@@ -1,0 +1,12 @@
+{
+    "iterm2": {
+        "description": "iTerm2 is a terminal emulator for macOS that does amazing things",
+        "homepage": "https://iterm2.com",
+        "sha256": "1kh5im2yv86h894c8lgvk7jr4w2rw9zgvjapnssp8cdybbci5kjp",
+        "type": "tarball",
+        "underVersion": "3_4_3",
+        "url": "https://iterm2.com/downloads/stable/iTerm2-3_4_3.zip",
+        "url_template": "https://iterm2.com/downloads/stable/iTerm2-<underVersion>.zip",
+        "version": "3.4.3"
+    }
+}
