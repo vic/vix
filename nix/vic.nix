@@ -29,6 +29,7 @@
       iterm2
       firefox-developer
       flux
+      keybase
     ];
 
     programs.git = {

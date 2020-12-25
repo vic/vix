@@ -9,11 +9,11 @@
         "version": "85.0b4"
     },
     "flux": {
-        "version": "40.1",
         "sha256": "1gkjsc4xhp9hgxhh6742dbmx1d0dvaq49nms4pd7j7z2xjprfhf4",
         "type": "tarball",
         "url": "https://justgetflux.com/mac/Flux.zip",
-        "url_template": "https://justgetflux.com/mac/Flux.zip"
+        "url_template": "https://justgetflux.com/mac/Flux.zip",
+        "version": "40.1"
     },
     "iterm2": {
         "description": "iTerm2 is a terminal emulator for macOS that does amazing things",
@@ -24,6 +24,15 @@
         "url": "https://iterm2.com/downloads/stable/iTerm2-3_4_3.zip",
         "url_template": "https://iterm2.com/downloads/stable/iTerm2-<underVersion>.zip",
         "version": "3.4.3"
+    },
+    "keybase": {
+        "description": "Keybase",
+        "homepage": "https://keybase.io",
+        "sha256": "1m5jjm91n5dxqa4yci9d9asv47h4kncjbfvv1hykfxcyvqnh2vpp",
+        "type": "file",
+        "url": "https://prerelease.keybase.io/Keybase.dmg",
+        "url_template": "https://prerelease.keybase.io/Keybase.dmg",
+        "version": "1"
     },
     "tor-browser": {
         "description": "Tor privacy browser",
