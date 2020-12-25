@@ -4,6 +4,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+
+    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.inputs.nixpkgs.follows = "nixpkgs";
+
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -11,38 +15,40 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager }:
-    {
-      darwinConfigurations.oeiuwq = darwin.lib.darwinSystem {
-        modules = [
-          ./nix/system.nix
-          ./nix/vic.nix
-          ./nix/overlays.nix
-          # ./nix/hm-link-apps.nix
-          home-manager.darwinModules.home-manager
-        ];
-      };
+  outputs = { self, darwin, nixpkgs, home-manager, flake-utils }:
+  {
 
-      darwinPackages = self.darwinConfigurations.oeiuwq.pkgs;
+    nixosConfigurations.ashura = darwin.lib.darwinSystem {
+      modules = [
+        home-manager.darwinModules.home-manager
+        self.nixosModules.darwin
+        ./nix/vic.nix
+      ];
+    };
 
-      # Build darwin flake using:
-      # $ darwin-rebuild build --flake '.#oeiuwq' --override-input darwin .
-      # $ nix build '.#darwinConfigurations.oeiuwq.system'
-      defaultPackage.${self.darwinPackages.system} =
-        self.darwinConfigurations.oeiuwq.system;
+    nixosModules.darwin = {
+      imports = [
+        ./nix/system.nix
+        ./nix/overlays.nix
+        # ./nix/hm-link-apps.nix
+      ];
+    };
 
-      defaultApp.${self.darwinPackages.system} = {
+    defaultPackage.x86_64-darwin =
+      self.nixosConfigurations.ashura.system;
+
+      defaultApp.x86_64-darwin = {
         type = "app";
         program =
           let
-            program = self.darwinPackages.writeScriptBin "activate" ''
-            sudo ${self.darwinConfigurations.oeiuwq.system}/activate
-            '';
+            program =
+              with self.nixosConfigurations.ashura.pkgs;
+              writeScriptBin "activate" ''
+                sudo ${self.nixosConfigurations.ashura.system}/activate
+              '';
           in "${program}/bin/activate";
       };
 
+  };
 
-      defShell =
-        self.darwinPackages.mkShell { inputsFrom = [ self.defaultPackage ]; };
-    };
 }

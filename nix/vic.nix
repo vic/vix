@@ -22,12 +22,14 @@
       nixfmt            # fmt nix sources
       nodejs            # whatnot
       nox               # quick installer for nix
+      ripgrep
       ripgrep-all       # rg faster grep on many file types
       tig               # terminal git ui
       victor-mono       # fontz ligatures
       tor-browser       # darkz web
-      iterm2
+      beaker-browser
       firefox-developer
+      iterm2
       flux
       keybase
       jetbrains.idea-community

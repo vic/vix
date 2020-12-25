@@ -58,6 +58,20 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1608872849,
+        "narHash": "sha256-6yjOOeQplNLhUh0tsuZmqFRBZXXX87PbgWPIteRyfO4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "12b1d81ab9140f5b56e7d2e3c43a922229837bfb",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
         "lastModified": 1608723372,
         "narHash": "sha256-XoCD827n1+bBPVxjKFmAikh7KSIspj9BBj2vnWhtTC4=",
         "owner": "nixos",
@@ -74,10 +88,29 @@
     },
     "root": {
       "inputs": {
-        "darwin": "darwin",
         "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs",
+        "vix": "vix"
+      }
+    },
+    "vix": {
+      "inputs": {
+        "darwin": "darwin",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1608874769,
+        "narHash": "sha256-7IDMIVHp9RHIv6c8DozcEUWA6aNj1zJa5lvv1KUoDHc=",
+        "owner": "vic",
+        "repo": "vix",
+        "rev": "1cf461719d8df1a066a8c8d4884812c3ca619669",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "vix",
+        "type": "github"
       }
     }
   },
