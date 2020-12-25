@@ -11,6 +11,7 @@ in
       tor-browser = import ./apps/tor-browser args;
       flux = import ./apps/flux args;
       keybase = import ./apps/keybase args;
+      jetbrains.idea-community = import ./apps/idea-community args;
     })
   ];
 }

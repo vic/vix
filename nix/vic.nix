@@ -30,6 +30,7 @@
       firefox-developer
       flux
       keybase
+      jetbrains.idea-community
     ];
 
     programs.git = {

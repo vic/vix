@@ -15,6 +15,15 @@
         "url_template": "https://justgetflux.com/mac/Flux.zip",
         "version": "40.1"
     },
+    "idea": {
+        "description": "IntelliJ IDEA Community",
+        "homepage": "https://www.jetbrains.com/idea",
+        "sha256": "09fky1mv0h95jgpkjc8k0zkv19wcl92jkv44r2szz19sxa1fjgz7",
+        "type": "file",
+        "url": "https://download.jetbrains.com/idea/ideaIC-2020.3.dmg",
+        "url_template": "https://download.jetbrains.com/idea/ideaIC-<version>.dmg",
+        "version": "2020.3"
+    },
     "iterm2": {
         "description": "iTerm2 is a terminal emulator for macOS that does amazing things",
         "homepage": "https://iterm2.com",
