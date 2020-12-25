@@ -1,4 +1,13 @@
 {
+    "firefox-developer": {
+        "description": "Firefox Developer Edition",
+        "homepage": "https://www.mozilla.org/es-MX/firefox/developer/",
+        "sha256": "17xiccsi3fpv6ly4lwfz0gdjxgbypj4k8fik9h1k4czplw1sf0l7",
+        "type": "file",
+        "url": "https://download-installer.cdn.mozilla.net/pub/devedition/releases/85.0b4/mac/en-US/Firefox%2085.0b4.dmg",
+        "url_template": "https://download-installer.cdn.mozilla.net/pub/devedition/releases/<version>/mac/en-US/Firefox%20<version>.dmg",
+        "version": "85.0b4"
+    },
     "iterm2": {
         "description": "iTerm2 is a terminal emulator for macOS that does amazing things",
         "homepage": "https://iterm2.com",
@@ -8,5 +17,13 @@
         "url": "https://iterm2.com/downloads/stable/iTerm2-3_4_3.zip",
         "url_template": "https://iterm2.com/downloads/stable/iTerm2-<underVersion>.zip",
         "version": "3.4.3"
+    },
+    "tor-browser": {
+        "description": "Tor privacy browser",
+        "sha256": "19w3blwsjkfv41pdjwgxh9dij525596v1rjc8xsrkvhizaj6ilda",
+        "type": "file",
+        "url": "https://www.torproject.org/dist/torbrowser/10.0.7/TorBrowser-10.0.7-osx64_en-US.dmg",
+        "url_template": "https://www.torproject.org/dist/torbrowser/<version>/TorBrowser-<version>-osx64_en-US.dmg",
+        "version": "10.0.7"
     }
 }

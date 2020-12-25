@@ -25,6 +25,9 @@
       ripgrep-all       # rg faster grep on many file types
       tig               # terminal git ui
       victor-mono       # fontz ligatures
+      tor-browser       # darkz web
+      iterm2
+      firefox-developer
     ];
 
     programs.git = {

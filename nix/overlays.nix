@@ -6,7 +6,9 @@ in
 {
   nixpkgs.overlays = [
     (self: super: {
-      iterm2 = import ./apps/iterm2/default.nix args;
+      iterm2 = import ./apps/iterm2 args;
+      firefox-developer = import ./apps/firefox-developer args;
+      tor-browser = import ./apps/tor-browser args;
     })
   ];
 }

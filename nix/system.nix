@@ -9,7 +9,6 @@
           home-manager
           htop
           vim
-          iterm2
         ];
         system.stateVersion = 4;
         home-manager = {
