@@ -28,6 +28,7 @@
       tor-browser       # darkz web
       iterm2
       firefox-developer
+      flux
     ];
 
     programs.git = {

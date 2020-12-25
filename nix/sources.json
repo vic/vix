@@ -8,6 +8,13 @@
         "url_template": "https://download-installer.cdn.mozilla.net/pub/devedition/releases/<version>/mac/en-US/Firefox%20<version>.dmg",
         "version": "85.0b4"
     },
+    "flux": {
+        "version": "40.1",
+        "sha256": "1gkjsc4xhp9hgxhh6742dbmx1d0dvaq49nms4pd7j7z2xjprfhf4",
+        "type": "tarball",
+        "url": "https://justgetflux.com/mac/Flux.zip",
+        "url_template": "https://justgetflux.com/mac/Flux.zip"
+    },
     "iterm2": {
         "description": "iTerm2 is a terminal emulator for macOS that does amazing things",
         "homepage": "https://iterm2.com",

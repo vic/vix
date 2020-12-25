@@ -17,6 +17,6 @@ mkDerivation {
   '';
   installPhase = ''
     mkdir -p $out/Applications
-    cp -a "Tor Browser.app" $out/Applications
+    cp -R "Tor Browser.app" $out/Applications
   '';
 }

@@ -7,7 +7,7 @@
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -18,6 +18,7 @@
           ./nix/system.nix
           ./nix/vic.nix
           ./nix/overlays.nix
+          # ./nix/hm-link-apps.nix
           home-manager.darwinModules.home-manager
         ];
       };
@@ -29,6 +30,17 @@
       # $ nix build '.#darwinConfigurations.oeiuwq.system'
       defaultPackage.${self.darwinPackages.system} =
         self.darwinConfigurations.oeiuwq.system;
+
+      defaultApp.${self.darwinPackages.system} = {
+        type = "app";
+        program =
+          let
+            program = self.darwinPackages.writeScriptBin "activate" ''
+            sudo ${self.darwinConfigurations.oeiuwq.system}/activate
+            '';
+          in "${program}/bin/activate";
+      };
+
 
       defShell =
         self.darwinPackages.mkShell { inputsFrom = [ self.defaultPackage ]; };
