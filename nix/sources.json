@@ -32,7 +32,7 @@
         "type": "file",
         "url": "https://prerelease.keybase.io/Keybase.dmg",
         "url_template": "https://prerelease.keybase.io/Keybase.dmg",
-        "version": "1"
+        "version": "5.5.0-20200526170801+139bb348af"
     },
     "tor-browser": {
         "description": "Tor privacy browser",

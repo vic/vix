@@ -14,7 +14,8 @@ mkDerivation {
   phases = [ "unpackPhase" "installPhase" ];
   unpackPhase = "undmg $src";
   installPhase = ''
-    mkdir -p $out/Applications
+    mkdir -p $out/Applications $out/bin
     cp -a "Keybase.app" $out/Applications
+    ln -s $out/Applications/Keybase.app/Contents/SharedSupport/bin/{git,k}* $out/bin
   '';
 }
