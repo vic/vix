@@ -5,6 +5,7 @@
   firefox-developer = import ./firefox-developer args;
   tor-browser = import ./tor-browser args;
   beaker-browser = import ./beaker-browser args;
+  pock = import ./pock args;
   flux = import ./flux args;
   keybase = import ./keybase args;
   jetbrains.idea-community = import ./idea-community args;

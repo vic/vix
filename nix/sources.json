@@ -53,6 +53,16 @@
         "url_template": "https://prerelease.keybase.io/Keybase.dmg",
         "version": "5.5.0-20200526170801+139bb348af"
     },
+    "pock": {
+        "description": "Display macOS Dock in Touch Bar",
+        "homepage": "https://pock.dev",
+        "sha256": "1fcvxw7s3v1n4767brxafp08s3i8ic070qvmdncm171jjd2kx257",
+        "type": "tarball",
+        "underversion": "0_7_2",
+        "url": "https://pock.dev/download.php?file=pock_0_7_2.zip&nw=1",
+        "url_template": "https://pock.dev/download.php?file=pock_<underversion>.zip&nw=1",
+        "version": "0.7.2"
+    },
     "tor-browser": {
         "description": "Tor privacy browser",
         "sha256": "19w3blwsjkfv41pdjwgxh9dij525596v1rjc8xsrkvhizaj6ilda",
