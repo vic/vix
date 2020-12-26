@@ -33,6 +33,7 @@
       flux
       keybase
       jetbrains.idea-community
+      nodePackages.hyp
     ];
 
     programs.git = {

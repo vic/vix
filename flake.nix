@@ -34,20 +34,23 @@
       ];
     };
 
+    packages.x86_64-darwin =
+      self.nixosConfigurations.ashura.pkgs;
+
     defaultPackage.x86_64-darwin =
       self.nixosConfigurations.ashura.system;
 
-      defaultApp.x86_64-darwin = {
-        type = "app";
-        program =
-          let
-            program =
-              with self.nixosConfigurations.ashura.pkgs;
-              writeScriptBin "activate" ''
-                sudo ${self.nixosConfigurations.ashura.system}/activate
-              '';
-          in "${program}/bin/activate";
-      };
+    defaultApp.x86_64-darwin = {
+      type = "app";
+      program =
+        let
+          program =
+            with self.nixosConfigurations.ashura.pkgs;
+            writeScriptBin "activate" ''
+              sudo ${self.nixosConfigurations.ashura.system}/activate
+            '';
+        in "${program}/bin/activate";
+    };
 
   };
 
