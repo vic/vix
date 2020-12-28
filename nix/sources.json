@@ -12,11 +12,11 @@
     "firefox-developer": {
         "description": "Firefox Developer Edition",
         "homepage": "https://www.mozilla.org/es-MX/firefox/developer/",
-        "sha256": "17xiccsi3fpv6ly4lwfz0gdjxgbypj4k8fik9h1k4czplw1sf0l7",
+        "sha256": "1ychy8w37c57b0xm3g3225bck6g9ag1mrzjn5qssw9xmlml5agj9",
         "type": "file",
-        "url": "https://download-installer.cdn.mozilla.net/pub/devedition/releases/85.0b4/mac/en-US/Firefox%2085.0b4.dmg",
+        "url": "https://download-installer.cdn.mozilla.net/pub/devedition/releases/86.0b3/mac/en-US/Firefox%2086.0b3.dmg",
         "url_template": "https://download-installer.cdn.mozilla.net/pub/devedition/releases/<version>/mac/en-US/Firefox%20<version>.dmg",
-        "version": "85.0b4"
+        "version": "86.0b3"
     },
     "flux": {
         "sha256": "1gkjsc4xhp9hgxhh6742dbmx1d0dvaq49nms4pd7j7z2xjprfhf4",
@@ -26,13 +26,14 @@
         "version": "40.1"
     },
     "idea": {
+        "arch": "aarch64",
         "description": "IntelliJ IDEA Community",
         "homepage": "https://www.jetbrains.com/idea",
-        "sha256": "09fky1mv0h95jgpkjc8k0zkv19wcl92jkv44r2szz19sxa1fjgz7",
+        "sha256": "07s84rgwzh7gp9dzpyv6vfbm5pfawv6mnl10fk82f4hldq1azbgg",
         "type": "file",
-        "url": "https://download.jetbrains.com/idea/ideaIC-2020.3.dmg",
-        "url_template": "https://download.jetbrains.com/idea/ideaIC-<version>.dmg",
-        "version": "2020.3"
+        "url": "https://download-cf.jetbrains.com/idea/ideaIC-2020.3.2-aarch64.dmg",
+        "url_template": "https://download-cf.jetbrains.com/idea/ideaIC-<version>-<arch>.dmg",
+        "version": "2020.3.2"
     },
     "iterm2": {
         "description": "iTerm2 is a terminal emulator for macOS that does amazing things",
@@ -56,12 +57,13 @@
     "pock": {
         "description": "Display macOS Dock in Touch Bar",
         "homepage": "https://pock.dev",
-        "sha256": "1fcvxw7s3v1n4767brxafp08s3i8ic070qvmdncm171jjd2kx257",
+        "sha256": "13l69s4s07sdlpwnnm6bbln68a1rjxi94lsvicqi9n1wlrsgvynj",
         "type": "tarball",
-        "underversion": "0_7_2",
-        "url": "https://pock.dev/download.php?file=pock_0_7_2.zip&nw=1",
+        "underVersion": "0_8_0__10",
+        "underversion": "0_8_0__10",
+        "url": "https://pock.dev/download.php?file=pock_0_8_0__10.zip&nw=1",
         "url_template": "https://pock.dev/download.php?file=pock_<underversion>.zip&nw=1",
-        "version": "0.7.2"
+        "version": "0.8.0-10"
     },
     "tor-browser": {
         "description": "Tor privacy browser",
@@ -70,5 +72,15 @@
         "url": "https://www.torproject.org/dist/torbrowser/10.0.7/TorBrowser-10.0.7-osx64_en-US.dmg",
         "url_template": "https://www.torproject.org/dist/torbrowser/<version>/TorBrowser-<version>-osx64_en-US.dmg",
         "version": "10.0.7"
+    },
+    "tunnelblick": {
+        "build": "5601",
+        "description": "openvpn on macos",
+        "homepage": "https://tunnelblick.net",
+        "sha256": "135l4dzvbhns5rkr8azi1dmccf551fx4by0r33kmv1risw62g4x6",
+        "type": "file",
+        "url": "https://tunnelblick.net/release/Tunnelblick_3.8.4a_build_5601.dmg",
+        "url_template": "https://tunnelblick.net/release/Tunnelblick_<version>_build_<build>.dmg",
+        "version": "3.8.4a"
     }
 }

@@ -8,5 +8,6 @@
   pock = import ./pock args;
   flux = import ./flux args;
   keybase = import ./keybase args;
+  tunnelblick = import ./tunnelblick args;
   jetbrains.idea-community = import ./idea-community args;
 }

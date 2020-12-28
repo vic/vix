@@ -6,9 +6,8 @@
   services.nix-daemon.enable = true;
   environment.systemPackages = with pkgs; [
     nixFlakes
+    direnv
     home-manager
-    htop
-    vim
   ];
   system.stateVersion = 4;
   home-manager = {
