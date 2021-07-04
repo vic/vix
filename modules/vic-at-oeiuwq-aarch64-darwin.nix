@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, vix-lib, ... }: {
   home-manager.users.vic = {
     home.packages = with pkgs; [
       nixfmt
@@ -39,4 +39,14 @@
 
   };
 
+
+  nixpkgs.overlays = 
+    let
+      devEnvOverlay = new: old: {
+        vicEnv = old.buildEnv {
+          name = "vicEnv";
+          paths = config.home-manager.users.vic.home.packages;
+        };
+      };
+    in [ devEnvOverlay ];
 }
