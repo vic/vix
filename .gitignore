@@ -1,3 +1,5 @@
 result*
 outputs*
 tmp
+old
+./flake.lock

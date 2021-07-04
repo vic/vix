@@ -1,0 +1,2 @@
+{ nixpkgs, self, ... }@args: {
+}

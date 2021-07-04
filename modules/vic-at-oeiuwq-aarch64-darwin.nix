@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{ pkgs, ... }: {
   home-manager.users.vic = {
     home.packages = with pkgs; [
       nixfmt
@@ -25,7 +23,7 @@
       ripgrep # grep faster
       ripgrep-all # rg faster grep on many file types
       tig # terminal git ui
-     victor-mono # fontz ligatures
+      # victor-mono # fontz ligatures
       # tor-browser # darkz web
       # beaker-browser # p2p geocities
       # firefox-developer # firefox with dev nicities
