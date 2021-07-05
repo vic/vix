@@ -1,3 +1,1 @@
-{ nixpkgs, self, ... }@args: {
-	foo = {};
-}
+{ nixpkgs, self, ... }@args: { foo = { }; }
