@@ -1,9 +1,4 @@
-{ pkgs, ... }: {
-  nix.package = pkgs.nixFlakes;
-  services.nix-daemon.enable = true;
-  system.stateVersion = 4;
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-  };
+{ vix-lib, ... }: {pkgs, ...}@args: {
+  config._module.args = { vix-lib = vix-lib args; };
+  imports = [ ./pkg-sets.nix ./system-oeiuwq.nix ./user-vic.nix ];
 }

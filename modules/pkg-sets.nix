@@ -1,21 +1,19 @@
-{ config, pkgs, vix-lib, lib, ... }:
-let
-
-in {
+{ config, pkgs, lib, ... }: {
   options = with lib; {
-    devShells = mkOption {
+    pkgSets = mkOption {
       type = types.attrsOf (types.listOf types.package);
       default = { };
-      description = ''
-        Dev Environments
-      '';
+      description = "Package sets";
     };
   };
 
   config = {
 
-    devShells = with pkgs; {
+    pkgSets = with pkgs; {
+      # System level packages
+      oeiuwq = [ nixFlakes direnv home-manager ];
 
+      # Home level packages
       vic = [
         gping
         xsv
@@ -52,6 +50,7 @@ in {
         # neovim # you can move, but there is no escape
       ];
 
+      # Development environments
       scala = [
         mill
         coursier
@@ -69,32 +68,22 @@ in {
 
       bash = [ shfmt shellcheck ];
 
-      nix = [ 
+      nix = [
         niv # manage nix dependencies
         nixfmt # fmt nix sources
         nox # quick installer for nix
       ];
     };
 
-    home-manager.users.vic = {
-      home.packages = (with pkgs; [ devEnvs.vic devEnvsNoGc ]);
-    };
-
     nixpkgs.overlays = [
       (new: old: {
-        devShells = lib.mapAttrs (name: buildInputs: old.mkShell {
-          inherit name buildInputs;
-        }) config.devShells;
+        pkgShells = lib.mapAttrs
+          (name: packages: old.mkShell { inherit name packages; })
+          config.pkgSets;
 
-        devEnvs = lib.mapAttrs (name: paths: old.buildEnv {
-          inherit name paths;
-        }) config.devShells;
-
-        devEnvsNoGc = old.buildEnv { 
-          name = "devEnvsNoGc";
-          paths = [];
-          buildInputs = lib.concatLists (lib.attrValues config.devShells);
-        };
+        pkgSets =
+          lib.mapAttrs (name: paths: old.buildEnv { inherit name paths; })
+          config.pkgSets;
       })
     ];
   };
