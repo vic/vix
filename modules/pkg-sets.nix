@@ -52,6 +52,7 @@
 
       # Development environments
       scala = [
+        openjdk
         mill
         coursier
         dbmate
@@ -77,8 +78,8 @@
 
     nixpkgs.overlays = [
       (new: old: {
-        pkgShells = lib.mapAttrs
-          (name: packages: old.mkShell { inherit name packages; })
+        pkgShells =
+          lib.mapAttrs (name: packages: old.mkShell { inherit name packages; })
           config.pkgSets;
 
         pkgSets =
