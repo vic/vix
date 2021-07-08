@@ -19,7 +19,6 @@
         xsv
         broot
         htop
-        # emacsMacport
         gitAndTools.delta
         gitui
         k9s
@@ -58,7 +57,7 @@
         dbmate
         gettext
         nodejs
-        # google-cloud-sdk # TODO: BACKPORT
+        google-cloud-sdk # TODO: BACKPORT
         # jdk # TODO: build
         kubectl
         # coursierPackages.graalvm

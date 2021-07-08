@@ -1,4 +1,4 @@
-{ vix-lib, flake-utils, mkDarwinSystem, ... }@args:
+{ vix-lib, flake-utils, mkDarwinSystem, nixpkgs, ... }@args:
 let
   hostName = "oeiuwq";
   systems = [ "aarch64-darwin" ];
@@ -9,7 +9,7 @@ in flake-utils.lib.eachSystem systems (system:
     nixosModules = [ (import ./modules args) ];
 
     # silliconOverlay = silliconPkgs: intelPkgs: {
-    #   ntelPkgs) llvmPackages_6;
+    #   inherit (intelPkgs) google-cloud-sdk;
     # };
 
     flakeOutputs = { pkgs, ... }@outputs:
