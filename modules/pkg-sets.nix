@@ -46,7 +46,7 @@
         # jetbrains.idea-community # just to follow linked libs
         # nodePackages.hyp # hyperspace://
         git # work around patches
-        # neovim # you can move, but there is no escape
+        neovim # you can move, but there is no escape
       ];
 
       # Development environments

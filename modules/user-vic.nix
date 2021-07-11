@@ -1,10 +1,17 @@
-{ config, pkgs, vix-lib, lib, ... }: {
+{ config, nixpkgs, pkgs, vix-lib, lib, ... }: {
 
   services.lorri.enable = true;
+
   home-manager.users.vic = {
+    programs.nix-index.enableFishIntegration = true;
     home.packages = config.pkgSets.vic;
 
     home.file = {
+      "link-nixpkgs" = {
+        target = ".nix-link/nixpkgs";
+        source = builtins.toPath nixpkgs;
+      };
+
       "link-vix" = {
         target = ".nix-link/vix";
         source = builtins.toPath ./..;
@@ -15,24 +22,21 @@
         source = builtins.toPath pkgs.openjdk;
       };
 
-       "direnv_use_shell" = {
-         target = ".config/direnv/lib/use_shell.sh";
-         text = ''
-         function use_shell () {
-           watch_file $HOME/.config/direnv/envs/$1.bash
-           source $HOME/.config/direnv/envs/$1.bash
-         }
-         '';
-       };
-    } // (
-      lib.mapAttrs' (name: shell:
-        let drv = vix-lib.shellDirenv name shell;
-        in lib.nameValuePair "direnv_use_${name}" {
-          target = ".config/direnv/envs/${name}.bash";
-          source = "${drv}/env";
-        }
-      ) pkgs.pkgShells
-    );
+      "direnv_use_shell" = {
+        target = ".config/direnv/lib/use_shell.sh";
+        text = ''
+          function use_shell () {
+            watch_file $HOME/.config/direnv/envs/$1.bash
+            source $HOME/.config/direnv/envs/$1.bash
+          }
+        '';
+      };
+    } // (lib.mapAttrs' (name: shell:
+      let drv = vix-lib.shellDirenv name shell;
+      in lib.nameValuePair "direnv_use_${name}" {
+        target = ".config/direnv/envs/${name}.bash";
+        source = "${drv}/env";
+      }) pkgs.pkgShells);
 
   };
 
