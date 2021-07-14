@@ -61,7 +61,7 @@
         # jdk # TODO: build
         kubectl
         # coursierPackages.graalvm
-        postgresql
+        postgresql_12
         metals
         kubernetes-helm # deploy things
       ];
