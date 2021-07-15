@@ -16,7 +16,7 @@ in flake-utils.lib.eachSystem systems (system:
     flakeOutputs = { pkgs, ... }@outputs:
       outputs // (with pkgs; {
         packages = pkgs;
-        devShell = mkShell { pkgs = [ sysEnv devEnvs.vic ]; };
+        devShell = mkShell { pkgs = [ pkgSets.oeiuwq pkgSets.vic ]; };
       });
 
   })

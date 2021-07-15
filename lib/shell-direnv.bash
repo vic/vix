@@ -9,7 +9,7 @@ function mk_setenv() {
 
 cat <<EOF > $outer/input-derivation
 #!$SHELL
-source $shell_intput_derivation
+source $shell_input_derivation
 if [ "\$phases" != "nobuildPhase" ]; then
   echo "Expected \$name to be an mkShell derivation" >&2
   exit 1
@@ -25,7 +25,6 @@ env -i $SHELL --norc --noprofile -e -x "$outer/input-derivation"
 (
 cat <<'EOF'
 # Variables that should never be set
-if [ "$(type -t path_add)" = function ]; then
 for vname in \
   HOME USER LOGNAME DISPLAY TERM \
   IN_NIX_SHELL NIX_BUILD_TOP NIX_BUILD_SHELL NIX_ENFORCE_PURITY \
@@ -33,7 +32,6 @@ for vname in \
 do
   eval "function ${vname}_add () { :; }"
 done
-fi
 
 
 # Variables that are always commulative with values from previous shells
@@ -50,18 +48,17 @@ function setenv() {
   local name
   local value
   name="$1";
-  value="$1";
+  value="$2";
   if [ "$(type -t "${name}_add")" = function ]; then
     "${name}_add" "$value"
   else
-    declare -x "$name" "$value"
+    export "$name"="$value"
   fi
 }
 
 EOF
 cat "$outer/shell-vars" | mk_setenv 
 cat <<'EOF'
-
 if [ -n "$shellHook" ]; then
   $shellHook
 fi

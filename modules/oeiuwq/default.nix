@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: {
   system.stateVersion = 4;
 
-  nix.package = pkgs.nixFlakes;
+  nix.package = pkgs.nixUnstable;
   nix.extraOptions = builtins.readFile ../../nix.conf;
 
   services.nix-daemon.enable = true;
@@ -14,9 +14,11 @@
   environment.systemPackages = config.pkgSets.oeiuwq;
 
   system.activationScripts.preActivation.text = lib.mkMerge [''
-    ${pkgs.nixUnstable}/bin/nix store \
+    echo "New configuration diff"
+    $DRY_RUN_CMD ${pkgs.nixUnstable}/bin/nix store \
         --experimental-features 'nix-command' \
-        diff-closures /run/current-system "$systemConfig"
+        diff-closures /run/current-system "$systemConfig" \
+        | sed -e 's/^/[diff]\t/'
   ''];
 
 }
