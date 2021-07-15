@@ -3,7 +3,7 @@
 
     programs.git = {
       enable = true;
-      userName = "Victor Borja";
+      userName = "Victor Hugo Borja";
       userEmail = "vborja@apache.org";
 
       extraConfig = { init = { defaultBranch = "main"; }; };
