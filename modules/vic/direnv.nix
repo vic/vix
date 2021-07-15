@@ -1,8 +1,8 @@
-{ config, pkgs, lib, vix-lib, HOME, ... }:
+{ config, pkgs, lib, vix-lib, USER, HOME, ... }:
 let direnv_lib = ".nix-out/direnv";
 in lib.mkMerge [
   {
-    home-manager.users.vic.home.file = {
+    home-manager.users.${USER}.home.file = {
       ".config/direnv/lib/use_flake.sh".text = ''
         function use_flake() {
           local flake flake5
@@ -33,7 +33,7 @@ in lib.mkMerge [
   #,
   {
 
-    home-manager.users.vic.home.file = lib.mkMerge (map (shellName: {
+    home-manager.users.${USER}.home.file = lib.mkMerge (map (shellName: {
       "${direnv_lib}/${shellName}.sh".text = ''
         eval "$(${pkgs.lorri}/bin/lorri direnv --shell-file ${HOME}/${direnv_lib}/${shellName}.nix)"'';
 
@@ -45,7 +45,7 @@ in lib.mkMerge [
   }
   #,
   {
-    home-manager.users.vic.home.file = lib.mkMerge (lib.mapAttrsToList
+    home-manager.users.${USER}.home.file = lib.mkMerge (lib.mapAttrsToList
       (name: shell: {
         "${direnv_lib}/${name}-env.sh".source =
           "${vix-lib.shellDirenv name shell}/env";

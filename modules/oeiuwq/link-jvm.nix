@@ -8,11 +8,11 @@
     echo "linking JVMs ..." >&2
     for f in $(ls "/run/current-system/sw/Library/Java/JavaVirtualMachines" 2>/dev/null); do
       if [ -L "$systemConfig/sw/Library/Java/JavaVirtualMachines/$f" ]; then
-        rm -v "/Library/Java/JavaVirtualMachines/$f"
+        rm "/Library/Java/JavaVirtualMachines/$f"
       fi
     done
     for f in $(ls "$systemConfig/sw/Library/Java/JavaVirtualMachines" 2>/dev/null); do
-      ln -sfv "$systemConfig/sw/Library/Java/JavaVirtualMachines/$f" "/Library/Java/JavaVirtualMachines/$f"
+      ln -s "$systemConfig/sw/Library/Java/JavaVirtualMachines/$f" "/Library/Java/JavaVirtualMachines/$f"
     done
   '';
 

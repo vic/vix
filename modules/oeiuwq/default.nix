@@ -7,13 +7,14 @@
   nix.package = pkgs.nixUnstable;
   nix.extraOptions = builtins.readFile ../../nix.conf;
 
-  services.nix-daemon.enable = true;
-
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
   };
 
   environment.systemPackages = config.pkgSets.oeiuwq;
+
+  services.nix-daemon.enable = true;
+  services.lorri.enable = true;
 
 }
