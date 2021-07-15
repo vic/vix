@@ -6,7 +6,7 @@ let
 in {
   _module.args = { inherit HOME USER DOTS; };
 
-  imports = [ ./direnv.nix ./ssh ];
+  imports = [ ./direnv ./ssh ];
 
   users.users.${USER}.home = HOME;
 
