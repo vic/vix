@@ -1,12 +1,12 @@
-{ config, pkgs, lib, vix-lib, home-manager, nix-darwin, nixpkgs, ... }@args: 
-let 
+{ config, pkgs, lib, vix-lib, home-manager, nix-darwin, nixpkgs, ... }@args:
+let
   USER = "vic";
   HOME = "/v";
-in
-{
-  _module.args = { inherit HOME USER; };
+  DOTS = vix-lib.mkOutOfStoreSymlink "/hk/dots";
+in {
+  _module.args = { inherit HOME USER DOTS; };
 
-  imports = [ ./direnv.nix ./ssh.nix ];
+  imports = [ ./direnv.nix ./ssh ];
 
   users.users.${USER}.home = HOME;
 
@@ -15,7 +15,7 @@ in
     home.packages = config.pkgSets.${USER};
 
     home.file.".nix-out/vix".source = ./../..;
-    home.file.".nix-out/dots".source = vix-lib.dots;
+    home.file.".nix-out/dots".source = DOTS;
     home.file.".nix-out/nixpkgs".source = nixpkgs;
     home.file.".nix-out/nix-darwin".source = nix-darwin;
     home.file.".nix-out/home-manager".source = home-manager;

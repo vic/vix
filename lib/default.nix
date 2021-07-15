@@ -18,6 +18,4 @@
       name = baseNameOf pathStr;
     in pkgs.runCommandLocal name { } "ln -s ${lib.escapeShellArg pathStr} $out";
 
-  dots = mkOutOfStoreSymlink "/hk/dots";
-
 }
