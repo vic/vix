@@ -23,27 +23,36 @@ EOF
 env -i $SHELL --norc --noprofile -e -x "$outer/input-derivation"
 
 (
-cat <<'EOF'
+
 # Variables that should never be set
 for vname in \
   HOME USER LOGNAME DISPLAY TERM \
   IN_NIX_SHELL NIX_BUILD_TOP NIX_BUILD_SHELL NIX_ENFORCE_PURITY \
   TZ PAGER SHELL SHLVL TMP TMPDIR TEMP TEMPDIR OLDPWD PWD SHELL
 do
-  eval "function ${vname}_add () { :; }"
+cat <<EOF
+function ${vname}_add() {
+  :
+}
+EOF
 done
 
 
 # Variables that are always commulative with values from previous shells
-if [ "$(type -t path_add)" = function ]; then
 for vname in \
 PATH XDG_DATA_DIRS LD_LIBRARY_PATH LIBRARY_PATH \
 PKG_CONFIG_PATH GOPATH NODE_PATH CLASSPATH
 do
-  eval "function ${vname}_add () { path_add $vname \"\${@}\" ; }"
-done
+cat <<EOF
+if [ "\$(type -t path_add)" = function ]; then
+  function ${vname}_add () { 
+    path_add $vname "\${@}" 
+  }
 fi
+EOF
+done
 
+cat <<'EOF'
 function setenv() {
   local name
   local value
