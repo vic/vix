@@ -24,12 +24,15 @@
         g = "git";
         gd = "git diff";
         gs = "git status";
-        gp = "git pull";
+        gp = "git pull --rebase --no-commit";
+        gz = "git stash";
+        gza = "git stash apply";
         gfap = "git fetch --all -p";
         groh = "git rebase remotes/origin/HEAD";
         grih = "git rebase -i remotes/origin/HEAD";
         gprh = "git push --force-with-lease origin HEAD";
         gfix = "git commit --all --fixup amend:HEAD";
+        gcm = "git commit --all --message";
         gcaa = "git commit --amend --all --reuse-message HEAD";
         gcam = "git commit --amend --all --message";
       };
