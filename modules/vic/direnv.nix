@@ -18,7 +18,7 @@ in lib.mkMerge [
 
       ".config/direnv/lib/use_vix.sh".text = ''
         function use_vix() {
-          source "~/${direnv_lib}/$1.sh"
+          source ~/"${direnv_lib}/$1.sh"
         }
       '';
 
@@ -32,7 +32,7 @@ in lib.mkMerge [
         eval "$(${pkgs.lorri}/bin/lorri direnv --shell-file ~/${direnv_lib}/${shellName}.nix)"'';
 
       "${direnv_lib}/${shellName}.nix".text = ''
-        (builtins.getFlake "~/.nix-out/vix").packages.''${builtins.currentSystem}.pkgShells.${shellName}'';
+        (builtins.getFlake "''${builtins.getEnv "HOME"}/.nix-out/vix").packages.''${builtins.currentSystem}.pkgShells.${shellName}'';
 
     }) (lib.attrNames config.pkgSets));
 
