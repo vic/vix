@@ -1,6 +1,6 @@
 { config, pkgs, lib, vix-lib, ... }: {
 
-  imports = [ ./activation-diff.nix ./link-jvm.nix ];
+  imports = [ ./link-jvm.nix ];
 
   system.stateVersion = 4;
 
