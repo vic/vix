@@ -1,6 +1,11 @@
 { nixpkgs, ... }:
-{ pkgs, ... }:
-self: super: rec {
+{ pkgs, lib, ... }: rec {
+
+  linkJvm = (name: jdk:
+    pkgs.runCommand "link-jvm-${name}" { } ''
+      mkdir -p $out/Library/Java/JavaVirtualMachines
+      ln -s ${builtins.toPath jdk} $out/Library/Java/JavaVirtualMachines/${name}
+    '');
 
   shellDirenv = name: shell:
     pkgs.runCommand "${name}-shell-direnv" {
@@ -11,8 +16,7 @@ self: super: rec {
     let
       pathStr = toString path;
       name = baseNameOf pathStr;
-    in pkgs.runCommandLocal name { }
-    "ln -s ${super.escapeShellArg pathStr} $out";
+    in pkgs.runCommandLocal name { } "ln -s ${lib.escapeShellArg pathStr} $out";
 
   dots = mkOutOfStoreSymlink "/hk/dots";
 

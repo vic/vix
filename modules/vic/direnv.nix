@@ -1,7 +1,5 @@
-{ config, pkgs, lib, vix-lib, ... }:
-let
-  direnv_lib = ".nix-out/direnv";
-  HOME = config.home-manager.users.vic.home.homeDirectory;
+{ config, pkgs, lib, vix-lib, HOME, ... }:
+let direnv_lib = ".nix-out/direnv";
 in lib.mkMerge [
   {
     home-manager.users.vic.home.file = {
