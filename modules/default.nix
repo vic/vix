@@ -1,9 +1,8 @@
 { vix-lib, nixpkgs, ... }:
-{ pkgs, ... }@args: {
+{ pkgs, lib, ... }@args: {
   config._module.args = {
-    vix-lib = vix-lib (args);
+    vix-lib = nixpkgs.lib.extend (vix-lib args);
     inherit nixpkgs;
   };
-  imports =
-    [ ./pkg-overrides.nix ./pkg-sets.nix ./system-oeiuwq.nix ./user-vic.nix ];
+  imports = [ ./pkg-overrides.nix ./pkg-sets.nix ./oeiuwq ./vic ];
 }

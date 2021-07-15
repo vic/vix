@@ -1,8 +1,9 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, vix-lib, ... }: {
   nixpkgs.overlays = [
     (self: super: {
+      vix-dots = vix-lib.mkOutOfStoreSymlink "/hk/dots";
 
-      google-cloud-sdk = let
+      google-cloud-sdk_bla = let
         now = super.google-cloud-sdk.overrideAttrs (old: {
           src = if pkgs.system != "aarch64-darwin" then
             old.src

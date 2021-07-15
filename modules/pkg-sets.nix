@@ -15,6 +15,9 @@
 
       # Home level packages
       vic = [
+        # keybase
+        pass
+        git-annex
         gping
         xsv
         broot

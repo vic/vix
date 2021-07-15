@@ -2,7 +2,7 @@
   system.stateVersion = 4;
 
   nix.package = pkgs.nixFlakes;
-  nix.extraOptions = builtins.readFile ../nix.conf;
+  nix.extraOptions = builtins.readFile ../../nix.conf;
 
   services.nix-daemon.enable = true;
 
