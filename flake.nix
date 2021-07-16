@@ -15,7 +15,5 @@
     import ./default.nix (mk-darwin-system.inputs // {
       inherit nixpkgs;
       inherit (mk-darwin-system) mkDarwinSystem;
-
-      vix-lib = import ./lib inputs;
     });
 }

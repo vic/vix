@@ -46,7 +46,7 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-hsekvBfwSj9xfEU4hVHLEdBGrt4l1+KlPEZpSlpKFKM=",
+        "narHash": "sha256-fHYnF5oUkBfOFvemVBD9+rIAjU/D7EYi04+vtB5DH2A=",
         "path": "../mkDarwinSystem",
         "type": "path"
       },

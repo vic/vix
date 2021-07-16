@@ -1,5 +1,5 @@
-{ nixpkgs, ... }:
-{ pkgs, lib, ... }: rec {
+{ lib, pkgs, config, ... }: rec {
+
 
   linkJvm = (name: jdk:
     pkgs.runCommand "link-jvm-${name}" { } ''
@@ -17,5 +17,22 @@
       pathStr = toString path;
       name = baseNameOf pathStr;
     in pkgs.runCommandLocal name { } "ln -s ${lib.escapeShellArg pathStr} $out";
+
+  mkDmgApp = name:
+    let source = (import ./../nix/sources.nix).${name};
+    in pkgs.stdenvNoCC.mkDerivation {
+      name = name;
+      version = source.version;
+      src = source;
+      sourceRoot = ".";
+      preferLocalBuild = true;
+      nativeBuildInputs = [ pkgs.undmg ];
+      phases = [ "unpackPhase" "installPhase" ];
+      unpackPhase = "undmg $src";
+      installPhase = ''
+        mkdir -p $out/Applications
+        cp -a *.app $out/Applications
+      '';
+    };
 
 }

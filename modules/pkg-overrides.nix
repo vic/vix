@@ -5,6 +5,8 @@
       # See https://github.com/NixOS/nixpkgs/pull/129543/files
       neovim = super.neovim-unwrapped;
 
+      VimMotionApp = vix-lib.mkDmgApp "VimMotionApp";
+
     })
   ];
 }

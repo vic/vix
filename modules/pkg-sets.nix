@@ -15,6 +15,7 @@
 
       # Home level packages
       vic = [
+        VimMotionApp
         # keybase
         pass
         git-annex
