@@ -5,5 +5,53 @@
         "url": "https://github.com/dwarvesf/VimMotionApp/releases/download/v1.2.3/VimMotion.1.2.3.dmg",
         "url_template": "https://github.com/dwarvesf/VimMotionApp/releases/download/v<version>/VimMotion.<version>.dmg",
         "version": "1.2.3"
+    },
+    "fish-done": {
+        "branch": "master",
+        "description": "A fish-shell package to automatically receive notifications when long processes finish.",
+        "homepage": "",
+        "owner": "franciscolourenco",
+        "repo": "done",
+        "rev": "7fda8f2c3e79835d5c1e6721fa48fe5ed4ba0858",
+        "sha256": "1snysg52fr1h6n188jhqzny4sfgzcjgpa9r9qvj9smkg7zmplmsy",
+        "type": "tarball",
+        "url": "https://github.com/franciscolourenco/done/archive/7fda8f2c3e79835d5c1e6721fa48fe5ed4ba0858.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "fish-fzf.fish": {
+        "branch": "main",
+        "description": "Augment your fish command line with fzf key bindings.",
+        "homepage": "",
+        "owner": "PatrickF1",
+        "repo": "fzf.fish",
+        "rev": "17d54b576919ee77644779db2dcae56d372a8830",
+        "sha256": "0h9jrmh8d0jy0xydr6iby3xf36lq0bj4rgpn6iij5dkn1p5b52xp",
+        "type": "tarball",
+        "url": "https://github.com/PatrickF1/fzf.fish/archive/17d54b576919ee77644779db2dcae56d372a8830.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "fish-hydro": {
+        "branch": "main",
+        "description": "Ultra-pure, lag-free prompt with async Git status. Designed for Fish.",
+        "homepage": "",
+        "owner": "jorgebucaran",
+        "repo": "hydro",
+        "rev": "a5877e9ef76b3e915c06143630bffc5ddeaba2a1",
+        "sha256": "1lgknykah265wxx6wyy5pqc3w3jhkr2nnybwb4954nlklr12g7ww",
+        "type": "tarball",
+        "url": "https://github.com/jorgebucaran/hydro/archive/a5877e9ef76b3e915c06143630bffc5ddeaba2a1.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "fish-pisces": {
+        "branch": "master",
+        "description": "♓️ Fish shell plugin that helps you to work with paired symbols in the command line",
+        "homepage": "",
+        "owner": "laughedelic",
+        "repo": "pisces",
+        "rev": "e45e0869855d089ba1e628b6248434b2dfa709c4",
+        "sha256": "073wb83qcn0hfkywjcly64k6pf0d7z5nxxwls5sa80jdwchvd2rs",
+        "type": "tarball",
+        "url": "https://github.com/laughedelic/pisces/archive/e45e0869855d089ba1e628b6248434b2dfa709c4.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

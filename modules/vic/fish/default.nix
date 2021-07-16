@@ -1,4 +1,4 @@
-{ config, lib, pkgs, USER, HOME, DOTS, ... }: {
+{ config, lib, pkgs, vix-lib, USER, HOME, DOTS, ... }: {
 
   home-manager.users.${USER} = {
 
@@ -7,6 +7,7 @@
 
     programs.fish = {
       enable = true;
+
       shellAliases = {
         l = "exa -l";
         ll = "exa -l -@ --git";
@@ -14,6 +15,7 @@
         # "." = "exa -g";
         ".." = "cd ..";
       };
+
       shellAbbrs = {
         ls = "exa";
         cat = "bat";
@@ -76,6 +78,13 @@
         repology-nixpkgs.description = "Open a browser on search for nixpkgs on repology.org";
         repology-nixpkgs.body = ''open "https://repology.org/projects/?inrepo=nix_unstable&search=$argv"'';
       };
+
+      plugins = map vix-lib.nivFishPlugin [
+       "hydro"
+       "done"
+       "fzf.fish"
+       "pisces"
+      ];
     };
 
     home.file = {

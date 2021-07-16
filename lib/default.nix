@@ -12,8 +12,13 @@
       shell_input_derivation = shell.inputDerivation;
     } (builtins.readFile ./shell-direnv.bash);
 
-  mkDmgApp = name:
-    let source = (import ./../nix/sources.nix).${name};
+  nivSources = import ./../nix/sources.nix;
+
+  nivFishPlugin = name: 
+    { inherit name; src = nivSources."fish-${name}"; };
+
+  nivDmgApp = name:
+    let source = nivSources.${name};
     in pkgs.stdenvNoCC.mkDerivation {
       name = name;
       version = source.version;
