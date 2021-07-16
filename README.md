@@ -27,7 +27,7 @@ modules/
   vic                  - Vic's home environment.
 ```
 
-### Additional output
+### Vic's HOME Additional output
 
 Particularly for my `vic` user, upon activation this flake creates the following symlinks:
 
@@ -54,3 +54,24 @@ $HOME/Applications/Home Manager Apps/XXX.app    - A link to some apps installed 
 
 ```
 
+
+### Vic's Fish environment
+
+Enabled fzf integration for fast searching History (CTRL+R) and files (CTRL+T)
+
+Enabled direnv integration for switching development environments upon entering dirs.
+
+Fish history is linked from private keybase repository where it is backed up.
+
+Appart from some [command aliases](modules/vic/fish/default.nix), the following fish functions are handy:
+
+```
+rg-nixpkgs PATTERN       - Search using rg on current system nixpkgs
+rg-home-manager PATTERN  - Search using rg on current system home-manager
+rg-nix-darwin PATTERN    - Search using rg on current system nix-darwin
+
+nixos-search-opt OPTION  - Search on nixos.org for OPTION
+nixos-search-pkg PACKAGE - Search on nixos.org for PACKAGE
+
+repology-search-nixpkgs PACKAGE - Search for PACKAGE using repology.org
+```
