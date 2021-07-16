@@ -18,14 +18,16 @@ Activate system with `env NIX_CONF_DIR="$PWD" nix run`.
 ### Structure
 
 ```
-flake.nix			- The entrypoint for all things. Read by nixFlake commands.
-default.nix			- Setups the environment for loading modules using mkDarwinSystem.
-lib				- Source for vix-lib. Functions used by modules.
-modules/
-  pkg-overrides.nix		- Custom packages and some overloading.
-  pkg-sets.nix			- Bags of packages, mainly used for different development environments.
-  oeiuwq			- System level module. Configures system wide options and packages.
-  vic				- Vic's home environment.
+|PATH|DESCRIPTION|
+|---|---|
+|flake.nix			| The entrypoint for all things. Read by nixFlake commands. |
+|default.nix			| Setups the environment for loading modules using mkDarwinSystem. |
+|lib				| Source for vix-lib. Functions used by modules. |
+|modules/			| |
+|  pkg-overrides.nix		| Custom packages and some overloading. |
+|  pkg-sets.nix			| Bags of packages, mainly used for different development environments. |
+|  oeiuwq			| System level module. Configures system wide options and packages. |
+|  vic				| Vic's home environment. |
 ```
 
 ### Additional output
