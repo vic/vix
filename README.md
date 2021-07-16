@@ -70,15 +70,15 @@ Appart from some [command aliases](modules/vic/fish/default.nix), the following 
 vix-activate             - Activate a new system generation, can be called from anywhere.
 
 vix-nixpkg-search        - Same as:
-                           nix search --inputs-from $HOME/.nix-out/ nixpkgs $argv
+                           nix search --inputs-from $HOME/.nix-out/vix nixpkgs $argv
 
 rg-vix PATTERN           - Search using rg on current system vix
 rg-nixpkgs PATTERN       - Search using rg on current system nixpkgs
 rg-home-manager PATTERN  - Search using rg on current system home-manager
 rg-nix-darwin PATTERN    - Search using rg on current system nix-darwin
 
-nixos-search-opt OPTION  - Search on nixos.org for OPTION
-nixos-search-pkg PACKAGE - Search on nixos.org for PACKAGE
+nixos-opt OPTION         - Search on nixos.org for OPTION
+nixos-pkg PACKAGE        - Search on nixos.org for PACKAGE
 
-repology-search-nixpkgs PACKAGE - Search for PACKAGE using repology.org
+repology-nixpkgs PACKAGE - Search for PACKAGE using repology.org
 ```
