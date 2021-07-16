@@ -2,7 +2,7 @@
 let
   USER = "vic";
   HOME = "/v";
-  DOTS = vix-lib.mkOutOfStoreSymlink "/hk/dots";
+  DOTS = lib.mkOutOfStoreSymlink "/hk/dots";
 in {
   _module.args = { inherit HOME USER DOTS; };
 

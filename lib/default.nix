@@ -12,12 +12,6 @@
       shell_input_derivation = shell.inputDerivation;
     } (builtins.readFile ./shell-direnv.bash);
 
-  mkOutOfStoreSymlink = path:
-    let
-      pathStr = toString path;
-      name = baseNameOf pathStr;
-    in pkgs.runCommandLocal name { } "ln -s ${lib.escapeShellArg pathStr} $out";
-
   mkDmgApp = name:
     let source = (import ./../nix/sources.nix).${name};
     in pkgs.stdenvNoCC.mkDerivation {

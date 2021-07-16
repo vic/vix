@@ -49,20 +49,31 @@
       '';
 
       functions = {
+        vix-activate.description = "Activate a new vix system generation";
+        vix-activate.body = 
+         let vix-source = lib.mkOutOfStoreSymlink ./../../..;
+         in ''nix run "${vix-source}"'';
+
+        vix-nixpkg-search.description = "Nix search on vix's nixpkgs input";
+        vix-nixpkg-search.body = ''nix search --inputs-from $HOME/.nix-out/vix nixpkgs $argv'';
+
+        rg-vix.description = "Search on current vix";
+        rg-vix.body = ''rg $argv $HOME/.nix-out/vix'';
+
         rg-nixpkgs.description = "Search on current nixpkgs";
-        rg-nixpkgs.body = ''command rg $argv $HOME/.nix-out/nixpkgs'';
+        rg-nixpkgs.body = ''rg $argv $HOME/.nix-out/nixpkgs'';
 
         rg-home-manager.description = "Search on current home-manager";
-        rg-home-manager.body = ''command rg $argv $HOME/.nix-out/home-manager'';
+        rg-home-manager.body = ''rg $argv $HOME/.nix-out/home-manager'';
 
         rg-nix-darwin.description = "Search on current nix-darwin";
-        rg-nix-darwin.body = ''command rg $argv $HOME/.nix-out/nix-darwin'';
+        rg-nix-darwin.body = ''rg $argv $HOME/.nix-out/nix-darwin'';
 
         nixos-search-opt.description = "Open a browser on search.nixos.org for options";
-        nixos-search-opt.body = ''command open "https://search.nixos.org/options?sort=relevance&query=$argv"'';
+        nixos-search-opt.body = ''open "https://search.nixos.org/options?sort=relevance&query=$argv"'';
 
         nixos-search-pkg.description = "Open a browser on search.nixos.org for packages";
-        nixos-search-pkg.body = ''command open "https://search.nixos.org/packages?sort=relevance&query=$argv"'';
+        nixos-search-pkg.body = ''open "https://search.nixos.org/packages?sort=relevance&query=$argv"'';
 
         repology-search-nixpkgs.description = "Open a browser on search for nixpkgs on repology.org";
         repology-search-nixpkgs.body = ''open "https://repology.org/projects/?inrepo=nix_unstable&search=$argv"'';
