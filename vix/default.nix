@@ -1,4 +1,5 @@
-{ vix, flake-utils, mkDarwinSystem, nixpkgs, home-manager, nix-darwin, ... }@inputs:
+{ vix, flake-utils, mkDarwinSystem, nixpkgs, home-manager, nix-darwin, ...
+}@inputs:
 let
   hostName = "oeiuwq";
   systems = [ "aarch64-darwin" ];

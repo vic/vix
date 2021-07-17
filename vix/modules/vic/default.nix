@@ -1,4 +1,5 @@
-{ config, pkgs, lib, vix, vix-lib, home-manager, nix-darwin, nixpkgs, ... }@args:
+{ config, pkgs, lib, vix, vix-lib, home-manager, nix-darwin, nixpkgs, ...
+}@args:
 let
   USER = "vic";
   HOME = "/v";
@@ -6,7 +7,7 @@ let
 in {
   _module.args = { inherit HOME USER DOTS; };
 
-  imports = [ ./git ./direnv ./ssh ./fish ];
+  imports = [ ./git ./direnv ./ssh ./fish ./emacs ];
 
   users.users.${USER}.home = HOME;
 

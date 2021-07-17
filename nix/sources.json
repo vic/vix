@@ -13,7 +13,19 @@
         "url_template": "https://github.com/dwarvesf/VimMotionApp/releases/download/v<version>/VimMotion.<version>.dmg",
         "version": "1.2.3"
     },
-    "doom-emacs": {
+    "emacs-chemacs2": {
+        "branch": "master",
+        "description": "Emacs version switcher, improved",
+        "homepage": null,
+        "owner": "plexus",
+        "repo": "chemacs2",
+        "rev": "ef82118824fac2b2363d3171d26acbabe1738326",
+        "sha256": "1gg4aa6dxc4k9d78j8mrrhy0mvhqmly7jxby69518xs9njxh00dq",
+        "type": "tarball",
+        "url": "https://github.com/plexus/chemacs2/archive/ef82118824fac2b2363d3171d26acbabe1738326.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "emacs-doom": {
         "branch": "develop",
         "description": "An Emacs framework for the stubborn martian hacker",
         "homepage": "",

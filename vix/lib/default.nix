@@ -61,7 +61,7 @@
     src = nivSources."fish-${name}";
   };
 
-  # Dirty hack to access OS provided tool.
+  vixLink = path: lib.mkOutOfStoreSymlink "/hk/vix/${path}";
   hdiutil = lib.mkOutOfStoreSymlink "/usr/bin/hdiutil";
 
   nivApp = name:
