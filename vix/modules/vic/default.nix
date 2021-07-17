@@ -1,4 +1,4 @@
-{ config, pkgs, lib, vix-lib, home-manager, nix-darwin, nixpkgs, ... }@args:
+{ config, pkgs, lib, vix, vix-lib, home-manager, nix-darwin, nixpkgs, ... }@args:
 let
   USER = "vic";
   HOME = "/v";
@@ -14,7 +14,7 @@ in {
     programs.nix-index.enableFishIntegration = true;
     home.packages = config.pkgSets.${USER};
 
-    home.file.".nix-out/vix".source = ./../..;
+    home.file.".nix-out/vix".source = vix;
     home.file.".nix-out/dots".source = DOTS;
     home.file.".nix-out/nixpkgs".source = nixpkgs;
     home.file.".nix-out/nix-darwin".source = nix-darwin;

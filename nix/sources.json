@@ -13,6 +13,18 @@
         "url_template": "https://github.com/dwarvesf/VimMotionApp/releases/download/v<version>/VimMotion.<version>.dmg",
         "version": "1.2.3"
     },
+    "doom-emacs": {
+        "branch": "develop",
+        "description": "An Emacs framework for the stubborn martian hacker",
+        "homepage": "",
+        "owner": "hlissner",
+        "repo": "doom-emacs",
+        "rev": "e82300aeb9f93a8d8127f8b8484bed734e2f3dcb",
+        "sha256": "16288q1nw4acq6skmkmydlz9ghycym7i7w60vjd9zj7icr1dal5x",
+        "type": "tarball",
+        "url": "https://github.com/hlissner/doom-emacs/archive/e82300aeb9f93a8d8127f8b8484bed734e2f3dcb.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "fish-done": {
         "branch": "master",
         "description": "A fish-shell package to automatically receive notifications when long processes finish.",

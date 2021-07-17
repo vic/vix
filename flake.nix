@@ -12,8 +12,9 @@
     mk-darwin-system.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { mk-darwin-system, nixpkgs, ... }@inputs:
-    import ./default.nix (mk-darwin-system.inputs // {
+  outputs = { self, mk-darwin-system, nixpkgs, ... }@inputs:
+    import ./vix (mk-darwin-system.inputs // {
+      vix = self;
       inherit nixpkgs;
       inherit (mk-darwin-system) mkDarwinSystem;
     });

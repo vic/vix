@@ -1,4 +1,4 @@
-{ flake-utils, mkDarwinSystem, nixpkgs, home-manager, nix-darwin, ... }@inputs:
+{ vix, flake-utils, mkDarwinSystem, nixpkgs, home-manager, nix-darwin, ... }@inputs:
 let
   hostName = "oeiuwq";
   systems = [ "aarch64-darwin" ];
@@ -9,8 +9,8 @@ in flake-utils.lib.eachSystem systems (system:
     nixosModules = [
       ({ config, pkgs, lib, ... }: {
         config._module.args = {
-          inherit home-manager nixpkgs nix-darwin;
-          vix-lib = import ./lib { inherit lib pkgs config; };
+          inherit home-manager nixpkgs nix-darwin vix;
+          vix-lib = import ./lib { inherit lib pkgs config vix; };
         };
       })
       (import ./modules)

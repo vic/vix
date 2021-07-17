@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }: rec {
+{ lib, pkgs, config, vix, ... }: rec {
 
   linkJvm = (name: jdk:
     pkgs.runCommand "link-jvm-${name}" { } ''
@@ -11,7 +11,7 @@
       shell_input_derivation = shell.inputDerivation;
     } (builtins.readFile ./shell-direnv.bash);
 
-  nivSources = import ./../nix/sources.nix;
+  nivSources = import "${vix}/nix/sources.nix";
 
   nivGoModule = { name, moduleOpts ? (meta: opts: opts) }:
     let
