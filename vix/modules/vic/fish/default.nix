@@ -23,7 +23,6 @@
         find = "fd";
         nr = "nix run";
         nf = "fd --glob '*.nix' -X nixfmt {}";
-        g = "git";
         gc = "git commit";
         gb = "git branch";
         gd = "git diff";
@@ -56,6 +55,11 @@
       '';
 
       functions = {
+        ms.description = "Magit status";
+        ms.body = "command eSPC g g";
+
+        ml.description = "Magit log";
+        ml.body = "command eSPC g / l l";
 
         fish_hybrid_key_bindings.description =
           "Vi-style bindings that inherit emacs-style bindings in all modes";
