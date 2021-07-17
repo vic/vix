@@ -24,19 +24,7 @@
   nivApp = name:
     let
       src = nivSources."${name}App";
-      nulls = {
-        version = null;
-        description = null;
-        homepage = null;
-        license = null;
-        maintainers = null;
-        platforms = [ config.nixpkgs.system ];
-      };
-      meta = {
-        inherit name;
-        inherit (nulls // src)
-          version description homepage license maintainers platforms;
-      };
+      meta = { inherit name; description = "${name} App"; } // src;
     in pkgs.stdenvNoCC.mkDerivation rec {
       inherit (meta) name version;
       inherit src meta;
