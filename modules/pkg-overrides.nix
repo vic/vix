@@ -5,33 +5,7 @@
       # See https://github.com/NixOS/nixpkgs/pull/129543/files
       neovim = super.neovim-unwrapped;
 
-      leader = vix-lib.nivGoModule {
-        name = "leader";
-
-        moduleOpts = meta: opts:
-          opts // {
-            runVend = true;
-            overrideModAttrs = old: {
-              buildPhase = ''
-                go mod init github.com/${meta.owner}/${meta.repo}
-                ${old.buildPhase}
-              '';
-              installPhase = ''
-                ${old.installPhase}
-                cp go.mod $out
-              '';
-            };
-          };
-
-        moduleDeriv = meta: drv:
-          drv.overrideAttrs (old: {
-            buildPhase = ''
-              cp vendor/go.mod .
-              ${old.buildPhase}
-            '';
-            checkPhase = "true";
-          });
-      };
+      leader = vix-lib.nivGoAutoMod "leader";
 
       VimMotionApp = vix-lib.nivApp "VimMotion";
 

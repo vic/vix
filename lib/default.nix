@@ -13,8 +13,7 @@
 
   nivSources = import ./../nix/sources.nix;
 
-  nivGoModule =
-    { name, moduleOpts ? (meta: opts: opts), moduleDeriv ? (meta: drv: drv), }:
+  nivGoModule = { name, moduleOpts ? (meta: opts: opts) }:
     let
       src = nivSources."go-${name}";
       meta = {
@@ -22,13 +21,40 @@
         description = name;
         version = src.version or src.rev;
       } // src;
-    in moduleDeriv meta (pkgs.buildGoModule (moduleOpts meta rec {
+    in (pkgs.buildGoModule (moduleOpts meta rec {
       inherit (meta) version;
       inherit src meta;
       pname = meta.name;
       name = "${pname}-${version}";
       vendorSha256 = meta.vendorSha256 or lib.fakeSha256;
     }));
+
+  nivGoAutoMod = name:
+    (nivGoModule {
+      inherit name;
+      moduleOpts = meta: opts:
+        opts // {
+          runVend = true;
+          doCheck = false;
+          overrideModAttrs = old: {
+            buildPhase = ''
+              go mod init ${
+                meta.go_module or "github.com/${meta.owner}/${meta.repo}"
+              }
+              ${old.buildPhase}
+            '';
+            installPhase = ''
+              ${old.installPhase}
+              cp go.mod $out
+            '';
+          };
+        };
+    }).overrideAttrs (old: {
+      buildPhase = ''
+        cp vendor/go.mod .
+        ${old.buildPhase}
+      '';
+    });
 
   nivFishPlugin = name: {
     inherit name;

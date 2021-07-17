@@ -76,6 +76,7 @@
     "go-leader": {
         "branch": "master",
         "description": "VIM's leader key for your terminal",
+        "go_module": "github.com/dhamidi/leader",
         "homepage": null,
         "owner": "dhamidi",
         "repo": "leader",
