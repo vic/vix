@@ -53,5 +53,17 @@
         "type": "tarball",
         "url": "https://github.com/laughedelic/pisces/archive/e45e0869855d089ba1e628b6248434b2dfa709c4.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "fish-z": {
+        "branch": "master",
+        "description": "Pure-fish z directory jumping",
+        "homepage": "",
+        "owner": "jethrokuan",
+        "repo": "z",
+        "rev": "45a9ff6d0932b0e9835cbeb60b9794ba706eef10",
+        "sha256": "1kjyl4gx26q8175wcizvsm0jwhppd00rixdcr1p7gifw6s308sd5",
+        "type": "tarball",
+        "url": "https://github.com/jethrokuan/z/archive/45a9ff6d0932b0e9835cbeb60b9794ba706eef10.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
