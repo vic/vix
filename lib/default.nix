@@ -13,6 +13,23 @@
 
   nivSources = import ./../nix/sources.nix;
 
+  nivGoModule =
+    { name, moduleOpts ? (meta: opts: opts), moduleDeriv ? (meta: drv: drv), }:
+    let
+      src = nivSources."go-${name}";
+      meta = {
+        inherit name;
+        description = name;
+        version = src.version or src.rev;
+      } // src;
+    in moduleDeriv meta (pkgs.buildGoModule (moduleOpts meta rec {
+      inherit (meta) version;
+      inherit src meta;
+      pname = meta.name;
+      name = "${pname}-${version}";
+      vendorSha256 = meta.vendorSha256 or lib.fakeSha256;
+    }));
+
   nivFishPlugin = name: {
     inherit name;
     src = nivSources."fish-${name}";
@@ -24,11 +41,15 @@
   nivApp = name:
     let
       src = nivSources."${name}App";
-      meta = { inherit name; description = "${name} App"; } // src;
+      meta = {
+        inherit name;
+        description = "${name} App";
+      } // src;
     in pkgs.stdenvNoCC.mkDerivation rec {
-      inherit (meta) name version;
+      inherit (meta) version;
       inherit src meta;
-      pname = "${name}App";
+      pname = meta.name;
+      name = "${pname}-${version}";
       sourceRoot = ".";
       preferLocalBuild = true;
       phases = [ "unpackPhase" "installPhase" ];

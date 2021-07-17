@@ -17,6 +17,7 @@
       vic = [
         EmacsApp
         VimMotionApp
+        leader
         # keybase
         pass
         git-annex
