@@ -86,5 +86,14 @@
         "url": "https://github.com/dhamidi/leader/archive/14373a25d8693681e7917f230de555977a12d2ba.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz",
         "vendorSha256": "1yf7vra3y8p032nwr0wp410lj7pk9ngr5r5svhbjcz3m2vcq2vsz"
+    },
+    "xbarApp": {
+        "description": "Put anything in your macOS menu bar ",
+        "homepage": "https://xbarapp.com/",
+        "sha256": "19wim34arpmvgnkfsvh1s0cqjvc5ks8jqc1hrhlkaady096n9wcy",
+        "type": "file",
+        "url": "https://github.com/matryer/xbar/releases/download/v2.1.4-beta/xbar.v2.1.4-beta.dmg",
+        "url_template": "https://github.com/matryer/xbar/releases/download/v<version>/xbar.v<version>.dmg",
+        "version": "2.1.4-beta"
     }
 }

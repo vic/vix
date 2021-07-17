@@ -7,6 +7,8 @@
 
       leader = vix-lib.nivGoAutoMod "leader";
 
+      xbarApp = vix-lib.nivApp "xbar";
+
       VimMotionApp = vix-lib.nivApp "VimMotion";
 
       EmacsApp = (vix-lib.nivApp "Emacs").overrideAttrs (old:

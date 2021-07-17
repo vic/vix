@@ -15,6 +15,7 @@
 
       # Home level packages
       vic = [
+        xbarApp
         EmacsApp
         VimMotionApp
         leader
