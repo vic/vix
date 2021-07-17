@@ -8,9 +8,7 @@
 
       extraConfig = { init = { defaultBranch = "main"; }; };
 
-      aliases = {
-        "fap" = "fetch --all -p";
-      };
+      aliases = { "fap" = "fetch --all -p"; };
 
       ignores = [ ".DS_Store" "*.swp" ];
 

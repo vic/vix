@@ -15,6 +15,7 @@
 
       # Home level packages
       vic = [
+        EmacsApp
         VimMotionApp
         # keybase
         pass
@@ -27,6 +28,7 @@
         gitui
         k9s
         hyperfine
+        xh # fetch things
         bat # better cat
         # browsh # Firefox on shell
         # emacsMacport # one editor to rule them all

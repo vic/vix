@@ -21,12 +21,11 @@ in {
     home.file.".nix-out/home-manager".source = home-manager;
     home.file.".nix-out/openjdk".source = pkgs.openjdk;
 
-   home.activation = {
-    aliasApplications = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      ln -sfn $genProfilePath/home-path/Applications "$HOME/Applications/Home Manager Applications"
-    '';
+    home.activation = {
+      aliasApplications = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        ln -sfn $genProfilePath/home-path/Applications "$HOME/Applications/Home Manager Applications"
+      '';
+    };
   };
-  };
-
 
 }

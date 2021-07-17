@@ -1,4 +1,11 @@
 {
+    "EmacsApp": {
+        "sha256": "12xdgg9glf03f512f3784anr7vlpj6mzdap1q3qjwg4frviyzxd5",
+        "type": "file",
+        "url": "https://emacsformacosx.com/download/emacs-builds/Emacs-27.2-2-universal.dmg",
+        "url_template": "https://emacsformacosx.com/download/emacs-builds/Emacs-<version>-universal.dmg",
+        "version": "27.2-2"
+    },
     "VimMotionApp": {
         "sha256": "000cl2ngj74b61nj0fdg4slpq5mzcf3w893jbidd34aibcsvjjy1",
         "type": "file",
