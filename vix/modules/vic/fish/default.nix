@@ -43,6 +43,14 @@
         gcm = "git commit --all --message";
         gcaa = "git commit --amend --all --reuse-message HEAD";
         gcam = "git commit --amend --all --message";
+
+        # Magit
+        ms = "spc g g"; # status
+        mc = "spc g / c"; # commit
+        md = "spc g / d u"; # diff unstaged
+        ml = "spc g / l l"; # log
+        mr = "spc g / r i"; # rebase interactive
+        mz = "spc g / Z l"; # list stash
       };
 
       loginShellInit = ''
@@ -55,11 +63,8 @@
       '';
 
       functions = {
-        ms.description = "Magit status";
-        ms.body = "command eSPC g g";
-
-        ml.description = "Magit log";
-        ml.body = "command eSPC g / l l";
+        spc.body = "espace $argv -- -nw";
+        vspc.body = "espace $argv -- -c";
 
         fish_hybrid_key_bindings.description =
           "Vi-style bindings that inherit emacs-style bindings in all modes";
