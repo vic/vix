@@ -50,7 +50,19 @@
         set -x PATH /etc/profiles/per-user/${USER}/bin:$PATH
       '';
 
+      interactiveShellInit = ''
+       set -g fish_key_bindings fish_hybrid_key_bindings
+      '';
+
       functions = {
+        fish_hybrid_key_bindings.description = "Vi-style bindings that inherit emacs-style bindings in all modes";
+        fish_hybrid_key_bindings.body = ''
+           for mode in default insert visual
+               fish_default_key_bindings -M $mode
+           end
+           fish_vi_key_bindings --no-erase
+        '';
+
         vix-activate.description = "Activate a new vix system generation";
         vix-activate.body = ''nix run /hk/vix'';
 
