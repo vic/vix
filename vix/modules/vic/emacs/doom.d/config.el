@@ -67,10 +67,12 @@
   :commands (evil-execute-in-god-state evil-god-state-bail)
 
   :init
-  (evil-define-key '(normal motion) global-map "\\" 'evil-execute-in-god-state)
   (evil-define-key 'god global-map [escape] 'evil-god-state-bail)
+  (map! :leader :nm :desc "God mode" "\\" #'evil-execute-in-god-state)
 
   :config
-  ;;(add-hook 'evil-god-state-entry-hook (lambda () (diminish 'god-local-mode)))
-  ;;(add-hook 'evil-god-state-exit-hook (lambda () (diminish-undo 'god-local-mode)))
+  (when (featurep 'diminish)
+    (add-hook 'evil-god-state-entry-hook (lambda () (diminish 'god-local-mode)))
+    (add-hook 'evil-god-state-exit-hook (lambda () (diminish-undo 'god-local-mode)))
+    )
   )
