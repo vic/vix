@@ -54,7 +54,23 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+(setq evil-move-cursor-back nil)
+
 (map! :n "U" #'evil-redo)
 
 (map! :leader
       :desc "M-x" "SPC" #'execute-extended-command)
+
+(use-package! evil-god-state
+  :defer t
+  :defer-incrementally god-mode
+  :commands (evil-execute-in-god-state evil-god-state-bail)
+
+  :init
+  (evil-define-key '(normal motion) global-map "\\" 'evil-execute-in-god-state)
+  (evil-define-key 'god global-map [escape] 'evil-god-state-bail)
+
+  :config
+  ;;(add-hook 'evil-god-state-entry-hook (lambda () (diminish 'god-local-mode)))
+  ;;(add-hook 'evil-god-state-exit-hook (lambda () (diminish-undo 'god-local-mode)))
+  )

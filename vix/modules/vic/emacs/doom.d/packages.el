@@ -48,3 +48,12 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+
+
+;; https://github.com/riscy/shx-for-emacs
+(package! shx :pin "09ae212")
+
+;; https://github.com/emacsorphanage/god-mode
+(package! god-mode :pin "1d7d647")
+;; https://github.com/gridaphobe/evil-god-state
+(package! evil-god-state :pin "3d44197")
