@@ -20,6 +20,7 @@
 
     home.file.".emacs-profiles.el".text = ''
       (("doom" . ((user-emacs-directory . "${doomEmacs}")
+                  (server-socket-dir . "${doomLocalDir}/server-socks")
                   (env . (("DOOMDIR" . "${doomDir}")
                           ("DOOMLOCALDIR" . "${doomLocalDir}")
         )))))
