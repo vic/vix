@@ -1,4 +1,4 @@
-{ config, lib, pkgs, vix-lib, USER, HOME, DOTS, ... }: {
+{ config, lib, pkgs, vix, vix-lib, USER, HOME, DOTS, ... }: {
 
   home-manager.users.${USER} = {
 
@@ -81,6 +81,15 @@
         vix-nixpkg-search.description = "Nix search on vix's nixpkgs input";
         vix-nixpkg-search.body =
           "nix search --inputs-from $HOME/.nix-out/vix nixpkgs $argv";
+
+        rg-vix-inputs.description = "Search on vix flake inputs";
+        rg-vix-inputs.body = let
+          flakePaths = flake:
+            [ flake.outPath ]
+            ++ lib.flatten (lib.mapAttrsToList (_: flakePaths) flake.inputs);
+
+          paths = builtins.concatStringsSep " " (flakePaths vix);
+        in "rg $argv ${paths}";
 
         rg-vix.description = "Search on current vix";
         rg-vix.body = "rg $argv $HOME/.nix-out/vix";
