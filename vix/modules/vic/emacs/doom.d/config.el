@@ -68,7 +68,7 @@
 
   :init
   (evil-define-key 'god global-map [escape] 'evil-god-state-bail)
-  (map! :nm "<escape>" #'evil-execute-in-god-state :desc "God mode")
+  (map! :leader :nm "<escape>" #'evil-execute-in-god-state :desc "God mode")
 
   :config
   (when (featurep 'diminish)
