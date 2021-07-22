@@ -2,7 +2,7 @@
 
 This flake builds my darwin system: 
 
-system packages (oeiuwq), user packages (vic), development environments for different langs (pkgSets), and some configurations (dotfiles).
+system packages (oeiuwq), user packages (vic), development environments for different langs (pkgSets), and some configurations (eg, doom-emacs files).
 
 Built with the following libraries (and lots of wonderful nix packages and libs):
 
@@ -19,13 +19,14 @@ Activate system with `env NIX_CONF_DIR="$PWD" nix run` the first time, and if yo
 ### Structure
 
 ```
-default.nix            - Setups the environment for loading modules using mkDarwinSystem.
-lib                    - Source for vix-lib. Functions used by modules.
-modules/
-  pkg-overrides.nix    - Custom packages and some overloading.
-  pkg-sets.nix         - Bags of packages, mainly used for different development environments.
-  oeiuwq               - System level module. Configures system wide options and packages.
-  vic                  - Vic's home environment.
+vix/
+  default.nix            - Setups the environment for loading modules using mkDarwinSystem.
+  lib                    - Source for vix-lib. Functions used by modules.
+  modules/
+    pkg-overrides.nix    - Custom packages and some overloading.
+    pkg-sets.nix         - Bags of packages, mainly used for different development environments.
+    oeiuwq               - System level module. Configures system wide options and packages.
+    vic                  - Vic's home environment.
 ```
 
 ### Vic's HOME Additional output
@@ -51,7 +52,7 @@ $HOME/.nix-out/direnv           - A collection of shell scripts intended to be s
 
 
 /Library/Java/JavaVirtualMachines/XXX           - Links vic's selected JVM system wide for MacOS.
-$HOME/Applications/Home Manager Apps/XXX.app    - A link to some apps installed using derivations.
+$HOME/Applications/Home Manager Applications/XXX.app    - A link to some apps installed using derivations.
 
 ```
 
@@ -64,13 +65,16 @@ Enabled direnv integration for switching development environments upon entering 
 
 Fish history is linked from private keybase repository where it is backed up.
 
-Appart from some [command aliases](modules/vic/fish/default.nix), the following fish functions are handy:
+Appart from some [command aliases](vix/modules/vic/fish/default.nix), the following fish functions are handy:
 
 ```
 vix-activate             - Activate a new system generation, can be called from anywhere.
 
 vix-nixpkg-search        - Same as:
                            nix search --inputs-from $HOME/.nix-out/vix nixpkgs $argv
+
+rg-vix-inputs PATTERM    - Search using rg on vix flake inputs recursively.
+                           This one is handy for grepping for nix code, options, packages, libs.
 
 rg-vix PATTERN           - Search using rg on current system vix
 rg-nixpkgs PATTERN       - Search using rg on current system nixpkgs
