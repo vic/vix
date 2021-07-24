@@ -55,6 +55,7 @@
 ;; they are implemented.
 
 (setq evil-move-cursor-back nil)
+(setq lsp-enable-file-watchers nil)
 
 (map! :n "U" #'evil-redo)
 
