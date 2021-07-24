@@ -18,6 +18,7 @@
 
       shellAbbrs = {
         ls = "exa";
+        top = "btm";
         cat = "bat";
         grep = "rg";
         find = "fd";
