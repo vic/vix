@@ -11,6 +11,10 @@
 
       VimMotionApp = vix-lib.nivApp "VimMotion";
 
+      KeyttyApp = vix-lib.nivApp "Keytty";
+
+      IdeaApp = vix-lib.nivApp "Idea";
+
       EmacsApp = (vix-lib.nivApp "Emacs").overrideAttrs (old:
         let
           bin_dir = {
@@ -19,6 +23,7 @@
         in {
           installPhase = ''
             ${old.installPhase}
+            mkdir -p $out/bin
             ln -s $out/Applications/Emacs.app/Contents/Resources/{etc,man,info} $out/
             ln -s $out/Applications/Emacs.app/Contents/MacOS/${bin_dir} $out/bin
             ln -s $out/Applications/Emacs.app/Contents/MacOS/Emacs $out/bin/emacs

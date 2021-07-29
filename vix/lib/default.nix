@@ -75,19 +75,14 @@
       inherit (meta) version;
       inherit src meta;
       pname = meta.name;
-      name = "${pname}-${version}";
       sourceRoot = ".";
       preferLocalBuild = true;
-      phases = [ "unpackPhase" "installPhase" ];
-      unpackPhase = ''
-        mkdir -p mnt src
-        ${hdiutil} attach -readonly -mountpoint mnt $src
-        cp -r mnt src
-        ${hdiutil} detach mnt
-      '';
+      phases = [ "installPhase" ];
       installPhase = ''
-        mkdir -p $out/Applications
-        find src -mindepth 1 -maxdepth 2 -type d -iname "*.app" -exec cp -r {} $out/Applications/ \;
+        mkdir -p mnt $out/Applications
+        ${hdiutil} attach -readonly -mountpoint mnt $src
+        cp -r mnt/*.app $out/Applications/
+        ${hdiutil} detach -force mnt
       '';
     };
 

@@ -4,7 +4,7 @@
   description = "Vic's Nix Environment";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/4711f4b";
+    nixpkgs.url = "github:nixos/nixpkgs/master";
 
     #mk-darwin-system.url = "github:vic/mk-darwin-system/main";
     mk-darwin-system.url = "path:../mkDarwinSystem";

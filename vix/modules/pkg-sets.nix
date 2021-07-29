@@ -17,8 +17,10 @@
       vic = [
         bottom
         xbarApp
+	IdeaApp
         EmacsApp
         VimMotionApp
+        KeyttyApp
         leader
         # keybase
         pass

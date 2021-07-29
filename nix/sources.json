@@ -1,10 +1,31 @@
 {
+    "CerebroApp": {
+        "sha256": "1288jqpxs790skhd5m9awncjs3l8jd5akq2anhp0ammfpajlzzl3",
+        "type": "file",
+        "url": "https://github.com/KELiON/cerebro/releases/download/v0.3.1/cerebro-0.3.1.dmg",
+        "url_template": "https://github.com/KELiON/cerebro/releases/download/v<version>/cerebro-<version>.dmg",
+        "version": "0.3.1"
+    },
     "EmacsApp": {
         "sha256": "12xdgg9glf03f512f3784anr7vlpj6mzdap1q3qjwg4frviyzxd5",
         "type": "file",
         "url": "https://emacsformacosx.com/download/emacs-builds/Emacs-27.2-2-universal.dmg",
         "url_template": "https://emacsformacosx.com/download/emacs-builds/Emacs-<version>-universal.dmg",
         "version": "27.2-2"
+    },
+    "IdeaApp": {
+        "sha256": "19r140dimmm46y352qnfs696fsgi78qqnd6ya6gj2kqgclqibj6p",
+        "type": "file",
+        "url": "https://download.jetbrains.com/idea/ideaIU-2021.2-aarch64.dmg",
+        "url_template": "https://download.jetbrains.com/idea/ideaIU-<version>-aarch64.dmg",
+        "version": "2021.2"
+    },
+    "KeyttyApp": {
+        "sha256": "08sifc1pjmbbvxryy1h9wda7f36y0sy67spdbgps3f1jdn84pcpn",
+        "type": "file",
+        "url": "https://github.com/keytty/shelter/releases/download/1.2.8/Keytty.1.2.8.dmg",
+        "url_template": "https://github.com/keytty/shelter/releases/download/1.2.8/Keytty.<version>.dmg",
+        "version": "1.2.8"
     },
     "VimMotionApp": {
         "sha256": "000cl2ngj74b61nj0fdg4slpq5mzcf3w893jbidd34aibcsvjjy1",
