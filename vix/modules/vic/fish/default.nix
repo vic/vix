@@ -44,6 +44,8 @@
         gcm = "git commit --all --message";
         gcaa = "git commit --amend --all --reuse-message HEAD";
         gcam = "git commit --amend --all --message";
+        gbDm =
+          "git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D";
 
         # Magit
         ms = "spc g g"; # status
