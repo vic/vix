@@ -46,7 +46,7 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-XlPB64UT/89EJvJspvzUqc9szvRgtZERFxbovIdXeYo=",
+        "narHash": "sha256-HT9C2FEx2wSE6a30roYlJmiXFfpLk4z2OTaqFipp38g=",
         "path": "../mkDarwinSystem",
         "type": "path"
       },
@@ -78,11 +78,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1627533199,
-        "narHash": "sha256-NyIUcNevwtsMBINn56jnDF8wz3TV1AFxw+Vw6JMnkyE=",
+        "lastModified": 1627652233,
+        "narHash": "sha256-tUzM+XtaAusLPJUREl/UaEks9yBVxRX4SxU3NzuP9Rk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "dd98b100651cfbb8804f32d852f75ef7c97a6b74",
+        "rev": "8575d242979c1a0e71bd19481e770517e8fd9d9e",
         "type": "github"
       },
       "original": {
