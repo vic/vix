@@ -19,6 +19,7 @@
         xbarApp
 	IdeaApp
         EmacsApp
+	# HamerspoonApp
         VimMotionApp
         KeyttyApp
         leader

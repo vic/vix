@@ -13,6 +13,13 @@
         "url_template": "https://emacsformacosx.com/download/emacs-builds/Emacs-<version>-universal.dmg",
         "version": "27.2-2"
     },
+    "HamerspoonApp": {
+        "sha256": "08whidgv8b3az1icm2dp92d5ci301jdjqkynpalfg858nhmq8agi",
+        "type": "file",
+        "url": "https://github.com/Hammerspoon/hammerspoon/releases/download/0.9.90/Hammerspoon-0.9.90.zip",
+        "url_template": "https://github.com/Hammerspoon/hammerspoon/releases/download/<version>/Hammerspoon-<version>.zip",
+        "version": "0.9.90"
+    },
     "IdeaApp": {
         "sha256": "19r140dimmm46y352qnfs696fsgi78qqnd6ya6gj2kqgclqibj6p",
         "type": "file",

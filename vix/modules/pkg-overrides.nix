@@ -11,6 +11,8 @@
 
       VimMotionApp = vix-lib.nivApp "VimMotion";
 
+      HamerspoonApp = vix-lib.nivApp "Hamerspoon";
+
       KeyttyApp = vix-lib.nivApp "Keytty";
 
       IdeaApp = vix-lib.nivApp "Idea";
