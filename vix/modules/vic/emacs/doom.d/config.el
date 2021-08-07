@@ -64,6 +64,26 @@
 
 (map! :ir (kbd "<backtab>") #'company-complete)
 
+(map! :n (kbd "C-;") #'iedit-mode)
+
+(map! :map iedit-mode-occurrence-keymap :n
+  "q" #'iedit-quit
+  "n" #'iedit-next-occurrence
+  "p" #'iedit-prev-occurrence
+  "t" #'iedit-toggle-selection
+  "f" #'iedit-mode-toggle-on-function
+  "H" #'iedit-help-for-occurrences
+  "r" #'iedit-replace-occurrences
+  "@" #'iedit-number-occurrences
+  "V" #'iedit-restrict-current-line
+  "F" #'iedit-restrict-function
+  "R" #'iedit-restrict-region
+  "C" #'iedit-show/hide-context-lines
+  "O" #'iedit-show/hide-occurrence-lines
+  "K" #'iedit-expand-up-to-occurrence
+  "J" #'iedit-expand-down-to-occurrence
+  "#" #'iedit-increment-occurrences
+  )
 
 (use-package! evil-god-state
   :defer t
