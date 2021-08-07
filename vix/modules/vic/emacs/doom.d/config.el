@@ -77,3 +77,12 @@
     (add-hook 'evil-god-state-exit-hook (lambda () (diminish-undo 'god-local-mode)))
     )
   )
+
+(use-package! doom-golden-ratio
+  :defer t
+  :commands (doom-golden-ratio-mode)
+  :init
+  (map! :leader :nm "t G" #'doom-golden-ratio-mode))
+
+(after! doom-golden-ratio
+  (doom-golden-ratio-mode))

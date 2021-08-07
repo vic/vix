@@ -57,3 +57,8 @@
 (package! god-mode :pin "1d7d647")
 ;; https://github.com/gridaphobe/evil-god-state
 (package! evil-god-state :pin "3d44197")
+;; https://github.com/paulalesius/doom-golden-ratio
+(package! doom-golden-ratio
+  :recipe
+  (:host github
+    :repo "vic/doom-golden-ratio"))
