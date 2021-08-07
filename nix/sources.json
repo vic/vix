@@ -106,6 +106,18 @@
         "url": "https://github.com/laughedelic/pisces/archive/e45e0869855d089ba1e628b6248434b2dfa709c4.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "fish-pure": {
+        "branch": "master",
+        "description": "Pretty, minimal, and fast prompt for Fish from Zsh.fish theme prompt fish-theme fish-prompt ",
+        "homepage": "",
+        "owner": "pure-fish",
+        "repo": "pure",
+        "rev": "c0df5cb4726aa6831c0473556066a4cbf48fc79e",
+        "sha256": "1ki7b6b7nrb8fzhcslkvg6a9i5fi2da6bv9fm693yvhfhccf863b",
+        "type": "tarball",
+        "url": "https://github.com/pure-fish/pure/archive/c0df5cb4726aa6831c0473556066a4cbf48fc79e.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "fish-z": {
         "branch": "master",
         "description": "Pure-fish z directory jumping",

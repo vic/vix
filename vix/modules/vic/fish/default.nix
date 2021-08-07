@@ -121,7 +121,7 @@
       };
 
       plugins =
-        map vix-lib.nivFishPlugin [ "hydro" "done" "fzf.fish" "pisces" "z" ];
+        map vix-lib.nivFishPlugin [ "pure" "done" "fzf.fish" "pisces" "z" ];
     };
 
     home.file = {
