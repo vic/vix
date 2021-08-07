@@ -62,6 +62,9 @@
 (map! :leader
       :desc "M-x" "SPC" #'execute-extended-command)
 
+(map! :ir (kbd "<backtab>") #'company-complete)
+
+
 (use-package! evil-god-state
   :defer t
   :defer-incrementally god-mode
