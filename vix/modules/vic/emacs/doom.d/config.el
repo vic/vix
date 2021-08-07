@@ -60,7 +60,12 @@
 (map! :n "U" #'evil-redo)
 
 (map! :leader
-      :desc "M-x" "SPC" #'execute-extended-command)
+  "SPC" #'execute-extended-command
+  "b SPC" #'switch-to-buffer
+  "b w" #'switch-to-buffer-other-window
+  "b t" #'switch-to-buffer-other-tab
+  "t t" #'treemacs
+  )
 
 (map! :ir (kbd "<backtab>") #'company-complete)
 
