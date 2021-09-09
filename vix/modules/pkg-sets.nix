@@ -17,9 +17,9 @@
       vic = [
         bottom
         xbarApp
-	IdeaApp
+        IdeaApp
         EmacsApp
-	# HamerspoonApp
+        # HamerspoonApp
         VimMotionApp
         KeyttyApp
         leader
