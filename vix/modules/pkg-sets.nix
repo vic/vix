@@ -63,9 +63,13 @@
 
       # Development environments
       scala = [
-        openjdk
-        mill
-        coursier
+        openjdk11
+        (mill.override { jre = openjdk11; })
+        (coursier.override { jre = openjdk11; })
+        (metals.override {
+          jre = openjdk11;
+          jdk = openjdk11;
+        })
         dbmate
         gettext
         nodejs
@@ -74,7 +78,6 @@
         kubectl
         # coursierPackages.graalvm
         postgresql_12
-        metals
         kubernetes-helm # deploy things
       ];
 
