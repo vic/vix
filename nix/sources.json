@@ -21,11 +21,11 @@
         "version": "0.9.90"
     },
     "IdeaApp": {
-        "sha256": "1bj7afdx875afssx8rdzqhn5cjnqyzmdg47asj159l2q2ddqfm1k",
+        "sha256": "0vi1wiv30ayr0dahljlsf47p5qh15xs5yxnq6wvy0ky9bny5hxlk",
         "type": "file",
-        "url": "https://download.jetbrains.com/idea/ideaIC-2021.2.1-aarch64.dmg",
+        "url": "https://download.jetbrains.com/idea/ideaIC-2021.2.3-aarch64.dmg",
         "url_template": "https://download.jetbrains.com/idea/ideaIC-<version>-aarch64.dmg",
-        "version": "2021.2.1"
+        "version": "2021.2.3"
     },
     "KeyttyApp": {
         "sha256": "08sifc1pjmbbvxryy1h9wda7f36y0sy67spdbgps3f1jdn84pcpn",
