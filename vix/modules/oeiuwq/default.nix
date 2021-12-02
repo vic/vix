@@ -4,7 +4,6 @@
 
   system.stateVersion = 4;
 
-  nix.package = pkgs.nixUnstable;
   nix.extraOptions = builtins.readFile "${vix}/nix.conf";
 
   home-manager = {

@@ -8,10 +8,11 @@
   };
 
   config = {
-
     pkgSets = with pkgs; {
       # System level packages
-      oeiuwq = [ nixFlakes direnv home-manager ];
+      oeiuwq = [
+      #nixFlakes
+      direnv home-manager ];
 
       # Home level packages
       vic = [
@@ -25,7 +26,7 @@
         leader
         # keybase
         pass
-        git-annex
+        # git-annex
         gping
         xsv
         broot
@@ -84,9 +85,9 @@
       bash = [ shfmt shellcheck ];
 
       nix = [
-        niv # manage nix dependencies
-        nixfmt # fmt nix sources
-        nox # quick installer for nix
+        # niv # manage nix dependencies
+        #nixfmt # fmt nix sources
+        #nox # quick installer for nix
       ];
     };
 
