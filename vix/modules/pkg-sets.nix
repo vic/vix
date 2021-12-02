@@ -11,8 +11,10 @@
     pkgSets = with pkgs; {
       # System level packages
       oeiuwq = [
-      #nixFlakes
-      direnv home-manager ];
+       nixFlakes
+       direnv
+       home-manager
+      ];
 
       # Home level packages
       vic = [
@@ -86,8 +88,7 @@
 
       nix = [
         # niv # manage nix dependencies
-        #nixfmt # fmt nix sources
-        #nox # quick installer for nix
+        nixfmt # fmt nix sources
       ];
     };
 

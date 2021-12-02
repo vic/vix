@@ -13,7 +13,7 @@
   };
 
   outputs = { self, nixpkgs, mk-darwin-system, ... }:
-    let
+    (let
       darwinFlakeOutput = mk-darwin-system.outputs.mkDarwinSystem.m1 {
 
         nixosModules = [
@@ -35,5 +35,5 @@
     in darwinFlakeOutput // {
       nixosConfigurations."oeiuwq" =
         darwinFlakeOutput.nixosConfiguration.aarch64-darwin;
-    };
+    });
 }

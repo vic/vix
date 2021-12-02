@@ -57,8 +57,8 @@
       };
 
       loginShellInit = ''
-        set -x PATH /nix/var/nix/profiles/system/sw/bin:$PATH
-        set -x PATH /etc/profiles/per-user/${USER}/bin:$PATH
+        set -x PATH /nix/var/nix/profiles/default/bin $PATH
+        set -x PATH /etc/profiles/per-user/${USER}/bin $PATH
       '';
 
       interactiveShellInit = ''
