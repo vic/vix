@@ -16,7 +16,7 @@
     let
       darwinFlakeOutput = mk-darwin-system.mkDarwinSystem.m1 {
         modules = [
-          ({ pkgs, lib, ... }@args: {
+          ({ pkgs, lib, ... }: {
             config._module.args = {
               vix = self // {
                 lib = import ./vix/lib {

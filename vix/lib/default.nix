@@ -62,28 +62,11 @@
   };
 
   vixLink = path: lib.mds.mkOutOfStoreSymlink "/hk/vix/${path}";
-  hdiutil = lib.mds.mkOutOfStoreSymlink "/usr/bin/hdiutil";
 
   nivApp = name:
-    let
+    lib.mds.installNivDmg {
+      inherit name;
       src = nivSources."${name}App";
-      meta = {
-        inherit name;
-        description = "${name} App";
-      } // src;
-    in pkgs.stdenvNoCC.mkDerivation rec {
-      inherit (meta) version;
-      inherit src meta;
-      pname = meta.name;
-      sourceRoot = ".";
-      preferLocalBuild = true;
-      phases = [ "installPhase" ];
-      installPhase = ''
-        mkdir -p mnt $out/Applications
-        ${hdiutil} attach -readonly -mountpoint mnt $src
-        cp -r mnt/*.app $out/Applications/
-        ${hdiutil} detach -force mnt
-      '';
     };
 
 }
