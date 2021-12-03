@@ -1,4 +1,4 @@
-{ config, pkgs, lib, vix, ...}@args:
+{ config, pkgs, lib, vix, ... }@args:
 let
   inherit (vix.inputs) mk-darwin-system nixpkgs;
   inherit (mk-darwin-system.inputs) home-manager nix-darwin;

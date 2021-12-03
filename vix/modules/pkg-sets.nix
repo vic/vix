@@ -10,11 +10,7 @@
   config = {
     pkgSets = with pkgs; {
       # System level packages
-      oeiuwq = [
-       nixFlakes
-       direnv
-       home-manager
-      ];
+      oeiuwq = [ nixFlakes direnv home-manager ];
 
       # Home level packages
       vic = [
