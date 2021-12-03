@@ -13,21 +13,14 @@
   };
 
   outputs = { self, nixpkgs, mk-darwin-system, ... }:
-    (let
-      darwinFlakeOutput = mk-darwin-system.outputs.mkDarwinSystem.m1 {
-
-        nixosModules = [
-          ({ config, pkgs, lib, ... }: {
-            config._module.args = let
-              vix = self;
-              inherit (mk-darwin-system.inputs) home-manager nix-darwin;
-            in {
-              inherit home-manager nixpkgs nix-darwin vix;
-              vix-lib = import ./vix/lib { inherit lib pkgs config vix; };
+    let
+      darwinFlakeOutput = mk-darwin-system.mkDarwinSystem.m1 {
+        modules = [
+          ({ pkgs, lib, ...}@args: { config._module.args = {
+            vix = self // { lib =
+               import ./vix/lib { vix = self; inherit pkgs lib; };
             };
-          })
-
-          (import ./vix/modules/oeiuwq/intel-overlay.nix nixpkgs.legacyPackages.x86_64-darwin)
+          };})
 
           ./vix/modules
         ];
@@ -35,5 +28,5 @@
     in darwinFlakeOutput // {
       nixosConfigurations."oeiuwq" =
         darwinFlakeOutput.nixosConfiguration.aarch64-darwin;
-    });
+    };
 }

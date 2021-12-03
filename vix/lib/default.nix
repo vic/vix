@@ -1,4 +1,4 @@
-{ lib, pkgs, config, vix, ... }: rec {
+{ lib, pkgs, vix, ... }: rec {
 
   linkJvm = (name: jdk:
     pkgs.runCommand "link-jvm-${name}" { } ''
@@ -61,8 +61,8 @@
     src = nivSources."fish-${name}";
   };
 
-  vixLink = path: lib.mkOutOfStoreSymlink "/hk/vix/${path}";
-  hdiutil = lib.mkOutOfStoreSymlink "/usr/bin/hdiutil";
+  vixLink = path: lib.mds.mkOutOfStoreSymlink "/hk/vix/${path}";
+  hdiutil = lib.mds.mkOutOfStoreSymlink "/usr/bin/hdiutil";
 
   nivApp = name:
     let

@@ -1,9 +1,10 @@
-{ config, pkgs, lib, vix, vix-lib, home-manager, nix-darwin, nixpkgs, ...
-}@args:
+{ config, pkgs, lib, vix, ...}@args:
 let
+  inherit (vix.inputs) mk-darwin-system nixpkgs;
+  inherit (mk-darwin-system.inputs) home-manager nix-darwin;
+  DOTS = lib.mds.mkOutOfStoreSymlink "/hk/dots";
   USER = "vic";
   HOME = "/v";
-  DOTS = lib.mkOutOfStoreSymlink "/hk/dots";
 in {
   _module.args = { inherit HOME USER DOTS; };
 

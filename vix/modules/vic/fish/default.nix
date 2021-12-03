@@ -1,4 +1,4 @@
-{ config, lib, pkgs, vix, vix-lib, USER, HOME, DOTS, ... }: {
+{ config, lib, pkgs, vix, USER, DOTS, ... }: {
 
   home-manager.users.${USER} = {
 
@@ -123,7 +123,7 @@
       };
 
       plugins =
-        map vix-lib.nivFishPlugin [ "pure" "done" "fzf.fish" "pisces" "z" ];
+        map vix.lib.nivFishPlugin [ "pure" "done" "fzf.fish" "pisces" "z" ];
     };
 
     home.file = {

@@ -1,20 +1,20 @@
-{ lib, pkgs, config, vix, vix-lib, USER, HOME, ... }: {
+{ lib, pkgs, config, vix, USER, ... }: {
 
   home-manager.users.${USER} = let
     emacsPkg = pkgs.EmacsApp;
     doomDir = "~/.doom.d";
     doomLocalDir = "~/.emacs.d/doom-local";
     doomEmacs = "~/.nix-out/doom-emacs";
-    doomConf = vix-lib.vixLink "vix/modules/vic/emacs/doom.d";
+    doomConf = vix.lib.vixLink "vix/modules/vic/emacs/doom.d";
   in {
     home.file.".doom.d".source = doomConf;
-    home.file.".nix-out/doom-emacs".source = vix-lib.nivSources.emacs-doom;
+    home.file.".nix-out/doom-emacs".source = vix.lib.nivSources.emacs-doom;
 
     home.file.".emacs.d/init.el".source =
-      "${vix-lib.nivSources.emacs-chemacs2}/init.el";
+      "${vix.lib.nivSources.emacs-chemacs2}/init.el";
 
     home.file.".emacs.d/early-init.el".source =
-      "${vix-lib.nivSources.emacs-chemacs2}/early-init.el";
+      "${vix.lib.nivSources.emacs-chemacs2}/early-init.el";
 
     home.file.".emacs-profile".text = "doom";
 

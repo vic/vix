@@ -1,6 +1,6 @@
-{ config, pkgs, lib, vix, vix-lib, ... }: {
+{ config, pkgs, lib, vix, ... }: {
 
-  imports = [ ./link-jvm.nix ];
+  imports = [ ./intel-overlay.nix ./link-jvm.nix ];
 
   system.stateVersion = 4;
 

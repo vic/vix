@@ -1,8 +1,8 @@
-{ config, lib, pkgs, vix-lib, ... }: {
+{ config, lib, pkgs, vix, ... }: {
 
   environment.pathsToLink = [ "/Library/Java/JavaVirtualMachines" ];
   environment.systemPackages =
-    [ (vix-lib.linkJvm pkgs.openjdk.name pkgs.openjdk) ];
+    [ (vix.lib.linkJvm pkgs.openjdk.name pkgs.openjdk) ];
 
   system.activationScripts.linkSystemJvm.text = ''
     echo "linking JVMs ..." >&2

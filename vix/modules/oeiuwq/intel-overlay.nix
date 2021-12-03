@@ -1,5 +1,5 @@
-intelPkgs: {
+{ lib, ... }: {
   nixpkgs.overlays = [(new: old: {
-    inherit (intelPkgs) pandoc;
+    inherit (lib.mds.intelPkgs) pandoc;
   })];
 }
