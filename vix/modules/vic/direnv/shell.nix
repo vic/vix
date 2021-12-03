@@ -1,10 +1,10 @@
-{ config, pkgs, lib, vix, USER, HOME, direnv_dir, ... }:
+{ pkgs, lib, USER, direnv_dir, ... }:
 lib.mkMerge [
   {
     home-manager.users.${USER}.home.file = {
       ".config/direnv/lib/use_vix_env.sh".text = ''
         function use_vix-env() {
-          source ~/"${direnv_dir}/$1-env.sh"
+          source ~/"${direnv_dir}/$1/env"
         }
       '';
     };
@@ -13,8 +13,7 @@ lib.mkMerge [
   {
     home-manager.users.${USER}.home.file = lib.mkMerge (lib.mapAttrsToList
       (name: shell: {
-        "${direnv_dir}/${name}-env.sh".source =
-          "${vix.lib.shellDirenv name shell}/env";
+        "${direnv_dir}/${name}".source = lib.mds.shellEnv shell;
       }) pkgs.pkgShells);
   }
 ]

@@ -6,11 +6,6 @@
       ln -s ${builtins.toPath jdk} $out/Library/Java/JavaVirtualMachines/${name}
     '');
 
-  shellDirenv = name: shell:
-    pkgs.runCommand "${name}-shell-direnv" {
-      shell_input_derivation = shell.inputDerivation;
-    } (builtins.readFile ./shell-direnv.bash);
-
   nivSources = import "${vix}/nix/sources.nix";
 
   nivGoModule = { name, moduleOpts ? (meta: opts: opts) }:
