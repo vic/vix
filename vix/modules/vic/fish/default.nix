@@ -56,10 +56,6 @@
         mz = "spc g / Z l"; # list stash
       };
 
-      loginShellInit = ''
-        set -x PATH /nix/var/nix/profiles/default/bin $PATH
-        set -x PATH /etc/profiles/per-user/${USER}/bin $PATH
-      '';
 
       interactiveShellInit = ''
         set -g fish_key_bindings fish_hybrid_key_bindings
