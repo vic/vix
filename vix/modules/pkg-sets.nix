@@ -83,7 +83,7 @@
       bash = [ shfmt shellcheck ];
 
       nix = [
-        # niv # manage nix dependencies
+        niv # manage nix dependencies
         nixfmt # fmt nix sources
       ];
     };
