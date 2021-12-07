@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1638415301,
-        "narHash": "sha256-iqszstbHaO5PYeBXQf1ukgYj/aq9wznBbZMrtYMZzgI=",
+        "lastModified": 1638571010,
+        "narHash": "sha256-KSO7u13VRLdklQTKYJaBSfVcurEvw+HifAsHR7V2i5E=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "de54d513c74bf8f4f3a58954b80b5f690639fe72",
+        "rev": "781d25b315def05cd7ede3765226c54216f0b1fe",
         "type": "github"
       },
       "original": {
@@ -46,7 +46,7 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-DiaCjGfQ4m3lIgDxGOD40LBP3i7GRfaKGTwaWHs3GP0=",
+        "narHash": "sha256-CLQ3imAPi9GIKDlh26Wvy7VucKPIQOCUFl7I89Futy8=",
         "path": "/hk/mkDarwinSystem",
         "type": "path"
       },

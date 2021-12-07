@@ -15,6 +15,8 @@
   outputs = { self, nixpkgs, mk-darwin-system, ... }:
     let
       darwinFlakeOutput = mk-darwin-system.mkDarwinSystem.m1 {
+        flakePath = "/hk/vix";
+
         modules = [
           ({ pkgs, lib, ... }: {
             config._module.args = {
@@ -31,7 +33,7 @@
         ];
       };
     in darwinFlakeOutput // {
-      nixosConfigurations."oeiuwq" =
-        darwinFlakeOutput.nixosConfiguration.aarch64-darwin;
+      darwinConfigurations."oeiuwq" =
+        darwinFlakeOutput.darwinConfiguration.aarch64-darwin;
     };
 }
