@@ -24,6 +24,7 @@
         find = "fd";
         nr = "nix run";
         nf = "fd --glob '*.nix' -X nixfmt {}";
+        gr = "git recents";
         gc = "git commit";
         gb = "git branch";
         gd = "git diff";
@@ -42,10 +43,9 @@
         gpfh = "git push --force-with-lease origin HEAD";
         gfix = "git commit --all --fixup amend:HEAD";
         gcm = "git commit --all --message";
-        gcaa = "git commit --amend --all --reuse-message HEAD";
+        ga = "git commit --amend --reuse-message HEAD --all";
         gcam = "git commit --amend --all --message";
-        gbDm =
-          "git for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D";
+        gbDm = "git rm-merged";
 
         # Magit
         ms = "spc g g"; # status
