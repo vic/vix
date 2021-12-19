@@ -80,6 +80,15 @@
         kubernetes-helm # deploy things
       ];
 
+      gleam_dev = [
+        rustup
+	rust-analyzer
+	erlang
+        libiconv
+	darwin.apple_sdk.frameworks.CoreServices
+	darwin.apple_sdk.frameworks.CoreFoundation
+      ];
+
       bash = [ shfmt shellcheck ];
 
       nix = [
