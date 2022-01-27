@@ -114,10 +114,10 @@
         "homepage": "",
         "owner": "hlissner",
         "repo": "doom-emacs",
-        "rev": "af7c1d79bd63d78410aafc410d52ee5c1109ec26",
-        "sha256": "1hnnlay32pjcwfa2r33b6iaixn1x5jqc58xdqj4nmgqdywbxn2jj",
+        "rev": "35865ef5e89442e3809b8095199977053dd4210f",
+        "sha256": "185r6902i502bmanv8a3h2pd25gwkaigfgsdslr9w0dyd8z3ypsa",
         "type": "tarball",
-        "url": "https://github.com/hlissner/doom-emacs/archive/af7c1d79bd63d78410aafc410d52ee5c1109ec26.tar.gz",
+        "url": "https://github.com/hlissner/doom-emacs/archive/35865ef5e89442e3809b8095199977053dd4210f.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fish-done": {
@@ -138,10 +138,10 @@
         "homepage": "",
         "owner": "PatrickF1",
         "repo": "fzf.fish",
-        "rev": "9f7d5b8df62f712f0d2667b67a4c88ea1ec609d1",
-        "sha256": "0f67qlnca4l7ik9wxamwn152n0sin559dkc4apqnlbil4fsswxvz",
+        "rev": "0dc2795255d6ac0759e6f1d572f64ea0768acefb",
+        "sha256": "0k8g9fliwxxvzcbh90v2k230p23g48kwsicd4z1cg69y4l60bqdg",
         "type": "tarball",
-        "url": "https://github.com/PatrickF1/fzf.fish/archive/9f7d5b8df62f712f0d2667b67a4c88ea1ec609d1.tar.gz",
+        "url": "https://github.com/PatrickF1/fzf.fish/archive/0dc2795255d6ac0759e6f1d572f64ea0768acefb.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fish-hydro": {
@@ -150,10 +150,10 @@
         "homepage": "",
         "owner": "jorgebucaran",
         "repo": "hydro",
-        "rev": "cf7b19842f03bc4df27f9281badfc2828c02b56a",
-        "sha256": "1xql3gjcpqdqzki5qm3kcgrr45ldfv3i5y33ymw8gh96icmshs3p",
+        "rev": "74cf14b8d9c29e21c68cd293fa761abe1ad6afe2",
+        "sha256": "1kwbaj2kd0si73l076jgb48xqafchihzhqmlalvariqy5y4784wx",
         "type": "tarball",
-        "url": "https://github.com/jorgebucaran/hydro/archive/cf7b19842f03bc4df27f9281badfc2828c02b56a.tar.gz",
+        "url": "https://github.com/jorgebucaran/hydro/archive/74cf14b8d9c29e21c68cd293fa761abe1ad6afe2.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fish-pisces": {
