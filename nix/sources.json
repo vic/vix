@@ -7,11 +7,11 @@
         "version": "0.3.1"
     },
     "EmacsApp": {
-        "sha256": "0xglbchk2i6ky0m95s0biz00iknnl3a36jcspms00vcdadi4afy5",
+        "sha256": "0npwvva9fdh8bp2j96fvpwl2i5h4k2lsvl5kq2dk54qphzx3skpl",
         "type": "file",
-        "url": "https://emacsformacosx.com/download/emacs-builds/Emacs-27.2-3-universal.dmg",
+        "url": "https://emacsformacosx.com/download/emacs-builds/Emacs-pretest-28.0.91-universal.dmg",
         "url_template": "https://emacsformacosx.com/download/emacs-builds/Emacs-<version>-universal.dmg",
-        "version": "27.2-3"
+        "version": "pretest-28.0.91"
     },
     "FirefoxDevApp": {
         "sha256": "05zy6qdvxdz252r0wvqf872lzcc14swy69w0jfdma2lprvsqla6n",
