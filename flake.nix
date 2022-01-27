@@ -5,7 +5,7 @@
 
   inputs = {
     nixpkgs.url =
-      "github:nixos/nixpkgs/21.11"; # change tag or commit of nixpkgs for your system
+      "github:nixos/nixpkgs/74f542c"; # change tag or commit of nixpkgs for your system
 
     #mk-darwin-system.url = "github:vic/mk-darwin-system/main"; # change main to a tag o git revision
     mk-darwin-system.url = "path:/hk/mkDarwinSystem"; # development mode
@@ -33,7 +33,7 @@
         ];
       };
     in darwinFlakeOutput // {
-      darwinConfigurations."oeiuwq" =
+      darwinConfigurations."yavanna" =
         darwinFlakeOutput.darwinConfiguration.aarch64-darwin;
     };
 }

@@ -17,10 +17,7 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": [
-          "mk-darwin-system",
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
         "lastModified": 1638571010,
@@ -46,7 +43,7 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-CLQ3imAPi9GIKDlh26Wvy7VucKPIQOCUFl7I89Futy8=",
+        "narHash": "sha256-1Ml2n5ZM9fiP6gzcbJEkB+ZR102YalZ7eaIFfRFwnSk=",
         "path": "/hk/mkDarwinSystem",
         "type": "path"
       },
@@ -57,10 +54,7 @@
     },
     "nix-darwin": {
       "inputs": {
-        "nixpkgs": [
-          "mk-darwin-system",
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1634994402,
@@ -78,16 +72,44 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1638239011,
-        "narHash": "sha256-AjhmbT4UBlJWqxY0ea8a6GU2C2HdKUREkG43oRr3TZg=",
+        "lastModified": 1641167626,
+        "narHash": "sha256-3OaCghkkNQx8nzKtMxZI13QFBRSGGCX90z2+YHuuO+k=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a7ecde854aee5c4c7cd6177f54a99d2c1ff28a31",
+        "rev": "74f542c42e5bca4f74f53cf7054c8a93d4736f51",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1641167626,
+        "narHash": "sha256-3OaCghkkNQx8nzKtMxZI13QFBRSGGCX90z2+YHuuO+k=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "74f542c42e5bca4f74f53cf7054c8a93d4736f51",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1641167626,
+        "narHash": "sha256-3OaCghkkNQx8nzKtMxZI13QFBRSGGCX90z2+YHuuO+k=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "74f542c42e5bca4f74f53cf7054c8a93d4736f51",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "21.11",
+        "ref": "74f542c",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -95,7 +117,7 @@
     "root": {
       "inputs": {
         "mk-darwin-system": "mk-darwin-system",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_3"
       }
     }
   },

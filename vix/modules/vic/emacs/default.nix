@@ -1,7 +1,7 @@
 { lib, pkgs, config, vix, USER, ... }: {
 
   home-manager.users.${USER} = let
-    emacsPkg = pkgs.EmacsApp;
+    emacsPkg = pkgs.emacs;
     doomDir = "~/.doom.d";
     doomLocalDir = "~/.emacs.d/doom-local";
     doomEmacs = "~/.nix-out/doom-emacs";

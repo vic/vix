@@ -7,11 +7,18 @@
         "version": "0.3.1"
     },
     "EmacsApp": {
-        "sha256": "12xdgg9glf03f512f3784anr7vlpj6mzdap1q3qjwg4frviyzxd5",
+        "sha256": "0xglbchk2i6ky0m95s0biz00iknnl3a36jcspms00vcdadi4afy5",
         "type": "file",
-        "url": "https://emacsformacosx.com/download/emacs-builds/Emacs-27.2-2-universal.dmg",
+        "url": "https://emacsformacosx.com/download/emacs-builds/Emacs-27.2-3-universal.dmg",
         "url_template": "https://emacsformacosx.com/download/emacs-builds/Emacs-<version>-universal.dmg",
-        "version": "27.2-2"
+        "version": "27.2-3"
+    },
+    "FirefoxDevApp": {
+        "sha256": "05zy6qdvxdz252r0wvqf872lzcc14swy69w0jfdma2lprvsqla6n",
+        "type": "file",
+        "url": "https://download-installer.cdn.mozilla.net/pub/devedition/releases/96.0b10/mac/en-US/Firefox%2096.0b10.dmg",
+        "url_template": "https://download-installer.cdn.mozilla.net/pub/devedition/releases/<version>/mac/en-US/Firefox%20<version>.dmg",
+        "version": "96.0b10"
     },
     "HamerspoonApp": {
         "sha256": "08whidgv8b3az1icm2dp92d5ci301jdjqkynpalfg858nhmq8agi",
@@ -21,11 +28,24 @@
         "version": "0.9.90"
     },
     "IdeaApp": {
-        "sha256": "0vi1wiv30ayr0dahljlsf47p5qh15xs5yxnq6wvy0ky9bny5hxlk",
+        "sha256": "0c885djqq4p1kinzh5yvqq1sc84zwlfh2nfljj106yj3wi34a4fy",
         "type": "file",
-        "url": "https://download.jetbrains.com/idea/ideaIC-2021.2.3-aarch64.dmg",
+        "url": "https://download.jetbrains.com/idea/ideaIC-2021.3.1-aarch64.dmg",
         "url_template": "https://download.jetbrains.com/idea/ideaIC-<version>-aarch64.dmg",
-        "version": "2021.2.3"
+        "version": "2021.3.1"
+    },
+    "Iterm2App": {
+        "sha256": "0y0vhxwn1cl0y1gjm5fad5zndb4v448mqcksbmmskpgg73h4wn9j",
+        "type": "file",
+        "url": "https://iterm2.com/downloads/stable/iTerm2-3_4_15.zip",
+        "url_template": "https://iterm2.com/downloads/stable/iTerm2-<version>.zip",
+        "version": "3_4_15"
+    },
+    "KeybaseApp": {
+        "sha256": "0fx3j6g7phpnd1if639wd3jas4wyznqr7an8gbxk1h3x81s8m91l",
+        "type": "file",
+        "url": "https://prerelease.keybase.io/Keybase.dmg",
+        "url_template": "https://prerelease.keybase.io/Keybase.dmg"
     },
     "KeyttyApp": {
         "sha256": "08sifc1pjmbbvxryy1h9wda7f36y0sy67spdbgps3f1jdn84pcpn",
@@ -33,6 +53,41 @@
         "url": "https://github.com/keytty/shelter/releases/download/1.2.8/Keytty.1.2.8.dmg",
         "url_template": "https://github.com/keytty/shelter/releases/download/1.2.8/Keytty.<version>.dmg",
         "version": "1.2.8"
+    },
+    "Postgres12App": {
+        "sha256": "1cqncz43fwkq3il0k0p1srngr0yq2m5rkvaibc047273a695ad8b",
+        "type": "file",
+        "url": "https://github.com/PostgresApp/PostgresApp/releases/download/v2.5.2/Postgres-2.5.2-14.dmg",
+        "url_template": "https://github.com/PostgresApp/PostgresApp/releases/download/v<version>/Postgres-<version>-14.dmg",
+        "version": "2.5.2"
+    },
+    "PosticoApp": {
+        "sha256": "1s8g1xf9z9xjp4a3zwc1p4cpg7h8mfpd5xgkfk5pq232831lgpnf",
+        "type": "file",
+        "url": "https://s3-eu-west-1.amazonaws.com/eggerapps-downloads/postico-1.5.20.zip",
+        "url_template": "https://s3-eu-west-1.amazonaws.com/eggerapps-downloads/postico-<version>.zip",
+        "version": "1.5.20"
+    },
+    "TelegramApp": {
+        "sha256": "13v3ybzb5gx0xw5r6y1cgznizm8m4a9kx42bbz30x0bnlpgqh5cj",
+        "type": "file",
+        "url": "https://updates.tdesktop.com/tmac/tsetup.3.4.2.dmg",
+        "url_template": "https://updates.tdesktop.com/tmac/tsetup.<version>.dmg",
+        "version": "3.4.2"
+    },
+    "TorApp": {
+        "sha256": "19vhs0y0xdwgi48lqhlsdsgcqvr5wdqmim2bd9r63lqwnl26x4wm",
+        "type": "file",
+        "url": "https://dist.torproject.org/torbrowser/11.0.3/TorBrowser-11.0.3-osx64_en-US.dmg",
+        "url_template": "https://dist.torproject.org/torbrowser/<version>/TorBrowser-<version>-osx64_en-US.dmg",
+        "version": "11.0.3"
+    },
+    "TunnelblickApp": {
+        "sha256": "14xxyg42sdn463ggm7za9iac30lbajwp1x1xs83ismjqk9hmhn5v",
+        "type": "file",
+        "url": "https://tunnelblick.net/release/Tunnelblick_3.8.7a_build_5770.dmg",
+        "url_template": "https://tunnelblick.net/release/Tunnelblick_<version>.dmg",
+        "version": "3.8.7a_build_5770"
     },
     "VimMotionApp": {
         "sha256": "000cl2ngj74b61nj0fdg4slpq5mzcf3w893jbidd34aibcsvjjy1",
@@ -59,10 +114,10 @@
         "homepage": "",
         "owner": "hlissner",
         "repo": "doom-emacs",
-        "rev": "e82300aeb9f93a8d8127f8b8484bed734e2f3dcb",
-        "sha256": "16288q1nw4acq6skmkmydlz9ghycym7i7w60vjd9zj7icr1dal5x",
+        "rev": "af7c1d79bd63d78410aafc410d52ee5c1109ec26",
+        "sha256": "1hnnlay32pjcwfa2r33b6iaixn1x5jqc58xdqj4nmgqdywbxn2jj",
         "type": "tarball",
-        "url": "https://github.com/hlissner/doom-emacs/archive/e82300aeb9f93a8d8127f8b8484bed734e2f3dcb.tar.gz",
+        "url": "https://github.com/hlissner/doom-emacs/archive/af7c1d79bd63d78410aafc410d52ee5c1109ec26.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fish-done": {
@@ -71,10 +126,10 @@
         "homepage": "",
         "owner": "franciscolourenco",
         "repo": "done",
-        "rev": "7fda8f2c3e79835d5c1e6721fa48fe5ed4ba0858",
-        "sha256": "1snysg52fr1h6n188jhqzny4sfgzcjgpa9r9qvj9smkg7zmplmsy",
+        "rev": "d6abb267bb3fb7e987a9352bc43dcdb67bac9f06",
+        "sha256": "1h8v5jg9kkali50qq0jn0i1w68wp4c2l0fapnglnnpg0v4vv51za",
         "type": "tarball",
-        "url": "https://github.com/franciscolourenco/done/archive/7fda8f2c3e79835d5c1e6721fa48fe5ed4ba0858.tar.gz",
+        "url": "https://github.com/franciscolourenco/done/archive/d6abb267bb3fb7e987a9352bc43dcdb67bac9f06.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fish-fzf.fish": {
@@ -83,10 +138,10 @@
         "homepage": "",
         "owner": "PatrickF1",
         "repo": "fzf.fish",
-        "rev": "17d54b576919ee77644779db2dcae56d372a8830",
-        "sha256": "0h9jrmh8d0jy0xydr6iby3xf36lq0bj4rgpn6iij5dkn1p5b52xp",
+        "rev": "9f7d5b8df62f712f0d2667b67a4c88ea1ec609d1",
+        "sha256": "0f67qlnca4l7ik9wxamwn152n0sin559dkc4apqnlbil4fsswxvz",
         "type": "tarball",
-        "url": "https://github.com/PatrickF1/fzf.fish/archive/17d54b576919ee77644779db2dcae56d372a8830.tar.gz",
+        "url": "https://github.com/PatrickF1/fzf.fish/archive/9f7d5b8df62f712f0d2667b67a4c88ea1ec609d1.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fish-hydro": {
@@ -95,10 +150,10 @@
         "homepage": "",
         "owner": "jorgebucaran",
         "repo": "hydro",
-        "rev": "a5877e9ef76b3e915c06143630bffc5ddeaba2a1",
-        "sha256": "1lgknykah265wxx6wyy5pqc3w3jhkr2nnybwb4954nlklr12g7ww",
+        "rev": "cf7b19842f03bc4df27f9281badfc2828c02b56a",
+        "sha256": "1xql3gjcpqdqzki5qm3kcgrr45ldfv3i5y33ymw8gh96icmshs3p",
         "type": "tarball",
-        "url": "https://github.com/jorgebucaran/hydro/archive/a5877e9ef76b3e915c06143630bffc5ddeaba2a1.tar.gz",
+        "url": "https://github.com/jorgebucaran/hydro/archive/cf7b19842f03bc4df27f9281badfc2828c02b56a.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fish-pisces": {

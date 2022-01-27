@@ -12,7 +12,12 @@ in {
 
   users.users.${USER}.home = HOME;
 
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [ "vscode" ];
+
   home-manager.users.${USER} = {
+    programs.vscode = { enable = true; };
+
     programs.nix-index.enableFishIntegration = true;
     home.packages = config.pkgSets.${USER};
 
@@ -25,7 +30,7 @@ in {
 
     home.activation = {
       aliasApplications = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        ln -sfn $genProfilePath/home-path/Applications "$HOME/Applications/Home Manager Applications"
+        ln -sfn $genProfilePath/home-path/Applications/* "$HOME/Applications/"
       '';
     };
   };

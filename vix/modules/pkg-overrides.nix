@@ -17,6 +17,43 @@
 
       IdeaApp = vix.lib.nivApp "Idea";
 
+      KeybaseApp = vix.lib.nivApp "Keybase";
+
+      FirefoxDevApp = vix.lib.nivApp "FirefoxDev";
+
+      TelegramApp = vix.lib.nivApp "Telegram";
+
+      TorApp = vix.lib.nivApp "Tor";
+
+      TunnelblickApp = vix.lib.nivApp "Tunnelblick";
+
+      Postgres12App = vix.lib.nivApp "Postgres12";
+
+      PosticoApp = with pkgs; stdenvNoCC.mkDerivation {
+        buildInputs = [ unzip ];
+        name = "Postico";
+        version = vix.lib.nivSources.PosticoApp.version;
+        src = vix.lib.nivSources.PosticoApp;
+        phases = [ "install" ];
+        install = ''
+          mkdir -p $out/Applications/
+          unzip $src -d $out/Applications/
+        '';
+      };
+
+      Iterm2App = pkgs.stdenvNoCC.mkDerivation
+        (let src = vix.lib.nivSources."Iterm2App";
+        in {
+          name = "Iterm2";
+          version = src.version;
+          inherit src;
+          phases = [ "install" ];
+          install = ''
+            mkdir -p $out
+            ${pkgs.unzip}/bin/unzip $src -d $out/Applications
+          '';
+        });
+
       EmacsApp = (vix.lib.nivApp "Emacs").overrideAttrs (old:
         let
           bin_dir = {

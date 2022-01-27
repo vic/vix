@@ -12,7 +12,7 @@
       fi
     done
     for f in $(ls "$systemConfig/sw/Library/Java/JavaVirtualMachines" 2>/dev/null); do
-      ln -s "$systemConfig/sw/Library/Java/JavaVirtualMachines/$f" "/Library/Java/JavaVirtualMachines/$f"
+      ln -s "$systemConfig/sw/Library/Java/JavaVirtualMachines/$f"/*.jdk/ "/Library/Java/JavaVirtualMachines/$f"
     done
   '';
 

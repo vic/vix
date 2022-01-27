@@ -56,9 +56,9 @@
         mz = "spc g / Z l"; # list stash
       };
 
-
       interactiveShellInit = ''
         set -g fish_key_bindings fish_hybrid_key_bindings
+        direnv hook fish | source
       '';
 
       functions = {
