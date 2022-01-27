@@ -29,7 +29,7 @@
       inherit name;
       moduleOpts = meta: opts:
         opts // {
-          runVend = true;
+          proxyVendor = true;
           doCheck = false;
           overrideModAttrs = old: {
             buildPhase = ''

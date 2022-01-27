@@ -37,7 +37,7 @@
           VimMotionApp
           KeyttyApp
           PosticoApp
-          leader
+          #leader
           pass
           # git-annex
           gping
@@ -71,7 +71,7 @@
           # jetbrains.idea-community # just to follow linked libs
           # nodePackages.hyp # hyperspace://
           git # work around patches
-          neovim # you can move, but there is no escape
+          # neovim # you can move, but there is no escape
         ] ++ podmans;
 
         # Development environments
@@ -114,11 +114,11 @@
     nixpkgs.overlays = [
       (new: old: {
         pkgShells =
-          lib.mapAttrs (name: packages: old.mkShell { inherit name packages; })
+          lib.mapAttrs (name: packages: new.mkShell { inherit name packages; })
           config.pkgSets;
 
         pkgSets =
-          lib.mapAttrs (name: paths: old.buildEnv { inherit name paths; })
+          lib.mapAttrs (name: paths: new.buildEnv { inherit name paths; })
           config.pkgSets;
       })
     ];

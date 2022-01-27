@@ -4,6 +4,6 @@
 
   home-manager.users.${USER} = {
     programs.direnv.enable = true;
-    programs.direnv.enableFishIntegration = true;
+    # programs.direnv.enableFishIntegration = true;
   };
 }
