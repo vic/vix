@@ -14,11 +14,11 @@
         "version": "pretest-28.0.91"
     },
     "FirefoxDevApp": {
-        "sha256": "05zy6qdvxdz252r0wvqf872lzcc14swy69w0jfdma2lprvsqla6n",
+        "sha256": "13flj06yaxgjshclxd831i47fj2mgmgpmrgq43q0j9azg28qiyyi",
         "type": "file",
-        "url": "https://download-installer.cdn.mozilla.net/pub/devedition/releases/96.0b10/mac/en-US/Firefox%2096.0b10.dmg",
+        "url": "https://download-installer.cdn.mozilla.net/pub/devedition/releases/97.0b9/mac/en-US/Firefox%2097.0b9.dmg",
         "url_template": "https://download-installer.cdn.mozilla.net/pub/devedition/releases/<version>/mac/en-US/Firefox%20<version>.dmg",
-        "version": "96.0b10"
+        "version": "97.0b9"
     },
     "HamerspoonApp": {
         "sha256": "08whidgv8b3az1icm2dp92d5ci301jdjqkynpalfg858nhmq8agi",
