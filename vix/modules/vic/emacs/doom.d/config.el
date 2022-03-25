@@ -60,35 +60,35 @@
 (map! :n "U" #'evil-redo)
 
 (map! :leader
-  "SPC" #'execute-extended-command
-  "b SPC" #'switch-to-buffer
-  "b w" #'switch-to-buffer-other-window
-  "b t" #'switch-to-buffer-other-tab
-  "t t" #'treemacs
-  )
+      "SPC" #'execute-extended-command
+      "b SPC" #'switch-to-buffer
+      "b w" #'switch-to-buffer-other-window
+      "b t" #'switch-to-buffer-other-tab
+      "t t" #'treemacs
+      )
 
 (map! :ir (kbd "<backtab>") #'company-complete)
 
 (map! :n (kbd "C-;") #'iedit-mode)
 
 (map! :map iedit-mode-occurrence-keymap :n
-  "q" #'iedit-quit
-  "n" #'iedit-next-occurrence
-  "p" #'iedit-prev-occurrence
-  "t" #'iedit-toggle-selection
-  "f" #'iedit-mode-toggle-on-function
-  "H" #'iedit-help-for-occurrences
-  "r" #'iedit-replace-occurrences
-  "@" #'iedit-number-occurrences
-  "V" #'iedit-restrict-current-line
-  "F" #'iedit-restrict-function
-  "R" #'iedit-restrict-region
-  "C" #'iedit-show/hide-context-lines
-  "O" #'iedit-show/hide-occurrence-lines
-  "K" #'iedit-expand-up-to-occurrence
-  "J" #'iedit-expand-down-to-occurrence
-  "#" #'iedit-increment-occurrences
-  )
+      "q" #'iedit-quit
+      "n" #'iedit-next-occurrence
+      "p" #'iedit-prev-occurrence
+      "t" #'iedit-toggle-selection
+      "f" #'iedit-mode-toggle-on-function
+      "H" #'iedit-help-for-occurrences
+      "r" #'iedit-replace-occurrences
+      "@" #'iedit-number-occurrences
+      "V" #'iedit-restrict-current-line
+      "F" #'iedit-restrict-function
+      "R" #'iedit-restrict-region
+      "C" #'iedit-show/hide-context-lines
+      "O" #'iedit-show/hide-occurrence-lines
+      "K" #'iedit-expand-up-to-occurrence
+      "J" #'iedit-expand-down-to-occurrence
+      "#" #'iedit-increment-occurrences
+      )
 
 (use-package! evil-god-state
   :defer t
@@ -114,3 +114,43 @@
 
 (after! doom-golden-ratio
   (doom-golden-ratio-mode))
+
+;; Vertical window divider
+(use-package! frame
+  :init
+  ;; Make sure new frames use window-divider
+  (add-hook 'before-make-frame-hook 'window-divider-mode)
+  :config
+  (setq-default default-frame-alist
+                (append (list
+                         ;; '(font . "SF Mono:style=medium:size=15") ;; NOTE: substitute whatever font you prefer here
+                         '(internal-border-width . 20)
+                         '(left-fringe    . 0)
+                         '(right-fringe   . 0)
+                         '(tool-bar-lines . 0)
+                         '(menu-bar-lines . 0)
+                         '(vertical-scroll-bars . nil))))
+  (setq-default window-resize-pixelwise t)
+  (setq-default frame-resize-pixelwise t)
+  :custom
+  (window-divider-default-right-width 12)
+  (window-divider-default-bottom-width 1)
+  (window-divider-default-places 'right-only)
+  (window-divider-mode t))
+
+
+(use-package! bespoke-themes
+  :defer t
+  :commands (bespoke/dark-theme)
+  :config
+  ;; Set evil cursor colors
+  (setq bespoke-set-evil-cursors t)
+  ;; Set use of italics
+  (setq bespoke-set-italic-comments t
+        bespoke-set-italic-keywords t)
+  ;; Set variable pitch
+  (setq bespoke-set-variable-pitch t)
+  ;; Set initial theme variant
+  (setq bespoke-set-theme 'dark)
+  ;; Load theme
+  (load-theme 'bespoke t))
