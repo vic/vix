@@ -98,15 +98,15 @@
         "version": "1.2.3"
     },
     "emacs-chemacs2": {
-        "branch": "master",
+        "branch": "main",
         "description": "Emacs version switcher, improved",
         "homepage": null,
         "owner": "plexus",
         "repo": "chemacs2",
-        "rev": "ef82118824fac2b2363d3171d26acbabe1738326",
-        "sha256": "1gg4aa6dxc4k9d78j8mrrhy0mvhqmly7jxby69518xs9njxh00dq",
+        "rev": "d53aa5e5e298a4244b70ae59e9d9ba34752c4bbb",
+        "sha256": "00rs0n6vrylkv47wqpn21kr45y5xmn5qy4lnkzkspp0yw16pw7m9",
         "type": "tarball",
-        "url": "https://github.com/plexus/chemacs2/archive/ef82118824fac2b2363d3171d26acbabe1738326.tar.gz",
+        "url": "https://github.com/plexus/chemacs2/archive/d53aa5e5e298a4244b70ae59e9d9ba34752c4bbb.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "emacs-doom": {
@@ -139,10 +139,10 @@
         "homepage": "",
         "owner": "PatrickF1",
         "repo": "fzf.fish",
-        "rev": "0dc2795255d6ac0759e6f1d572f64ea0768acefb",
-        "sha256": "0k8g9fliwxxvzcbh90v2k230p23g48kwsicd4z1cg69y4l60bqdg",
+        "rev": "17fcc74029bbd88445712752a5a71bc64aa3994c",
+        "sha256": "12fyg3ycj3fqqms9b5ncnyyjs0gl54yc5qcbp5yp4p5fy5vwy6jr",
         "type": "tarball",
-        "url": "https://github.com/PatrickF1/fzf.fish/archive/0dc2795255d6ac0759e6f1d572f64ea0768acefb.tar.gz",
+        "url": "https://github.com/PatrickF1/fzf.fish/archive/17fcc74029bbd88445712752a5a71bc64aa3994c.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fish-hydro": {
@@ -151,10 +151,10 @@
         "homepage": "",
         "owner": "jorgebucaran",
         "repo": "hydro",
-        "rev": "74cf14b8d9c29e21c68cd293fa761abe1ad6afe2",
-        "sha256": "1kwbaj2kd0si73l076jgb48xqafchihzhqmlalvariqy5y4784wx",
+        "rev": "d4875065ceea226f58ead97dd9b2417937344d6e",
+        "sha256": "1hcnyjvdz0402x69avdmzhbfnnwlb05i3kv4m2mrrfcfmag86xwx",
         "type": "tarball",
-        "url": "https://github.com/jorgebucaran/hydro/archive/74cf14b8d9c29e21c68cd293fa761abe1ad6afe2.tar.gz",
+        "url": "https://github.com/jorgebucaran/hydro/archive/d4875065ceea226f58ead97dd9b2417937344d6e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fish-pisces": {
