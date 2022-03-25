@@ -1,6 +1,6 @@
 .PHONY: all
 
-all: nixfmt update test build install
+all: nixfmt test install
 
 test: flake-check nixfmt-check
 
