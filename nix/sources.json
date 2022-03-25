@@ -207,6 +207,13 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz",
         "vendorSha256": "1yf7vra3y8p032nwr0wp410lj7pk9ngr5r5svhbjcz3m2vcq2vsz"
     },
+    "kdash": {
+        "sha256": "1g1gmyhwz4khvhpqclnys2mmpfn9885kfl79cmi8c5yb3q505fp5",
+        "type": "tarball",
+        "url": "https://github.com/kdash-rs/kdash/releases/download/v0.3.0/kdash-macos.tar.gz",
+        "url_template": "https://github.com/kdash-rs/kdash/releases/download/v<version>/kdash-macos.tar.gz",
+        "version": "0.3.0"
+    },
     "xbarApp": {
         "description": "Put anything in your macOS menu bar ",
         "homepage": "https://xbarapp.com/",

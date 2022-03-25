@@ -103,6 +103,7 @@
           kubernetes-helm
           # deploy things
         ];
+        aleron = [ kdash ];
         gleam_dev = [
           rustup
           rust-analyzer
