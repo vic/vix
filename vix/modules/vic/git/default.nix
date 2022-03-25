@@ -4,8 +4,15 @@
       enable = true;
       userName = "Victor Hugo Borja";
       userEmail = "vborja@apache.org";
-      extraConfig = { init = { defaultBranch = "main"; }; };
+      extraConfig = {
+        init = { defaultBranch = "main"; };
+        pager.difftool = true;
+        diff.tool = "difftastic";
+        difftool.prompt = false;
+        difftool.difftastic.cmd = "${pkgs.difftastic}/bin/difft $LOCAL $REMOTE";
+      };
       aliases = {
+        "dff" = "difftool";
         "fap" = "fetch --all -p";
         "rm-merged" =
           "for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D";
@@ -15,7 +22,9 @@
       ignores = [ ".DS_Store" "*.swp" ];
       includes = [ ];
       # { path = "${DOTS}/git/something"; }
+
       lfs.enable = true;
+
       delta.enable = true;
       delta.options = {
         line-numbers = true;

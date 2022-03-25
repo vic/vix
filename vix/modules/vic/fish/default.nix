@@ -22,7 +22,7 @@
         gr = "git recents";
         gc = "git commit";
         gb = "git branch";
-        gd = "git diff";
+        gd = "git dff";
         gs = "git status";
         gco = "git checkout";
         gcb = "git checkout -b";

@@ -20,6 +20,7 @@
         ];
         # Home level packages
         vic = [
+          difftastic
           direnv
           bottom
           #xbarApp
