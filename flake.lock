@@ -1,5 +1,28 @@
 {
   "nodes": {
+    "SPC": {
+      "inputs": {
+        "bats-assert": "bats-assert",
+        "bats-support": "bats-support",
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1648195054,
+        "narHash": "sha256-nmio/EAGpk6GnjsHTcn4pRxamApSyyXkPBCmvd8qmds=",
+        "owner": "vic",
+        "repo": "SPC",
+        "rev": "37050d670af0582d41619e00ad0fb3a1888ace24",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "SPC",
+        "type": "github"
+      }
+    },
     "alejandra": {
       "inputs": {
         "flakeCompat": "flakeCompat",
@@ -21,7 +44,54 @@
         "type": "github"
       }
     },
+    "bats-assert": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1619119588,
+        "narHash": "sha256-ggaJZDRsYn654kM0H90boHDKG2Fa32KM6kuVVEtsfWE=",
+        "owner": "bats-core",
+        "repo": "bats-assert",
+        "rev": "e0de84e9c011223e7f88b7ccf1c929f4327097ba",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bats-core",
+        "repo": "bats-assert",
+        "type": "github"
+      }
+    },
+    "bats-support": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1481062092,
+        "narHash": "sha256-5sVpojS4mHREfSgOblWCdQ+VKMWhnO0P62gzORSVpos=",
+        "owner": "ztombol",
+        "repo": "bats-support",
+        "rev": "004e707638eedd62e0481e8cdc9223ad471f12ee",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ztombol",
+        "repo": "bats-support",
+        "type": "github"
+      }
+    },
     "flake-utils": {
+      "locked": {
+        "lastModified": 1623875721,
+        "narHash": "sha256-A8BU7bjS5GirpAUv4QA+QnJ4CceLHkcXdRp4xITDB0s=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "f7e004a55b120c02ecb6219596820fcd32ca8772",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_2": {
       "locked": {
         "lastModified": 1644229661,
         "narHash": "sha256-1YdnJAsNy69bpcjuoKdOYQX0YxZBiCYZo4Twxerqv7k=",
@@ -75,7 +145,7 @@
     },
     "mk-darwin-system": {
       "inputs": {
-        "flake-utils": "flake-utils",
+        "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nixpkgs": [
@@ -83,7 +153,7 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-oeBgocL4qMizWDRDYQhNc6oDH/S5dBF+igOTFqbihnw=",
+        "narHash": "sha256-X4P+zV6rBJvQrtidz7ZEbdw88VRGq3krzW9XNZQzxio=",
         "path": "/hk/mkDarwinSystem",
         "type": "path"
       },
@@ -131,6 +201,7 @@
     },
     "root": {
       "inputs": {
+        "SPC": "SPC",
         "alejandra": "alejandra",
         "mk-darwin-system": "mk-darwin-system",
         "nixpkgs": "nixpkgs"

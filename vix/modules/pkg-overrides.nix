@@ -54,6 +54,8 @@
           '';
         });
       alejandra = vix.inputs.alejandra.defaultPackage.${config.nixpkgs.system};
+      SPC = vix.inputs.SPC.packages.${config.nixpkgs.system}.default;
+
       kdash = pkgs.stdenvNoCC.mkDerivation (let src = vix.lib.nivSources.kdash;
       in {
         name = "kdash";

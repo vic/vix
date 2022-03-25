@@ -23,25 +23,23 @@
     home.packages = [
       pkgs.EmacsApp
       (pkgs.writeScriptBin "doom-daemon" ''
-        ${emacsPkg}/bin/emacs --with-profile doom --daemon doom
+        exec ${emacsPkg}/bin/emacs --with-profile doom --daemon doom "''${@}"
       '')
       (pkgs.writeScriptBin "ve" ''
-        ${emacsPkg}/bin/emacsclient -c
+        exec ${emacsPkg}/bin/emacsclient -c "''${@}"
       '')
       (pkgs.writeScriptBin "e" ''
-        ${emacsPkg}/bin/emacsclient -nw
+        exec ${emacsPkg}/bin/emacsclient -nw "''${@}"
       '')
-      (pkgs.writeScriptBin "espace" ''
-        SPC="SPC "
-        while [ -n "$1" ]; do
-          if [ "--" == "$1" ]; then
-            shift
-            break
-          fi
-          SPC="$SPC $1"
-          shift
-        done
-        ${emacsPkg}/bin/emacsclient --eval '(call-interactively (lambda () (interactive) (execute-kbd-macro (kbd "'"$SPC"'"))))' "''${@}"
+      (pkgs.writeScriptBin "emacsclient" ''
+        exec ${emacsPkg}/bin/emacsclient "''${@}"
+      '')
+      (pkgs.writeScriptBin "SPC" ''
+        export DOOMDIR="${doomDir}"
+        export DOOMLOCALDIR="${doomLocalDir}"
+        export EMACSDIR="${doomEmacs}"
+        export SPC_CLIENT_CMD="${emacsPkg}/bin/emacsclient"
+        exec ${pkgs.SPC}/bin/SPC "''${@}"
       '')
       (pkgs.writeScriptBin "doom" ''
         export DOOMDIR="${doomDir}"

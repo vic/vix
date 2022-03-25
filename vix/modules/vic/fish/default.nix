@@ -43,7 +43,6 @@
         gbDm = "git rm-merged";
         # Magit
         mg = "spc g g";
-        # Magit
         ms = "spc g g";
         # status
         mc = "spc g / c";
@@ -51,6 +50,7 @@
         md = "spc g / d u";
         # diff unstaged
         ml = "spc g / l l";
+        tig = "spc g / l l";
         # log
         mr = "spc g / r i";
         # rebase interactive
@@ -62,8 +62,8 @@
         direnv hook fish | source
       '';
       functions = {
-        spc.body = "espace $argv -- -nw";
-        vspc.body = "espace $argv -- -c";
+        spc.body = "SPC $argv -- -nw";
+        vspc.body = "SPC $argv -- -c";
         fish_hybrid_key_bindings.description =
           "Vi-style bindings that inherit emacs-style bindings in all modes";
         fish_hybrid_key_bindings.body = ''

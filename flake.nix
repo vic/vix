@@ -12,6 +12,9 @@
     mk-darwin-system.inputs.nixpkgs.follows = "nixpkgs";
     alejandra.url = "github:kamadorueda/alejandra";
     alejandra.inputs.nixpkgs.follows = "nixpkgs";
+
+    SPC.url = "github:vic/SPC";
+    SPC.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = { self, nixpkgs, mk-darwin-system, ... }:
     let
