@@ -1,8 +1,8 @@
-.PHONY: test all
+.PHONY: all
 
-test: nixfmt-check
+all: nixfmt update test build install
 
-all: nixfmt build
+test: flake-check nixfmt-check
 
 nixfmt:
 	find . -type f -iname "*.nix" -print0 | xargs -0 nixfmt
@@ -10,8 +10,15 @@ nixfmt:
 nixfmt-check:
 	find . -type f -iname "*.nix" -print0 | xargs -0 nixfmt -c
 
+flake-check:
+	nix flake check
+
 install:
 	nix run
 
 build:
 	nix build
+
+update:
+	niv update
+	nix flake update
