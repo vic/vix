@@ -42,6 +42,8 @@
         gcam = "git commit --amend --all --message";
         gbDm = "git rm-merged";
         # Magit
+        mg = "spc g g";
+        # Magit
         ms = "spc g g";
         # status
         mc = "spc g / c";
