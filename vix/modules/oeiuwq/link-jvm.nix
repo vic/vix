@@ -1,7 +1,12 @@
-{ config, lib, pkgs, vix, ... }: {
-  environment.pathsToLink = [ "/Library/Java/JavaVirtualMachines" ];
-  environment.systemPackages =
-    [ (vix.lib.linkJvm pkgs.openjdk.name pkgs.openjdk) ];
+{
+  config,
+  lib,
+  pkgs,
+  vix,
+  ...
+}: {
+  environment.pathsToLink = ["/Library/Java/JavaVirtualMachines"];
+  environment.systemPackages = [(vix.lib.linkJvm pkgs.openjdk.name pkgs.openjdk)];
   system.activationScripts.linkSystemJvm.text = ''
     echo "linking JVMs ..." >&2
     for f in $(ls "/run/current-system/sw/Library/Java/JavaVirtualMachines" 2>/dev/null); do

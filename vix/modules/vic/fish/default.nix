@@ -1,4 +1,12 @@
-{ config, lib, pkgs, vix, USER, DOTS, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  vix,
+  USER,
+  DOTS,
+  ...
+}: {
   home-manager.users.${USER} = {
     programs.fzf.enable = true;
     programs.fzf.enableFishIntegration = true;
@@ -64,8 +72,7 @@
       functions = {
         spc.body = "SPC $argv -- -nw";
         vspc.body = "SPC $argv -- -c";
-        fish_hybrid_key_bindings.description =
-          "Vi-style bindings that inherit emacs-style bindings in all modes";
+        fish_hybrid_key_bindings.description = "Vi-style bindings that inherit emacs-style bindings in all modes";
         fish_hybrid_key_bindings.body = ''
           for mode in default insert visual
               fish_default_key_bindings -M $mode
@@ -77,14 +84,16 @@
         vix-shell.description = "Run nix shell with vix's nixpkgs";
         vix-shell.body = "nix shell --inputs-from $HOME/.nix-out/nixpkgs";
         vix-nixpkg-search.description = "Nix search on vix's nixpkgs input";
-        vix-nixpkg-search.body =
-          "nix search --inputs-from $HOME/.nix-out/vix nixpkgs $argv";
+        vix-nixpkg-search.body = "nix search --inputs-from $HOME/.nix-out/vix nixpkgs $argv";
         rg-vix-inputs.description = "Search on vix flake inputs";
         rg-vix-inputs.body = let
           maybeFlakePaths = f:
-            if builtins.hasAttr "inputs" f then flakePaths f else [ ];
+            if builtins.hasAttr "inputs" f
+            then flakePaths f
+            else [];
           flakePaths = flake:
-            [ flake.outPath ] ++ lib.flatten
+            [flake.outPath]
+            ++ lib.flatten
             (lib.mapAttrsToList (_: maybeFlakePaths) flake.inputs);
           paths = builtins.concatStringsSep " " (flakePaths vix);
         in "rg $argv ${paths}";
@@ -96,21 +105,18 @@
         rg-home-manager.body = "rg $argv $HOME/.nix-out/home-manager";
         rg-nix-darwin.description = "Search on current nix-darwin";
         rg-nix-darwin.body = "rg $argv $HOME/.nix-out/nix-darwin";
-        nixos-opt.description =
-          "Open a browser on search.nixos.org for options";
+        nixos-opt.description = "Open a browser on search.nixos.org for options";
         nixos-opt.body = ''
           open "https://search.nixos.org/options?sort=relevance&query=$argv"'';
-        nixos-pkg.description =
-          "Open a browser on search.nixos.org for packages";
+        nixos-pkg.description = "Open a browser on search.nixos.org for packages";
         nixos-pkg.body = ''
           open "https://search.nixos.org/packages?sort=relevance&query=$argv"'';
-        repology-nixpkgs.description =
-          "Open a browser on search for nixpkgs on repology.org";
+        repology-nixpkgs.description = "Open a browser on search for nixpkgs on repology.org";
         repology-nixpkgs.body = ''
           open "https://repology.org/projects/?inrepo=nix_unstable&search=$argv"'';
       };
       plugins =
-        map vix.lib.nivFishPlugin [ "pure" "done" "fzf.fish" "pisces" "z" ];
+        map vix.lib.nivFishPlugin ["pure" "done" "fzf.fish" "pisces" "z"];
     };
     home.file = {
       ".local/share/fish/fish_history".source = "${DOTS}/fish/fish_history";

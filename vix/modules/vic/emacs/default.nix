@@ -1,4 +1,12 @@
-{ lib, pkgs, config, vix, USER, ... }: {
+{
+  lib,
+  pkgs,
+  config,
+  vix,
+  USER,
+  DOTS,
+  ...
+}: {
   home-manager.users.${USER} = let
     emacsPkg = pkgs.emacs;
     doomDir = "~/.doom.d";
@@ -8,14 +16,14 @@
   in {
     home.file.".doom.d".source = doomConf;
     home.file.".nix-out/doom-emacs".source = vix.lib.nivSources.emacs-doom;
-    home.file.".emacs.d/init.el".source =
-      "${vix.lib.nivSources.emacs-chemacs2}/init.el";
-    home.file.".emacs.d/early-init.el".source =
-      "${vix.lib.nivSources.emacs-chemacs2}/early-init.el";
+    home.file.".emacs.d/init.el".source = "${vix.lib.nivSources.emacs-chemacs2}/init.el";
+    home.file.".emacs.d/early-init.el".source = "${vix.lib.nivSources.emacs-chemacs2}/early-init.el";
     home.file.".emacs-profile".text = "doom";
     home.file.".emacs-profiles.el".text = ''
       (("doom" . ((user-emacs-directory . "${doomEmacs}")
+                  (server-name . "doom")
                   (server-socket-dir . "${doomLocalDir}/server-socks")
+                  (custom-file . "${DOTS}/emacs.d/custom.el")
                   (env . (("DOOMDIR" . "${doomDir}")
                           ("DOOMLOCALDIR" . "${doomLocalDir}")
         )))))
@@ -26,13 +34,13 @@
         exec ${emacsPkg}/bin/emacs --with-profile doom --daemon doom "''${@}"
       '')
       (pkgs.writeScriptBin "ve" ''
-        exec ${emacsPkg}/bin/emacsclient -c "''${@}"
+        exec ${emacsPkg}/bin/emacsclient -s doom -c "''${@}"
       '')
       (pkgs.writeScriptBin "e" ''
-        exec ${emacsPkg}/bin/emacsclient -nw "''${@}"
+        exec ${emacsPkg}/bin/emacsclient -s doom -nw "''${@}"
       '')
       (pkgs.writeScriptBin "emacsclient" ''
-        exec ${emacsPkg}/bin/emacsclient "''${@}"
+        exec ${emacsPkg}/bin/emacsclient -s doom "''${@}"
       '')
       (pkgs.writeScriptBin "SPC" ''
         export DOOMDIR="${doomDir}"

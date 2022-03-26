@@ -1,4 +1,11 @@
-{ config, lib, pkgs, USER, DOTS, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  USER,
+  DOTS,
+  ...
+}: {
   home-manager.users.${USER} = {
     programs.ssh = {
       enable = true;

@@ -1,30 +1,40 @@
-{ lib, pkgs, vix, ... }: rec {
-  linkJvm = (name: jdk:
-    pkgs.runCommand "link-jvm-${name}" { } ''
+{
+  lib,
+  pkgs,
+  vix,
+  ...
+}: rec {
+  linkJvm = name: jdk:
+    pkgs.runCommand "link-jvm-${name}" {} ''
       mkdir -p $out/Library/Java/JavaVirtualMachines
       ln -s ${builtins.toPath jdk} $out/Library/Java/JavaVirtualMachines/${name}
-    '');
+    '';
   nivSources = import "${vix}/nix/sources.nix";
-  nivGoModule = { name, moduleOpts ? (meta: opts: opts) }:
-    let
-      src = nivSources."go-${name}";
-      meta = {
+  nivGoModule = {
+    name,
+    moduleOpts ? (meta: opts: opts),
+  }: let
+    src = nivSources."go-${name}";
+    meta =
+      {
         inherit name;
         description = name;
         version = src.version or src.rev;
-      } // src;
-    in (pkgs.buildGoModule (moduleOpts meta rec {
-      inherit (meta) version;
-      inherit src meta;
-      pname = meta.name;
-      name = "${pname}-${version}";
-      vendorSha256 = meta.vendorSha256 or lib.fakeSha256;
-    }));
+      }
+      // src;
+  in (pkgs.buildGoModule (moduleOpts meta rec {
+    inherit (meta) version;
+    inherit src meta;
+    pname = meta.name;
+    name = "${pname}-${version}";
+    vendorSha256 = meta.vendorSha256 or lib.fakeSha256;
+  }));
   nivGoAutoMod = name:
     (nivGoModule {
       inherit name;
       moduleOpts = meta: opts:
-        opts // {
+        opts
+        // {
           proxyVendor = true;
           doCheck = false;
           overrideModAttrs = old: {
@@ -40,7 +50,8 @@
             '';
           };
         };
-    }).overrideAttrs (old: {
+    })
+    .overrideAttrs (old: {
       buildPhase = ''
         cp vendor/go.mod .
         ${old.buildPhase}

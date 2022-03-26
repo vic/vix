@@ -3,11 +3,11 @@
 {
   description = "Vic's Nix Environment";
   inputs = {
-    nixpkgs.url =
-      "github:nixos/nixpkgs/d2562a557abf985e52b4f400060d44a62428c32f";
+    nixpkgs.url = "github:nixos/nixpkgs/d2562a557abf985e52b4f400060d44a62428c32f";
     # change tag or commit of nixpkgs for your system
     #mk-darwin-system.url = "github:vic/mk-darwin-system/main"; # change main to a tag o git revision
     mk-darwin-system.url = "path:/hk/mkDarwinSystem";
+
     # development mode
     mk-darwin-system.inputs.nixpkgs.follows = "nixpkgs";
     alejandra.url = "github:kamadorueda/alejandra";
@@ -16,25 +16,37 @@
     SPC.url = "github:vic/SPC";
     SPC.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, mk-darwin-system, ... }:
-    let
-      darwinFlakeOutput = mk-darwin-system.mkDarwinSystem.m1 {
-        flakePath = "/hk/vix";
-        modules = [
-          ({ pkgs, lib, ... }: {
-            config._module.args = {
-              vix = self // {
+  outputs = {
+    self,
+    nixpkgs,
+    mk-darwin-system,
+    ...
+  }: let
+    darwinFlakeOutput = mk-darwin-system.mkDarwinSystem.m1 {
+      flakePath = "/hk/vix";
+      modules = [
+        ({
+          pkgs,
+          lib,
+          ...
+        }: {
+          config._module.args = {
+            vix =
+              self
+              // {
                 lib = import ./vix/lib {
                   vix = self;
                   inherit pkgs lib;
                 };
               };
-            };
-          })
-          ./vix/modules
-        ];
-      };
-    in darwinFlakeOutput // {
+          };
+        })
+        ./vix/modules
+      ];
+    };
+  in
+    darwinFlakeOutput
+    // {
       darwinConfigurations."yavanna" =
         darwinFlakeOutput.darwinConfiguration.aarch64-darwin;
     };

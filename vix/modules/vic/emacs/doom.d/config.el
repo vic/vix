@@ -2,6 +2,7 @@
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
+(setq custom-file "/hk/dots/emacs.d/custom.el")
 
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
@@ -141,7 +142,7 @@
 
 (use-package! bespoke-themes
   :defer t
-  :commands (bespoke/dark-theme)
+  :commands (bespoke/dark-theme bespoke/toggle-theme)
   :config
   ;; Set evil cursor colors
   (setq bespoke-set-evil-cursors t)

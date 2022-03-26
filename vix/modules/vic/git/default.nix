@@ -1,11 +1,18 @@
-{ config, lib, pkgs, USER, DOTS, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  USER,
+  DOTS,
+  ...
+}: {
   home-manager.users.${USER} = {
     programs.git = {
       enable = true;
       userName = "Victor Hugo Borja";
       userEmail = "vborja@apache.org";
       extraConfig = {
-        init = { defaultBranch = "main"; };
+        init = {defaultBranch = "main";};
         pager.difftool = true;
         diff.tool = "difftastic";
         difftool.prompt = false;
@@ -14,13 +21,11 @@
       aliases = {
         "dff" = "difftool";
         "fap" = "fetch --all -p";
-        "rm-merged" =
-          "for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D";
-        "recents" =
-          "for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'";
+        "rm-merged" = "for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D";
+        "recents" = "for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'";
       };
-      ignores = [ ".DS_Store" "*.swp" ];
-      includes = [ ];
+      ignores = [".DS_Store" "*.swp"];
+      includes = [];
       # { path = "${DOTS}/git/something"; }
 
       lfs.enable = true;

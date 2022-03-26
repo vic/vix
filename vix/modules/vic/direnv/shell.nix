@@ -1,4 +1,10 @@
-{ pkgs, lib, USER, direnv_dir, ... }:
+{
+  pkgs,
+  lib,
+  USER,
+  direnv_dir,
+  ...
+}:
 lib.mkMerge [
   {
     home-manager.users.${USER}.home.file = {
@@ -14,6 +20,7 @@ lib.mkMerge [
     home-manager.users.${USER}.home.file = lib.mkMerge (lib.mapAttrsToList
       (name: shell: {
         "${direnv_dir}/${name}".source = lib.mds.shellEnv shell;
-      }) pkgs.pkgShells);
+      })
+      pkgs.pkgShells);
   }
 ]

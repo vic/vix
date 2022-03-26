@@ -1,25 +1,30 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   options = with lib; {
     pkgSets = mkOption {
       type = types.attrsOf (types.listOf types.package);
-      default = { };
+      default = {};
       description = "Package sets";
     };
   };
   config = {
-    pkgSets = with pkgs;
-      let
-        # System level packages
-        oeiuwq = [ nixFlakes direnv home-manager ];
-        podmans = [
-          # for podman docker
-          podman
-          qemu
-          xz
-          gvproxy
-        ];
-        # Home level packages
-        vic = [
+    pkgSets = with pkgs; let
+      # System level packages
+      oeiuwq = [nixFlakes direnv home-manager];
+      podmans = [
+        # for podman docker
+        podman
+        qemu
+        xz
+        gvproxy
+      ];
+      # Home level packages
+      vic =
+        [
           difftastic
           direnv
           bottom
@@ -82,47 +87,48 @@
           git
           # work around patches
           # neovim # you can move, but there is no escape
-        ] ++ podmans;
-        # Development environments
-        scala = [
-          openjdk11
-          (mill.override { jre = openjdk11; })
-          (coursier.override { jre = openjdk11; })
-          (metals.override {
-            jre = openjdk11;
-            jdk = openjdk11;
-          })
-          dbmate
-          gettext
-          nodejs
-          google-cloud-sdk
-          # TODO: BACKPORT
-          # jdk # TODO: build
-          kubectl
-          # coursierPackages.graalvm
-          postgresql_12
-          kubernetes-helm
-          # deploy things
-        ];
-        aleron = [ kdash ];
-        gleam_dev = [
-          rustup
-          rust-analyzer
-          erlang
-          libiconv
-          darwin.apple_sdk.frameworks.CoreServices
-          darwin.apple_sdk.frameworks.CoreFoundation
-        ];
-        # bash = [ shfmt shellcheck ];
-        nix = [ niv nixfmt ];
-      in { inherit oeiuwq vic scala gleam_dev nix; };
+        ]
+        ++ podmans;
+      # Development environments
+      scala = [
+        openjdk11
+        (mill.override {jre = openjdk11;})
+        (coursier.override {jre = openjdk11;})
+        (metals.override {
+          jre = openjdk11;
+          jdk = openjdk11;
+        })
+        dbmate
+        gettext
+        nodejs
+        google-cloud-sdk
+        # TODO: BACKPORT
+        # jdk # TODO: build
+        kubectl
+        # coursierPackages.graalvm
+        postgresql_12
+        kubernetes-helm
+        # deploy things
+      ];
+      aleron = [kdash];
+      gleam_dev = [
+        rustup
+        rust-analyzer
+        erlang
+        libiconv
+        darwin.apple_sdk.frameworks.CoreServices
+        darwin.apple_sdk.frameworks.CoreFoundation
+      ];
+      # bash = [ shfmt shellcheck ];
+      nix = [niv nixfmt alejandra];
+    in {inherit oeiuwq vic scala gleam_dev nix;};
     nixpkgs.overlays = [
       (new: old: {
         pkgShells =
-          lib.mapAttrs (name: packages: new.mkShell { inherit name packages; })
+          lib.mapAttrs (name: packages: new.mkShell {inherit name packages;})
           config.pkgSets;
         pkgSets =
-          lib.mapAttrs (name: paths: new.buildEnv { inherit name paths; })
+          lib.mapAttrs (name: paths: new.buildEnv {inherit name paths;})
           config.pkgSets;
       })
     ];

@@ -1,4 +1,12 @@
-{ config, pkgs, lib, USER, HOME, direnv_dir, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  USER,
+  HOME,
+  direnv_dir,
+  ...
+}:
 lib.mkMerge [
   {
     home-manager.users.${USER}.home.file = {
