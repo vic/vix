@@ -50,19 +50,18 @@
         gcam = "git commit --amend --all --message";
         gbDm = "git rm-merged";
         # Magit
-        mg = "spc g g";
-        ms = "spc g g";
+        ms = "mg SPC g g";
         # status
-        mc = "spc g / c";
+        mc = "mg SPC g / c";
         # commit
-        md = "spc g / d u";
+        md = "mg SPC g / d u";
         # diff unstaged
-        ml = "spc g / l l";
-        tig = "spc g / l l";
+        ml = "mg SPC g / l l";
+        tig = "mg SPC g / l l";
         # log
-        mr = "spc g / r i";
+        mr = "mg SPC g / r i";
         # rebase interactive
-        mz = "spc g / Z l";
+        mz = "mg SPC g / Z l";
         # list stash
       };
       interactiveShellInit = ''
@@ -70,6 +69,7 @@
         direnv hook fish | source
       '';
       functions = {
+        mg.body = "spc u SPC gg -r \"$PWD\" RET";
         spc.body = "SPC $argv -- -nw";
         vspc.body = "SPC $argv -- -c";
         fish_hybrid_key_bindings.description = "Vi-style bindings that inherit emacs-style bindings in all modes";
