@@ -40,13 +40,11 @@
         exec ${emacsPkg}/bin/emacsclient -s doom -nw "''${@}"
       '')
       (pkgs.writeScriptBin "emacsclient" ''
-        exec ${emacsPkg}/bin/emacsclient -s doom "''${@}"
+        exec ${emacsPkg}/bin/emacsclient "''${@}"
       '')
       (pkgs.writeScriptBin "SPC" ''
-        export DOOMDIR="${doomDir}"
-        export DOOMLOCALDIR="${doomLocalDir}"
-        export EMACSDIR="${doomEmacs}"
         export SPC_CLIENT_CMD="${emacsPkg}/bin/emacsclient"
+        export SPC_CLIENT_OPTS="-s doom"
         exec ${pkgs.SPC}/bin/SPC "''${@}"
       '')
       (pkgs.writeScriptBin "doom" ''
