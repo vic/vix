@@ -17,6 +17,9 @@
         diff.tool = "difftastic";
         difftool.prompt = false;
         difftool.difftastic.cmd = "${pkgs.difftastic}/bin/difft $LOCAL $REMOTE";
+
+        github.user = "vic";
+        gitlab.user = "vic";
       };
       aliases = {
         "dff" = "difftool";
