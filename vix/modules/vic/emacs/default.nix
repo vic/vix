@@ -31,7 +31,7 @@
     home.packages = [
       pkgs.EmacsApp
       (pkgs.writeScriptBin "doom-daemon" ''
-        exec ${emacsPkg}/bin/emacs --with-profile doom --daemon doom "''${@}"
+        exec ${emacsPkg}/bin/emacs --with-profile doom --daemon=doom "''${@}"
       '')
       (pkgs.writeScriptBin "ve" ''
         exec ${emacsPkg}/bin/emacsclient -s doom -c "''${@}"
