@@ -3,6 +3,7 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 (setq custom-file "/hk/dots/emacs.d/custom.el")
+(add-to-list 'auth-sources "/hk/dots/emacs.d/authinfo")
 
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
