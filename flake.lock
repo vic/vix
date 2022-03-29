@@ -31,11 +31,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1647993668,
-        "narHash": "sha256-PBFmxE4lGktnrEEqEXJ05noQJ5+LtECJgrH9LdAx0xc=",
+        "lastModified": 1648332543,
+        "narHash": "sha256-9FWmFNLCOp4y0I8Yb4GvgGXxtDq3nBDSTI9qyCi2LJ4=",
         "owner": "kamadorueda",
         "repo": "alejandra",
-        "rev": "461da9509f95216ea89bfec3f270fbcd507543fa",
+        "rev": "5cbb3486c7959646f452830c0a223edc5db5b951",
         "type": "github"
       },
       "original": {
@@ -109,11 +109,11 @@
     "flakeCompat": {
       "flake": false,
       "locked": {
-        "lastModified": 1641205782,
-        "narHash": "sha256-4jY7RCWUoZ9cKD8co0/4tFARpWB+57+r1bLLvXNJliY=",
+        "lastModified": 1648199409,
+        "narHash": "sha256-JwPKdC2PoVBkG6E+eWw3j6BMR6sL3COpYWfif7RVb8Y=",
         "owner": "edolstra",
         "repo": "flake-compat",
-        "rev": "b7547d3eed6f32d06102ead8991ec52ab0a4f1a7",
+        "rev": "64a525ee38886ab9028e6f61790de0832aa3ef03",
         "type": "github"
       },
       "original": {

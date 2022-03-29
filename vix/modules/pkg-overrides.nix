@@ -63,6 +63,7 @@
           ln -s $out/Applications/Emacs.app/Contents/MacOS/Emacs $out/bin/emacs
         '';
       });
+
       alejandra = vix.inputs.alejandra.defaultPackage.${config.nixpkgs.system};
       SPC = vix.inputs.SPC.packages.${config.nixpkgs.system}.default;
 

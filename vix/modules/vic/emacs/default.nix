@@ -30,6 +30,9 @@
     '';
     home.packages = [
       pkgs.EmacsApp
+      (pkgs.writeScriptBin "alejandra-quiet" ''
+        exec ${pkgs.alejandra}/bin/alejandra --quiet "''${@}"
+      '')
       (pkgs.writeScriptBin "doom-daemon" ''
         exec ${emacsPkg}/bin/emacs --with-profile doom --daemon=doom "''${@}"
       '')

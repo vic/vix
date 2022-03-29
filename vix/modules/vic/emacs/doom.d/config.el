@@ -156,3 +156,5 @@
   (setq bespoke-set-theme 'dark)
   ;; Load theme
   (load-theme 'bespoke t))
+
+(set-formatter! 'alejandra "alejandra-quiet" :modes '(nix-mode))

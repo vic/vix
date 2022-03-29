@@ -1,13 +1,13 @@
 .PHONY: all
 
-all: nixfmt test install
+all: fmt test install
 
-test: flake-check nixfmt-check
+test: flake-check fmt-check
 
-nixfmt:
+fmt:
 	find . -type f -iname "*.nix" -print0 | xargs -0 alejandra
 
-nixfmt-check:
+fmt-check:
 	find . -type f -iname "*.nix" -print0 | xargs -0 alejandra -c
 
 flake-check:
