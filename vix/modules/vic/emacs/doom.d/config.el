@@ -64,6 +64,8 @@
 (map! :leader
       "SPC" #'execute-extended-command
       "b SPC" #'switch-to-buffer
+      "b TAB" #'switch-to-next-buffer
+      "b <backtab>" #'switch-to-prev-buffer
       "b w" #'switch-to-buffer-other-window
       "b t" #'switch-to-buffer-other-tab
       "t t" #'treemacs
