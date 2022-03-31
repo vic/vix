@@ -94,6 +94,10 @@
       "#" #'iedit-increment-occurrences
       )
 
+(map! (:when IS-MAC :g "s-[" #'evil-jump-backward
+     "s-]" #'evil-jump-forward
+    ))
+
 (use-package! evil-god-state
   :defer t
   :defer-incrementally god-mode
