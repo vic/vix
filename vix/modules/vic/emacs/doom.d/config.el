@@ -164,3 +164,4 @@
   (load-theme 'bespoke t))
 
 (set-formatter! 'alejandra "alejandra-quiet" :modes '(nix-mode))
+(doom-golden-ratio-mode 1)
