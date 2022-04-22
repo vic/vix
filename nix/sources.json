@@ -139,10 +139,10 @@
         "homepage": "",
         "owner": "PatrickF1",
         "repo": "fzf.fish",
-        "rev": "17fcc74029bbd88445712752a5a71bc64aa3994c",
-        "sha256": "12fyg3ycj3fqqms9b5ncnyyjs0gl54yc5qcbp5yp4p5fy5vwy6jr",
+        "rev": "fdc1f4043b1ff4da76bb7c0a6a4f19084e9213ef",
+        "sha256": "1m5gqnjmm0gm906mrhl54pwmjpqfbjims7zvjk4hyhyx45hi94m8",
         "type": "tarball",
-        "url": "https://github.com/PatrickF1/fzf.fish/archive/17fcc74029bbd88445712752a5a71bc64aa3994c.tar.gz",
+        "url": "https://github.com/PatrickF1/fzf.fish/archive/fdc1f4043b1ff4da76bb7c0a6a4f19084e9213ef.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fish-hydro": {
@@ -187,10 +187,10 @@
         "homepage": "",
         "owner": "jethrokuan",
         "repo": "z",
-        "rev": "45a9ff6d0932b0e9835cbeb60b9794ba706eef10",
-        "sha256": "1kjyl4gx26q8175wcizvsm0jwhppd00rixdcr1p7gifw6s308sd5",
+        "rev": "85f863f20f24faf675827fb00f3a4e15c7838d76",
+        "sha256": "1kaa0k9d535jnvy8vnyxd869jgs0ky6yg55ac1mxcxm8n0rh2mgq",
         "type": "tarball",
-        "url": "https://github.com/jethrokuan/z/archive/45a9ff6d0932b0e9835cbeb60b9794ba706eef10.tar.gz",
+        "url": "https://github.com/jethrokuan/z/archive/85f863f20f24faf675827fb00f3a4e15c7838d76.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "go-leader": {
