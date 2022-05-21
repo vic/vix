@@ -96,7 +96,6 @@
         (coursier.override {jre = openjdk11;})
         (metals.override {
           jre = openjdk11;
-          jdk = openjdk11;
         })
         dbmate
         gettext

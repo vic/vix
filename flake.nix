@@ -3,7 +3,7 @@
 {
   description = "Vic's Nix Environment";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/7fd0bd232331fdd86765b8cdbd50becc970debdc";
+    nixpkgs.url = "github:nixos/nixpkgs/91c498f0f2505d6f1af5a0151312d282deba201b";
     # change tag or commit of nixpkgs for your system
     #mk-darwin-system.url = "github:vic/mk-darwin-system/main"; # change main to a tag o git revision
     mk-darwin-system.url = "path:/hk/mkDarwinSystem";
