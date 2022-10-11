@@ -1,4 +1,4 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;;; $DOOMDIR/stardew valleyconfig.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
@@ -36,7 +36,7 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type 'normal)
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -123,45 +123,67 @@
 (after! doom-golden-ratio
   (doom-golden-ratio-mode))
 
-;; Vertical window divider
-(use-package! frame
-  :init
-  ;; Make sure new frames use window-divider
-  (add-hook 'before-make-frame-hook 'window-divider-mode)
-  :config
-  (setq-default default-frame-alist
-                (append (list
-                         ;; '(font . "SF Mono:style=medium:size=15") ;; NOTE: substitute whatever font you prefer here
-                         '(internal-border-width . 20)
-                         '(left-fringe    . 0)
-                         '(right-fringe   . 0)
-                         '(tool-bar-lines . 0)
-                         '(menu-bar-lines . 0)
-                         '(vertical-scroll-bars . nil))))
-  (setq-default window-resize-pixelwise t)
-  (setq-default frame-resize-pixelwise t)
-  :custom
-  (window-divider-default-right-width 12)
-  (window-divider-default-bottom-width 1)
-  (window-divider-default-places 'right-only)
-  (window-divider-mode t))
+;; ;; Vertical window divider
+;; (use-package! frame
+;;   :init
+;;   ;; Make sure new frames use window-divider
+;;   (add-hook 'before-make-frame-hook 'window-divider-mode)
+;;   :config
+;;   (setq-default default-frame-alist
+;;                 (append (list
+;;                          ;; '(font . "SF Mono:style=medium:size=15") ;; NOTE: substitute whatever font you prefer here
+;;                          '(internal-border-width . 20)
+;;                          '(left-fringe    . 0)
+;;                          '(right-fringe   . 0)
+;;                          '(tool-bar-lines . 0)
+;;                          '(menu-bar-lines . 0)
+;;                          '(vertical-scroll-bars . nil))))
+;;   (setq-default window-resize-pixelwise t)
+;;   (setq-default frame-resize-pixelwise t)
+;;   :custom
+;;   (window-divider-default-right-width 12)
+;;   (window-divider-default-bottom-width 1)
+;;   (window-divider-default-places 'right-only)
+;;   (window-divider-mode t))
 
 
-(use-package! bespoke-themes
-  :defer t
-  :commands (bespoke/dark-theme bespoke/toggle-theme)
-  :config
-  ;; Set evil cursor colors
-  (setq bespoke-set-evil-cursors t)
-  ;; Set use of italics
-  (setq bespoke-set-italic-comments t
-        bespoke-set-italic-keywords t)
-  ;; Set variable pitch
-  (setq bespoke-set-variable-pitch t)
-  ;; Set initial theme variant
-  (setq bespoke-set-theme 'dark)
-  ;; Load theme
-  (load-theme 'bespoke t))
+;; (use-package! bespoke-themes
+;;   :defer t
+;;   :commands (bespoke/dark-theme bespoke/toggle-theme)
+;;   :config
+;;   ;; Set evil cursor colors
+;;   (setq bespoke-set-evil-cursors t)
+;;   ;; Set use of italics
+;;   (setq bespoke-set-italic-comments t
+;;         bespoke-set-italic-keywords t)
+;;   ;; Set variable pitch
+;;   (setq bespoke-set-variable-pitch t)
+;;   ;; Set initial theme variant
+
+;;   (setq bespoke-set-theme 'dark)
+;;   ;; Load theme
+;;   (load-theme 'bespoke t))
 
 (set-formatter! 'alejandra "alejandra-quiet" :modes '(nix-mode))
+
+
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (("C-TAB" . 'copilot-complete)
+         :map copilot-completion-map
+         ("<backtab>" . 'copilot-previous-completion)
+         ("<tab>" . 'copilot-next-completion)
+         ("C-w" . 'copilot-accept-completion-by-word)
+         ("C-l" . 'copilot-accept-completion-by-line)
+         ("C-e" . 'copilot-accept-completion)
+         ("C-d" . 'copilot-clear-overlay)
+          ))
+
+(use-package! emacs-mini-frame
+  :defer t
+  :commands (mini-frame-mode)
+  :init (mini-frame-mode 1))
+
+(toggle-frame-maximized)
 (doom-golden-ratio-mode 1)

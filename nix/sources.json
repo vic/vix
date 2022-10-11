@@ -28,11 +28,11 @@
         "version": "0.9.90"
     },
     "IdeaApp": {
-        "sha256": "1i32i2gd35mgi8rrfbsfx93wz45z0drqmrii2fkliabkwdqdy6zn",
+        "sha256": "1y4xx5siqmswzvv6mpkb322rq38iisaw70lmw8q0yf5vw8714dml",
         "type": "file",
-        "url": "https://download.jetbrains.com/idea/ideaIC-2022.1-aarch64.dmg",
+        "url": "https://download.jetbrains.com/idea/ideaIC-2022.1.3-aarch64.dmg",
         "url_template": "https://download.jetbrains.com/idea/ideaIC-<version>-aarch64.dmg",
-        "version": "2022.1"
+        "version": "2022.1.3"
     },
     "Iterm2App": {
         "sha256": "0y0vhxwn1cl0y1gjm5fad5zndb4v448mqcksbmmskpgg73h4wn9j",

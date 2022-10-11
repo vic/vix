@@ -71,3 +71,9 @@
   (:host github :repo "mclear-tools/bespoke-themes" :branch "main"
     ;; :pin "4378932"
     ))
+
+(package! copilot
+  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+
+(package! emacs-mini-frame
+  :recipe (:host github :repo "muffinmad/emacs-mini-frame" :files ("*.el")))
