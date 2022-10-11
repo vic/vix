@@ -1,5 +1,9 @@
-{ config, lib, pkgs, ... }:
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 # for configurable home-manager modules see:
 # https://github.com/nix-community/home-manager/blob/master/modules/modules.nix
 {

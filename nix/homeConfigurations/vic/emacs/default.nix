@@ -1,5 +1,11 @@
-{lib, pkgs, config, inputs, flake, ...}:
-let
+{
+  lib,
+  pkgs,
+  config,
+  inputs,
+  flake,
+  ...
+}: let
   inherit (inputs) nivSources;
   emacsPkg = pkgs.emacs28;
   doomDir = "~/.doom.d";
@@ -15,27 +21,27 @@ in {
   home.file.".emacs.d/early-init.el".source = "${nivSources.emacs-chemacs2}/early-init.el";
   home.file.".emacs-profile".text = "doom";
   home.file.".emacs-profiles.el".text = ''
-      (("doom" . ((user-emacs-directory . "${doomEmacs}")
-                  (server-name . "doom")
-                  (server-socket-dir . "${doomLocalDir}/server-socks")
-                  (custom-file . "${config.dots}/emacs.d/custom.el")
-                  (env . (("DOOMDIR" . "${doomDir}")
-                          ("DOOMLOCALDIR" . "${doomLocalDir}")
-                  )))))
-    '';
+    (("doom" . ((user-emacs-directory . "${doomEmacs}")
+                (server-name . "doom")
+                (server-socket-dir . "${doomLocalDir}/server-socks")
+                (custom-file . "${config.dots}/emacs.d/custom.el")
+                (env . (("DOOMDIR" . "${doomDir}")
+                        ("DOOMLOCALDIR" . "${doomLocalDir}")
+                )))))
+  '';
   home.packages = [
     (pkgs.writeScriptBin "alejandra-quiet" ''
-        exec ${pkgs.alejandra}/bin/alejandra --quiet "''${@}"
-      '')
+      exec ${pkgs.alejandra}/bin/alejandra --quiet "''${@}"
+    '')
     (pkgs.writeScriptBin "doom-daemon" ''
-        exec ${emacsPkg}/bin/emacs --with-profile doom --daemon=doom "''${@}"
-      '')
+      exec ${emacsPkg}/bin/emacs --with-profile doom --daemon=doom "''${@}"
+    '')
     (pkgs.writeScriptBin "ve" ''
-        exec ${emacsPkg}/bin/emacsclient -s doom -c "''${@}"
-      '')
+      exec ${emacsPkg}/bin/emacsclient -s doom -c "''${@}"
+    '')
     (pkgs.writeScriptBin "e" ''
-        exec ${emacsPkg}/bin/emacsclient -s doom -nw "''${@}"
-      '')
+      exec ${emacsPkg}/bin/emacsclient -s doom -nw "''${@}"
+    '')
     # (pkgs.writeScriptBin "emacsclient" ''
     #     exec ${emacsPkg}/bin/emacsclient "''${@}"
     #   '')
@@ -45,10 +51,10 @@ in {
     #    exec ${pkgs.SPC}/bin/SPC "''${@}"
     #  '')
     (pkgs.writeScriptBin "doom" ''
-        export DOOMDIR="${doomDir}"
-        export DOOMLOCALDIR="${doomLocalDir}"
-        export EMACSDIR="${doomEmacs}"
-        exec $EMACSDIR/bin/doom "''${@}"
-      '')
+      export DOOMDIR="${doomDir}"
+      export DOOMLOCALDIR="${doomLocalDir}"
+      export EMACSDIR="${doomEmacs}"
+      exec $EMACSDIR/bin/doom "''${@}"
+    '')
   ];
 }
