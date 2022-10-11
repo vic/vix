@@ -25,20 +25,6 @@
   ];
 
   config = {
-    # Install dmg applications versioned by niv.
-    # See `nix develop -c niv show` on the root of your flake.
-    home.appsFromDmg = [
-      "FirefoxDevApp"
-      "IdeaApp"
-      "KeybaseApp"
-      "KeyttyApp"
-      "TelegramApp"
-      "TunnelblickApp"
-      "VimMotionApp"
-      # "Iterm2App"
-      # "PosticoApp"
-    ];
-
     home.packages = with pkgs; [
       bat
       bottom
@@ -50,7 +36,21 @@
       htop
       jq
       k9s
+      ripgrep
       ripgrep-all
+
+      # Install dmg applications versioned by niv.
+      # See `nix develop -c niv show` on the root of your flake.
+      #
+      nivApps.FirefoxDevApp
+      nivApps.IdeaApp
+      nivApps.KeybaseApp
+      nivApps.KeyttyApp
+      nivApps.TelegramApp
+      nivApps.TunnelblickApp
+      nivApps.VimMotionApp
+      # "Iterm2App"
+      # "PosticoApp"
     ];
 
     # enable at least one shell. as for any other program, see customizable options at:
