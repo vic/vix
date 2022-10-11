@@ -21,7 +21,7 @@
       "rm-merged" = "for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D";
       "recents" = "for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'";
     };
-    ignores = [".DS_Store" "*.swp"];
+    ignores = [".DS_Store" "*.swp" ".direnv"];
     includes = [];
     # { path = "${DOTS}/git/something"; }
 

@@ -4,3 +4,4 @@ outputs*
 tmp
 old
 ./flake.lock
+.direnv
