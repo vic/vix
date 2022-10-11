@@ -1,55 +1,45 @@
-## Test your system is buildable.
+# vix - Vic's Nix config.
 
-``` sh
-nix flake check
+This flake builds my darwin system: 
+
+Built with the following libraries (and lots of wonderful nix packages and libs):
+
+- [mk-darwin-system](http://github.com/vic/mk-darwin-system) Extracted from vix. 
+
+### Activation
+
+Activate system with `env NIX_CONF_DIR="$PWD" nix run` the first time.
+
+### Searching for packages 
+
+`nix search --inputs-from . nixpkgs keybase` or use the `vix-nixpkg-search` fish function (see bellow).
+
+### Vic's Fish environment
+
+Enabled fzf integration for fast searching History (CTRL+R) and files (CTRL+T)
+
+Enabled direnv integration for switching development environments upon entering dirs.
+
+Fish history is linked from private keybase repository where it is backed up.
+
+Appart from some [command aliases](vix/modules/vic/fish/default.nix), the following fish functions are handy:
+
 ```
+vix-activate             - Activate a new system generation, can be called from anywhere.
 
-## Activate your system
+vix-nixpkg-search        - Same as:
+                           nix search --inputs-from $HOME/.nix-out/vix nixpkgs $argv
 
-``` sh
-nix run
-```
+rg-vix-inputs PATTERM    - Search using rg on vix flake inputs recursively.
+                           This one is handy for grepping for nix code, options, packages, libs.
 
-## Interactive shell
+rg-vix PATTERN           - Search using rg on current system vix
+rg-nixpkgs PATTERN       - Search using rg on current system nixpkgs
+rg-home-manager PATTERN  - Search using rg on current system home-manager
+rg-nix-darwin PATTERN    - Search using rg on current system nix-darwin
 
-Your flake includes a development shell which includes tools
-like `niv` (for dependency management), `alejandra` (nix code formatter).
+nixos-opt OPTION         - Search on nixos.org for OPTION
+nixos-pkg PACKAGE        - Search on nixos.org for PACKAGE
 
-``` sh
-nix develop
-```
-
-## Add home-managed nixpkgs applications.
-
-Edit `nix/homeConfigurations/your-username.nix` and add
-the desired values for `home.programs`, for example, if
-you like to use [exa](https://the.exa.website/):
-
-``` nix
-home.programs = with pkgs; [ exa ];
-```
-
-
-## Install home-managed dmg applications (sourced by Niv)
-
-Your flake can use [niv](https://github.com/nmattia/niv) to declare
-external source dependencies, like `.dmg` applications distributed via
-github releases or for MacOS apps not available via `nixpkgs`.
-
-See `niv --help` and the [niv homepage](https://github.com/nmattia/niv) for
-more instructions on adding, updating and removing dependencies.
-
-Suppose we would like to install [Keytty](https://keytty.com/). 
-First, we need to determine the `.dmg` url from [keytty's releases](https://github.com/keytty/shelter/releases) page.
-And then add a dependency using `niv`.
-
-``` sh
-niv add keytty-dmg -t 'https://github.com/keytty/shelter/releases/download/<version>/Keytty.<version>.dmg' -v '1.2.8'
-```
-
-After adding the `keytty-dmg` dependency at version `1.2.8`, we can install it
-by editing `nix/homeConfigurations/your-username.nix`:
-
-``` nix
-home.appsFromDmg = [ "keytty-dmg "] # NOTE: same name as niv-managed dependency.
+repology-nixpkgs PACKAGE - Search for PACKAGE using repology.org
 ```
