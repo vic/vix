@@ -47,13 +47,13 @@
         ]
       },
       "locked": {
-        "lastModified": 1665467359,
-        "narHash": "sha256-OGqy0aAq52L/OGXXeG1fIt+KKlGiVMS+K1v1hzfLm3E=",
-        "path": "/hk/macnix",
+        "lastModified": 1665468798,
+        "narHash": "sha256-wPrTN0At1+LKw+AhC3ba8ztqzo1Khud3BmeZmRYc4hw=",
+        "path": "/hk/mk-darwin-system",
         "type": "path"
       },
       "original": {
-        "path": "/hk/macnix",
+        "path": "/hk/mk-darwin-system",
         "type": "path"
       }
     },
