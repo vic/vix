@@ -1,15 +1,15 @@
-{lib, pkgs, config, inputs, ...}:
+{lib, pkgs, config, inputs, flake, ...}:
 let
   inherit (inputs) nivSources;
   emacsPkg = pkgs.emacs28;
   doomDir = "~/.doom.d";
   doomLocalDir = "~/.emacs.d/doom-local";
   doomEmacs = "~/.nix-out/doom-emacs";
-  doomConf = config.lib.file.mkOutOfStoreSymlink "/hk/vix/homeConfigurations/vic/emacs/doom.d";
+  # doomConf = config.lib.file.mkOutOfStoreSymlink "/hk/vix/homeConfigurations/vic/emacs/doom.d";
 in {
   programs.emacs.enable = true;
 
-  home.file.".doom.d".source = doomConf;
+  home.file.".doom.d".source = ./doom.d;
   home.file.".nix-out/doom-emacs".source = nivSources.emacs-doom;
   home.file.".emacs.d/init.el".source = "${nivSources.emacs-chemacs2}/init.el";
   home.file.".emacs.d/early-init.el".source = "${nivSources.emacs-chemacs2}/early-init.el";
