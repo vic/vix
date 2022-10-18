@@ -38,6 +38,7 @@
       k9s
       ripgrep
       ripgrep-all
+      unison-ucm
 
       # Install dmg applications versioned by niv.
       # See `nix develop -c niv show` on the root of your flake.

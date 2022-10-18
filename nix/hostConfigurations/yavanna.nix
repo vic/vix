@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 # for configurable nixos modules see (note that many of them might be linux-only):
@@ -11,4 +12,8 @@
 # https://github.com/LnL7/nix-darwin/blob/master/modules/module-list.nix
 {
   environment.systemPackages = with pkgs; [nixVersions.stable];
+
+  nixpkgs.overlays = [
+    (import ./../overlays/unison.nix inputs.nivSources)
+  ];
 }
