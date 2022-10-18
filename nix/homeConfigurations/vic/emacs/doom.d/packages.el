@@ -50,6 +50,10 @@
 ;(unpin! t)
 
 
+;; https://github.com/dariooddenino/unison-mode-emacs
+(package! unison-mode-emacs :pin "2b794ad"
+  :recipe (:host github :repo "dariooddenino/unison-mode-emacs"))
+
 ;; https://github.com/riscy/shx-for-emacs
 (package! shx :pin "09ae212")
 
