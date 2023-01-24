@@ -42,11 +42,11 @@
         "version": "3_4_15"
     },
     "KeybaseApp": {
-        "sha256": "1hk4m6yrlfyjnsrgv8c0bw82ybcrr2pirx1sy8jj6rq7392qiryb",
+        "sha256": "1gcqw5n7387iyidxj4bbdhkr3wgvqr30ff13r0k4555sa5d8515v",
         "type": "file",
-        "url": "https://prerelease.keybase.io/Keybase.dmg?date=2020-01-27",
+        "url": "https://prerelease.keybase.io/Keybase.dmg?date=2020-10-25",
         "url_template": "https://prerelease.keybase.io/Keybase.dmg?date=<version>",
-        "version": "2020-01-27"
+        "version": "2020-10-25"
     },
     "KeyttyApp": {
         "sha256": "08sifc1pjmbbvxryy1h9wda7f36y0sy67spdbgps3f1jdn84pcpn",

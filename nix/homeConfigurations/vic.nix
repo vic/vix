@@ -25,6 +25,11 @@
   ];
 
   config = {
+    manual.html.enable = false;
+    manual.manpages.enable = false;
+
+    # linkHomeApplications = true;
+
     home.packages = with pkgs; [
       bat
       bottom
@@ -39,6 +44,7 @@
       ripgrep
       ripgrep-all
       unison-ucm
+      nixVersions.stable
 
       # Install dmg applications versioned by niv.
       # See `nix develop -c niv show` on the root of your flake.

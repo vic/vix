@@ -1,7 +1,7 @@
 {
   inputs = {
     # change tag or commit of nixpkgs for your system
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs";
 
     # change main to a tag o git revision
     # mk-darwin-system.url = "github:vic/mk-darwin-system/main";
@@ -11,7 +11,7 @@
 
   outputs = {mk-darwin-system, ...} @ inputs: let
     userName = "vic";
-    userHome = "/v";
+    userHome = "/v/home";
     hostName = "yavanna";
 
     darwinFlake = mk-darwin-system.mkFlake {
