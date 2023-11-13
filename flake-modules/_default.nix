@@ -1,0 +1,1 @@
+top: flakeModules: flakeModules // { default = { imports = top.lib.attrValues flakeModules; }; }
