@@ -1,3 +1,0 @@
-{config, ...}: {
-  allowUnfree = true;
-}
