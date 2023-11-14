@@ -10,7 +10,7 @@ top@{lib, config, ...}: let
 
   baseModules = [
     top.config.flake.nixosModules.with-system
-    top.config.flake.nixosModules.all-features
+    top.config.flake.nixosModules.${"features.all"}
     { _module.args.flakeConfig = top.config; }
   ];
 

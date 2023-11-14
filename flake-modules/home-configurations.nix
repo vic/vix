@@ -20,7 +20,7 @@ in {
           example = literalExample "inputs.home-manager.lib.homeManagerConfiguration";
           default = top.config.vix.inputs.home-manager-unstable.lib.homeManagerConfiguration;
         };
-        userName = mkOption {
+        userName = mkOption { 
           default = elemAt (match "([^@]+)@(.*)" name) 0;
         };
         hostName = mkOption {
