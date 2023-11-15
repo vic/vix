@@ -1,4 +1,4 @@
-top@{lib, ...}: {builder}: 
+top@{lib, config, ...}: {builder, kind}: 
 let 
   inherit (lib) mkOption;
 in
@@ -20,7 +20,7 @@ in
 
         module = mkOption {
           description = "Main configuration module to load";
-          inherit (builder.mod name) default example;
+          default = top.config.vix.lib.paths.${kind}.default name;
         };
 
         extraModules = mkOption {

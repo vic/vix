@@ -4,29 +4,22 @@
   cfg = config.vix;
 
   paths.homes = rec {
-    path = toPath "${cfg.self}/home-configurations";
-    default = name: toPath "${path}/${name}/default.nix";
-    configuration = name: toPath "${path}/${name}/homeConfiguration.nix";
-    user = name: toPath "${path}/${name}/user.nix";
+    path = toPath "${cfg.self}/homes";
+    default = name: toPath "${path}/${name}";
+    userModule = name: toPath "${path}/${name}/userModule.nix";
+    hostModule = name: toPath "${path}/${name}/hostModule.nix";
+    flakeModule = name: toPath "${path}/${name}/flakeModule.nix";
   };
 
-  paths.nixos = rec {
-    path = toPath "${cfg.self}/nixos-configurations";
-    default = name: toPath "${path}/${name}/default.nix";
-    configuration = name: toPath "${path}/${name}/configuration.nix";
+  osPaths = kind: rec {
+    path = toPath "${cfg.self}/hosts/${kind}";
+    default = name: toPath "${path}/${name}";
+    setup = name: toPath "${path}/${name}/setupModule.nix";
   };
 
-  paths.darwin = rec {
-    path = toPath "${cfg.self}/darwin-configurations";
-    default = name: toPath "${path}/${name}/default.nix";
-    configuration = name: toPath "${path}/${name}/configuration.nix";
-  };
-
-  paths.wsl = rec {
-    path = toPath "${cfg.self}/wsl-configurations";
-    default = name: toPath "${path}/${name}/default.nix";
-    configuration = name: toPath "${path}/${name}/configuration.nix";
-  };
+  paths.nixos  = osPaths "nixos";
+  paths.darwin = osPaths "darwin";
+  paths.wsl    = osPaths "wsl";
 
 in {
   inherit paths;

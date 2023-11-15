@@ -28,6 +28,6 @@
     experimental-features = [ "nix-command" "flakes" "fetch-closure" ];
   };
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } ./flake-modules;
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } ./flakeModules;
 
 }

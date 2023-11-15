@@ -1,9 +1,9 @@
 {lib, config, flake-parts-lib, moduleLocation, ...}: let
   inherit (flake-parts-lib) mkSubmoduleOptions;
-  inherit (lib) pipe id mapAttrs' attrValues mkOption mapAttrs types;
+  inherit (lib) pipe id mapAttrs' attrValues mkOption mapAttrs types mkMerge;
   inherit (config.vix.lib) dirApply;
 
-  scanFeatures = dir: pipe dir [
+  scanFeatures = kind: pipe "${config.vix.self}/features/${kind}" [
     (dirApply id)
     (mapAttrs' (name: value: { name = "feature-${name}"; inherit value; }))
     (x: x // { ${"feature-all"}.imports = attrValues x; })
@@ -30,11 +30,13 @@ in {
     # nixosModules already defined by flake-parts
     (mkOptions "wslModules")
     (mkOptions "darwinModules")
+    (mkOptions "homeModules")
   ];
 
   config = {
-    flake.nixosModules  = scanFeatures "${config.vix.self}/nixos-features" ;
-    flake.wslModules    = scanFeatures "${config.vix.self}/wsl-features" ;
-    flake.darwinModules = scanFeatures "${config.vix.self}/darwin-features" ;
+    flake.nixosModules  = scanFeatures "nixos";
+    flake.darwinModules = scanFeatures "darwin";
+    flake.wslModules    = scanFeatures "wsl";
+    flake.homeModules    = scanFeatures "homes";
   };
 }

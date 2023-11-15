@@ -1,6 +1,9 @@
-top@{lib, config, ...}: {kind, flakeMods, baseModules ? import ./base-modules.nix top, builder}: let
+top@{lib, config, ...}: {kind, builder}: let
   inherit (lib) mkOption types pipe listToAttrs mapAttrsToList mapAttrs flatten optional literalExample mkDefault length pathExists;
   inherit (config.vix.lib) paths;
+
+  flakeMods = config.flake."${kind}Modules";
+  baseModules = import ./base-modules.nix top;
 
   usersOnHost = hostName: pipe config.vix.home-configurations [
     (mapAttrsToList (name: value: optional (value.hostName == hostName) { inherit name value; }))
@@ -10,7 +13,7 @@ top@{lib, config, ...}: {kind, flakeMods, baseModules ? import ./base-modules.ni
 
   mkHostModules = cfg: pipe cfg [
     (mapAttrsToList (hostName: cfg: {
-      name = hostName;
+      name = "host-${hostName}";
       value = mkHostModule hostName cfg;
     }))
     listToAttrs
@@ -45,14 +48,14 @@ top@{lib, config, ...}: {kind, flakeMods, baseModules ? import ./base-modules.ni
   };
 
   mkHostConfiguration = hostName: cfg: cfg.builder { 
-    modules = [ flakeMods.${hostName} ]; 
+    modules = [ flakeMods."host-${hostName}" ]; 
   };
 
 in {
   options.configurations = mkOption {
     description = "NixOS configurations";
     default = {};
-    type = types.lazyAttrsOf (types.submodule (import ./options.nix top { inherit builder; }));
+    type = types.lazyAttrsOf (types.submodule (import ./options.nix top { inherit builder kind; }));
   };
 
   config = {

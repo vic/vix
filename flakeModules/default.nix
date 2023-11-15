@@ -5,7 +5,7 @@ top@{lib, config, ...}: let
   vix-lib = import ./../lib/_default.nix top;
   inherit (vix-lib) dirApply;
 
-  flake.flakeModules = pipe ./../flake-modules [
+  flake.flakeModules = pipe ./. [
      (dirApply id)
      (x: builtins.removeAttrs x ["default"])
      (import ./_lib.nix top vix-lib)

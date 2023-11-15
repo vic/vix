@@ -5,7 +5,6 @@ top@{lib, config, ...}: let
 
   mod = import ./_nixos_builder top {
     kind = "wsl";
-    flakeMods = config.flake.wslModules;
 
     builder.fn = {
       default = top.config.vix.inputs.nixpkgs-stable.lib.nixosSystem;
@@ -23,11 +22,6 @@ top@{lib, config, ...}: let
         { wsl.enable = true; }
       ]; 
       example = literalExample "[]";
-    };
-
-    builder.mod = name: {
-      default = paths.wsl.configuration name;
-      example = "./wsl-configurations/<your-hostname>/configuration.nix";
     };
   };
 

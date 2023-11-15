@@ -4,7 +4,7 @@ top@{lib, config, ...}: let
 
   mod = import ./_nixos_builder top {
     kind = "nixos";
-    flakeMods = config.flake.nixosModules;
+
     builder.fn = {
       default = top.config.vix.inputs.nixpkgs-unstable.lib.nixosSystem;
       example = literalExample "inputs.nixpkgs.lib.nixosSystem";
@@ -18,11 +18,6 @@ top@{lib, config, ...}: let
     builder.extraMods = name: {
       default = []; 
       example = literalExample "[]";
-    };
-
-    builder.mod = name: {
-      default = paths.nixos.configuration name;
-      example = "./nixos-configurations/<your-hostname>/configuration.nix";
     };
   };
 
