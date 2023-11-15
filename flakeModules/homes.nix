@@ -27,12 +27,16 @@ in {
           default = elemAt (match "([^@]+)@(.*)" name) 1;
         };
         userModule = mkOption {
-          description = "Nixos module to configure the user at system (eg groups)";
-          default = paths.homes.user name;
+          description = "nixos user module";
+          default = paths.homes.userModule name;
+        };
+        hostModule = mkOption {
+          description = "nixos system module";
+          default = paths.homes.hostModule name;
         };
         module = mkOption {
           description = "home-manager module to configure the user home.";
-          default = paths.homes.configuration name;
+          default = paths.homes.default name;
         };
         pkgs = mkOption {
           description = "nixpkgs instance to use for homeConfiguration";

@@ -19,31 +19,43 @@ top@{lib, config, ...}: {kind, builder}: let
     listToAttrs
   ];
 
-  mkHostModule = hostName: cfg: let
+  osHomeModule = homeName: homeCfg: [({config, ...}: {
+    home-manager.users.${homeCfg.userName} = {...}: { 
+      home.stateVersion = mkDefault config.system.stateVersion;
+      imports = [top.config.flake.homeModules.${homeName}];
+    };
+  })];
+
+  optionalIfExists = path: module: optional (pathExists path) module;
+  osHostModule = homeName: homeCfg: optionalIfExists (paths.homes.hostModule homeName) (paths.homes.hostModule homeName);
+  osUserModule = homeName: homeCfg: optionalIfExists (paths.homes.userModule homeName) (args@{pkgs, config, ...}: {
+    users.users.${homeCfg.userName} = args2@{...}: { 
+      _module.args = args // args2;
+      imports = [ (paths.homes.userModule homeName) ];
+    };
+  });
+
+
+  homes = hostName: hostCfg: let 
     users = usersOnHost hostName;
-    userConfig = homeName: homeCfg: optional (pathExists (paths.homes.user homeName)) {
-      users.users.${homeCfg.userName} = paths.homes.user homeName;
-    };
-    homeConfig = homeName: homeCfg: {config, ...}: {
-      home-manager.users.${homeCfg.userName} = {...}: { 
-        home.stateVersion = mkDefault config.system.stateVersion;
-        imports = [top.config.flake.homeModules.${homeName}];
-      };
-    };
     usersModules = pipe users [ 
-      (mapAttrsToList (homeName: homeCfg: [ 
-        [(homeConfig homeName homeCfg)]
-        (userConfig homeName homeCfg) 
-      ]))
+      (mapAttrsToList (homeName: homeCfg: 
+        (osHomeModule homeName homeCfg) ++
+        (osUserModule homeName homeCfg) ++
+        (osHostModule homeName homeCfg)   
+      )) 
       flatten
     ];
-    hm-module = {config, ...}: {
+
+    module = {config, ...}: {
       home-manager.useUserPackages = lib.mkDefault true;
       home-manager.useGlobalPkgs = lib.mkDefault true;
-      imports = [ cfg.hmModule ] ++ usersModules;
+      imports = [ hostCfg.hmModule ] ++ usersModules;
     };
-  in {
-    imports = baseModules ++ cfg.extraModules ++ [ cfg.module ] ++ (optional (users != {}) hm-module); 
+  in optional (users != {}) module;
+
+  mkHostModule = hostName: hostCfg: {
+    imports = baseModules ++ hostCfg.extraModules ++ [ hostCfg.module ] ++ (homes hostName hostCfg); 
     networking.hostName = mkDefault hostName;
   };
 
