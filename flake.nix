@@ -1,33 +1,21 @@
 {
   inputs = {
-    flake-parts.url = "https://rime.cx/v1/github/hercules-ci/flake-parts/branch/main.tar.gz";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable&shallow=1";
 
-    nix-latest.url = "https://rime.cx/v1/github/NixOS/nix/version/2.18.1.tar.gz";
-    # nix-latest.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    blueprint.url = "github:numtide/blueprint?ref=main&shallow=1";
+    blueprint.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/23.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-wsl.url = "github:nix-community/nixos-wsl?ref=main&shallow=1";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager-stable.url = "github:nix-community/home-manager/release-23.05"; # IMPORTANT: must match stable nixpkgs. 
-    home-manager-stable.inputs.nixpkgs.follows = "nixpkgs-stable";
+    home-manager.url = "github:nix-community/home-manager?ref=master&shallow=1";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager-unstable.url = "github:nix-community/home-manager";
-    home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    nixos-wsl-stable.url = "github:nix-community/NixOS-WSL/23.5.5.2";
-    nixos-wsl-stable.inputs.nixpkgs.follows = "nixpkgs-stable";
-
-    nixos-vscode-ssh.url = "github:mudrii/nixos-vscode-ssh-fix";
-    nixos-vscode-ssh.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    devenv.url = "github:cachix/devenv";
-
+    vscode-server.url = "github:nix-community/nixos-vscode-server?ref=master&shallow=1";
+    vscode-server.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  nixConfig = {
-    experimental-features = [ "nix-command" "flakes" "fetch-closure" ];
+  outputs = inputs: inputs.blueprint {
+    inherit inputs;
   };
-
-  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } ./flakeModules;
-
 }

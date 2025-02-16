@@ -1,3 +1,0 @@
-{pkgs, ...}: {
-  shell = pkgs.fish;
-}

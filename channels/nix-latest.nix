@@ -1,1 +1,0 @@
-{ config, ...}: {system, ...}: config.vix.inputs.nix-latest.packages.${system}
