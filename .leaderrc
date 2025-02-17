@@ -1,8 +1,9 @@
 {
   "name": "Leader",
   "keys": {
-    "a": "nh os boot",
+    "R": "nh-reboot",
     "c": "nh clean all",
+    "C": "nh-clean-boot",
     "s": "nh os switch",
     "b": "nh os boot",
     "S": "nr-switch",

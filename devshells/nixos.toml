@@ -1,0 +1,19 @@
+imports = ["./nix.toml", "./nixos/leader.nix"]
+
+[[commands]]
+package = "nh"
+
+[[commands]]
+name = "nh-reboot"
+command = "nix fmt && nh os boot && reboot"
+help = "Nix Format / OS Boot"
+
+[[commands]]
+name = "nh-clean-boot"
+command = "nix fmt && nh os boot && nh clean all && nh os boot"
+help = "Clear boot"
+
+[[commands]]
+name = "nr-switch"
+command = "sudo nixos-rebuild --flake . switch"
+help = "nixos-rebuild switch"
