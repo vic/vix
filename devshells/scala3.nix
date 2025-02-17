@@ -1,18 +1,22 @@
-import ./from-nix ({pkgs, perSystem, ...}: let
-  jre = pkgs.graalvm-ce;
+import ./from-nix (
+  { pkgs, perSystem, ... }:
+  let
+    jre = pkgs.graalvm-ce;
 
-  mill = pkgs.mill.override { inherit jre; };
-  scala-cli = pkgs.scala-cli.override { inherit jre; };
-  sbt = pkgs.sbt.override { inherit jre; };
-  metals = pkgs.metals.override { inherit jre; };
-in {
+    mill = pkgs.mill.override { inherit jre; };
+    scala-cli = pkgs.scala-cli.override { inherit jre; };
+    sbt = pkgs.sbt.override { inherit jre; };
+    metals = pkgs.metals.override { inherit jre; };
+  in
+  {
 
-  commands = [
-    { package = mill; }
-    { package = scala-cli; }
-    { package = sbt; }
-  ]; 
+    commands = [
+      { package = mill; }
+      { package = scala-cli; }
+      { package = sbt; }
+    ];
 
-  devshell.packages = [ metals ];
- 
-})
+    devshell.packages = [ metals ];
+
+  }
+)

@@ -1,4 +1,9 @@
-{pname, pkgs, inputs}: pkgs.buildGoModule rec {
+{
+  pname,
+  pkgs,
+  inputs,
+}:
+pkgs.buildGoModule rec {
   inherit pname;
   version = "0.3.2";
   src = inputs.cli-leader;
