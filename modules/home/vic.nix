@@ -7,8 +7,13 @@
 {
 
   imports = [
+    inputs.nix-index-database.hmModules.nix-index
+    ./vic/secrets.nix
     ./vic/devshells.nix
+    ./vic/nix-registry.nix
   ];
+
+  home.sessionVariables.EDITOR = "vim";
 
   home.packages = with pkgs; [
     tree
@@ -26,6 +31,9 @@
   programs.nh.enable = true;
   programs.fish.enable = true;
   programs.home-manager.enable = true;
+  programs.nix-index.enable = true;
+  programs.nix-index.enableFishIntegration = true;
+  programs.nix-index-database.comma.enable = true;
 
   home.file.".config/fish/conf.d/init-leader.fish".source =
     "${inputs.cli-leader.outPath}/assets/leader.fish.sh";

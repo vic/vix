@@ -22,6 +22,12 @@
 
     devshell.url = "github:numtide/devshell?ref=main&shallow=1";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
+
+    sops-nix.url = "github:Mic92/sops-nix?ref=master&shallow=1";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-index-database.url = "github:nix-community/nix-index-database?ref=main&shallow=1";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =

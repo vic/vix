@@ -1,5 +1,8 @@
 imports = ["./nix.toml", "./nixos/leader.nix"]
 
+[devshell]
+packages = ["sops", "age", "ssh-to-age"]
+
 [[commands]]
 package = "nh"
 
@@ -17,3 +20,11 @@ help = "Clear boot"
 name = "nr-switch"
 command = "sudo nixos-rebuild --flake . switch"
 help = "nixos-rebuild switch"
+
+
+[[commands]]
+name = "vic-sops-edit"
+help = "Edit secrets for vic"
+command = """
+sops --config ./modules/home/vic/sops.yaml edit ./modules/home/vic/${1:-secrets.yaml}
+"""
