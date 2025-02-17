@@ -1,8 +1,5 @@
 {
   perSystem,
-  lib,
-  pkgs,
-  inputs,
   ...
 }:
 {

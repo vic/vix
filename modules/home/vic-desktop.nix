@@ -7,6 +7,7 @@
     emacs
     vscode
     wezterm
+    ghostty
   ];
 
 }
