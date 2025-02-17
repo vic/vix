@@ -13,6 +13,15 @@
 
     vscode-server.url = "github:nix-community/nixos-vscode-server?ref=master&shallow=1";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
+
+    cli-leader.url = "github:dhamidi/leader?ref=14373a2&shallow=1";
+    cli-leader.flake = false;
+
+    nox.url = "github:madsbv/nix-options-search?ref=main&shallow=1";
+    nox.inputs.nixpkgs.follows = "nixpkgs";
+
+    devshell.url = "github:numtide/devshell?ref=main&shallow=1";
+    devshell.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs: inputs.blueprint {

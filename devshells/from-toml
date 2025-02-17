@@ -1,0 +1,4 @@
+path: {perSystem, ...}: perSystem.devshell.mkShell { 
+  _module.args = { inherit perSystem; };
+  imports = [ (perSystem.devshell.importTOML path) ]; 
+}

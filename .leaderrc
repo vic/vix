@@ -1,0 +1,18 @@
+{
+  "name": "Leader",
+  "keys": {
+    "\\": "nh os switch && nh clean all",
+    "c": "nh clean all",
+    "s": "nh os switch",
+    "S": "sudo nixos-rebuild --flake . switch",
+    "f": {
+      "name": "flake",
+      "keys": {
+        "u": "nix flake update",
+        "s": "nix flake show",
+        "c": "nix flake check",
+        "r": "nix repl"
+      }
+    }
+  }
+}
