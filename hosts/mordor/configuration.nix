@@ -2,12 +2,13 @@
 {
 
   imports = with inputs.self.nixosModules; [
-    wsl
     nix-features
+    desktop
+    barrier
     vic
+    vic-autologin
     ./static.nix
+    ./hardware-configuration.nix
   ];
-
-  wsl.defaultUser = "vic";
 
 }

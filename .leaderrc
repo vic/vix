@@ -1,18 +1,18 @@
 {
   "name": "Leader",
   "keys": {
-    "\\": "nix fmt && nh os switch && nh clean all",
+    "a": "nh-all",
     "c": "nh clean all",
     "s": "nh os switch",
-    "S": "sudo nixos-rebuild --flake . switch",
+    "S": "nr-switch",
     "f": "nix fmt",
+    "r": "nh os repl",
     "F": {
       "name": "flake",
       "keys": {
         "u": "nix flake update",
         "s": "nix flake show",
-        "c": "nix flake check",
-        "r": "nix repl"
+        "c": "nix flake check"
       }
     }
   }

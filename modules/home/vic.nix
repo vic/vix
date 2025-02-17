@@ -7,7 +7,6 @@
 {
 
   imports = [
-    inputs.self.homeModules.vscode-server
     ./vic/devshells.nix
   ];
 
@@ -16,6 +15,12 @@
     vim
     perSystem.nox.default
     perSystem.self.leader
+    jujutsu
+    fzf
+    ripgrep
+    bat
+    bottom
+    htop
   ];
 
   programs.nh.enable = true;
