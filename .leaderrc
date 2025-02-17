@@ -1,11 +1,12 @@
 {
   "name": "Leader",
   "keys": {
-    "\\": "nh os switch && nh clean all",
+    "\\": "nix fmt && nh os switch && nh clean all",
     "c": "nh clean all",
     "s": "nh os switch",
     "S": "sudo nixos-rebuild --flake . switch",
-    "f": {
+    "f": "nix fmt",
+    "F": {
       "name": "flake",
       "keys": {
         "u": "nix flake update",

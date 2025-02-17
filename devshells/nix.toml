@@ -1,2 +1,4 @@
 [[commands]]
-package = "alejandra"
+name = "fmt"
+command = "nix fmt"
+help = "Format nix files."

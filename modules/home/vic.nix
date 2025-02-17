@@ -8,7 +8,7 @@
 
   imports = [
     inputs.self.homeModules.vscode-server
-
+    ./vic/devshells.nix
   ];
 
   home.packages = with pkgs; [
