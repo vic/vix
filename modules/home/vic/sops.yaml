@@ -1,7 +1,11 @@
 keys:
   - &vic age1wmg6gkfar8nl9tr2y409vac6zqwnfjvjh6rxh2fl6x3tx4rzwdxqwj2r9e
 creation_rules:
-  - path_regex: secrets/?[^/]*\.(yaml|json|env|ini)$
+  - path_regex: ^secrets.yaml$
+    key_groups:
+    - age: 
+      - *vic
+  - path_regex: ^secrets/[^/]*$
     key_groups:
     - age: 
       - *vic

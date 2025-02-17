@@ -13,15 +13,14 @@
 
   };
 
-  sops.secrets =
-    let
-      vic-owned = {
-        mode = "0400";
-        owner = "vic";
-      };
-    in
-    {
-      "hello" = { };
-    };
+  sops.secrets = {
+    "hello" = { };
+  };
+
+  sops.templates = {
+    "hello.toml".content = ''
+      hello = "Wooo ${config.sops.placeholder.hello} Hoo";
+    '';
+  };
 
 }

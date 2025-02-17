@@ -23,8 +23,12 @@ help = "nixos-rebuild switch"
 
 
 [[commands]]
-name = "vic-sops-edit"
-help = "Edit secrets for vic"
+name = "vic-sops"
+help = "Sops for vic"
 command = """
-sops --config ./modules/home/vic/sops.yaml edit ./modules/home/vic/${1:-secrets.yaml}
+if test -z "${1:-}"; then
+  sops --config ./modules/home/vic/sops.yaml edit ./modules/home/vic/secrets.yaml
+else
+  sops --config ./modules/home/vic/sops.yaml "${@}"
+fi
 """
