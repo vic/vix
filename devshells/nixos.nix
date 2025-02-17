@@ -21,8 +21,8 @@ import ./from-nix (
       { package = pkgs.nh; }
       {
         name = "nh-all";
-        command = "nix fmt && nh os switch && nh clean all && nh os boot";
-        help = "Nix Format / OS Switch / NH Clean";
+        command = "nix fmt && nh os boot";
+        help = "Nix Format / OS Boot";
       }
       {
         name = "nr-switch";
