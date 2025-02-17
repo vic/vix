@@ -1,4 +1,9 @@
-{ inputs, config, lib, ... }:
+{
+  inputs,
+  config,
+  lib,
+  ...
+}:
 {
 
   imports = [
@@ -28,7 +33,7 @@
   };
 
   home.file.".ssh/id_ed25519.pub".source = ./secrets/ssh/id_ed25519.pub;
-  home.activation.link_ssh_id = lib.hm.dag.entryAfter ["writeBoundary"] ''
-  run ln -s "${config.sops.secrets."ssh/id_ed25519".path}" $HOME/.ssh/id_ed25519
+  home.activation.link_ssh_id = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    run ln -s "${config.sops.secrets."ssh/id_ed25519".path}" $HOME/.ssh/id_ed25519
   '';
 }
