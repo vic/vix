@@ -7,11 +7,13 @@
 {
 
   imports = [
-    inputs.nix-index-database.hmModules.nix-index
+    ./devshells.nix
+    ./nix-registry.nix
+    ./nix-index.nix
     ./vic/secrets.nix
-    ./vic/devshells.nix
-    ./vic/nix-registry.nix
     ./vic/ssh.nix
+    ./vic/fish.nix
+    ./vic/git.nix
   ];
 
   home.sessionVariables.EDITOR = "vim";
@@ -30,22 +32,6 @@
   ];
 
   programs.nh.enable = true;
-  programs.fish.enable = true;
   programs.home-manager.enable = true;
-  programs.nix-index.enable = true;
-  programs.nix-index.enableFishIntegration = true;
-  programs.nix-index-database.comma.enable = true;
-
-  home.file.".config/fish/conf.d/init-leader.fish".source =
-    "${inputs.cli-leader.outPath}/assets/leader.fish.sh";
-
-  home.file.".nix-flake".source = inputs.self.outPath;
-
-  programs.git = {
-    enable = true;
-    userName = "Victor Borja";
-    userEmail = "vborja@apache.org";
-    signing.format = "ssh";
-  };
 
 }
