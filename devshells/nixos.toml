@@ -7,9 +7,6 @@ packages = ["sops", "age", "ssh-to-age"]
 package = "nixfmt-rfc-style"
 
 [[commands]]
-package = "nox"
-
-[[commands]]
 package = "nh"
 
 [[commands]]

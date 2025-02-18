@@ -11,6 +11,7 @@
     ./vic/secrets.nix
     ./vic/devshells.nix
     ./vic/nix-registry.nix
+    ./vic/ssh.nix
   ];
 
   home.sessionVariables.EDITOR = "vim";
