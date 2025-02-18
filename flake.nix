@@ -2,7 +2,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable&shallow=1";
 
-    blueprint.url = "github:numtide/blueprint?ref=main&shallow=1";
+    blueprint.url = "github:vic/blueprint?ref=load-toml-devshells&shallow=1";
+    #blueprint.url = "path:/home/vic/hk/blueprint";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-wsl.url = "github:nix-community/nixos-wsl?ref=main&shallow=1";

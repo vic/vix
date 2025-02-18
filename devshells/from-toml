@@ -1,2 +1,0 @@
-path: {inputs, perSystem, pkgs, ...}@args: 
-(import ./from-nix (inputs.devshell.lib.importTOML path)) args
