@@ -1,4 +1,0 @@
-path: {perSystem, inputs, ...}: perSystem.devshell.mkShell { 
-  _module.args = { inherit perSystem inputs; };
-  imports = [ path ]; 
-}
