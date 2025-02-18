@@ -1,4 +1,0 @@
-[[commands]]
-name = "fmt"
-command = "nix fmt"
-help = "Format nix files."
