@@ -3,7 +3,8 @@
 
   imports = with inputs.self.nixosModules; [
     nix-features
-    desktop
+    bootable
+    kde-desktop
     barrier
     vic
     vic-autologin
