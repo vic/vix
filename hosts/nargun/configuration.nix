@@ -13,8 +13,11 @@
       bootable
       gnome-desktop
       barrier
+      macos-keys
       ./static.nix
       ./hardware-configuration.nix
     ];
+
+  vix.features.macos-keys.enable = true;
 
 }

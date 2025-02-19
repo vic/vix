@@ -33,8 +33,8 @@
     yazi # file tui
     eza # ls
     zoxide # cd 
-    p7zip-rar # zip
     obsidian # notion
+    fd # find
   ];
 
   programs.nh.enable = true;
