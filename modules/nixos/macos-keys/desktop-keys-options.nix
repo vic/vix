@@ -11,6 +11,11 @@ with lib;
     default = "A-f4";
     description = "Key to close the current app";
   };
+  new-tab = mkOption {
+    type = types.str;
+    default = "C-t";
+    description = "Key to create a tab new";
+  };
   close-tab = mkOption {
     type = types.str;
     default = "C-w";

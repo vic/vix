@@ -29,6 +29,7 @@ let
 
     # windows
     q = desktop.close-app;
+    t = desktop.new-tab;
     w = desktop.close-tab;
     tab = "swapm(mac_leftcmd, ${desktop.next-app})";
 
@@ -36,6 +37,8 @@ let
 
   # Layer for the left opt key
   mac_leftopt = { };
+
+  mac_rightctrl = { };
 
 in
 {
@@ -47,5 +50,9 @@ in
   # # Left Meta (two left from spacebar) becomes MacOS Option layer.
   main.leftmeta = "layer(mac_leftopt)";
   "mac_leftopt:M" = mac_leftopt; # inherit from original Meta layer
+
+  # Right Alt (right from spacebar) becomes additional Ctrl layer.
+  main.rightalt = "overload(mac_rightctrl, esc)";
+  "mac_rightctrl:C" = mac_rightctrl;
 
 }
