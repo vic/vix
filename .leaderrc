@@ -1,0 +1,21 @@
+{
+  "name": "Leader",
+  "keys": {
+    "R": "nh-reboot",
+    "c": "nh clean all",
+    "C": "nh-clean-boot",
+    "s": "nh os switch",
+    "b": "nh os boot",
+    "S": "nr-switch",
+    "f": "nix fmt",
+    "r": "nh os repl",
+    "F": {
+      "name": "flake",
+      "keys": {
+        "u": "nix flake update",
+        "s": "nix flake show",
+        "c": "nix flake check"
+      }
+    }
+  }
+}

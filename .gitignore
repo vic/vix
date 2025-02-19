@@ -1,7 +1,5 @@
-.DS*
-result*
-outputs*
-tmp
+cha
+result
 old
-./flake.lock
+.devenv
 .direnv
