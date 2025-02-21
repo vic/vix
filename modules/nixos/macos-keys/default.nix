@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 let
   cfg = config.vix.features.macos-keys;
 in
@@ -8,7 +13,6 @@ in
     enable = options.mkEnableOption "MacOS keys";
     desktop-keys = import ./desktop-keys-options.nix { inherit lib config; };
   };
-
 
   config = lib.mkIf cfg.enable {
     services.keyd.enable = true;

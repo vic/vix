@@ -6,6 +6,9 @@
     #blueprint.url = "path:/home/vic/hk/blueprint";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
 
+    nix-darwin.url = "github:LnL7/nix-darwin?ref=master&shallow=1";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     nixos-wsl.url = "github:nix-community/nixos-wsl?ref=main&shallow=1";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
 

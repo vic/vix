@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
 
   home.packages = [ pkgs.difftastic ];
 
@@ -9,7 +10,9 @@
     signing.format = "ssh";
 
     extraConfig = {
-      init = {defaultBranch = "main";};
+      init = {
+        defaultBranch = "main";
+      };
       pager.difftool = true;
       diff.tool = "difftastic";
       difftool.prompt = false;
@@ -21,11 +24,17 @@
     aliases = {
       "dff" = "difftool";
       "fap" = "fetch --all -p";
-      "rm-merged" = "for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D";
-      "recents" = "for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'";
+      "rm-merged" =
+        "for-each-ref --format '%(refname:short)' refs/heads | grep -v master | xargs git branch -D";
+      "recents" =
+        "for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'";
     };
-    ignores = [".DS_Store" "*.swp" ".direnv"];
-    includes = [];
+    ignores = [
+      ".DS_Store"
+      "*.swp"
+      ".direnv"
+    ];
+    includes = [ ];
     # { path = "${DOTS}/git/something"; }
 
     lfs.enable = true;

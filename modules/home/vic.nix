@@ -32,7 +32,7 @@
     htop
     yazi # file tui
     eza # ls
-    zoxide # cd 
+    zoxide # cd
     obsidian # notion
     fd # find
   ];

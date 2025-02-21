@@ -1,17 +1,25 @@
-{ pkgs, ... }:
-{
-  home-manager.backupFileExtension = "backup";
+{ lib, pkgs, ... }:
+lib.mkMerge [
 
-  programs.fish.enable = true;
+  {
+    home-manager.backupFileExtension = "backup";
 
-  users.users.vic = {
-    isNormalUser = true;
-    description = "vic";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
-    shell = pkgs.fish;
-  };
+    programs.fish.enable = true;
 
-}
+    users.users.vic = {
+      description = "vic";
+      shell = pkgs.fish;
+    };
+  }
+
+  (lib.mkIf pkgs.stdenv.isLinux {
+    users.users.vic = {
+      isNormalUser = true;
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ];
+    };
+  })
+
+]

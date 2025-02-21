@@ -2,21 +2,25 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
-  imports = with inputs.self.nixosModules; 
-    [ 
-      nix-features
-      vic
-      vic-autologin
-      bootable
-      gnome-desktop
-      barrier
-      macos-keys
-      ./static.nix
-      ./hardware-configuration.nix
-    ];
+  imports = with inputs.self.nixosModules; [
+    nix-features
+    vic
+    vic-autologin
+    bootable
+    gnome-desktop
+    barrier
+    macos-keys
+    ./static.nix
+    ./hardware-configuration.nix
+  ];
 
   vix.features.macos-keys.enable = true;
 

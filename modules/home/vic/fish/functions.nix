@@ -2,7 +2,8 @@
   lib,
   inputs,
   ...
-}: {
+}:
+{
   mg.body = "spc u SPC gg -r \"$PWD\" RET";
   spc.body = "SPC $argv -- -nw";
   vspc.body = "SPC $argv -- -c";
@@ -20,17 +21,14 @@
   vix-nixpkg-search.description = "Nix search on vix's nixpkgs input";
   vix-nixpkg-search.body = "nix search --inputs-from $HOME/.nix-out/vix nixpkgs $argv";
   rg-vix-inputs.description = "Search on vix flake inputs";
-  rg-vix-inputs.body = let
-    maybeFlakePaths = f:
-      if builtins.hasAttr "inputs" f
-      then flakePaths f
-      else [];
-    flakePaths = flake:
-      [flake.outPath]
-      ++ lib.flatten
-      (lib.mapAttrsToList (_: maybeFlakePaths) flake.inputs);
-    paths = builtins.concatStringsSep " " (flakePaths inputs.self);
-  in "rg $argv ${paths}";
+  rg-vix-inputs.body =
+    let
+      maybeFlakePaths = f: if builtins.hasAttr "inputs" f then flakePaths f else [ ];
+      flakePaths =
+        flake: [ flake.outPath ] ++ lib.flatten (lib.mapAttrsToList (_: maybeFlakePaths) flake.inputs);
+      paths = builtins.concatStringsSep " " (flakePaths inputs.self);
+    in
+    "rg $argv ${paths}";
   rg-vix.description = "Search on current vix";
   rg-vix.body = "rg $argv $HOME/.nix-out/vix";
   rg-nixpkgs.description = "Search on current nixpkgs";
@@ -40,12 +38,9 @@
   rg-nix-darwin.description = "Search on current nix-darwin";
   rg-nix-darwin.body = "rg $argv $HOME/.nix-out/nix-darwin";
   nixos-opt.description = "Open a browser on search.nixos.org for options";
-  nixos-opt.body = ''
-    open "https://search.nixos.org/options?sort=relevance&query=$argv"'';
+  nixos-opt.body = ''open "https://search.nixos.org/options?sort=relevance&query=$argv"'';
   nixos-pkg.description = "Open a browser on search.nixos.org for packages";
-  nixos-pkg.body = ''
-    open "https://search.nixos.org/packages?sort=relevance&query=$argv"'';
+  nixos-pkg.body = ''open "https://search.nixos.org/packages?sort=relevance&query=$argv"'';
   repology-nixpkgs.description = "Open a browser on search for nixpkgs on repology.org";
-  repology-nixpkgs.body = ''
-    open "https://repology.org/projects/?inrepo=nix_unstable&search=$argv"'';
+  repology-nixpkgs.body = ''open "https://repology.org/projects/?inrepo=nix_unstable&search=$argv"'';
 }

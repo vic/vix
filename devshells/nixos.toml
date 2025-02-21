@@ -1,7 +1,7 @@
 imports = ["./nixos/leader.nix"]
 
 [devshell]
-packages = ["sops", "age", "ssh-to-age"]
+packages = ["sops", "age"]
 
 [[commands]]
 package = "nixfmt-rfc-style"
@@ -23,6 +23,12 @@ help = "Clear boot"
 name = "nr-switch"
 command = "sudo nixos-rebuild --flake . switch"
 help = "nixos-rebuild switch"
+
+[[commands]]
+name = "dw-switch"
+command = "sudo darwin-rebuild --flake . switch"
+help = "nixos-rebuild switch"
+
 
 [[commands]]
 name = "vic-sops"

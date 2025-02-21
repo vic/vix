@@ -22,7 +22,6 @@ let
     "8" = "${desktop.switch-tab-n-prefix}-8";
     "9" = "${desktop.switch-tab-n-prefix}-9";
 
-
     # cursor
     left = desktop.beginning-of-line;
     right = desktop.end-of-line;

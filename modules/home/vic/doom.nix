@@ -1,7 +1,7 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 {
   programs.emacs.enable = true;
-  services.emacs.enable = true;
+  services.emacs.enable = pkgs.stdenv.isLinux;
 
   # home.file.".config/doom".source = ./doom;
   home.packages = [

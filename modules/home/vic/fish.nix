@@ -1,4 +1,4 @@
-{inputs, pkgs, ...}:
+{ inputs, pkgs, ... }:
 let
   inherit (pkgs) lib;
 in
@@ -13,12 +13,11 @@ in
   programs.fish = {
     enable = true;
 
-    functions = import ./fish/functions.nix {inherit inputs lib;};
+    functions = import ./fish/functions.nix { inherit inputs lib; };
     shellAliases = import ./fish/aliases.nix;
     shellAbbrs = import ./fish/abbrs.nix;
 
-    plugins = []; # pure done fzf.fish pisces z
+    plugins = [ ]; # pure done fzf.fish pisces z
   };
-
 
 }
