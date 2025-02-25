@@ -15,4 +15,4 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@main
         with:
           determinate: false
-      - run: nix flake check
+      - run: nix build .#checks.x86_64-linux.formatted
