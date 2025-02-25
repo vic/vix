@@ -3,6 +3,6 @@
 
   nix.registry =
     with pkgs.lib;
-    mapAttrs (name: v: { flake = v; }) (filterAttrs (name: value: value ? outputs) inputs);
+    mapAttrs (_name: v: { flake = v; }) (filterAttrs (_name: value: value ? outputs) inputs);
 
 }

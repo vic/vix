@@ -1,0 +1,18 @@
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  lints:
+    name: nix flake check
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: "write"
+      contents: "read"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          determinate: false
+      - run: nix flake check

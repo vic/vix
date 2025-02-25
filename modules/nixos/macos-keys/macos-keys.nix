@@ -1,5 +1,5 @@
 # see https://github.com/rvaiya/keyd/blob/master/examples/macos.conf
-{ desktop, config, ... }:
+{ desktop, ... }:
 let
 
   # Layer for the left cmd key

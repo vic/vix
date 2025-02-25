@@ -32,6 +32,9 @@
 
     nix-index-database.url = "github:nix-community/nix-index-database?ref=main&shallow=1";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
