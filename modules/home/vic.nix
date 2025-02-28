@@ -20,7 +20,6 @@
 
   home.packages = with pkgs; [
     tree
-    vim
     perSystem.nox.default
     perSystem.self.leader
     jujutsu # git
@@ -38,5 +37,15 @@
 
   programs.nh.enable = true;
   programs.home-manager.enable = true;
+
+  programs.neovim.enable = true;
+  programs.neovim.viAlias = true;
+  programs.neovim.vimAlias = true;
+  programs.neovim.withNodeJs = true;
+  programs.neovim.extraPackages = with pkgs; [
+    zig
+    sqlite
+    treefmt
+  ];
 
 }

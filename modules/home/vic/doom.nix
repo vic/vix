@@ -11,6 +11,7 @@
   ];
 
   home.activation.link-doom-config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    # test -h $HOME/.flake || exit 1
     run ln -sfn $HOME/.flake/modules/home/vic/doom $HOME/.config/doom
   '';
 

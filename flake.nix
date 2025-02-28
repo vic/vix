@@ -38,8 +38,6 @@
   };
 
   outputs =
-    inputs:
-    inputs.blueprint {
-      inherit inputs;
-    };
+    inputs@{self, ...}:
+    inputs.blueprint { inherit inputs; };
 }
