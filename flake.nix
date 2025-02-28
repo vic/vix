@@ -2,6 +2,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable&shallow=1";
 
+    systems.url = "github:nix-systems/default?ref=main&shallow=1";
+
     blueprint.url = "github:vic/blueprint?ref=load-toml-devshells&shallow=1";
     #blueprint.url = "path:/home/vic/hk/blueprint";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
@@ -37,7 +39,5 @@
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs =
-    inputs@{self, ...}:
-    inputs.blueprint { inherit inputs; };
+  outputs = inputs: (inputs.blueprint { inherit inputs; }) // (import ./lib/apps.nix inputs);
 }

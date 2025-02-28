@@ -1,5 +1,5 @@
 # Vic's Nix Environment
 
-```
-nh os boot
+```bash
+sudo nix run github:vic/vix#${host}-rebuild boot
 ```
