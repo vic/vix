@@ -20,6 +20,8 @@
       HostName 192.168.1.71
       User vic
       IdentityFile ~/.ssh/id_ed25519
+      RequestTTY yes
+      RemoteCommand TERM=xterm $SHELL -l
     '';
   };
 
@@ -29,7 +31,8 @@
 
   home.activation.link_ssh_id = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     run cat ${./secrets/ssh/vic_mordor.pub} > $HOME/.ssh/authorized_keys
-    run chmod 400 $HOME/.ssh/authorized_keys
+    run chmod 600 $HOME/.ssh/authorized_keys
+
     run ln -sf "${config.sops.secrets."ssh/id_ed25519".path}" $HOME/.ssh/id_ed25519
   '';
 }
