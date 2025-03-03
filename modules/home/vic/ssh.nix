@@ -16,12 +16,12 @@
     #settings.PermitRootLogin = "no";
 
     extraConfig = ''
-    Host yavanna
-      HostName 192.168.1.71
-      User vic
-      IdentityFile ~/.ssh/id_ed25519
-      RequestTTY yes
-      RemoteCommand TERM=xterm $SHELL -l
+      Host yavanna
+        HostName 192.168.1.71
+        User vic
+        IdentityFile ~/.ssh/id_ed25519
+        RequestTTY yes
+        RemoteCommand TERM=xterm $SHELL -l
     '';
   };
 
