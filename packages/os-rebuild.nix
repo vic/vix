@@ -28,9 +28,9 @@ let
   os-builders =
     let
       all-oses = inputs.self.nixosConfigurations // inputs.self.darwinConfigurations;
-      same-system = lib.filterAttrs (n: o: o.config.nixpkgs.hostPlatform.system == pkgs.system) all-oses;
-    in 
-      lib.mapAttrs os-builder same-system;
+      same-system = lib.filterAttrs (_n: o: o.config.nixpkgs.hostPlatform.system == pkgs.system) all-oses;
+    in
+    lib.mapAttrs os-builder same-system;
 
   os-rebuild = pkgs.writeShellApplication {
     name = "os-rebuild";
