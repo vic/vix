@@ -1,43 +1,41 @@
 inputs:
 let
-  os-configurations =
-    with builtins;
-    (attrValues inputs.self.nixosConfigurations) ++ (attrValues inputs.self.darwinConfigurations);
 
-  systems = builtins.map (os: os.config.nixpkgs.hostPlatform.system) os-configurations;
-
-  perSystem =
-    f: with inputs.nixpkgs.lib; genAttrs systems (system: f inputs.nixpkgs.legacyPackages.${system});
-
-  os-rebuild =
-    pkgs: os:
-    let
-      hostname = os.config.networking.hostName;
-      platform = os.config.nixpkgs.hostPlatform;
-      darwin-rebuild = inputs.nix-darwin.packages.${pkgs.system}.darwin-rebuild;
-      nixos-rebuild = pkgs.nixos-rebuild;
-      builder =
-        if platform.isDarwin then
-          "${darwin-rebuild}/bin/darwin-rebuild"
-        else
-          "${nixos-rebuild}/bin/nixos-rebuild";
-      app = pkgs.writeShellApplication {
-        name = "app";
-        text = ''
-          ${builder} --flake path:${inputs.self}#${hostname} "''${@:-boot}"
-        '';
-      };
-    in
-    pkgs.lib.optionalAttrs (platform.system == pkgs.system) {
-      "${hostname}-rebuild" = {
-        type = "app";
-        program = "${app}/bin/app";
-      };
+  # This function might be the content of apps.nix, loaded by blueprint
+  userExposedApps =
+    { perSystem, pkgs }:
+    {
+      default = perSystem.self.packages.os-rebuild;
+      inherit (pkgs) hello; # or any other derivation
     };
 
-  nixos-hosts = pkgs: with pkgs.lib; mergeAttrsList (map (os-rebuild pkgs) os-configurations);
+  # TODO: blueprint should expose apps on each system.
+  # following functions are temporary til this functionality is implemented properly in blueprint
+  # and are currently only for demo purposes.
+  eachSystem = inputs.nixpkgs.lib.genAttrs inputs.nixpkgs.lib.systems.flakeExposed;
+  eachSystem' =
+    f:
+    eachSystem (
+      system:
+      let
+        pkgs = inputs.nixpkgs.legacyPackages.${system};
+        perSystem.self.packages = inputs.self.packages.${system};
+      in
+      f { inherit pkgs perSystem; }
+    );
+
+  flakeExposedApps = eachSystem' (
+    { pkgs, perSystem }@args:
+    let
+      toFlakeApp = _name: deriv: {
+        type = "app";
+        program = pkgs.lib.getExe deriv;
+      };
+    in
+    pkgs.lib.mapAttrs toFlakeApp (userExposedApps args)
+  );
 
 in
 {
-  apps = perSystem nixos-hosts;
+  apps = flakeExposedApps;
 }
