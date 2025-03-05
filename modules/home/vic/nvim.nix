@@ -11,8 +11,4 @@
     treefmt
   ];
 
-  home.activation.link-nvim-config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    run ln -sfn $HOME/.flake/modules/home/vic/nvim $HOME/.config/
-  '';
-
 }

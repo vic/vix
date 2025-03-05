@@ -15,6 +15,7 @@
     ./vic/git.nix
     ./vic/doom.nix
     ./vic/nvim.nix
+    ./vic/dots.nix
   ];
 
   home.packages = with pkgs; [

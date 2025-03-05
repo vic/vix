@@ -9,8 +9,5 @@
     (pkgs.writeShellScriptBin "d" ''exec emacsclient -nw -a "doom run -nw --"  "$@"'')
   ];
 
-  home.activation.link-doom-config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    run ln -sfn $HOME/.flake/modules/home/vic/doom $HOME/.config/
-  '';
 
 }
