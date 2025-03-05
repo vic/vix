@@ -9,7 +9,7 @@
   ];
 
   # Determinate uses its own daemon to manage the Nix installation
-  #nix.enable = false;
+  nix.enable = false;
 
   system.defaults.trackpad.Clicking = true;
   system.defaults.trackpad.TrackpadThreeFingerDrag = true;
