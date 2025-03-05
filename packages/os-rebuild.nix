@@ -1,12 +1,14 @@
 { pkgs, inputs }:
 let
 
+  inherit (pkgs) lib;
+
   os-builder =
     name: os:
     let
       platform = os.config.nixpkgs.hostPlatform;
-      darwin-rebuild = pkgs.lib.getExe inputs.nix-darwin.packages.${platform.system}.darwin-rebuild;
-      nixos-rebuild = pkgs.lib.getExe pkgs.nixos-rebuild;
+      darwin-rebuild = lib.getExe inputs.nix-darwin.packages.${platform.system}.darwin-rebuild;
+      nixos-rebuild = lib.getExe pkgs.nixos-rebuild;
       flake-param = ''--flake "path:${inputs.self}#${name}"'';
       builder =
         if platform.isDarwin then
@@ -24,12 +26,15 @@ let
     };
 
   os-builders =
-    (pkgs.lib.mapAttrs os-builder inputs.self.nixosConfigurations)
-    // (pkgs.lib.mapAttrs os-builder inputs.self.darwinConfigurations);
+    let
+      all-oses = inputs.self.nixosConfigurations // inputs.self.darwinConfigurations;
+      same-system = lib.filterAttrs (n: o: o.config.nixpkgs.hostPlatform.system == pkgs.system) all-oses;
+    in 
+      lib.mapAttrs os-builder same-system;
 
   os-rebuild = pkgs.writeShellApplication {
     name = "os-rebuild";
-    runtimeInputs = pkgs.lib.attrValues os-builders;
+    runtimeInputs = lib.attrValues os-builders;
     text = ''
       if test "file" = "$(type -t "''${1:-_}-os-rebuild")"; then
         hostname="$1"
