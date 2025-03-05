@@ -3,7 +3,6 @@
   programs.emacs.enable = true;
   services.emacs.enable = pkgs.stdenv.isLinux;
 
-  # home.file.".config/doom".source = ./doom;
   home.packages = [
     (pkgs.writeShellScriptBin "doom" ''exec $HOME/.config/emacs/bin/doom "$@"'')
     (pkgs.writeShellScriptBin "doomscript" ''exec $HOME/.config/emacs/bin/doomscript "$@"'')
@@ -11,8 +10,7 @@
   ];
 
   home.activation.link-doom-config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    # test -h $HOME/.flake || exit 1
-    run ln -sfn $HOME/.flake/modules/home/vic/doom $HOME/.config/doom
+    run ln -sfn $HOME/.flake/modules/home/vic/doom $HOME/.config/
   '';
 
 }

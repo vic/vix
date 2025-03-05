@@ -14,9 +14,8 @@
     ./vic/fish.nix
     ./vic/git.nix
     ./vic/doom.nix
+    ./vic/nvim.nix
   ];
-
-  home.sessionVariables.EDITOR = "vim";
 
   home.packages = with pkgs; [
     tree
@@ -37,15 +36,5 @@
 
   programs.nh.enable = true;
   programs.home-manager.enable = true;
-
-  programs.neovim.enable = true;
-  programs.neovim.viAlias = true;
-  programs.neovim.vimAlias = true;
-  programs.neovim.withNodeJs = true;
-  programs.neovim.extraPackages = with pkgs; [
-    zig
-    sqlite
-    treefmt
-  ];
 
 }
