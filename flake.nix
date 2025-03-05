@@ -39,5 +39,5 @@
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs: (inputs.blueprint { inherit inputs; }) // (import ./lib/apps.nix inputs);
+  outputs = inputs: inputs.blueprint { inherit inputs; };
 }
