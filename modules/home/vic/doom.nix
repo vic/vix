@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 {
   programs.emacs.enable = true;
   services.emacs.enable = pkgs.stdenv.isLinux;
@@ -8,6 +8,5 @@
     (pkgs.writeShellScriptBin "doomscript" ''exec $HOME/.config/emacs/bin/doomscript "$@"'')
     (pkgs.writeShellScriptBin "d" ''exec emacsclient -nw -a "doom run -nw --"  "$@"'')
   ];
-
 
 }

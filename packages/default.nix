@@ -1,1 +1,1 @@
-{perSystem, ...}: perSystem.self.os-rebuild
+{ perSystem, ... }: perSystem.self.os-rebuild

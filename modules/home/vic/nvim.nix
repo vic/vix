@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 {
   home.sessionVariables.EDITOR = "vim";
   programs.neovim.enable = true;
