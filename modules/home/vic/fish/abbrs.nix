@@ -36,10 +36,9 @@
   md = "mg SPC g / d u";
   # diff unstaged
   ml = "mg SPC g / l l";
-  tig = "mg SPC g / l l";
   # log
   mr = "mg SPC g / r i";
   # rebase interactive
   mz = "mg SPC g / Z l";
-  # list stash
+  lg = "lazygit";
 }

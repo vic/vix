@@ -32,6 +32,8 @@
     zoxide # cd
     obsidian # notion
     fd # find
+    lazygit # no magit
+    tig # alucard
   ];
 
   programs.nh.enable = true;
