@@ -1,14 +1,38 @@
-{ pkgs, lib, ... }: let
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
+let
 
-  doom-clone = pkgs.writeShellApplication {
-    name = "doom-clone";
-    runtimeInputs = with pkgs; [ git emacs ];
+  doom-install = pkgs.writeShellApplication {
+    name = "doom-install";
+    runtimeInputs = with pkgs; [
+      git
+      emacs
+      ripgrep
+    ];
     text = ''
-    # If doom already exists just exit
-    test -f "$HOME/.config/emacs/bin/doom" && exit 0
+      doom_exists="$(test -f "$HOME"/.config/emacs/bin/doom && echo 1)"
+      if test "$doom_exists"; then
+        doom_rev="$(rg "put 'doom-version 'ref '\"(\w+)\"" "$HOME"/.config/emacs/.local/etc/@/init*.el -or '$1')"
+      fi
 
-    git clone --depth 1 https://github.com/doomemacs/doomemacs "$HOME/.config/emacs"
-    "$HOME/.config/emacs/bin/doom" install --no-config --no-env --install --force
+      if test "''${doom_rev:-}" = "${inputs.doom-emacs.rev}"; then
+        exit 0 # doom already pointing to same revision
+      fi
+
+      (
+        if ! test "$doom_exists"; then
+          git clone --depth 1 https://github.com/doomemacs/doomemacs "$HOME/.config/emacs"
+        fi
+        cd "$HOME/.config/emacs"
+        git fetch --depth 1 origin "${inputs.doom-emacs.rev}"
+        git reset --hard "${inputs.doom-emacs.rev}"
+        bin/doom install --no-config --no-env --install --force
+        bin/doom upgrade --packages --force
+      )
     '';
   };
 
@@ -24,7 +48,7 @@ in
   ];
 
   home.activation.clone_doom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    run ${lib.getExe doom-clone}
+    run ${lib.getExe doom-install}
   '';
 
 }

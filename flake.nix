@@ -37,6 +37,9 @@
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    doom-emacs.url = "github:doomemacs/doomemacs";
+    doom-emacs.flake = false;
   };
 
   outputs = inputs: inputs.blueprint { inherit inputs; };

@@ -60,6 +60,22 @@
         "type": "github"
       }
     },
+    "doom-emacs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1741115618,
+        "narHash": "sha256-3a1cfxzaM/jvrrODgYdxyji9KN0rQZjPJzgPFNRiBIw=",
+        "owner": "doomemacs",
+        "repo": "doomemacs",
+        "rev": "8846d151814ebbf7fb90d9d5dd16cd737257408e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "doomemacs",
+        "repo": "doomemacs",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -257,6 +273,7 @@
         "blueprint": "blueprint",
         "cli-leader": "cli-leader",
         "devshell": "devshell",
+        "doom-emacs": "doom-emacs",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nix-index-database": "nix-index-database",
