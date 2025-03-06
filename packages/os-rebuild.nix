@@ -14,7 +14,7 @@ let
     pkgs.writeShellApplication {
       name = "${name}-os-rebuild";
       text = ''
-      sudo ${if platform.isDarwin then darwin-rebuild else nixos-rebuild} ${flake-param} "''${@:-switch}"
+        sudo ${if platform.isDarwin then darwin-rebuild else nixos-rebuild} ${flake-param} "''${@:-switch}"
       '';
     };
 
