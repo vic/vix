@@ -10,19 +10,12 @@ let
       darwin-rebuild = lib.getExe inputs.nix-darwin.packages.${platform.system}.darwin-rebuild;
       nixos-rebuild = lib.getExe pkgs.nixos-rebuild;
       flake-param = ''--flake "path:${inputs.self}#${name}"'';
-      builder =
-        if platform.isDarwin then
-          ''
-            ${darwin-rebuild} ${flake-param} "''${@:-check}"
-          ''
-        else
-          ''
-            ${nixos-rebuild} ${flake-param} "''${@:-test}"
-          '';
     in
     pkgs.writeShellApplication {
       name = "${name}-os-rebuild";
-      text = builder;
+      text = ''
+      sudo ${if platform.isDarwin then darwin-rebuild else nixos-rebuild} ${flake-param} "''${@:-switch}"
+      '';
     };
 
   os-builders =
