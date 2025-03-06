@@ -27,8 +27,9 @@ let
 
   os-builders =
     let
-      all-oses = inputs.self.nixosConfigurations // inputs.self.darwinConfigurations;
-      same-system = lib.filterAttrs (_n: o: o.config.nixpkgs.hostPlatform.system == pkgs.system) all-oses;
+      has-same-system = _n: o: o.config.nixpkgs.hostPlatform.system == pkgs.system;
+      all-oses = (inputs.self.nixosConfigurations or { }) // (inputs.self.darwinConfigurations or { });
+      same-system = lib.filterAttrs has-same-system all-oses;
     in
     lib.mapAttrs os-builder same-system;
 
