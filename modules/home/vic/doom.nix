@@ -14,8 +14,8 @@ let
       ripgrep
     ];
     text = ''
-      doom_exists="$(test -f "$HOME"/.config/emacs/bin/doom && echo 1)"
-      if test "$doom_exists"; then
+      set -xe
+      if test -d "$HOME/.config/emacs/.local"; then
         doom_rev="$(rg "put 'doom-version 'ref '\"(\w+)\"" "$HOME"/.config/emacs/.local/etc/@/init*.el -or '$1')"
       fi
 
@@ -24,7 +24,7 @@ let
       fi
 
       (
-        if ! test "$doom_exists"; then
+        if ! test -d "$HOME/.config/emacs/.git"; then
           git clone --depth 1 https://github.com/doomemacs/doomemacs "$HOME/.config/emacs"
         fi
         cd "$HOME/.config/emacs"
@@ -47,7 +47,7 @@ in
     (pkgs.writeShellScriptBin "d" ''exec emacsclient -nw -a "doom run -nw --"  "$@"'')
   ];
 
-  home.activation.clone_doom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.doom-install = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     run ${lib.getExe doom-install}
   '';
 
