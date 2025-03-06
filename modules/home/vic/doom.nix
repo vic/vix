@@ -31,7 +31,7 @@ let
         git fetch --depth 1 origin "${inputs.doom-emacs.rev}"
         git reset --hard "${inputs.doom-emacs.rev}"
         bin/doom install --no-config --no-env --install --force
-        bin/doom upgrade --packages --force
+        bin/doom sync -e --gc --aot --force
       )
     '';
   };
