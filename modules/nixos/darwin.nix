@@ -13,4 +13,8 @@
 
   system.defaults.trackpad.Clicking = true;
   system.defaults.trackpad.TrackpadThreeFingerDrag = true;
+  system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
+
+  system.keyboard.enableKeyMapping = true;
+  system.keyboard.remapCapsLockToControl = true;
 }
