@@ -2,19 +2,22 @@
   pkgs,
   lib,
   inputs,
+  config,
   ...
 }:
 let
+
+  emacsPkg = pkgs.emacs30;
 
   doom-install = pkgs.writeShellApplication {
     name = "doom-install";
     runtimeInputs = with pkgs; [
       git
-      emacs
+      emacsPkg
       ripgrep
     ];
     text = ''
-      set -xe
+      set -e
       if test -d "$HOME/.config/emacs/.local"; then
         doom_rev="$(rg "put 'doom-version 'ref '\"(\w+)\"" "$HOME"/.config/emacs/.local/etc/@/init*.el -or '$1')"
       fi
@@ -36,12 +39,18 @@ let
     '';
   };
 
+  SPC = inputs.SPC.packages.${pkgs.system}.SPC.override { emacs = emacsPkg; };
+
 in
 {
   programs.emacs.enable = true;
-  services.emacs.enable = pkgs.stdenv.isLinux;
+  programs.emacs.package = emacsPkg;
+  services.emacs.enable = true;
+  services.emacs.package = emacsPkg;
+  services.emacs.extraOptions = [ "--init-directory" "~/.config/emacs" ];
 
   home.packages = [
+    SPC
     (pkgs.writeShellScriptBin "doom" ''exec $HOME/.config/emacs/bin/doom "$@"'')
     (pkgs.writeShellScriptBin "doomscript" ''exec $HOME/.config/emacs/bin/doomscript "$@"'')
     (pkgs.writeShellScriptBin "d" ''exec emacsclient -nw -a "doom run -nw --"  "$@"'')

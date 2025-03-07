@@ -41,6 +41,9 @@
     use_devshell_toml.inputs.nixpkgs.follows = "nixpkgs";
     use_devshell_toml.inputs.treefmt-nix.follows = "treefmt-nix";
 
+    SPC.url = "github:vic/SPC";
+    SPC.inputs.nixpkgs.follows = "nixpkgs";
+
     doom-emacs.url = "github:doomemacs/doomemacs";
     doom-emacs.flake = false;
   };
