@@ -1,3 +1,4 @@
+{config, pkgs, ...}:
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -15,7 +16,7 @@
         "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
       ];
     };
-    gc = {
+    gc = pkgs.lib.optionalAttrs config.nix.enable {
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 7d";
