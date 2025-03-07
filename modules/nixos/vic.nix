@@ -10,6 +10,12 @@ lib.mkMerge [
       description = "vic";
       shell = pkgs.fish;
     };
+
+    fonts.packages = with pkgs.nerd-fonts; [
+      victor-mono
+      jetbrains-mono
+      inconsolata
+    ];
   }
 
   (lib.mkIf pkgs.stdenv.isLinux {
