@@ -2,7 +2,6 @@
   pkgs,
   lib,
   inputs,
-  config,
   ...
 }:
 let
@@ -47,7 +46,10 @@ in
   programs.emacs.package = emacsPkg;
   services.emacs.enable = true;
   services.emacs.package = emacsPkg;
-  services.emacs.extraOptions = [ "--init-directory" "~/.config/emacs" ];
+  services.emacs.extraOptions = [
+    "--init-directory"
+    "~/.config/emacs"
+  ];
 
   home.packages = [
     SPC
