@@ -6,3 +6,4 @@
 local map = vim.keymap.set
 
 map("n", "<leader>fs", "<cmd>w<cr>", { desc = "Save File" })
+map("n", "U", "<cmd>redo<cr>", { desc = "Redo" })
