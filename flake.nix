@@ -4,7 +4,7 @@
 
     systems.url = "github:nix-systems/default?ref=main&shallow=1";
 
-    blueprint.url = "github:vic/blueprint?ref=load-toml-devshells&shallow=1";
+    blueprint.url = "github:vic/blueprint?ref=vic&shallow=1";
     #blueprint.url = "path:/home/vic/hk/blueprint";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
 
