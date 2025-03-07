@@ -18,7 +18,10 @@ let
 in
 {
 
-  imports = [ { home.file = envs; } ];
+  imports = [
+    inputs.use_devshell_toml.homeModules.default
+    { home.file = envs; }
+  ];
 
   home.packages = with pkgs; [
     perSystem.devshell.default

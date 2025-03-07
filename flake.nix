@@ -5,7 +5,6 @@
     systems.url = "github:nix-systems/default?ref=main&shallow=1";
 
     blueprint.url = "github:vic/blueprint?ref=vic&shallow=1";
-    #blueprint.url = "path:/home/vic/hk/blueprint";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-darwin.url = "github:LnL7/nix-darwin?ref=master&shallow=1";
@@ -37,6 +36,10 @@
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    use_devshell_toml.url = "github:vic/use_devshell_toml";
+    use_devshell_toml.inputs.nixpkgs.follows = "nixpkgs";
+    use_devshell_toml.inputs.treefmt-nix.follows = "treefmt-nix";
 
     doom-emacs.url = "github:doomemacs/doomemacs";
     doom-emacs.flake = false;

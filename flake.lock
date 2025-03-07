@@ -283,6 +283,7 @@
         "sops-nix": "sops-nix",
         "systems": "systems_3",
         "treefmt-nix": "treefmt-nix",
+        "use_devshell_toml": "use_devshell_toml",
         "vscode-server": "vscode-server"
       }
     },
@@ -385,6 +386,29 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "use_devshell_toml": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1741312999,
+        "narHash": "sha256-lCqSUY3gxigQfsL8cAKBXn7vO/+JfHfdfuR9P9hi7JE=",
+        "owner": "vic",
+        "repo": "use_devshell_toml",
+        "rev": "2bbf9af59edaba51b047c372a3e708ee78304d04",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "use_devshell_toml",
         "type": "github"
       }
     },
