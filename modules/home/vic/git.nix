@@ -10,9 +10,8 @@
     signing.format = "ssh";
 
     extraConfig = {
-      init = {
-        defaultBranch = "main";
-      };
+      init.defaultBranch = "main";
+      pull.rebase = true;
       pager.difftool = true;
       diff.tool = "difftastic";
       difftool.prompt = false;
@@ -20,6 +19,9 @@
 
       github.user = "vic";
       gitlab.user = "vic";
+
+      core.editor = "vim";
+      url."git@github.com:".insteadOf = "https://github.com/";
     };
     aliases = {
       "dff" = "difftool";
@@ -33,6 +35,15 @@
       ".DS_Store"
       "*.swp"
       ".direnv"
+      ".envrc"
+      ".envrc.local"
+      ".env"
+      ".env.local"
+      "/devshell.toml"
+      "/.tool-versions"
+      "*.key"
+      "/vic"
+      "*~"
     ];
     includes = [ ];
     # { path = "${DOTS}/git/something"; }
