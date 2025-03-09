@@ -1,5 +1,3 @@
-imports = ["./nixos/leader.nix"]
-
 [devshell]
 packages = ["sops", "age", "nh"]
 
@@ -25,8 +23,8 @@ journalctl -u home-manager-vic.service "${@}"
 name = "os-rebuild"
 help = "OS rebuild"
 command = """
-nix run .#os-rebuild "${@}"
-""""
+sudo nix run .#os-rebuild "${@}"
+"""
 
 [[commands]]
 name = "clean"
