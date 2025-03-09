@@ -1,34 +1,7 @@
 imports = ["./nixos/leader.nix"]
 
 [devshell]
-packages = ["sops", "age"]
-
-[[commands]]
-package = "nixfmt-rfc-style"
-
-[[commands]]
-package = "nh"
-
-[[commands]]
-name = "nh-reboot"
-command = "nix fmt && nh os boot && reboot"
-help = "Nix Format / OS Boot"
-
-[[commands]]
-name = "nh-clean-boot"
-command = "nix fmt && nh os boot && nh clean all && nh os boot"
-help = "Clear boot"
-
-[[commands]]
-name = "nr-switch"
-command = "sudo nixos-rebuild --flake . switch"
-help = "nixos-rebuild switch"
-
-[[commands]]
-name = "dw-switch"
-command = "sudo darwin-rebuild --flake . switch"
-help = "nixos-rebuild switch"
-
+packages = ["sops", "age", "nh"]
 
 [[commands]]
 name = "vic-sops"
@@ -40,3 +13,27 @@ else
   sops --config ./modules/home/vic/sops.yaml "${@}"
 fi
 """
+
+[[commands]]
+name = "logs-home-manager-vic"
+help = "See logs for home-manager-vic activation"
+command = """
+journalctl -u home-manager-vic.service "${@}"
+"""
+
+[[commands]]
+name = "os-rebuild"
+help = "OS rebuild"
+command = """
+nix run .#os-rebuild "${@}"
+""""
+
+[[commands]]
+name = "clean"
+help = "nh clean all"
+command = "nh clean all"
+
+[[commands]]
+name = "fmt"
+help = "nix fmt"
+command = "nix fmt"
