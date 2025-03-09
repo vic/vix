@@ -7,7 +7,8 @@ let
     let
       has-same-system = _n: o: o.config.nixpkgs.hostPlatform.system == pkgs.system;
       all-oses = (inputs.self.nixosConfigurations or { }) // (inputs.self.darwinConfigurations or { });
-    in lib.filterAttrs has-same-system all-oses;
+    in
+    lib.filterAttrs has-same-system all-oses;
 
   os-builder =
     name: os:
@@ -24,16 +25,17 @@ let
       '';
     };
 
-  os-builders =
-    lib.mapAttrs os-builder same-system-oses;
+  os-builders = lib.mapAttrs os-builder same-system-oses;
 
   os-rebuild = pkgs.writeShellApplication {
     name = "os-rebuild";
     text = ''
-      export PATH="${pkgs.lib.makeBinPath ((lib.attrValues os-builders) ++ [pkgs.coreutils])}"
+      export PATH="${pkgs.lib.makeBinPath ((lib.attrValues os-builders) ++ [ pkgs.coreutils ])}"
 
       if [ "-h" = "''${1:-}" ] || [ "--help" = "''${1:-}" ]; then
-        echo Usage: "$0" [HOSTNAME] [${if pkgs.stdenv.isDarwin then "DARWIN" else "NIXOS"}-REBUILD OPTIONS ...]
+        echo Usage: "$0" [HOSTNAME] [${
+          if pkgs.stdenv.isDarwin then "DARWIN" else "NIXOS"
+        }-REBUILD OPTIONS ...]
         echo
         echo Default hostname: "$(uname -n)"
         echo Default ${if pkgs.stdenv.isDarwin then "darwin" else "nixos"}-rebuild options: switch
