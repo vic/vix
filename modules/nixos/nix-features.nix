@@ -9,6 +9,11 @@
         "nix-command"
         "flakes"
       ];
+
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
       substituters = [
         "https://devenv.cachix.org"
       ];
