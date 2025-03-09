@@ -32,7 +32,7 @@ in
   programs.direnv.nix-direnv.enable = true;
 
   home.file.".envrc".text = ''
-    export FLAKE=${inputs.self.outPath}
+    export FLAKE="$HOME/.flake"
   '';
 
 }
