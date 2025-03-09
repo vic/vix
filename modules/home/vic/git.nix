@@ -21,7 +21,6 @@
       gitlab.user = "vic";
 
       core.editor = "vim";
-      url."git@github.com:".insteadOf = "https://github.com/";
     };
     aliases = {
       "dff" = "difftool";
