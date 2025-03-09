@@ -21,7 +21,7 @@ let
     pkgs.writeShellApplication {
       name = "${name}-os-rebuild";
       text = ''
-        ${if platform.isDarwin then darwin-rebuild else nixos-rebuild} ${flake-param} "''${@:-switch}"
+        ${if platform.isDarwin then darwin-rebuild else nixos-rebuild} ${flake-param} "''${@}"
       '';
     };
 
@@ -35,8 +35,9 @@ let
           (lib.attrValues os-builders)
           ++ [
             pkgs.coreutils
-            pkgs.systemd
           ]
+          ++ (lib.optionals pkgs.stdenv.isLinux [ pkgs.systemd ])
+
         )
       }"
 
@@ -61,7 +62,7 @@ let
       fi
 
       if test "file" = "$(type -t "$hostname-os-rebuild")"; then
-        "$hostname-os-rebuild" "''${@}"
+        "$hostname-os-rebuild" "''${@:-switch}"
       else
         echo "No configuration found for host: $hostname"
         exit 1

@@ -23,7 +23,7 @@ journalctl -u home-manager-vic.service "${@}"
 name = "os-rebuild"
 help = "OS rebuild"
 command = """
-sudo nix run .#os-rebuild "${@}"
+sudo nix run .#os-rebuild -- "${@}"
 """
 
 [[commands]]
