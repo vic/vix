@@ -30,7 +30,15 @@ let
   os-rebuild = pkgs.writeShellApplication {
     name = "os-rebuild";
     text = ''
-      export PATH="${pkgs.lib.makeBinPath ((lib.attrValues os-builders) ++ [ pkgs.coreutils ])}"
+      export PATH="${
+        pkgs.lib.makeBinPath (
+          (lib.attrValues os-builders)
+          ++ [
+            pkgs.coreutils
+            pkgs.systemd
+          ]
+        )
+      }"
 
       if [ "-h" = "''${1:-}" ] || [ "--help" = "''${1:-}" ]; then
         echo Usage: "$0" [HOSTNAME] [${
