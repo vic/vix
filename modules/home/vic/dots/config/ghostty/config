@@ -1,0 +1,5 @@
+theme = rebecca
+font-family = "JetBrainsMono NFM Light"
+font-size = 22
+
+#keybind = ctrl+d=new_split:right
