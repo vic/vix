@@ -27,7 +27,7 @@
 
   services.ssh-agent.enable = pkgs.stdenv.isLinux;
 
-  home.activation.link_ssh_id = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.link-ssh-id = lib.hm.dag.entryAfter [ "link-flake" "sops-nix" ] ''
     run ln -sf "${config.sops.secrets."ssh/id_ed25519".path}" $HOME/.ssh/id_ed25519
   '';
 }

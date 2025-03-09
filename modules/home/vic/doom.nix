@@ -17,23 +17,26 @@ let
     ];
     text = ''
       set -e
-      if test -d "$HOME/.config/emacs/.local"; then
+      if test -f "$HOME"/.config/emacs/.local/etc/@/init*.el; then
         doom_rev="$(rg "put 'doom-version 'ref '\"(\w+)\"" "$HOME"/.config/emacs/.local/etc/@/init*.el -or '$1')"
       fi
 
       if test "''${doom_rev:-}" = "${inputs.doom-emacs.rev}"; then
+        echo "DOOM Emacs already at revision ${inputs.doom-emacs.rev}"
         exit 0 # doom already pointing to same revision
       fi
 
       (
+        echo "DOOM Emacs obtaining revision ${inputs.doom-emacs.rev}"
         if ! test -d "$HOME/.config/emacs/.git"; then
           git clone --depth 1 https://github.com/doomemacs/doomemacs "$HOME/.config/emacs"
         fi
         cd "$HOME/.config/emacs"
         git fetch --depth 1 origin "${inputs.doom-emacs.rev}"
         git reset --hard "${inputs.doom-emacs.rev}"
-        bin/doom install --no-config --no-env --install --force
-        bin/doom sync -e --gc --aot --force
+        bin/doom install --no-config --no-env --no-install --no-fonts --no-hooks --force
+        echo "DOOM Emacs updated to revision ${inputs.doom-emacs.rev}"
+        echo "Don't forget to run doom sync to optimize packages startup."
       )
     '';
   };
@@ -58,7 +61,7 @@ in
     (pkgs.writeShellScriptBin "d" ''exec emacsclient -nw -a "doom run -nw --"  "$@"'')
   ];
 
-  home.activation.doom-install = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.doom-install = lib.hm.dag.entryAfter [ "link-ssh-id" ] ''
     run ${lib.getExe doom-install}
   '';
 
