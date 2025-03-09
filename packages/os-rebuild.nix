@@ -3,6 +3,12 @@ let
 
   inherit (pkgs) lib;
 
+  same-system-oses =
+    let
+      has-same-system = _n: o: o.config.nixpkgs.hostPlatform.system == pkgs.system;
+      all-oses = (inputs.self.nixosConfigurations or { }) // (inputs.self.darwinConfigurations or { });
+    in lib.filterAttrs has-same-system all-oses;
+
   os-builder =
     name: os:
     let
@@ -14,22 +20,29 @@ let
     pkgs.writeShellApplication {
       name = "${name}-os-rebuild";
       text = ''
-        sudo ${if platform.isDarwin then darwin-rebuild else nixos-rebuild} ${flake-param} "''${@:-switch}"
+        ${if platform.isDarwin then darwin-rebuild else nixos-rebuild} ${flake-param} "''${@:-switch}"
       '';
     };
 
   os-builders =
-    let
-      has-same-system = _n: o: o.config.nixpkgs.hostPlatform.system == pkgs.system;
-      all-oses = (inputs.self.nixosConfigurations or { }) // (inputs.self.darwinConfigurations or { });
-      same-system = lib.filterAttrs has-same-system all-oses;
-    in
-    lib.mapAttrs os-builder same-system;
+    lib.mapAttrs os-builder same-system-oses;
 
   os-rebuild = pkgs.writeShellApplication {
     name = "os-rebuild";
-    runtimeInputs = lib.attrValues os-builders;
     text = ''
+      export PATH="${pkgs.lib.makeBinPath ((lib.attrValues os-builders) ++ [pkgs.coreutils])}"
+
+      if [ "-h" = "''${1:-}" ] || [ "--help" = "''${1:-}" ]; then
+        echo Usage: "$0" [HOSTNAME] [${if pkgs.stdenv.isDarwin then "DARWIN" else "NIXOS"}-REBUILD OPTIONS ...]
+        echo
+        echo Default hostname: "$(uname -n)"
+        echo Default ${if pkgs.stdenv.isDarwin then "darwin" else "nixos"}-rebuild options: switch
+        echo
+        echo Known hostnames on ${pkgs.system}:
+        echo "${lib.concatStringsSep "\n" (lib.attrNames same-system-oses)}"
+        exit 0
+      fi
+
       if test "file" = "$(type -t "''${1:-_}-os-rebuild")"; then
         hostname="$1"
         shift
