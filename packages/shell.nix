@@ -1,1 +1,1 @@
-{pkgs, inputs, ...}: inputs.self.devShells.${pkgs.system}.default
+{ pkgs, inputs, ... }: inputs.self.devShells.${pkgs.system}.default
