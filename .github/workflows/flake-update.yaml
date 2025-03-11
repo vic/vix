@@ -10,10 +10,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v30
-      - name: Make changes to pull request
+      - env:
+          GH_TOKEN: ${{ secrets.PAT }}
         run: |
+          git checkout -b "flake-update-$(date '+%F')"
+          title="Updating flake inputs $(date)"
           (
-            echo "Updating flake inputs $(date)"
+            echo "$title"
             echo -ne "\n\n\n\n"
             echo '```shell'
             echo '$ nix flake update'
@@ -22,19 +25,13 @@ jobs:
             echo -ne "\n\n\n\n"
             echo 'request-checks: true'
           ) | tee /tmp/commit-message.md
+          changes="$(git status -s | grep -o 'M ' | wc -l)"
+          if test "$changes" -eq 0; then
+            echo "No changes"
+            exit 0
+          fi
+          git status -s | grep 'M ' | cut -d 'M' -f 2 | xargs git add
+          git commit --author "Victor Borja <vic@apache.org>" -F /tmp/commit-message.md --nosignoff --no-verify
+          gh pr create --base main --label flake-update --reviewer vic --assignee vic --body-file /tmp/commit-message.md --title "$title" | tee /tmp/pr-url
+          echo gh pr merge --delete-branch --rebase --auto "$(< /tmp/pr-url)"
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v7
-        with:
-          assignees: vic
-          reviewers: vic
-          commit-message: nix flake update
-          branch: flake-updates
-          delete-branch: true
-          title: 'flake-update'
-          body-path: '/tmp/commit-message.md'
-      - name: Enable Pull Request Automerge
-        run: echo gh pr merge --delete-branch --rebase --auto "${{ steps.cpr.outputs.pull-request-url }}"
-        env:
-          GH_TOKEN: ${{ github.token }}
