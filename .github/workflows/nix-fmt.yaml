@@ -1,4 +1,4 @@
-name: "flake check"
+name: "nix fmt"
 
 on:
   pull_request:
@@ -6,11 +6,9 @@ on:
     branches: [main]
 
 jobs:
-  flake-check:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, macos-13]
+  nix-fmt:
+    name: nix-fmt
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v30
@@ -18,4 +16,4 @@ jobs:
         with:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix flake check
+      - run: nix build .#checks.x86_64-linux.formatted

@@ -1,12 +1,12 @@
-name: "flake check"
+name: "Test on Comment"
 
 on:
-  pull_request:
-  push:
-    branches: [main]
+  issue_comment:
+    types: [created]
 
 jobs:
   flake-check:
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/test')
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
