@@ -14,12 +14,17 @@ jobs:
         run: |
           (
             echo "Updating flake inputs $(date)"
-
+            echo ''
+            echo ''
             echo '```shell'
             echo '$ nix flake update'
-            nix flake update --accept-flake-config
+            nix flake update --accept-flake-config 2>&1
             echo '```'
-          ) 2>&1> /tmp/commit-message.md
+            echo ''
+            echo ''
+            echo ''
+            echo 'request-checks: true'
+          ) | tee /tmp/commit-message.md
 
       - name: Create Pull Request
         id: cpr
