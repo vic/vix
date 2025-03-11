@@ -12,14 +12,14 @@ jobs:
       - uses: cachix/install-nix-action@v30
       - name: Make changes to pull request
         run: |
-          echo "nix flake update" | tee -a > /tmp/.nix-flake-update.out
-          date | tee -a > /tmp/.nix-flake-update.out
-          echo '' | tee -a > /tmp/.nix-flake-update.out
-          echo '' | tee -a > /tmp/.nix-flake-update.out
-          echo '```shell' | tee -a > /tmp/.nix-flake-update.out
-          echo '$' nix flake update | tee -a > /tmp/.nix-flake-update.out
-          nix flake update --accept-flake-config 2>&1 | tee -a > /tmp/.nix-flake-update.out
-          echo '```' | tee -a > /tmp/.nix-flake-update.out
+          (
+            echo "Updating flake inputs $(date)"
+
+            echo '```shell'
+            echo '$ nix flake update'
+            nix flake update --accept-flake-config
+            echo '```'
+          ) 2>&1> /tmp/commit-message.md
 
       - name: Create Pull Request
         id: cpr
@@ -31,7 +31,7 @@ jobs:
           branch: flake-updates
           delete-branch: true
           title: 'flake-update'
-          body-path: '/tmp/.nix-flake-update.out'
+          body-path: '/tmp/commit-message.md'
       - name: Enable Pull Request Automerge
         run: echo gh pr merge --delete-branch --rebase --auto "${{ steps.cpr.outputs.pull-request-url }}"
         env:
