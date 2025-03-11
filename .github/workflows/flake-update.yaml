@@ -23,9 +23,10 @@ jobs:
           signoff: false
           branch: flake-updates
           delete-branch: true
-          title: 'nix flake update'
+          title: 'flake-update'
           body: |
-            Love you. <3
+            flake-update
+            Made with <3
 
       - name: Check outputs
         run: |
