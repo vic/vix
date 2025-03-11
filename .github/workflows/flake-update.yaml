@@ -14,15 +14,12 @@ jobs:
         run: |
           (
             echo "Updating flake inputs $(date)"
-            echo ''
-            echo ''
+            echo -ne "\n\n\n\n"
             echo '```shell'
             echo '$ nix flake update'
             nix flake update --accept-flake-config 2>&1
             echo '```'
-            echo ''
-            echo ''
-            echo ''
+            echo -ne "\n\n\n\n"
             echo 'request-checks: true'
           ) | tee /tmp/commit-message.md
 
