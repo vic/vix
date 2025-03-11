@@ -1,4 +1,14 @@
 {
+  description = "Vic's Nix Environment";
+
+  nixConfig = {
+    allow-import-from-derivation = true;
+
+    extra-trusted-public-keys = [
+      "vix.cachix.org-1:JFm9l4KxdKyBNjQFxo/SF5SVjBTGvib/D877Zwf8C0s="
+    ];
+    extra-substituters = [ "https://vix.cachix.org" ];
+  };
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable&shallow=1";
 
