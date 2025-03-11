@@ -23,3 +23,7 @@ jobs:
           delete-branch: true
           title: 'flake-update'
           body-path: '.nix-flake-update.out'
+      - name: Enable Pull Request Automerge
+        run: gh pr merge --delete-branch --rebase --auto "${{ steps.cpr.outputs.pull-request-url }}"
+        env:
+          GH_TOKEN: ${{ secrets.PAT }}
