@@ -2,7 +2,7 @@ name: "flake check"
 
 on:
   pull_request:
-    types: [opened, reopened, edited, ready_for_review, synchronize]
+    types: [opened, reopened, edited, labeled, ready_for_review, synchronize]
   push:
     branches: [main]
 

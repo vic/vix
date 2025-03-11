@@ -1,6 +1,7 @@
 name: "labeler"
 on:
-- pull_request_target
+  pull_request_target:
+    types: [assigned, opened, reopened, edited, ready_for_review, synchronize]
 
 jobs:
   labeler:
