@@ -8,7 +8,7 @@ on:
 
 jobs:
   flake-check:
-    if: contains(github.event.pull_request.labels.*.name, 'flake-update')
+    if: contains(github.event.pull_request.labels.*.name, 'flake-update') || contains(github.event.label.name, 'flake-update')
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
