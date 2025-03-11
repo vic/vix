@@ -86,16 +86,15 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1741307774,
-        "narHash": "sha256-n8CvLZubIG/lBs2X3YFnqnys22QH+HJPiN6oYIy0ZfE=",
-        "owner": "vic",
+        "lastModified": 1741697533,
+        "narHash": "sha256-+4vOgmO/RLRW7VQyL+ua5Q/sKZbp3Cg9IumqWlOcuK4=",
+        "owner": "numtide",
         "repo": "blueprint",
-        "rev": "a18eec5c0e6c53796e74b44b6ae4450ac98d2548",
+        "rev": "658dfdb19eab4766270ffd20f36c55dc7dc8ed30",
         "type": "github"
       },
       "original": {
-        "owner": "vic",
-        "ref": "vic",
+        "owner": "numtide",
         "repo": "blueprint",
         "type": "github"
       }
