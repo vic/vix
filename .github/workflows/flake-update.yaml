@@ -11,24 +11,15 @@ jobs:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v30
       - name: Make changes to pull request
-        run: nix flake update
+        run: nix flake update 2>&1 | tee .nix-flake-update.out
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v7
         with:
-          labels: flake-update
+          assignees: vic
+          reviewers: vic
           commit-message: nix flake update
-          committer: Victor Borja <vborja@apache.org>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          signoff: false
           branch: flake-updates
           delete-branch: true
           title: 'flake-update'
-          body: |
-            flake-update
-            Made with <3
-
-      - name: Check outputs
-        run: |
-          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
-          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+          body-path: '.nix-flake-update.out'
