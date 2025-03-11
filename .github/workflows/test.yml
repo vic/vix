@@ -3,14 +3,11 @@ name: "flake check"
 on:
   pull_request:
     types: [opened, reopened, labeled, ready_for_review, synchronize]
-  issue_comment:
-    types: [created]
   push:
     branches: [main]
 
 jobs:
   flake-check:
-    if: contains(github.event.pull_request.labels.*.name, 'flake-update') || contains(github.event.issue_comment.body, 'flake-update')
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
