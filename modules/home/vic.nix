@@ -37,7 +37,7 @@
       lazygit # no magit
       tig # alucard
       cachix
-
+      gh
     ])
     ++ (pkgs.lib.optionals pkgs.stdenv.isLinux [
       pkgs.wl-clipboard
