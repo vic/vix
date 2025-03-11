@@ -40,5 +40,4 @@ jobs:
           git commit -F /tmp/commit-message.md --no-signoff --no-verify --trailer "request-checks:true" --no-edit --cleanup=verbatim
           git push origin "$branch:$branch" --force
           gh pr create --base main --label flake-update --reviewer vic --assignee vic --body-file /tmp/commit-message.md --title "$title" --head "$branch" | tee /tmp/pr-url
-          gh pr merge --delete-branch --rebase --auto "$(< /tmp/pr-url)"
 
