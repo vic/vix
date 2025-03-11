@@ -17,7 +17,8 @@ jobs:
           GIT_COMMITTER_NAME: Victor Borja
           GIT_COMMITTER_EMAIL: vborja@apache.org
         run: |
-          git checkout -b "flake-update-$(date '+%F')"
+          branch="flake-update-$(date '+%F')"
+          git checkout -b "$branch"
           title="Updating flake inputs $(date)"
           (
             echo "$title"
@@ -36,6 +37,7 @@ jobs:
           fi
           git status -s | grep 'M ' | cut -d 'M' -f 2 | xargs git add
           git commit -F /tmp/commit-message.md --no-signoff --no-verify --trailer "request-checks:true" --no-edit
-          gh pr create --base main --label flake-update --reviewer vic --assignee vic --body-file /tmp/commit-message.md --title "$title" | tee /tmp/pr-url
+          git push origin "$branch:$branch" --force
+          gh pr create --base main --label flake-update --reviewer vic --assignee vic --body-file /tmp/commit-message.md --title "$title" --head "$branch" | tee /tmp/pr-url
           echo gh pr merge --delete-branch --rebase --auto "$(< /tmp/pr-url)"
 
