@@ -2,9 +2,7 @@ name: "flake check"
 
 on:
   pull_request:
-    types: [opened, reopened, edited, labeled, assigned, ready_for_review, synchronize]
-  deployment_review:
-    types: [approved]
+    types: [opened, reopened, edited, ready_for_review, synchronize]
   push:
     branches: [main]
 
