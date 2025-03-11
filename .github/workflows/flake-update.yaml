@@ -1,4 +1,4 @@
-name: "PR on flake update"
+name: "flake update"
 on:
   repository_dispatch:
   workflow_dispatch:
