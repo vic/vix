@@ -14,7 +14,7 @@
 
     systems.url = "github:nix-systems/default?ref=main&shallow=1";
 
-    blueprint.url = "github:vic/blueprint?ref=vic&shallow=1";
+    blueprint.url = "github:numtide/blueprint?shallow=1";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-darwin.url = "github:LnL7/nix-darwin?ref=master&shallow=1";
