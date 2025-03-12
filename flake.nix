@@ -5,7 +5,7 @@
     allow-import-from-derivation = true;
 
     extra-trusted-public-keys = [
-      "vix.cachix.org-1:JFm9l4KxdKyBNjQFxo/SF5SVjBTGvib/D877Zwf8C0s="
+      "vix.cachix.org-1:hP/Lpdsi1dB3AxK9o6coWh+xHzvAc4ztdDYuG7lC6dI="
     ];
     extra-substituters = [ "https://vix.cachix.org" ];
   };
