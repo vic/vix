@@ -17,7 +17,7 @@
   programs.nvf = {
     enable = true;
     settings = {
-      imports = [ (import "${inputs.nvf}/configuration.nix" true) ];
+      imports = [ (import "${inputs.nvf}/configuration.nix" false) ];
     };
   };
 
