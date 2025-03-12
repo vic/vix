@@ -1,3 +1,5 @@
+imports = [ "./nixos/gh-flake-update.nix" ]
+
 [devshell]
 packages = ["sops", "age", "nh"]
 
