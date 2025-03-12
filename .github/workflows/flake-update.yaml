@@ -12,6 +12,6 @@ jobs:
       - uses: cachix/install-nix-action@v30
       - name: nix flake update
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.PAT }}
         run:
           nix develop . -c gh-flake-update
