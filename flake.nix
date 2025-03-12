@@ -6,8 +6,12 @@
 
     extra-trusted-public-keys = [
       "vix.cachix.org-1:hP/Lpdsi1dB3AxK9o6coWh+xHzvAc4ztdDYuG7lC6dI="
+      "nvf.cachix.org-1:GMQWiUhZ6ux9D5CvFFMwnc2nFrUHTeGaXRlVBXo+naI="
     ];
-    extra-substituters = [ "https://vix.cachix.org" ];
+    extra-substituters = [ 
+      "https://vix.cachix.org" 
+      "https://nvf.cachix.org"
+    ];
   };
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable&shallow=1";
@@ -56,6 +60,8 @@
 
     doom-emacs.url = "github:doomemacs/doomemacs";
     doom-emacs.flake = false;
+
+    nvf.url = "github:notashelf/nvf";
   };
 
   outputs = inputs: inputs.blueprint { inherit inputs; };
