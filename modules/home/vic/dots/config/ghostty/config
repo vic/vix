@@ -4,5 +4,5 @@ font-size = 22
 
 #keybind = ctrl+d=new_split:right
 # copy-on-select = clipboard
-keybind = performable:ctrl+v=paste_from_clipboard
-keybind = performable:ctrl+c=copy_to_clipboard
+keybind = performable:ctrl+shift+v=paste_from_clipboard
+keybind = performable:ctrl+shift+c=copy_to_clipboard
