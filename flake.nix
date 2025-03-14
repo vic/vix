@@ -14,8 +14,13 @@
 
     systems.url = "github:nix-systems/default?ref=main&shallow=1";
 
+    # not used here but followed by other deps to get a flat dep tree
+    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.inputs.systems.follows = "systems";
+
     blueprint.url = "github:numtide/blueprint?shallow=1";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
+    blueprint.inputs.systems.follows = "systems";
 
     nix-darwin.url = "github:LnL7/nix-darwin?ref=master&shallow=1";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -28,12 +33,14 @@
 
     vscode-server.url = "github:nix-community/nixos-vscode-server?ref=master&shallow=1";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
+    vscode-server.inputs.flake-utils.follows = "flake-utils";
 
     cli-leader.url = "github:dhamidi/leader?ref=14373a2&shallow=1";
     cli-leader.flake = false;
 
     nox.url = "github:madsbv/nix-options-search?ref=main&shallow=1";
     nox.inputs.nixpkgs.follows = "nixpkgs";
+    nox.inputs.flake-utils.follows = "flake-utils";
 
     devshell.url = "github:numtide/devshell?ref=main&shallow=1";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
@@ -53,6 +60,8 @@
 
     SPC.url = "github:vic/SPC";
     SPC.inputs.nixpkgs.follows = "nixpkgs";
+    SPC.inputs.blueprint.follows = "blueprint";
+    SPC.inputs.treefmt-nix.follows = "treefmt-nix";
 
     doom-emacs.url = "github:doomemacs/doomemacs";
     doom-emacs.flake = false;
