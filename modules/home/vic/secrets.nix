@@ -21,7 +21,7 @@
     "hello" = { };
     "ssh/id_ed25519" = {
       format = "binary";
-      sopsFile = ./secrets/ssh/vic_mordor;
+      sopsFile = ./secrets/mordor;
     };
   };
 
