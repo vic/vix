@@ -14,6 +14,7 @@ let
       git
       emacsPkg
       ripgrep
+      openssh
     ];
     text = ''
       set -e
