@@ -7,7 +7,7 @@ in
 {
   home.activation.link-flake = config.lib.dag.entryAfter [ "writeBoundary" ] ''
     echo Checking that "$HOME/.flake" exists.
-    run test -L "$HOME/.flake"
+    test -L "$HOME/.flake"
   '';
 
   home.file.".ssh" = {
