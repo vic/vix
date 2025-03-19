@@ -17,6 +17,7 @@ in
 
   home.file.".config/nvim".source = dotsLink "config/nvim";
   home.file.".config/doom".source = dotsLink "config/doom";
+  home.file.".config/zed".source = dotsLink "config/zed";
   home.file.".config/wezterm".source = dotsLink "config/wezterm";
   home.file.".config/ghostty".source = dotsLink "config/ghostty";
 

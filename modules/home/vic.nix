@@ -38,6 +38,8 @@
       tig # alucard
       cachix
       gh
+      jq
+      nix-search-cli
     ])
     ++ (pkgs.lib.optionals pkgs.stdenv.isLinux [
       pkgs.wl-clipboard

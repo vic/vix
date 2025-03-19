@@ -6,6 +6,8 @@
     vscode
     wezterm
     ghostty
+    code-cursor
+    zed-editor
   ];
 
 }
