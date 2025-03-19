@@ -37,7 +37,7 @@ let
         git reset --hard "${inputs.doom-emacs.rev}"
         bin/doom install --no-config --no-env --no-install --no-fonts --no-hooks --force
         echo "DOOM Emacs updated to revision ${inputs.doom-emacs.rev}"
-        echo "Don't forget to run doom sync to optimize packages startup."
+        bin/doom sync -e --force
       )
     '';
   };
