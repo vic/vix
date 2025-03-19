@@ -67,8 +67,10 @@
     doom-emacs.flake = false;
   };
 
-  outputs = inputs: inputs.blueprint {
-    inherit inputs;
-    nixpkgs.config.allowUnfree = true;
-  };
+  outputs =
+    inputs:
+    inputs.blueprint {
+      inherit inputs;
+      nixpkgs.config.allowUnfree = true;
+    };
 }
