@@ -179,19 +179,19 @@
 		"when": "config.github.copilot.inlineSuggest.enable && editorTextFocus && !editorHasSelection && !inlineSuggestionsVisible"
 	},
 	{
-		"key": "ctrl+[",
+		"key": "alt+[",
 		"command": "workbench.action.navigatePreviousInEditLocations"
 	},
 	{
-		"key": "ctrl+]",
+		"key": "alt+]",
 		"command": "workbench.action.navigateForwardInEditLocations"
 	},
 	{
-		"key": "ctrl+{",
+		"key": "ctrl+[",
 		"command": "workbench.action.navigatePreviousInNavigationLocations"
-	}
-	{
-		"key": "ctrl+}",
-		"command": "workbench.action.navigateForwardInNavigationLocations"
 	},
+	{
+		"key": "ctrl+]",
+		"command": "workbench.action.navigateForwardInNavigationLocations"
+	}
 ]
