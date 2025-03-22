@@ -124,7 +124,6 @@
         "added": true
     },
     "editor.fontSize": 18,
-    "window.menuBarVisibility": "hidden",
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.editor.tabSizing": "shrink",
     "find-it-faster.general.useTerminalInEditor": false,

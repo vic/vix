@@ -183,11 +183,15 @@
 		"command": "workbench.action.navigatePreviousInEditLocations"
 	},
 	{
-		"key": "ctrl+[",
-		"command": "workbench.action.navigateBackInEditLocations"
-	},
-	{
 		"key": "ctrl+]",
 		"command": "workbench.action.navigateForwardInEditLocations"
+	},
+	{
+		"key": "ctrl+{",
+		"command": "workbench.action.navigatePreviousInNavigationLocations"
 	}
+	{
+		"key": "ctrl+}",
+		"command": "workbench.action.navigateForwardInNavigationLocations"
+	},
 ]
