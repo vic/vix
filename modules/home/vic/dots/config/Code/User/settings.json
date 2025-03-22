@@ -1,0 +1,143 @@
+{
+    "vspacecode.bindingOverrides": [
+        {
+          "keys": "f.b",
+          "name": "FileBrowser Open",
+          "type": "command",
+          "command":"file-browser.open",
+        },
+        {
+          "keys": "p.e",
+          "name": "Yazi",
+          "type": "command",
+          "command":"vscodeyazi.openYazi",
+        },
+        {
+          "keys": "g.g",
+          "name": "LazyGit",
+          "type": "command",
+          "command":"lazygit.openLazygit",
+        },
+        {
+          "keys": "f.f",
+          "name": "Fuzzy find file in project",
+          "type": "command",
+          "command":"find-it-faster.findFiles",
+        },
+        {
+          "keys": "f.p",
+          "name": "Fuzzy find file in project",
+          "type": "command",
+          "command":"find-it-faster.findFiles",
+        },
+        {
+          "keys": "s.p",
+          "name": "Fuzzy search in project",
+          "type": "command",
+          "command":"find-it-faster.findWithinFiles",
+        },
+        {
+          "keys": "s.f",
+          "name": "Fuzzy search same file type in project",
+          "type": "command",
+          "command":"find-it-faster.findWithinFilesWithType",
+        }
+    ],
+    "window.customTitleBarVisibility": "windowed",
+    "editor.minimap.enabled": false,
+    "vim.easymotion": true,
+    "vim.useSystemClipboard": true,
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "<space>"
+            ],
+            "commands": [
+                "vspacecode.space"
+            ]
+        },
+        {
+            "before": [
+                ","
+            ],
+            "commands": [
+                "vspacecode.space",
+                {
+                    "command": "whichkey.triggerKey",
+                    "args": "m"
+                }
+            ]
+        }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "<space>"
+            ],
+            "commands": [
+                "vspacecode.space"
+            ]
+        },
+        {
+            "before": [
+                ","
+            ],
+            "commands": [
+                "vspacecode.space",
+                {
+                    "command": "whichkey.triggerKey",
+                    "args": "m"
+                }
+            ]
+        },
+        {
+            "before": [
+                ">"
+            ],
+            "commands": [
+                "editor.action.indentLines"
+            ]
+        },
+        {
+            "before": [
+                "<"
+            ],
+            "commands": [
+                "editor.action.outdentLines"
+            ]
+        }
+    ],
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.copyOnSelection": true,
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "git.confirmSync": false,
+    "editor.inlineSuggest.edits.showCollapsed": true,
+    "workbench.colorTheme": "Midnight Purple 2077",
+    "editor.renderLineHighlight": "gutter",
+    "editor.renderLineHighlightOnlyWhenFocus": true,
+    "editor.inlayHints.enabled": "offUnlessPressed",
+    "vim.smartRelativeLine": true,
+    "editor.lineNumbers": "relative",
+    "scm.diffDecorationsGutterPattern": {
+        "added": true
+    },
+    "editor.fontSize": 18,
+    "window.menuBarVisibility": "hidden",
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.editor.tabSizing": "shrink",
+    "find-it-faster.general.useTerminalInEditor": false,
+    "find-it-faster.findFiles.previewWindowConfig": "right,50%,border-left,+{2}+3/3,~3",
+    "find-it-faster.findWithinFiles.fuzzRipgrepQuery": true,
+    "find-it-faster.findWithinFiles.previewWindowConfig": "right,50%,border-left,+{2}+3/3,~3",
+    "find-it-faster.advanced.disableStartupChecks": true,
+    "editor.smoothScrolling": true,
+    "terminal.integrated.smoothScrolling": true,
+    "workbench.list.smoothScrolling": true,
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "scm.diffDecorationsGutterVisibility": "hover",
+    "zenMode.showTabs": "none",
+    "terminal.integrated.sendKeybindingsToShell": true
+}
