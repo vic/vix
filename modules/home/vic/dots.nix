@@ -22,12 +22,15 @@ in
   home.file.".config/ghostty".source = dotsLink "config/ghostty";
 
   home.file.".config/Code/User/settings.json".source = dotsLink "config/Code/User/settings.json";
-  home.file.".config/Cursor/User/settings.json".source = dotsLink "config/Code/User/settings.json";
-  home.file.".config/Code/User/keybindings.json".source = dotsLink "config/Code/User/keybindings.json";
-  home.file.".config/Cursor/User/keybindings.json".source = dotsLink "config/Code/User/keybindings.json";
+  home.file.".config/Code/User/keybindings.json".source =
+    dotsLink "config/Code/User/keybindings.json";
   home.file.".vscode/extensions/extensions.json".source =
     dotsLink "vscode/extensions/extensions-${pkgs.stdenv.hostPlatform.uname.system}.json";
+
+  home.file.".config/Cursor/User/settings.json".source = dotsLink "config/Code/User/settings.json";
+  home.file.".config/Cursor/User/keybindings.json".source =
+    dotsLink "config/Code/User/keybindings.json";
   home.file.".cursor/extensions/extensions.json".source =
-    dotsLink "vscode/extensions/extensions-${pkgs.stdenv.hostPlatform.uname.system}.json";
+    dotsLink "cursor/extensions/extensions-${pkgs.stdenv.hostPlatform.uname.system}.json";
 
 }
