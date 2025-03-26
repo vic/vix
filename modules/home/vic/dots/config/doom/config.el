@@ -36,7 +36,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-nord-light)
+(setq doom-theme 'doom-dracula)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -116,3 +116,14 @@
 
 (use-package! jujutsu
   :commands (jujutsu-status jujutsu-status-dispatch))
+
+(defun my-hl-line-range-function ()
+  (let ((beg (save-excursion
+           (back-to-indentation)
+           (point)))
+        (end (save-excursion
+           (end-of-visual-line)
+           (point))))
+    (cons beg end)))
+
+(setq hl-line-range-function #'my-hl-line-range-function)
