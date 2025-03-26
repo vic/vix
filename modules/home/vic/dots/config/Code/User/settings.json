@@ -126,7 +126,7 @@
     "editor.fontSize": 18,
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.editor.tabSizing": "shrink",
-    "find-it-faster.general.useTerminalInEditor": false,
+    "find-it-faster.general.useTerminalInEditor": true,
     "find-it-faster.findFiles.previewWindowConfig": "right,50%,border-left,+{2}+3/3,~3",
     "find-it-faster.findWithinFiles.fuzzRipgrepQuery": true,
     "find-it-faster.findWithinFiles.previewWindowConfig": "right,50%,border-left,+{2}+3/3,~3",
@@ -138,5 +138,26 @@
     "editor.cursorSmoothCaretAnimation": "on",
     "scm.diffDecorationsGutterVisibility": "hover",
     "zenMode.showTabs": "none",
-    "terminal.integrated.sendKeybindingsToShell": true
+    "terminal.integrated.sendKeybindingsToShell": true,
+    "find-it-faster.general.killTerminalAfterUse": true,
+    "find-it-faster.general.openFileInPreviewEditor": true,
+    "direnv.restart.automatic": true,
+    "window.autoDetectColorScheme": true,
+    "workbench.preferredLightColorTheme": "Rebecca",
+    "workbench.preferredDarkColorTheme": "Midnight Purple 2077",
+    "workbench.view.showQuietly": {
+        "workbench.panel.output": false
+    },
+    "workbench.editor.centeredLayoutFixedWidth": true,
+    "workbench.editor.limit.enabled": true,
+    "workbench.editor.limit.value": 1,
+    "errorLens.statusBarColorsEnabled": true,
+    "workbench.sideBar.location": "right",
+    "workbench.activityBar.location": "top",
+    "workbench.editor.showTabs": "none",
+    "workbench.editor.limit.excludeDirty": true,
+    "workbench.editor.limit.perEditorGroup": true,
+    "cursor.cmdk.useThemedDiffBackground": true,
+    "search.showLineNumbers": true,
+    "editor.fontFamily": "'JetBrainsMono NFM Light', 'Droid Sans Mono', 'monospace', monospace"
 }
