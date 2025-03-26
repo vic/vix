@@ -25,8 +25,9 @@
       perSystem.nix-versions.default
       perSystem.nix-inspect.default
       perSystem.nox.default
-      perSystem.self.devicon-lookup # for eee 
+      perSystem.self.devicon-lookup # for eee
       perSystem.self.leader
+      perSystem.self.copilot-language-server # tab tab tab
       jujutsu # git
       fzf
       ripgrep # grep

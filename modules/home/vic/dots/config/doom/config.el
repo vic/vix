@@ -117,6 +117,38 @@
 (use-package! jujutsu
   :commands (jujutsu-status jujutsu-status-dispatch))
 
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+
+  :config
+  (add-to-list 'copilot-indentation-alist '(prog-mode 2))
+  (add-to-list 'copilot-indentation-alist '(org-mode 2))
+  (add-to-list 'copilot-indentation-alist '(text-mode 2))
+  (add-to-list 'copilot-indentation-alist '(scala-mode 2))
+  (add-to-list 'copilot-indentation-alist '(go-mode 2))
+  (add-to-list 'copilot-indentation-alist '(rust-mode 2))
+  (add-to-list 'copilot-indentation-alist '(closure-mode 2))
+  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2)))
+
+
+(defun copilot-complete-or-indent()
+  (interactive)
+  (if (copilot--overlay-visible)
+      (copilot-accept-completion)
+    (copilot-complete)
+    (if (copilot--overlay-visible)
+        nil
+      (lsp-inline-completion-display))))
+
+(map! :nvir
+      "<backtab>" 'copilot-complete-or-indent
+      "<tab>" 'copilot-accept-completion
+      "TAB" 'copilot-accept-completion
+      "C-TAB" 'copilot-accept-completion-by-word
+      "C-<tab>" 'copilot-accept-completion-by-word
+      "C-n" 'copilot-next-completion
+      "C-p" 'copilot-previous-completion)
+
 (defun my-hl-line-range-function ()
   (let ((beg (save-excursion
            (back-to-indentation)

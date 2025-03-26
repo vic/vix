@@ -53,4 +53,9 @@
            :files (:defaults "*.el" "*.sh")))
 
 (package! jujutsu
-  :recipe (:host github :repo "bennyandresen/jujutsu.el"))
+  :recipe (:host github :repo "bennyandresen/jujutsu.el"
+  :files (:defaults "*.el")))
+
+(package! copilot
+  :recipe (:host github :repo "copilot-emacs/copilot.el"
+  :files (:defaults "*.el")))

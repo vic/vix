@@ -1,4 +1,8 @@
-{ pname, pkgs, inputs}:
+{
+  pname,
+  pkgs,
+  inputs,
+}:
 pkgs.rustPlatform.buildRustPackage {
   name = pname;
   src = inputs.devicon-lookup;

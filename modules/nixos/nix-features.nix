@@ -1,6 +1,20 @@
 { config, pkgs, ... }:
 {
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    let
+      name = pkgs.lib.getName pkg;
+      allowed = builtins.elem name [
+        "copilot-language-server"
+        "cursor"
+        "vscode"
+        "obsidian"
+        "anydesk"
+      ];
+      msg = if allowed then "Allowed unfree: ${name}" else "Not allowed unfree ${name}";
+    in
+    builtins.trace msg allowed;
+
   nix = {
     settings = {
       auto-optimise-store = true;
