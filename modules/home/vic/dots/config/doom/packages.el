@@ -59,3 +59,6 @@
 (package! copilot
   :recipe (:host github :repo "copilot-emacs/copilot.el"
   :files (:defaults "*.el")))
+
+(package! gptel
+  :recipe (:host github :repo "karthink/gptel"))

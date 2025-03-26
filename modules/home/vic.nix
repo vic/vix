@@ -28,6 +28,7 @@
       perSystem.self.devicon-lookup # for eee
       perSystem.self.leader
       perSystem.self.copilot-language-server # tab tab tab
+      perSystem.self.vic-sops-get
       jujutsu # git
       fzf
       ripgrep # grep

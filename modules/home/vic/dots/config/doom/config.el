@@ -117,6 +117,20 @@
 (use-package! jujutsu
   :commands (jujutsu-status jujutsu-status-dispatch))
 
+(use-package! gptel
+  :config
+  (setq
+   gptel-model 'gpt-4o
+   gptel-backend
+        ;; Github Models offers an OpenAI compatible API
+        (gptel-make-openai "Github Models" ;Any name you want
+        :host "models.inference.ai.azure.com"
+        :endpoint "/chat/completions?api-version=2024-05-01-preview"
+        :stream t
+        :key (shell-command-to-string "vic-sops-get gh_actions_pat")
+        :models '(claude-3.5-sonnet gpt-4o))
+   ))
+
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
 

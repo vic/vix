@@ -14,7 +14,6 @@
     age.sshKeyPaths = [ ];
     age.generateKey = false;
     defaultSopsFile = ./secrets.yaml;
-
   };
 
   sops.secrets = {
