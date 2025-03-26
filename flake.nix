@@ -18,7 +18,6 @@
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
 
-
     blueprint.url = "github:numtide/blueprint?shallow=1";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
     blueprint.inputs.systems.follows = "systems";
