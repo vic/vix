@@ -131,6 +131,22 @@
         "type": "github"
       }
     },
+    "devicon-lookup": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1708787643,
+        "narHash": "sha256-eHxUSrN/wzitT95Sdt0DTNv4UuvwRn4gHmIzgK6ELZk=",
+        "owner": "coreyja",
+        "repo": "devicon-lookup",
+        "rev": "404c9cbd477b3dee0e757aa93a66d5e59b85e596",
+        "type": "github"
+      },
+      "original": {
+        "owner": "coreyja",
+        "repo": "devicon-lookup",
+        "type": "github"
+      }
+    },
     "devshell": {
       "inputs": {
         "nixpkgs": [
@@ -616,6 +632,7 @@
         "blueprint": "blueprint",
         "cli-leader": "cli-leader",
         "crane": "crane",
+        "devicon-lookup": "devicon-lookup",
         "devshell": "devshell",
         "doom-emacs": "doom-emacs",
         "flake-parts": "flake-parts",

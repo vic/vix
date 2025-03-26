@@ -13,6 +13,23 @@
           "command":"vscodeyazi.openYazi",
         },
         {
+          "keys": "p.F",
+          "name": "nix fmt",
+          "type": "command",
+          "command": "runCommands",
+            "args": {
+              "commands": [
+                "workbench.action.terminal.focus",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                      "text": "nix fmt\n"
+                    }
+                }
+              ]
+            }
+        },
+        {
           "keys": "g.g",
           "name": "LazyGit",
           "type": "command",

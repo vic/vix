@@ -25,6 +25,7 @@
       perSystem.nix-versions.default
       perSystem.nix-inspect.default
       perSystem.nox.default
+      perSystem.self.devicon-lookup # for eee 
       perSystem.self.leader
       jujutsu # git
       fzf
@@ -43,6 +44,7 @@
       gh
       jq
       nix-search-cli
+      nixd # lsp
     ])
     ++ (pkgs.lib.optionals pkgs.stdenv.isLinux [
       pkgs.wl-clipboard

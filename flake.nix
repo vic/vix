@@ -95,6 +95,9 @@
     radicle.inputs.crane.follows = "crane";
     radicle.inputs.rust-overlay.follows = "rust-overlay";
 
+    devicon-lookup.url = "github:coreyja/devicon-lookup";
+    devicon-lookup.flake = false;
+
   };
 
   outputs =
