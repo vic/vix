@@ -21,6 +21,7 @@
   home.packages =
     (with pkgs; [
       tree
+      perSystem.radicle.radicle-full
       perSystem.nix-versions.default
       perSystem.nix-inspect.default
       perSystem.nox.default
