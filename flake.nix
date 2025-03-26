@@ -18,6 +18,7 @@
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
 
+
     blueprint.url = "github:numtide/blueprint?shallow=1";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
     blueprint.inputs.systems.follows = "systems";
@@ -74,9 +75,27 @@
     nix-versions.inputs.systems.follows = "systems";
     nix-versions.inputs.treefmt-nix.follows = "treefmt-nix";
 
+    rust-overlay.url = "github:oxalica/rust-overlay";
+    crane.url = "github:ipetkov/crane";
+
+    nci.url = "github:yusdacra/nix-cargo-integration";
+    nci.inputs.nixpkgs.follows = "nixpkgs";
+    nci.inputs.parts.follows = "flake-parts";
+    nci.inputs.crane.follows = "crane";
+    nci.inputs.treefmt.follows = "treefmt-nix";
+    nci.inputs.rust-overlay.follows = "rust-overlay";
+
     nix-inspect.url = "github:bluskript/nix-inspect";
     nix-inspect.inputs.nixpkgs.follows = "nixpkgs";
     nix-inspect.inputs.parts.follows = "flake-parts";
+    nix-inspect.inputs.nci.follows = "nci";
+
+    radicle.url = "git+https://seed.radicle.xyz/z3gqcJUoA1n9HaHKufZs5FCSGazv5.git";
+    radicle.inputs.nixpkgs.follows = "nixpkgs";
+    radicle.inputs.flake-utils.follows = "flake-utils";
+    radicle.inputs.crane.follows = "crane";
+    radicle.inputs.rust-overlay.follows = "rust-overlay";
+
   };
 
   outputs =
