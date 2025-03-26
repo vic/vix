@@ -193,5 +193,21 @@
 	{
 		"key": "ctrl+]",
 		"command": "workbench.action.navigateForwardInNavigationLocations"
+	},
+	{
+		"key": "alt+s",
+		"command": "workbench.action.files.save"
+	},
+	{
+		"key": "ctrl+x b",
+		"command": "workbench.action.quickOpenLeastRecentlyUsedEditor"
+	},
+	{
+		"key": "alt+e",
+		"command": "workbench.explorer.fileView.focus"
+	},
+	{
+		"key": "alt+backspace",
+		"command": "workbench.action.openPreviousRecentlyUsedEditor"
 	}
 ]
