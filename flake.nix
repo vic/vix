@@ -65,6 +65,18 @@
 
     doom-emacs.url = "github:doomemacs/doomemacs";
     doom-emacs.flake = false;
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
+    nix-versions.url = "github:vic/nix-versions";
+    nix-versions.inputs.nixpkgs.follows = "nixpkgs";
+    nix-versions.inputs.flake-parts.follows = "flake-parts";
+    nix-versions.inputs.systems.follows = "systems";
+    nix-versions.inputs.treefmt-nix.follows = "treefmt-nix";
+
+    nix-inspect.url = "github:bluskript/nix-inspect";
+    nix-inspect.inputs.nixpkgs.follows = "nixpkgs";
+    nix-inspect.inputs.parts.follows = "flake-parts";
   };
 
   outputs =
