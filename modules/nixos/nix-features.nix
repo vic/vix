@@ -19,6 +19,9 @@
             "nvidia-x11"
             "nvidia-settings"
           ];
+          "nienna" = [
+            "broadcom-sta"
+          ];
         }
         .${config.networking.hostName} or [ ];
 
