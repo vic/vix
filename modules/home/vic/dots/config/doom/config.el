@@ -85,6 +85,7 @@
   :config
   (add-hook 'lsp-mode-hook 'lsp-ui-mode)
   :custom
+  (lsp-headerline-breadcrumb-enable t)
   (lsp-eldoc-render-all t)
   (lsp-idle-delay 0.6)
   ;; enable / disable the hints as you prefer:
