@@ -21,6 +21,8 @@
   home.packages =
     (with pkgs; [
       tree
+      perSystem.nix-versions.default
+      perSystem.nix-inspect.default
       perSystem.nox.default
       perSystem.self.leader
       jujutsu # git
