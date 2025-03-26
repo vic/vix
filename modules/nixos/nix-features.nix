@@ -13,12 +13,14 @@
         "anydesk"
       ];
 
-      perHost = {
-        "mordor" = [
-          "nvidia-x11"
-          "nvidia-settings"
-        ];
-      }.${config.networking.hostName} or [];
+      perHost =
+        {
+          "mordor" = [
+            "nvidia-x11"
+            "nvidia-settings"
+          ];
+        }
+        .${config.networking.hostName} or [ ];
 
       allowed = builtins.elem name (global ++ perHost);
       msg = if allowed then "Allowed unfree: ${name}" else "Not allowed unfree ${name}";
