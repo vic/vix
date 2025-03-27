@@ -22,6 +22,10 @@
       format = "binary";
       sopsFile = ./secrets/mordor;
     };
+    "ssh/sops_ssh_config" = {
+      format = "binary";
+      sopsFile = ./secrets/ssh-conf;
+    };
   };
 
   sops.templates = {

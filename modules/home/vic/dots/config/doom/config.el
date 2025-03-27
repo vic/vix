@@ -148,11 +148,8 @@
 (defun copilot-complete-or-indent()
   (interactive)
   (if (copilot--overlay-visible)
-      (copilot-accept-completion)
-    (copilot-complete)
-    (if (copilot--overlay-visible)
-        nil
-      (lsp-inline-completion-display))))
+      (copilot-accept-completion-by-word)
+    (copilot-complete)))
 
 (map! :nvir
       "<backtab>" 'copilot-complete-or-indent
