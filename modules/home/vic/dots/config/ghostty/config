@@ -2,7 +2,17 @@ theme = rebecca
 font-family = "JetBrainsMono NFM Light"
 font-size = 22
 
+# Reminder: bat ctrl+shift+j for scrollback
+# https://github.com/ghostty-org/ghostty/blob/main/src/config/Config.zig#L4350
+
 #keybind = ctrl+d=new_split:right
 # copy-on-select = clipboard
 keybind = performable:ctrl+shift+v=paste_from_clipboard
 keybind = performable:ctrl+shift+c=copy_to_clipboard
+
+keybind = ctrl+l=clear_screen
+
+# on escape sequences
+# https://www.leonerd.org.uk/hacks/fixterms/
+# https://github.com/ghostty-org/ghostty/discussions/3187#discussioncomment-11741888
+# keybind = ctrl+s=text:"hello world"\x1b[1;5Z
