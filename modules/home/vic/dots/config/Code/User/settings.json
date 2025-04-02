@@ -160,13 +160,13 @@
     "find-it-faster.general.openFileInPreviewEditor": true,
     "direnv.restart.automatic": true,
     "window.autoDetectColorScheme": true,
-    "workbench.preferredLightColorTheme": "Rebecca",
+    "workbench.preferredLightColorTheme": "GitHub Light",
     "workbench.preferredDarkColorTheme": "Midnight Purple 2077",
     "workbench.view.showQuietly": {
         "workbench.panel.output": false
     },
     "workbench.editor.centeredLayoutFixedWidth": true,
-    "workbench.editor.limit.enabled": true,
+    "workbench.editor.limit.enabled": false,
     "workbench.editor.limit.value": 1,
     "errorLens.statusBarColorsEnabled": true,
     "workbench.sideBar.location": "right",
