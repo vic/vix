@@ -161,11 +161,15 @@
       "C-p" 'copilot-previous-completion)
 
 (map! :leader :desc "Run Command" "SPC" 'execute-extended-command)
-;;(map! "s-[" 'evil-jump-backward)
-;;(map! "s-]" 'evil-jump-forward)
-;;(global-set-key (kbd "s-[") 'evil-jump-backward)
-;;(global-set-key (kbd "s-]") 'evil-jump-forward)
 
+(map! :n :desc "Comment or uncomment" "C-/" 'comment-dwim)
+(map! :n "U" 'evil-redo)
+(map! :m "[ [" 'better-jumper-jump-backward)
+(map! :m "] ]" 'better-jumper-jump-forward)
+
+(setq god-global-mode -1)
+(god-mode-all -1)
+(map! :leader :desc "God Mode" "<escape>" 'god-execute-with-current-bindings)
 
 (defun my-hl-line-range-function ()
   (let ((beg (save-excursion
@@ -177,6 +181,7 @@
     (cons beg end)))
 
 (setq hl-line-range-function #'my-hl-line-range-function)
+
 
 
 ;; from https://gist.github.com/yorickvP/6132f237fbc289a45c808d8d75e0e1fb
