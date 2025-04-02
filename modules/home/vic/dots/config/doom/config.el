@@ -36,11 +36,11 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-dracula)
+(setq doom-theme 'doom-oksolar-light)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type t)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -160,6 +160,13 @@
       "C-n" 'copilot-next-completion
       "C-p" 'copilot-previous-completion)
 
+(map! :leader :desc "Run Command" "SPC" 'execute-extended-command)
+;;(map! "s-[" 'evil-jump-backward)
+;;(map! "s-]" 'evil-jump-forward)
+;;(global-set-key (kbd "s-[") 'evil-jump-backward)
+;;(global-set-key (kbd "s-]") 'evil-jump-forward)
+
+
 (defun my-hl-line-range-function ()
   (let ((beg (save-excursion
            (back-to-indentation)
@@ -170,3 +177,28 @@
     (cons beg end)))
 
 (setq hl-line-range-function #'my-hl-line-range-function)
+
+
+;; from https://gist.github.com/yorickvP/6132f237fbc289a45c808d8d75e0e1fb
+;; Set up wl-copy and wl-paste in terminal Emacs
+(when (and (or server-mode (string= (getenv "XDG_SESSION_TYPE") "wayland"))
+           (executable-find "wl-copy")
+           (executable-find "wl-paste"))
+  (defun my-wl-copy (text)
+    "Copy with wl-copy if in terminal, otherwise use the original value of `interprogram-cut-function'."
+    (if (display-graphic-p)
+        (gui-select-text text)
+      (let ((wl-copy-process
+             (make-process :name "wl-copy"
+                           :buffer nil
+                           :command '("wl-copy")
+                           :connection-type 'pipe)))
+        (process-send-string wl-copy-process text)
+        (process-send-eof wl-copy-process))))
+  (defun my-wl-paste ()
+    "Paste with wl-paste if in terminal, otherwise use the original value of `interprogram-paste-function'."
+    (if (display-graphic-p)
+        (gui-selection-value)
+      (shell-command-to-string "wl-paste --no-newline")))
+  (setq interprogram-cut-function #'my-wl-copy)
+  (setq interprogram-paste-function #'my-wl-paste))

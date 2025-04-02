@@ -47,6 +47,8 @@
       jq
       nix-search-cli
       nixd # lsp
+      nixfmt-rfc-style
+      ispell
     ])
     ++ (pkgs.lib.optionals pkgs.stdenv.isLinux [
       pkgs.wl-clipboard
