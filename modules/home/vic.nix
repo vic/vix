@@ -13,6 +13,7 @@
     ./vic/ssh.nix
     ./vic/fish.nix
     ./vic/git.nix
+    ./vic/jujutsu.nix
     ./vic/doom.nix
     ./vic/nvim.nix
     ./vic/dots.nix
@@ -31,7 +32,6 @@
       perSystem.self.vic-sops-get
       perSystem.self.jj-fzf
       perSystem.self.lazyjj
-      jujutsu # git
       fzf
       ripgrep # grep
       bat # cat
