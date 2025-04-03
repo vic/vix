@@ -8,7 +8,9 @@
   nf = "fd --glob '*.nix' -X nixfmt {}";
   # jj
   jf = "jj-fzf";
+  lf = "lazyjj";
   # git
+  lg = "lazygit";
   gr = "git recents";
   gc = "git commit";
   gb = "git branch";
@@ -43,5 +45,4 @@
   mr = "mg SPC g / r i";
   # rebase interactive
   mz = "mg SPC g / Z l";
-  lg = "lazygit";
 }
