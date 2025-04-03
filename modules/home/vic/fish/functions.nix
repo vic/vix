@@ -4,6 +4,14 @@
   ...
 }:
 {
+  jj-git-init.description = "init jj to follow git branch";
+  jj-git-init.argumentNames = [ "branch" ];
+  jj-git-init.body = ''
+    jj git init --colocate
+    jj bookmark track "$branch@origin"
+    jj config set --repo "revset-aliases.'trunk()'" "$branch@origin"
+  '';
+
   mg.body = "spc u SPC gg -r \"$PWD\" RET";
   spc.body = "SPC $argv -- -nw";
   vspc.body = "SPC $argv -- -c";
