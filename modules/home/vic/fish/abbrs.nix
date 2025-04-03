@@ -9,6 +9,18 @@
   # jj
   jf = "jj-fzf";
   lf = "lazyjj";
+  jl = "jj log";
+  js = "jj status";
+  jd = "jj diff";
+  jB = "jj bookmark";
+  jD = "jj describe -m";
+  jR = "jj rebase";
+  jS = "jj squash -i";
+  jN = "jj new -m";
+  jG = "jj git";
+  jP = "jj git push";
+  jF = "jj git fetch";
+  
   # git
   lg = "lazygit";
   gr = "git recents";
