@@ -6,21 +6,26 @@
   find = "fd";
   nr = "nix run";
   nf = "fd --glob '*.nix' -X nixfmt {}";
+
   # jj
   jf = "jj-fzf";
-  lf = "lazyjj";
-  jl = "jj log";
-  js = "jj status";
-  jd = "jj diff";
+  lj = "lazyjj";
   jB = "jj bookmark";
   jD = "jj describe -m";
+  jd = "jj diff";
+  je = "jj edit";
+  jF = "jj git fetch";
+  jG = "jj git";
+  jl = "jj log";
+  jM = "jj bookmark set main";
+  jn = "jj new";
+  jN = "jj new -m";
+  jp = "jj git push";
+  jP = "jj git push && jj new -A @";
   jR = "jj rebase";
   jS = "jj squash -i";
-  jN = "jj new -m";
-  jG = "jj git";
-  jP = "jj git push";
-  jF = "jj git fetch";
-  
+  js = "jj status --no-pager";
+
   # git
   lg = "lazygit";
   gr = "git recents";
