@@ -6,6 +6,9 @@
   find = "fd";
   nr = "nix run";
   nf = "fd --glob '*.nix' -X nixfmt {}";
+  # jj
+  jf = "jj-fzf";
+  # git
   gr = "git recents";
   gc = "git commit";
   gb = "git branch";
