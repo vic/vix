@@ -75,4 +75,16 @@
 
     };
   };
+
+  home.file.".config/jj/jj-fzf.toml".source = let
+    toml = {
+      template-aliases = {
+        "format_short_id(id)" = "id.shortest()"; # default is shortest(12)
+        "format_short_change_id(id)" = "format_short_id(id)";
+        "format_short_signature(signature)" = "signature.email()";
+        "format_timestamp(timestamp)" = "timestamp.ago()";
+      };
+    };
+    fmt = pkgs.formats.toml {}; 
+  in fmt.generate "jj-fxf.toml" toml;
 }
