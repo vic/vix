@@ -71,15 +71,6 @@
           "-r"
           ".."
         ];
-
-        n = [ "new" ];
-        d = [ "describe" ];
-        b = [ "bookmark" ];
-        s = [ "squash" ];
-        r = [ "rebase" ];
-        e = [ "edit" ];
-        A = [ "abbandon" ];
-        U = [ "undo" ];
       };
 
     };
