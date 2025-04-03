@@ -68,6 +68,7 @@
         # like git log, all visible commits in the repo
         ll = [
           "log"
+          "-r"
           ".."
         ];
 
