@@ -101,6 +101,10 @@
 
     jj-fzf.url = "github:tim-janik/jj-fzf";
     jj-fzf.flake = false;
+
+    lazyjj.url = "github:Cretezy/lazyjj";
+    lazyjj.flake = false;
+
   };
 
   outputs =

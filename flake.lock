@@ -693,6 +693,7 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "jj-fzf": "jj-fzf",
+        "lazyjj": "lazyjj",
         "nci": "nci",
         "nix-darwin": "nix-darwin",
         "nix-index-database": "nix-index-database",
