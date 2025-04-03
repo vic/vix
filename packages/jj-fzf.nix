@@ -1,4 +1,9 @@
-{pname, pkgs, inputs, ...}: 
+{
+  pname,
+  pkgs,
+  inputs,
+  ...
+}:
 pkgs.writeShellApplication {
   name = pname;
   runtimeInputs = with pkgs; [
@@ -13,6 +18,6 @@ pkgs.writeShellApplication {
     bash
   ];
   text = ''
-  bash ${inputs.jj-fzf}/jj-fzf
+    bash ${inputs.jj-fzf}/jj-fzf
   '';
 }
