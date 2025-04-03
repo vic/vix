@@ -29,6 +29,7 @@
       perSystem.self.leader
       perSystem.self.copilot-language-server # tab tab tab
       perSystem.self.vic-sops-get
+      perSystem.self.jj-fzf
       jujutsu # git
       fzf
       ripgrep # grep

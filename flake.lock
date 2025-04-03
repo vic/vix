@@ -335,6 +335,38 @@
         "type": "github"
       }
     },
+    "jj-fzf": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1738203280,
+        "narHash": "sha256-1ND9pMzLaW+iIJYFDoseUixK522x/1N2ryAySnYOjGs=",
+        "owner": "tim-janik",
+        "repo": "jj-fzf",
+        "rev": "501a936d4f5843b0a3b4df37caec529fbe199c2b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tim-janik",
+        "repo": "jj-fzf",
+        "type": "github"
+      }
+    },
+    "lazyjj": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1741927225,
+        "narHash": "sha256-FK4g1VBoPr2bYcbXD9zL9Muu6BGVyKH7LDGVj4JzWy0=",
+        "owner": "Cretezy",
+        "repo": "lazyjj",
+        "rev": "cbae43c50484547a2f41c610c740a16b4cb1e055",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Cretezy",
+        "repo": "lazyjj",
+        "type": "github"
+      }
+    },
     "mk-naked-shell": {
       "flake": false,
       "locked": {
@@ -660,6 +692,7 @@
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "jj-fzf": "jj-fzf",
         "nci": "nci",
         "nix-darwin": "nix-darwin",
         "nix-index-database": "nix-index-database",

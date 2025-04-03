@@ -98,6 +98,9 @@
     devicon-lookup.url = "github:coreyja/devicon-lookup";
     devicon-lookup.flake = false;
 
+
+    jj-fzf.url = "github:tim-janik/jj-fzf";
+    jj-fzf.flake = false;
   };
 
   outputs =
