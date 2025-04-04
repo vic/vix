@@ -119,7 +119,6 @@
           "format_short_signature(signature)" = "signature.email()";
           "format_timestamp(timestamp)" = "timestamp.ago()";
         };
-        ui.diff.tool = ":builtin";
       };
       fmt = pkgs.formats.toml { };
     in
