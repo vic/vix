@@ -1,33 +1,37 @@
 { pkgs, perSystem, ... }:
 {
 
-  home.packages = let
-    jj-for-tui = pkgs.stdenvNoCC.mkDerivation {
-      inherit (pkgs.jujutsu) name version meta;
-      nativeBuildInputs = [ pkgs.makeWrapper ];
-      phases = "wrap";
-      wrap = ''
-      makeWrapper ${pkgs.jujutsu}/bin/jj $out/bin/jj \
-      --add-flags --config-file \
-      --add-flags "~/.config/jj/tui.toml"
-      '';
-    };
+  home.packages =
+    let
+      jj-for-tui = pkgs.stdenvNoCC.mkDerivation {
+        inherit (pkgs.jujutsu) name version meta;
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        phases = "wrap";
+        wrap = ''
+          makeWrapper ${pkgs.jujutsu}/bin/jj $out/bin/jj \
+          --add-flags --config-file \
+          --add-flags "~/.config/jj/tui.toml"
+        '';
+      };
 
-    jj-tui-wrap = drv: pkgs.stdenvNoCC.mkDerivation {
-      inherit (drv) name meta;
-      nativeBuildInputs = [ pkgs.makeWrapper ];
-      phases = "wrap";
-      wrap = ''
-      makeWrapper \
-        "${drv}/bin/${drv.meta.mainProgram}" \
-        "$out/bin/${drv.meta.mainProgram}" \
-        --prefix PATH : ${jj-for-tui}/bin
-      '';
-    };
-  in [
-    (jj-tui-wrap perSystem.self.lazyjj)
-    (jj-tui-wrap perSystem.self.jj-fzf)
-  ];
+      jj-tui-wrap =
+        drv:
+        pkgs.stdenvNoCC.mkDerivation {
+          inherit (drv) name meta;
+          nativeBuildInputs = [ pkgs.makeWrapper ];
+          phases = "wrap";
+          wrap = ''
+            makeWrapper \
+              "${drv}/bin/${drv.meta.mainProgram}" \
+              "$out/bin/${drv.meta.mainProgram}" \
+              --prefix PATH : ${jj-for-tui}/bin
+          '';
+        };
+    in
+    [
+      (jj-tui-wrap perSystem.self.lazyjj)
+      (jj-tui-wrap perSystem.self.jj-fzf)
+    ];
 
   programs.jujutsu = {
     enable = true;
@@ -105,15 +109,17 @@
     };
   };
 
-  home.file.".config/jj/tui.toml".source = let
-    toml = {
-      template-aliases = {
-        "format_short_id(id)" = "id.shortest()"; # default is shortest(12)
-        "format_short_change_id(id)" = "format_short_id(id)";
-        "format_short_signature(signature)" = "signature.email()";
-        "format_timestamp(timestamp)" = "timestamp.ago()";
+  home.file.".config/jj/tui.toml".source =
+    let
+      toml = {
+        template-aliases = {
+          "format_short_id(id)" = "id.shortest()"; # default is shortest(12)
+          "format_short_change_id(id)" = "format_short_id(id)";
+          "format_short_signature(signature)" = "signature.email()";
+          "format_timestamp(timestamp)" = "timestamp.ago()";
+        };
       };
-    };
-    fmt = pkgs.formats.toml {}; 
-  in fmt.generate "tui.toml" toml;
+      fmt = pkgs.formats.toml { };
+    in
+    fmt.generate "tui.toml" toml;
 }
