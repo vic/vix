@@ -15,7 +15,7 @@
       };
 
       jj-tui-wrap =
-        drv:
+        drv: extra:
         pkgs.stdenvNoCC.mkDerivation {
           inherit (drv) name meta;
           nativeBuildInputs = [ pkgs.makeWrapper ];
@@ -24,13 +24,14 @@
             makeWrapper \
               "${drv}/bin/${drv.meta.mainProgram}" \
               "$out/bin/${drv.meta.mainProgram}" \
-              --prefix PATH : ${jj-for-tui}/bin
+              --prefix PATH : ${jj-for-tui}/bin \
+              ${extra}
           '';
         };
     in
     [
-      (jj-tui-wrap perSystem.self.lazyjj)
-      (jj-tui-wrap perSystem.self.jj-fzf)
+      (jj-tui-wrap perSystem.self.lazyjj "--add-flags --jj-bin --add-flags ${jj-for-tui}/bin/jj")
+      (jj-tui-wrap perSystem.self.jj-fzf "--add-flags --key-bindings")
     ];
 
   programs.jujutsu = {
@@ -82,7 +83,7 @@
       };
 
       git = {
-        push-bookmark-prefix = "vic/change-";
+        push-bookmark-prefix = "vic/jj-change-";
       };
 
       aliases = {
