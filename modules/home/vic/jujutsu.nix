@@ -32,6 +32,7 @@
     [
       (jj-tui-wrap perSystem.self.lazyjj "--add-flags --jj-bin --add-flags ${jj-for-tui}/bin/jj")
       (jj-tui-wrap perSystem.self.jj-fzf "--add-flags --key-bindings")
+      (jj-tui-wrap perSystem.self.jjui "")
     ];
 
   programs.jujutsu = {
@@ -114,7 +115,7 @@
     let
       toml = {
         template-aliases = {
-          "format_short_id(id)" = "id.shortest()"; # default is shortest(12)
+          "format_short_id(id)" = "id.shortest(10).upper()"; # default is shortest(12)
           "format_short_change_id(id)" = "format_short_id(id)";
           "format_short_signature(signature)" = "signature.email()";
           "format_timestamp(timestamp)" = "timestamp.ago()";
@@ -123,4 +124,14 @@
       fmt = pkgs.formats.toml { };
     in
     fmt.generate "tui.toml" toml;
+
+  home.file.".config/jjui/config.toml".source =
+    let
+      # https://github.com/idursun/jjui/wiki/Configuration
+      toml = {
+
+      };
+      fmt = pkgs.formats.toml { };
+    in
+    fmt.generate "config.toml" toml;
 }
