@@ -6,6 +6,7 @@
 }:
 pkgs.writeShellApplication {
   name = pname;
+  meta.mainProgram = pname;
   runtimeInputs = with pkgs; [
     jujutsu
     git

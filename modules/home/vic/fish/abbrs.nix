@@ -15,8 +15,9 @@
   jd = "jj diff";
   je = "jj edit";
   jF = "jj git fetch";
-  jG = "jj git";
+  jg = "jj git";
   jl = "jj log";
+  jll = "jj ll";
   jM = "jj bookmark set main";
   jn = "jj new";
   jN = "jj new -m";
@@ -24,7 +25,7 @@
   jP = "jj git push && jj new -A @";
   jR = "jj rebase";
   jS = "jj squash -i";
-  js = "jj status --no-pager";
+  js = "jj show";
 
   # git
   lg = "lazygit";

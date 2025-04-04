@@ -30,8 +30,6 @@
       perSystem.self.leader
       perSystem.self.copilot-language-server # tab tab tab
       perSystem.self.vic-sops-get
-      perSystem.self.jj-fzf
-      perSystem.self.lazyjj
       fzf
       ripgrep # grep
       bat # cat
