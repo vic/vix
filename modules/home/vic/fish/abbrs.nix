@@ -29,6 +29,7 @@
   jR = "jj restore -i";
   jS = "jj squash -i";
   js = "jj status --no-pager";
+  ju = "jjui";
 
   # git
   lg = "lazygit";

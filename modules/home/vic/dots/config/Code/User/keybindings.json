@@ -209,5 +209,9 @@
 	{
 		"key": "alt+backspace",
 		"command": "workbench.action.openPreviousRecentlyUsedEditor"
+	},
+	{
+		"key": "ctrl+i",
+		"command": "composerMode.agent"
 	}
 ]

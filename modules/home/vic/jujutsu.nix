@@ -52,10 +52,12 @@
         # immutable heads:
         # main and not mine commits.
         "immutable_heads()" = "trunk() | (trunk().. & ~mine())";
+
+        "default_log()" = "present(@) | ancestors(immutable_heads().., 2) | present(trunk())";
       };
 
       template-aliases = {
-        "format_short_id(id)" = "id.shortest(7)"; # default is shortest(12)
+        "format_short_id(id)" = "id.shortest().upper()"; # default is shortest(12)
         "format_short_change_id(id)" = "format_short_id(id)";
         "format_short_signature(signature)" = "signature.email()";
       };
@@ -114,6 +116,12 @@
   home.file.".config/jj/tui.toml".source =
     let
       toml = {
+        ui.editor = "vim";
+        jj-fzf = {
+          show-keys = "true";
+          revsets.log = "..";
+          diff-mode = "jj-diff";
+        };
         template-aliases = {
           "format_short_id(id)" = "id.shortest(10).upper()"; # default is shortest(12)
           "format_short_change_id(id)" = "format_short_id(id)";

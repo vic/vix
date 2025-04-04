@@ -111,7 +111,11 @@
 
 (use-package! eee
   :custom
-  (ee-terminal-command "ghostty"))
+  (ee-terminal-command "ghostty")
+  :config
+  (ee-define "ee-lazyjj" default-directory (string-trim-right (expand-file-name "~/.flake/modules/home/vic/dots/config/doom/ee-lazyjj.bash")) nil ignore)
+  (ee-define "ee-jj-fzf" default-directory (string-trim-right (expand-file-name "~/.flake/modules/home/vic/dots/config/doom/ee-jj-fzf.bash")) nil ignore)
+  )
 
 
 (use-package! jujutsu
