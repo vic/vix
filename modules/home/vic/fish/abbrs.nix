@@ -10,7 +10,9 @@
   # jj
   jf = "jj-fzf";
   lj = "lazyjj";
-  jB = "jj bookmark";
+  jb = "jj bookmark";
+  jB = "jj bookmark set";
+  jc = "jj commit";
   jD = "jj describe -m";
   jd = "jj diff";
   je = "jj edit";
@@ -23,9 +25,10 @@
   jN = "jj new -m";
   jp = "jj git push";
   jP = "jj git push && jj new -A @";
-  jR = "jj rebase";
+  jr = "jj rebase";
+  jR = "jj restore -i";
   jS = "jj squash -i";
-  js = "jj show";
+  js = "jj status --no-pager";
 
   # git
   lg = "lazygit";
