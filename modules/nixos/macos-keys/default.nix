@@ -19,7 +19,6 @@ in
     services.keyd.keyboards.default.ids = [ "*" ]; # apply on all devices
     services.keyd.keyboards.default.settings = lib.mkMerge [
       (import ./caps-is-ctrl-or-esc.nix)
-      (import ./lctrl-vim-navigation.nix)
       (import ./macos-keys.nix {
         desktop = cfg.desktop-keys;
         inherit lib pkgs config;

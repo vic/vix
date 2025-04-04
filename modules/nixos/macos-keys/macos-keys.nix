@@ -1,9 +1,10 @@
+# see https://raw.githubusercontent.com/rvaiya/keyd/refs/heads/master/docs/keyd.scdoc
 # see https://github.com/rvaiya/keyd/blob/master/examples/macos.conf
 { desktop, ... }:
 let
 
-  # Layer for the left cmd key
-  mac_leftcmd = {
+  # MacOS Command (⌘)
+  mac_cmd = {
 
     # clipboard
     c = desktop.copy;
@@ -34,24 +35,40 @@ let
 
   };
 
-  # Layer for the left opt key
-  mac_leftopt = { };
+  # MacOS Option (⌥)
+  mac_opt = { };
 
-  mac_rightctrl = { };
+  # Macos Meh (⌃⌥⇧)
+  mac_meh = { };
+
+  # Hyper (⌃⌥⇧⌘)
+  mac_hyper = {
+    h = "left";
+    j = "down";
+    k = "up";
+    l = "right";
+  };
 
 in
 {
 
-  # Left Alt (left from spacebar) becomes MacOS Command layer.
-  main.leftalt = "layer(mac_leftcmd)";
-  "mac_leftcmd:A" = mac_leftcmd; # inherit from original Alt layer
+  # Left Alt (left from spacebar) becomes MacOS Command
+  main.leftalt = "overload(layer(mac_leftcmd), esc)";
+  "mac_leftcmd:A" = mac_cmd; # Keep original Alt
 
-  # # Left Meta (two left from spacebar) becomes MacOS Option layer.
-  main.leftmeta = "layer(mac_leftopt)";
-  "mac_leftopt:M" = mac_leftopt; # inherit from original Meta layer
+  # Right Alt (right from spacebar) becomes MacOS Command
+  main.rightalt = "overload(layer(mac_rightcmd), esc)";
+  "mac_rightcmd:A" = mac_cmd; # Keep original Alt
 
-  # Right Alt (right from spacebar) becomes additional Ctrl layer.
-  main.rightalt = "overload(mac_rightctrl, esc)";
-  "mac_rightctrl:C" = mac_rightctrl;
+  # Left Meta (two left from spacebar) becomes MacOS Option
+  main.leftmeta = "overload(layer(mac_leftopt), esc)";
+  "mac_leftopt:M" = mac_opt; # inherit from original Meta layer
+
+  # Right Ctrl (two right from spacebar) becomes Macos Meh
+  main.rightcontrol = "overload(mac_meh, esc)";
+  "mac_meh:C-A-S" = mac_meh; # ⌃⌥⇧ -> Ctrl+Alt+Shift
+
+  main.leftcontrol = "overload(mac_hyper, esc)";
+  "mac_hyper:C-A-S-M" = mac_hyper; # ⌃⌥⇧⌘ -> Ctrl+Alt+Shift+Meta
 
 }
