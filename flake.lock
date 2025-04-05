@@ -351,6 +351,22 @@
         "type": "github"
       }
     },
+    "jjui": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1743843874,
+        "narHash": "sha256-dmzxmvuhZzL9dVLl+5anpaBWdBcoSSX6pUpc5jjlPmU=",
+        "owner": "idursun",
+        "repo": "jjui",
+        "rev": "799c9744c286d197d8da6bd1692b0d5a0ef8d47a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "idursun",
+        "repo": "jjui",
+        "type": "github"
+      }
+    },
     "lazyjj": {
       "flake": false,
       "locked": {
@@ -693,6 +709,7 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "jj-fzf": "jj-fzf",
+        "jjui": "jjui",
         "lazyjj": "lazyjj",
         "nci": "nci",
         "nix-darwin": "nix-darwin",
