@@ -104,6 +104,9 @@
     lazyjj.url = "github:Cretezy/lazyjj";
     lazyjj.flake = false;
 
+    jjui.url = "github:idursun/jjui";
+    jjui.flake = false;
+
   };
 
   outputs =
