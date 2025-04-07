@@ -29,6 +29,7 @@
   jR = "jj restore -i";
   jS = "jj squash -i";
   js = "jj status --no-pager";
+  jss = "jj show --summary --no-pager";
   ju = "jjui";
 
   # git
