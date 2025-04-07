@@ -354,11 +354,11 @@
     "jjui": {
       "flake": false,
       "locked": {
-        "lastModified": 1743953935,
-        "narHash": "sha256-WHrp01Pi68QCBJjLij58cvD5lqjpqGyGZzoaXeHxp5M=",
+        "lastModified": 1744017811,
+        "narHash": "sha256-9o7I4qk0flaFlrO5fBuntJO3XSEWAM9WuoPEA/Y+LXE=",
         "owner": "idursun",
         "repo": "jjui",
-        "rev": "91637732ebb5918c688e665e7407c2eed8b4ba10",
+        "rev": "1e3cc16aae6bfae46235857a52cfaa253a90e142",
         "type": "github"
       },
       "original": {

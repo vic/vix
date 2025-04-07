@@ -123,7 +123,7 @@
           diff-mode = "jj-diff";
         };
         template-aliases = {
-          "format_short_id(id)" = "id.shortest(10).upper()"; # default is shortest(12)
+          "format_short_id(id)" = "id.shortest().upper()"; # default is shortest(12)
           "format_short_change_id(id)" = "format_short_id(id)";
           "format_short_signature(signature)" = "signature.email()";
           "format_timestamp(timestamp)" = "timestamp.ago()";
