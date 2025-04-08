@@ -22,6 +22,9 @@
           "nienna" = [
             "broadcom-sta"
           ];
+          "smaug" = [
+            "broadcom-sta"
+          ];
         }
         .${config.networking.hostName} or [ ];
 
