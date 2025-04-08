@@ -38,6 +38,7 @@
       ".envrc.local"
       ".env"
       ".env.local"
+      ".jj"
       "/devshell.toml"
       "/.tool-versions"
       "*.key"

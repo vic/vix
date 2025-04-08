@@ -8,7 +8,10 @@
     barrier
     vic
     vic-autologin
+    kvm-amd
+    nvidia
     ./static.nix
+    ./filesystems.nix
     ./hardware-configuration.nix
   ];
 

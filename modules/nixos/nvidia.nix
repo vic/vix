@@ -20,7 +20,12 @@
     prime = {
       offload.enable = powerManagement.finegrained;
       offload.enableOffloadCmd = prime.offload.enable;
-      nvidiaBusId = "PCI:9:0:0";
+      nvidiaBusId = (
+        {
+          mordor = "PCI:9:0:0";
+        }
+        .${config.networking.hostName} or ""
+      );
     };
   };
 }

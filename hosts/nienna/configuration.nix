@@ -16,7 +16,10 @@
     gnome-desktop
     barrier
     macos-keys
+    kvm-intel
+    wl-broadcom
     ./static.nix
+    ./filesystems.nix
     ./hardware-configuration.nix
   ];
 
