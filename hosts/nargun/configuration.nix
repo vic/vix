@@ -16,7 +16,9 @@
     gnome-desktop
     barrier
     macos-keys
+    kvm-amd
     ./static.nix
+    ./filesystems.nix
     ./hardware-configuration.nix
   ];
 

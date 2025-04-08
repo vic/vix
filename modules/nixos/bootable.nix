@@ -1,5 +1,9 @@
-{ ... }:
+{ lib, modulesPath, ... }:
 {
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -29,7 +33,7 @@
   };
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  # services.printing.enable = true;
 
   # Enable sound with pipewire.
   # sound.enable = true;
@@ -73,4 +77,5 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  networking.useDHCP = lib.mkDefault true;
 }
