@@ -31,6 +31,9 @@
     home-manager.url = "github:nix-community/home-manager?ref=master&shallow=1";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    nixos-generators.url = "github:nix-community/nixos-generators";
+    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
+
     vscode-server.url = "github:nix-community/nixos-vscode-server?ref=master&shallow=1";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
     vscode-server.inputs.flake-utils.follows = "flake-utils";
