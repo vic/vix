@@ -64,9 +64,8 @@
 
       ui = {
         default-command = [
-          "l"
+          "status"
           "--no-pager"
-          "--reversed"
         ];
         diff.tool = [
           (pkgs.lib.getExe pkgs.difftastic)

@@ -14,7 +14,7 @@
   jB = "jj bookmark set";
   jc = "jj commit";
   jD = "jj describe -m";
-  jd = "jj diff";
+  jd = "jj show --tool difft";
   je = "jj edit";
   jF = "jj git fetch";
   jg = "jj git";
@@ -28,7 +28,7 @@
   jr = "jj rebase";
   jR = "jj restore -i";
   jS = "jj squash -i";
-  js = "jj status --no-pager";
+  js = "jj show --stat --no-pager";
   jss = "jj show --summary --no-pager";
   ju = "jjui";
 
