@@ -1,8 +1,8 @@
-name: "flake update"
+name: upterm
 on:
   workflow_dispatch:
 jobs:
-  createPullRequest:
+  upterm:
     runs-on: mac-latest
     steps:
       - uses: actions/checkout@v4
