@@ -16,4 +16,4 @@ jobs:
           echo "StrictHostKeyChecking no" >> $HOME/.ssh/config
           nix profile install nixpkgs#upterm nixpkgs#openssh nixpkgs#tmux nixpkgs#vim
           export PATH=$HOME/.nix-profile/bin:$PATH
-          upterm -- host --github-user vic --force-command 'tmux attach -t gh' -- tmux new -t gh
+          upterm host --github-user vic --force-command 'tmux attach -t gh' -- tmux new -t gh
