@@ -8,6 +8,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v30
       - name: upterm
+        env:
+          GH_TOKEN: ${{ secrets.PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           export PATH=$HOME/.nix-profile/bin:$PATH
           env NIXPKGS_ALLOW_UNFREE=1 nix profile install nixpkgs#vscode --impure
