@@ -18,8 +18,7 @@ jobs:
           ssh-keyscan uptermd.upterm.dev 2> /dev/null >> ~/.ssh/known_hosts
           cat <(cat ~/.ssh/known_hosts | awk '{ print "@cert-authority * " $2 " " $3 }') >> ~/.ssh/known_hosts
           mkdir -p $HOME/.upterm
-          nohup upterm host --accept --github-user vic -- tmux new -s upterm -x 132 -y 43 > $HOME/.upterm/out.log
-          tmux set -t upterm window-size largest
+          nohup upterm host --accept --github-user vic > $HOME/.upterm/out.log
           while ! grep 'SSH Session:' $HOME/.upterm/out.log; do true ; done
           while ! grep 'Client joined' $HOME/.upterm/upterm.log >/dev/null; do sleep 10; done
           while test -f $HOME/.upterm/*.sock; do date; sleep 10; done
