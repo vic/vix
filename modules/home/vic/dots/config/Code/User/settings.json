@@ -176,6 +176,5 @@
     "workbench.editor.limit.perEditorGroup": true,
     "cursor.cmdk.useThemedDiffBackground": true,
     "search.showLineNumbers": true,
-    "editor.fontFamily": "'JetBrainsMono NFM Light', 'Droid Sans Mono', 'monospace', monospace",
-    "remote.SSH.configFile": "~/.ssh/vscode-ssh-config"
+    "editor.fontFamily": "'JetBrainsMono NFM Light', 'Droid Sans Mono', 'monospace', monospace"
 }

@@ -10,17 +10,8 @@
     addKeysToAgent = "yes";
     controlMaster = "auto";
     controlPath = "~/.ssh/%h:%C";
-
-    matchBlocks = {
-      "uptermd.upterm.dev" = {
-        forwardAgent = true;
-        extraOptions = {
-          ControlMaster = "auto";
-          ControlPersist = "yes";
-          ControlPath = "~/.ssh/upterm:%C";
-        };
-      };
-    };
+    controlPersist = "yes";
+    forwardAgent = true;
 
     # on server
     #settings.PasswordAuthentication = false;
