@@ -10,6 +10,17 @@
     addKeysToAgent = "yes";
     controlMaster = "auto";
 
+    matchBlocks = {
+      "uptermd.upterm.dev" = {
+        forwardAgent = true;
+        extraOptions = {
+          ControlMaster = "auto";
+          ControlPersist = "yes";
+          ControlPath = "~/.ssh/upterm/%r";
+        };
+      };
+    };
+
     # on server
     #settings.PasswordAuthentication = false;
     #settings.KdbInteractiveAuthentication = false;
