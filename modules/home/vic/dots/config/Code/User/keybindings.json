@@ -174,11 +174,6 @@
 		"when": "terminalFocusInAny"
 	},
 	{
-		"key": "shift+tab",
-		"command": "editor.action.inlineSuggest.trigger",
-		"when": "config.github.copilot.inlineSuggest.enable && editorTextFocus && !editorHasSelection && !inlineSuggestionsVisible"
-	},
-	{
 		"key": "alt+[",
 		"command": "workbench.action.navigatePreviousInEditLocations"
 	},
@@ -213,5 +208,23 @@
 	{
 		"key": "ctrl+i",
 		"command": "composerMode.agent"
+	},
+	{
+		"key": "shift+tab",
+		"command": "editor.action.inlineSuggest.acceptNextWord",
+		"when": "inlineSuggestionVisible && !editorReadonly"
+	},
+	{
+		"key": "ctrl+alt+meta+tab",
+		"command": "editor.action.inlineSuggest.trigger",
+		"when": "editorTextFocus && !editorHasSelection && !inlineSuggestionsVisible"
+	},
+	{
+		"key": "ctrl+alt+`",
+		"command": "vscodeyazi.openYazi"
+	},
+	{
+		"key": "shift+`",
+		"command": "-vscodeyazi.openYazi"
 	}
 ]

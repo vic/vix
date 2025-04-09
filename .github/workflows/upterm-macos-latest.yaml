@@ -1,0 +1,16 @@
+name: upterm-macos-latest
+on:
+  workflow_dispatch:
+jobs:
+  upterm:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v30
+      - name: upterm
+        env:
+          GH_TOKEN: ${{ secrets.PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NIXPKGS_ALLOW_UNFREE: 1
+        run: |
+          nix develop --impure .#upterm --command gh-action
