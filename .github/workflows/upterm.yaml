@@ -7,8 +7,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v30
-      - name: nix flake update
+      - name: upterm
         env:
           GH_TOKEN: ${{ secrets.PAT }}
-        run:
-          nix run nixpkgs#upterm -- host --github-user vic --force-command 'tmux attach -t gh' -- tmux new -t gh
+        run: |
+          mkdir -p $HOME/.ssh
+          touch $HOME/.ssh/known_hosts
+          echo "StrictHostKeyChecking no" >> $HOME/.ssh/config
+          nix profile install nixpkgs#upterm nixpkgs#openssh nixpkgs#tmux nixpkgs#vim
+          export PATH=$HOME/.nix-profile/bin:$PATH
+          upterm -- host --github-user vic --force-command 'tmux attach -t gh' -- tmux new -t gh
