@@ -7,13 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v30
-      - name: upterm
-        env:
-          GH_TOKEN: ${{ secrets.PAT }}
-        run: |
-          mkdir -p $HOME/.ssh
-          touch $HOME/.ssh/known_hosts
-          echo "StrictHostKeyChecking no" >> $HOME/.ssh/config
-          nix profile install nixpkgs#upterm nixpkgs#openssh nixpkgs#tmux nixpkgs#vim
-          export PATH=$HOME/.nix-profile/bin:$PATH
-          upterm host --github-user vic --force-command 'tmux attach -t gh' -- tmux new -t gh
+      - uses: owenthereal/action-upterm@v1
+        with:
+           limit-access-to-users: vic
+           wait-timeout-minutes: 5
