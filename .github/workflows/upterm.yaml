@@ -19,5 +19,5 @@ jobs:
           mkdir -p $HOME/.upterm
           tmux new -d -s upterm -x 132 -y 43 "upterm host --accept --github-user vic | tee $HOME/.upterm/out.log"
           tmux set -t upterm window-size largest
-          while true; do date; echo "Connecting"; grep 'SSH Session:' $HOME/.upterm/out.log | head -n 1 ; sleep 10; if grep 'Client joined' $HOME/.upterm/upterm.log; then break ; fi  ; done
+          while true; do date; echo "Connecting"; grep 'SSH Session:' $HOME/.upterm/out.log | head -n 1 ; sleep 10; if grep 'Client joined' $HOME/.upterm/upterm.log >/dev/null; then break ; fi  ; done
           while true; do date; echo "Working"; sleep 360; if ! test -f $HOME/.upterm/*.sock; then break ; fi ; done

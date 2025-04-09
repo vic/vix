@@ -9,6 +9,7 @@
     enable = true;
     addKeysToAgent = "yes";
     controlMaster = "auto";
+    controlPath = "~/.ssh/%h:%C";
 
     matchBlocks = {
       "uptermd.upterm.dev" = {
@@ -16,7 +17,7 @@
         extraOptions = {
           ControlMaster = "auto";
           ControlPersist = "yes";
-          ControlPath = "~/.ssh/upterm/%r";
+          ControlPath = "~/.ssh/upterm:%C";
         };
       };
     };
