@@ -9,9 +9,15 @@ let
       };
     }
   );
-in
-pkgs.buildFHSEnv {
-  name = pname;
-  targetPkgs = pkgs: [ pkgs.stdenv.cc.cc.lib ];
-  runScript = pkgs.lib.getExe p;
-}
+
+  cls = pkgs.buildFHSEnv {
+    name = pname;
+    targetPkgs = pkgs: [ pkgs.stdenv.cc.cc.lib ];
+    runScript = pkgs.lib.getExe p;
+  };
+  
+  noop = pkgs.writeShellApplication {
+    name = pname;
+    text = "echo Not available";
+  };
+in if pkgs.stdenv.hostPlatform.isLinux then cls else noop
