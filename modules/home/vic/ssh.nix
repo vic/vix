@@ -10,7 +10,6 @@
     addKeysToAgent = "yes";
     controlMaster = "auto";
     controlPath = "~/.ssh/%h:%C";
-    controlPersist = "yes";
     forwardAgent = true;
 
     # on server
