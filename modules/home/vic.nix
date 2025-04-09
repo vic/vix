@@ -28,7 +28,6 @@
       perSystem.nox.default
       perSystem.self.devicon-lookup # for eee
       perSystem.self.leader
-      perSystem.self.copilot-language-server # tab tab tab
       perSystem.self.vic-sops-get
       fzf
       ripgrep # grep
@@ -52,6 +51,7 @@
     ])
     ++ (pkgs.lib.optionals pkgs.stdenv.isLinux [
       pkgs.wl-clipboard
+      perSystem.self.copilot-language-server # tab tab tab
     ]);
 
   programs.nh.enable = true;

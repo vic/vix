@@ -10,48 +10,48 @@
     extra-substituters = [ "https://vix.cachix.org" ];
   };
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable&shallow=1";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
 
-    systems.url = "github:nix-systems/default?ref=main&shallow=1";
+    systems.url = "github:nix-systems/default";
 
     # not used here but followed by other deps to get a flat dep tree
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
 
-    blueprint.url = "github:numtide/blueprint?shallow=1";
+    blueprint.url = "github:numtide/blueprint";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
     blueprint.inputs.systems.follows = "systems";
 
-    nix-darwin.url = "github:LnL7/nix-darwin?ref=master&shallow=1";
+    nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-wsl.url = "github:nix-community/nixos-wsl?ref=main&shallow=1";
+    nixos-wsl.url = "github:nix-community/nixos-wsl";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager.url = "github:nix-community/home-manager?ref=master&shallow=1";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
-    vscode-server.url = "github:nix-community/nixos-vscode-server?ref=master&shallow=1";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
     vscode-server.inputs.flake-utils.follows = "flake-utils";
 
-    cli-leader.url = "github:dhamidi/leader?ref=14373a2&shallow=1";
+    cli-leader.url = "github:dhamidi/leader?ref=14373a2";
     cli-leader.flake = false;
 
-    nox.url = "github:madsbv/nix-options-search?ref=main&shallow=1";
+    nox.url = "github:madsbv/nix-options-search";
     nox.inputs.nixpkgs.follows = "nixpkgs";
     nox.inputs.flake-utils.follows = "flake-utils";
 
-    devshell.url = "github:numtide/devshell?ref=main&shallow=1";
+    devshell.url = "github:numtide/devshell";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
 
-    sops-nix.url = "github:Mic92/sops-nix?ref=master&shallow=1";
+    sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-index-database.url = "github:nix-community/nix-index-database?ref=main&shallow=1";
+    nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
