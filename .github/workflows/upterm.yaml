@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 jobs:
   upterm:
-    runs-on: mac-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v30
