@@ -22,5 +22,6 @@ jobs:
           while ! grep 'SSH Session:' $HOME/.upterm/out.log; do sleep 1 ; done
           echo Waiting
           while ! grep 'Client joined' $HOME/.upterm/upterm.log >/dev/null; do sleep 10; done
-          echo Connected
-          while test -f $HOME/.upterm/*.sock; do date; sleep 10; done
+          echo Joined
+          while ! grep 'Client left' $HOME/.upterm/upterm.log >/dev/null; do sleep 10; done
+          echo Left
