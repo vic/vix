@@ -24,7 +24,7 @@
       tree
       perSystem.radicle.radicle-full
       perSystem.nix-versions.default
-      perSystem.nix-inspect.default
+      # perSystem.nix-inspect.default # TODO: enabling it causes GH-action to fail
       perSystem.nox.default
       perSystem.self.devicon-lookup # for eee
       perSystem.self.leader
