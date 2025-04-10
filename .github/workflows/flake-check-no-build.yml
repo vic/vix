@@ -18,6 +18,4 @@ jobs:
         with:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix store gc
-      - run: nix flake check --no-build # dont build systems/derivations just check their types.
-      - run: nix store gc
+      - run: nix flake check --accept-flake-config --quiet --no-build # dont build systems/derivations just check their types.
