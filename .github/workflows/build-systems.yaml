@@ -1,0 +1,64 @@
+name: build-systems
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  find-systems:
+    name: find-systems
+    runs-on: ubuntu-latest
+    outputs:
+      nixos: ${{ steps.finder.outputs.nixos }}
+      darwin: ${{ steps.finder.outputs.darwin }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: finder
+        run: |
+          nixos=$(nix eval .#.lib.hostsBySystem --apply 'f: f "x86_64-linux"' --json)
+          darwin=$(nix eval .#.lib.hostsBySystem --apply 'f: f "aarch64-darwin"' --json)
+          darwin13=$(nix eval .#.lib.hostsBySystem --apply 'f: f "x86_64-darwin"' --json)
+          echo "nixos=$nixos"
+          echo "darwin=$darwin"
+          echo "darwin13=$darwin13"
+          echo "nixos=$nixos" >> $GITHUB_OUTPUT
+          echo "darwin=$darwin" >> $GITHUB_OUTPUT
+          echo "darwin13=$darwin13" >> $GITHUB_OUTPUT
+
+  nixos:
+    name: nixos-${{ matrix.host }}
+    needs: [find-systems]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        host: ${{ fromJSON(needs.find-systems.outputs.nixos) }}
+    steps:
+      - uses: cachix/install-nix-action@v31
+      - uses: actions/checkout@v4
+      - run: nix build --no-link --print-out-paths --print-debug-logs .#.nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
+
+  darwin:
+    name: darwin-${{ matrix.host }}
+    needs: [find-systems]
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        host: ${{ fromJSON(needs.find-systems.outputs.darwin) }}
+    steps:
+      - uses: cachix/install-nix-action@v31
+      - uses: actions/checkout@v4
+      - run: nix build  --no-link --print-out-paths --print-debug-logs .#.darwinConfigurations.${{ matrix.host }}.system
+
+  darwin13:
+    name: darwin13-${{ matrix.host }}
+    needs: [find-systems]
+    runs-on: macos-13
+    strategy:
+      matrix:
+        host: ${{ fromJSON(needs.find-systems.outputs.darwin13) }}
+    steps:
+      - uses: cachix/install-nix-action@v31
+      - uses: actions/checkout@v4
+      - run: nix build  --no-link --print-out-paths --print-debug-logs .#.darwinConfigurations.${{ matrix.host }}.system
+
+

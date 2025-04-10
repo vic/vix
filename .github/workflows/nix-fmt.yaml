@@ -1,4 +1,4 @@
-name: "nix fmt"
+name: nix-fmt
 
 on:
   pull_request:
