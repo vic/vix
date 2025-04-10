@@ -177,5 +177,8 @@
     "cursor.cmdk.useThemedDiffBackground": true,
     "search.showLineNumbers": true,
     "editor.fontFamily": "'JetBrainsMono NFM Light', 'Droid Sans Mono', 'monospace', monospace",
-    "git.enabled": false
+    "git.enabled": false,
+    "opensource-explorer.defaultClonePath": "~/hk",
+    "opensource-explorer.defaultView": "recent",
+    "debug.openExplorerOnEnd": true
 }

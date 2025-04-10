@@ -1,6 +1,7 @@
 {
   pkgs,
   perSystem,
+  osConfig,
   ...
 }:
 {
@@ -22,9 +23,7 @@
   home.packages =
     (with pkgs; [
       tree
-      perSystem.radicle.radicle-full
       perSystem.nix-versions.default
-      # perSystem.nix-inspect.default # TODO: enabling it causes GH-action to fail
       perSystem.nox.default
       perSystem.self.devicon-lookup # for eee
       perSystem.self.leader
@@ -37,7 +36,6 @@
       yazi # file tui
       eza # ls
       zoxide # cd
-      obsidian # notion
       fd # find
       lazygit # no magit
       tig # alucard
@@ -49,6 +47,17 @@
       nixfmt-rfc-style
       ispell
     ])
+    ++ (pkgs.lib.optionals
+      (builtins.elem osConfig.networking.hostName [
+        "mordor"
+        "nargun"
+      ])
+      [
+        obsidian # notion
+        perSystem.radicle.radicle-full
+        perSystem.nix-inspect.default # TODO: enabling it causes GH-action to fail
+      ]
+    )
     ++ (pkgs.lib.optionals pkgs.stdenv.isLinux [
       pkgs.wl-clipboard
       perSystem.self.copilot-language-server # tab tab tab

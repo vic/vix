@@ -45,7 +45,7 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - run: nix build --accept-flake-config --no-link --print-out-paths .#.nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
 
-  aarch64-linux:
+  aarch64-darwin:
     name: ${{ matrix.host }} aarch64-darwin
     needs: [find-systems]
     runs-on: macos-latest
