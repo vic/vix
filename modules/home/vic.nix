@@ -49,13 +49,12 @@
         pkgs.ispell
       ];
 
-      perHost = rec {
-        mordor = [
+      perHost = {
+        nargun = [
           # pkgs.obsidian # notion
           perSystem.radicle.radicle-full
           perSystem.nix-inspect.default # TODO: enabling it causes GH-action to fail
         ];
-        nargun = mordor;
       };
 
       perPlatform = {

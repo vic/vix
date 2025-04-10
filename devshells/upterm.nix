@@ -38,6 +38,9 @@ let
 in
 perSystem.devshell.mkShell {
 
-  devshell.packages = [ gh-action ];
+  devshell.packages = [
+    gh-action
+    perSystem.self.vic-sops-get
+  ];
 
 }

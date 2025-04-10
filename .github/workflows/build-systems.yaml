@@ -10,24 +10,28 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       nixos: ${{ steps.finder.outputs.nixos }}
-      darwin: ${{ steps.finder.outputs.darwin }}
-      dintel: ${{ steps.finder.outputs.dintel }}
+      nixos_arm: ${{ steps.finder.outputs.nixos_arm }}
+      darwin_arm: ${{ steps.finder.outputs.darwin_arm }}
+      darwin_intel: ${{ steps.finder.outputs.darwin_intel }}
     steps:
       - uses: cachix/install-nix-action@v31
       - uses: actions/checkout@v4
       - id: finder
         run: |
           nixos=$(nix eval --accept-flake-config --quiet .#.lib.hostsBySystem --apply 'f: f "x86_64-linux"' --json)
-          darwin=$(nix eval --accept-flake-config --quiet .#.lib.hostsBySystem --apply 'f: f "aarch64-darwin"' --json)
-          dintel=$(nix eval --accept-flake-config --quiet .#.lib.hostsBySystem --apply 'f: f "x86_64-darwin"' --json)
+          nixos_arm=$(nix eval --accept-flake-config --quiet .#.lib.hostsBySystem --apply 'f: f "aarch64-linux"' --json)
+          darwin_arm=$(nix eval --accept-flake-config --quiet .#.lib.hostsBySystem --apply 'f: f "aarch64-darwin"' --json)
+          darwin_intel=$(nix eval --accept-flake-config --quiet .#.lib.hostsBySystem --apply 'f: f "x86_64-darwin"' --json)
 
           echo "nixos=$nixos"
-          echo "darwin=$darwin"
-          echo "dintel=$dintel"
+          echo "nixos_arm=$nixos_arm"
+          echo "darwin_arm=$darwin_arm"
+          echo "darwin_intel=$darwin_intel"
 
           echo "nixos=$nixos" >> $GITHUB_OUTPUT
-          echo "darwin=$darwin" >> $GITHUB_OUTPUT
-          echo "dintel=$dintel" >> $GITHUB_OUTPUT
+          echo "nixos_arm=$nixos_arm" >> $GITHUB_OUTPUT
+          echo "darwin_arm=$darwin_arm" >> $GITHUB_OUTPUT
+          echo "darwin_intel=$darwin_intel" >> $GITHUB_OUTPUT
 
   x86_64-linux:
     name: ${{ matrix.host }} x86_64-linux
@@ -45,13 +49,29 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - run: nix build --accept-flake-config --no-link --print-out-paths .#.nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
 
+  aarm64-linux:
+    name: ${{ matrix.host }} aarm64-linux
+    needs: [find-systems]
+    runs-on: ubuntu-24.04-arm
+    strategy:
+      matrix:
+        host: ${{ fromJSON(needs.find-systems.outputs.nixos_arm) }}
+    steps:
+      - uses: cachix/install-nix-action@v31
+      - uses: actions/checkout@v4
+      - uses: cachix/cachix-action@v16
+        with:
+          name: vix
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - run: nix build --accept-flake-config --no-link --print-out-paths .#.nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
+
   aarch64-darwin:
     name: ${{ matrix.host }} aarch64-darwin
     needs: [find-systems]
     runs-on: macos-latest
     strategy:
       matrix:
-        host: ${{ fromJSON(needs.find-systems.outputs.darwin) }}
+        host: ${{ fromJSON(needs.find-systems.outputs.darwin_arm) }}
     steps:
       - uses: cachix/install-nix-action@v31
       - uses: actions/checkout@v4
@@ -67,7 +87,7 @@ jobs:
     runs-on: macos-13
     strategy:
       matrix:
-        host: ${{ fromJSON(needs.find-systems.outputs.dintel) }}
+        host: ${{ fromJSON(needs.find-systems.outputs.darwin_intel) }}
     steps:
       - uses: cachix/install-nix-action@v31
       - uses: actions/checkout@v4

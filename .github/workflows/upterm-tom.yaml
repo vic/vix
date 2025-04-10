@@ -1,4 +1,4 @@
-name: upterm-ubuntu-latest
+name: upterm-tom
 on:
   workflow_dispatch:
 jobs:
@@ -16,6 +16,7 @@ jobs:
           GH_TOKEN: ${{ secrets.PAT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NIXPKGS_ALLOW_UNFREE: 1
+          HOMER: runner@tom
         run: |
           mkdir -p ~/.config/nixpkgs
           echo '{ allowUnfree = true; }' > ~/.config/nixpkgs/config.nix

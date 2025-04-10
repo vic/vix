@@ -1,4 +1,4 @@
-name: upterm-macos-latest
+name: upterm-bert
 on:
   workflow_dispatch:
 jobs:
@@ -15,6 +15,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NIXPKGS_ALLOW_UNFREE: 1
+          HOMER: runner@bert
         run: |
           mkdir -p ~/.config/nixpkgs
           echo '{ allowUnfree = true; }' > ~/.config/nixpkgs/config.nix

@@ -9,7 +9,6 @@ cat ~/.ssh/known_upterm >> ~/.ssh/known_hosts
 grep 'uptermd.upterm.dev ' ~/.ssh/known_upterm | gawk -e '{ print "@cert-authority * " $2 " " $3 }' >> ~/.ssh/known_hosts
 cat ~/.ssh/known_hosts
 echo Starting in background
-set -x -e
 screen -A -U -O -T xterm-256color -dmS upterm bash -c "upterm host --accept --github-user $GITHUB_REPOSITORY_OWNER 2>&1 | tee -a ~/.upterm/out.log"
 echo Waiting for upterm to start
 tail -f ~/.upterm/out.log | head -n 1

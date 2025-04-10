@@ -21,8 +21,6 @@
 
       "uptermd.upterm.dev" = {
         forwardAgent = true;
-        forwardX11 = true;
-        forwardX11Trusted = true;
         serverAliveInterval = 10;
         serverAliveCountMax = 6;
         extraOptions.ControlPath = "~/.ssh/upterm-%C";
