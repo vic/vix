@@ -4,7 +4,7 @@
 
 ### Installing NixOS (Boot from Bombadil USB)
 
-TODO: Automate this on Bombadil USB (Issue [#75](issues/75))
+TODO: Automate this on Bombadil USB (Issue [#75](https://github.com/vic/vix/issues/75))
 
 ```bash
 # Edit your partitions.  Mount /mnt/{boot,home,etc}
@@ -31,7 +31,7 @@ nixos-install --root /mnt --flake /mnt/home/vic/vix#HOST
 
 ## Installing on Windows-WSL2 (Boot NixOS-WSL2)
 
-TODO: Generate WSL2 tarball (Issue [#83](issues/83))
+TODO: Generate WSL2 tarball (Issue [#83](https://github.com/vic/vix/issues/83))
 
 ```
 # * import and boot from NixOS-WSL
@@ -68,7 +68,7 @@ nix run path:~/vix#os-rebuild -- HOST switch
 
 ## Hosts
 
-Defined at [`/hosts`](tree/main/hosts) directory.
+Defined at [`/hosts`]([tree/main/hosts](https://github.com/vic/vix/tree/main/hosts) directory.
 
 [![Workflow](https://github.com/vic/vix/actions/workflows/build-systems.yaml/badge.svg)](https://github.com/vic/vix/actions/workflows/build-systems.yaml)
 
