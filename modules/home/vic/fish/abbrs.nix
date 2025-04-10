@@ -20,7 +20,8 @@
   jg = "jj git";
   jl = "jj log";
   jll = "jj ll";
-  jM = "jj bookmark set main -r";
+  jm = "jj bookmark set main -r @";
+  jm- = "jj bookmark set main -r @-";
   jn = "jj new";
   jN = { expansion = "jj new -m \"%\""; setCursor = true; };
   jp = "jj git push";
