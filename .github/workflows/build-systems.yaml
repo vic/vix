@@ -18,13 +18,13 @@ jobs:
         run: |
           nixos=$(nix eval .#.lib.hostsBySystem --apply 'f: f "x86_64-linux"' --json)
           darwin=$(nix eval .#.lib.hostsBySystem --apply 'f: f "aarch64-darwin"' --json)
-          darwin13=$(nix eval .#.lib.hostsBySystem --apply 'f: f "x86_64-darwin"' --json)
+          dintel=$(nix eval .#.lib.hostsBySystem --apply 'f: f "x86_64-darwin"' --json)
           echo "nixos=$nixos"
           echo "darwin=$darwin"
-          echo "darwin13=$darwin13"
+          echo "dintel=$dintel"
           echo "nixos=$nixos" >> $GITHUB_OUTPUT
           echo "darwin=$darwin" >> $GITHUB_OUTPUT
-          echo "darwin13=$darwin13" >> $GITHUB_OUTPUT
+          echo "dintel=$dintel" >> $GITHUB_OUTPUT
 
   nixos:
     name: nixos-${{ matrix.host }}
@@ -36,7 +36,11 @@ jobs:
     steps:
       - uses: cachix/install-nix-action@v31
       - uses: actions/checkout@v4
-      - run: nix build --no-link --print-out-paths --quiet .#.nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
+      - uses: cachix/cachix-action@v16
+        with:
+          name: vix
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - run: nix build --accept-flake-config --no-link --print-out-paths --quiet .#.nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
 
   darwin:
     name: darwin-${{ matrix.host }}
@@ -48,7 +52,11 @@ jobs:
     steps:
       - uses: cachix/install-nix-action@v31
       - uses: actions/checkout@v4
-      - run: nix build  --no-link --print-out-paths --quiet .#.darwinConfigurations.${{ matrix.host }}.system
+      - uses: cachix/cachix-action@v16
+        with:
+          name: vix
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - run: nix build --accept-flake-config  --no-link --print-out-paths --quiet .#.darwinConfigurations.${{ matrix.host }}.system
 
   darwin13:
     name: darwin13-${{ matrix.host }}
@@ -56,10 +64,14 @@ jobs:
     runs-on: macos-13
     strategy:
       matrix:
-        host: ${{ fromJSON(needs.find-systems.outputs.darwin13) }}
+        host: ${{ fromJSON(needs.find-systems.outputs.dintel) }}
     steps:
       - uses: cachix/install-nix-action@v31
       - uses: actions/checkout@v4
-      - run: nix build  --no-link --print-out-paths --quiet .#.darwinConfigurations.${{ matrix.host }}.system
+      - uses: cachix/cachix-action@v16
+        with:
+          name: vix
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - run: nix build  --accept-flake-config --no-link --print-out-paths --quiet .#.darwinConfigurations.${{ matrix.host }}.system
 
 
