@@ -19,7 +19,7 @@ let
     name = "gh-action";
     runtimeInputs = [
       pkgs.upterm
-      pkgs.tmux
+      pkgs.screen
       pkgs.openssh
       pkgs.bash
     ] ++ (pkgs.lib.optionals (pkgs.config.allowUnfree) [ pkgs.vscode ]);
