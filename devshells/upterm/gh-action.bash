@@ -10,11 +10,9 @@ grep 'uptermd.upterm.dev ' ~/.ssh/known_upterm | gawk -e '{ print "@cert-authori
 cat ~/.ssh/known_hosts
 echo Starting in background
 set -x -e
-upterm host --accept --github-user $GITHUB_REPOSITORY_OWNER  2>&1 | tee -a ~/.upterm/out.log
-#screen -T xterm -dmS upterm bash -c "upterm host --accept --github-user vic 2>&1 | tee -a ~/.upterm/out.log"
-sleep 1
+screen -A -U -O -T xterm-256color -dmS upterm bash -c "upterm host --accept --github-user $GITHUB_REPOSITORY_OWNER 2>&1 | tee -a ~/.upterm/out.log"
 echo Waiting for upterm to start
-tail -f ~/.upterm/out.log | head -n 11
+tail -f ~/.upterm/out.log | head -n 1
 while ! grep 'SSH Session:' ~/.upterm/out.log; do sleep 1 ; done
 echo Waiting for join
 while ! grep 'Client joined' ~/.upterm/upterm.log >/dev/null; do sleep 10; done
