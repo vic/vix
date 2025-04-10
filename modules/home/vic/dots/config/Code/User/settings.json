@@ -176,5 +176,6 @@
     "workbench.editor.limit.perEditorGroup": true,
     "cursor.cmdk.useThemedDiffBackground": true,
     "search.showLineNumbers": true,
-    "editor.fontFamily": "'JetBrainsMono NFM Light', 'Droid Sans Mono', 'monospace', monospace"
+    "editor.fontFamily": "'JetBrainsMono NFM Light', 'Droid Sans Mono', 'monospace', monospace",
+    "git.enabled": false
 }
