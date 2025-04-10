@@ -18,4 +18,6 @@ jobs:
         with:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - run: nix store gc
       - run: nix flake check
+      - run: nix store gc
