@@ -12,6 +12,7 @@
       where =
         ({
           "x86_64-linux" = inputs.self.nixosConfigurations;
+          "aarch64-linux" = inputs.self.nixosConfigurations;
           "x86_64-darwin" = inputs.self.darwinConfigurations;
           "aarch64-darwin" = inputs.self.darwinConfigurations;
         }).${system} or (throw "Unsupported system: ${system}");
