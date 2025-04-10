@@ -37,6 +37,13 @@
             host.port = 5900;
           }
         ];
+        remoteForwards = [
+          {
+            bind.port = 5000; # sops
+            host.address = "127.0.0.1";
+            host.port = 5000;
+          }
+        ];
       };
 
     };

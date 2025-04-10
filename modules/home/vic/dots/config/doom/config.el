@@ -131,7 +131,7 @@
         :host "models.inference.ai.azure.com"
         :endpoint "/chat/completions?api-version=2024-05-01-preview"
         :stream t
-        :key (shell-command-to-string "vic-sops-get gh_actions_pat")
+        :key (shell-command-to-string "vic-sops-get -a gh_actions_pat")
         :models '(claude-3.5-sonnet gpt-4o))
    ))
 

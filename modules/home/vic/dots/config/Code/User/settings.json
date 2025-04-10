@@ -180,5 +180,6 @@
     "git.enabled": false,
     "opensource-explorer.defaultClonePath": "~/hk",
     "opensource-explorer.defaultView": "recent",
-    "debug.openExplorerOnEnd": true
+    "debug.openExplorerOnEnd": true,
+    "jjk.enableAnnotations": false
 }
