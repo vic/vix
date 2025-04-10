@@ -4,9 +4,9 @@ ssh-keygen -q -t rsa -N '' -C "$GITHUB_TRIGGERING_ACTOR@$GITHUB_REPOSITORY:$GITH
 ssh-keygen -q -t ed25519 -N '' -C "$GITHUB_TRIGGERING_ACTOR@$GITHUB_REPOSITORY:$GITHUB_RUN_ID" -f ~/.ssh/id_ed25519
 ssh-add
 echo Adding uptermd.upterm.dev to known_hosts
-ssh-keyscan uptermd.upterm.dev 2> /dev/null >> ~/.ssh/known_hosts2
-cat ~/.ssh/known_hosts2 >> ~/.ssh/known_hosts
-awk -f '{ print "@cert-authority * " $2 " " $3 }' -- ~/.ssh/known_hosts2 >> ~/.ssh/known_hosts
+ssh-keyscan uptermd.upterm.dev 2> /dev/null >> ~/.ssh/known_upterm
+cat ~/.ssh/known_upterm >> ~/.ssh/known_hosts
+grep 'uptermd.upterm.dev ' ~/.ssh/known_upterm | gawk -e '{ print "@cert-authority * " $2 " " $3 }' >> ~/.ssh/known_hosts
 cat ~/.ssh/known_hosts
 echo Starting in background
 set -x -e

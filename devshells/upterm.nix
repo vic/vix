@@ -22,6 +22,9 @@ let
       pkgs.screen
       pkgs.openssh
       pkgs.bash
+      pkgs.coreutils
+      pkgs.findutils
+      pkgs.gawk
     ] ++ (pkgs.lib.optionals (pkgs.config.allowUnfree) [ pkgs.vscode ]);
     text = ''
       mkdir -p ~/.ssh
