@@ -12,6 +12,10 @@
     jj config set --repo "revset-aliases.'trunk()'" "$branch@origin"
   '';
 
+  jj-desc.body = ''
+  jj describe --edit -m "$(echo -e "\n")$(jj status --color never | awk '{print "JJ: " $0}')$(echo -e "\n")$(jj show --git --color never  | awk '{print "JJ: " $0}')"
+  '';
+
   mg.body = "spc u SPC gg -r \"$PWD\" RET";
   spc.body = "SPC $argv -- -nw";
   vspc.body = "SPC $argv -- -c";

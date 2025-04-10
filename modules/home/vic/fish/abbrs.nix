@@ -8,29 +8,30 @@
   nf = "fd --glob '*.nix' -X nixfmt {}";
 
   # jj
-  jf = "jj-fzf";
+  jz = "jj-fzf";
   lj = "lazyjj";
   jb = "jj bookmark";
-  jB = "jj bookmark set";
-  jc = "jj commit";
-  jD = "jj describe -m";
-  jd = "jj show --tool difft";
+  jc = "jj commit -i";
+  jd = { expansion = "jj describe -m \"%\""; setCursor = true; };
+  jdt = "jj show --tool difft";
   je = "jj edit";
-  jF = "jj git fetch";
+  jf = "jj git fetch";
   jg = "jj git";
   jl = "jj log";
   jll = "jj ll";
-  jM = "jj bookmark set main";
+  jM = "jj bookmark set main -r";
   jn = "jj new";
-  jN = "jj new -m";
+  jN = { expansion = "jj new -m \"%\""; setCursor = true; };
   jp = "jj git push";
-  jP = "jj git push && jj new -A @";
+  jP = "jj git push && jj new -A main";
   jr = "jj rebase";
   jR = "jj restore -i";
   jS = "jj squash -i";
   js = "jj show --stat --no-pager";
   jss = "jj show --summary --no-pager";
   ju = "jjui";
+  jdp =  "jj-desc && jj bookmark set main -r @ && jj git push -r main";
+  jcp =  "jj commit -i && jj bookmark set main -r @- && jj git push -r main";
 
   # git
   lg = "lazygit";
