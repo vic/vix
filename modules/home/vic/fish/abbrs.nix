@@ -12,7 +12,10 @@
   lj = "lazyjj";
   jb = "jj bookmark";
   jc = "jj commit -i";
-  jd = { expansion = "jj describe -m \"%\""; setCursor = true; };
+  jd = {
+    expansion = "jj describe -m \"%\"";
+    setCursor = true;
+  };
   jdd = "jj diff";
   jdt = "jj show --tool difft";
   je = "jj edit";
@@ -23,7 +26,10 @@
   jm = "jj bookmark set main -r @";
   jm- = "jj bookmark set main -r @-";
   jn = "jj new";
-  jN = { expansion = "jj new -m \"%\""; setCursor = true; };
+  jN = {
+    expansion = "jj new -m \"%\"";
+    setCursor = true;
+  };
   jp = "jj git push";
   jP = "jj git push && jj new -A main";
   jr = "jj rebase";
@@ -32,8 +38,8 @@
   js = "jj show --stat --no-pager";
   jss = "jj show --summary --no-pager";
   ju = "jjui";
-  jdp =  "jj-desc && jj bookmark set main -r @ && jj git push -r main";
-  jcp =  "jj commit -i && jj bookmark set main -r @- && jj git push -r main";
+  jdp = "jj-desc && jj bookmark set main -r @ && jj git push -r main";
+  jcp = "jj commit -i && jj bookmark set main -r @- && jj git push -r main";
 
   # git
   lg = "lazygit";
