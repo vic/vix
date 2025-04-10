@@ -4,26 +4,26 @@
 
 ### Installing NixOS (Boot from Bombadil USB)
 
-TODO: Automate this on Bombadil USB (Issue #75)
+TODO: Automate this on Bombadil USB (Issue [#75](issues/75))
 
 ```bash
 # Edit your partitions.  Mount /mnt/{boot,home,etc}
-git clone https://github.com/vic/vix /mnt/home/vic/hk/vix
+git clone https://github.com/vic/vix /mnt/home/vic/vix
 
 # Make sure you update hosts/HOST/{filesystems, hardware-configuration}.nix
 # To match the current hardware.
 
 # Will be used during home-manager activation, to link .config files.
-ln -sfn /home/vic/hk/vic /mnt/home/vic/.flake
+ln -sfn /home/vic/vix /mnt/home/vic/.flake
 
 # Setup local sops keys via SSH Forwarded SOPS_SERVER.
 # You will be prompted for a Password.
-nix run path:/mnt/home/vic/hk/vix#vic-sops-get -- \
+nix run path:/mnt/home/vic/vix#vic-sops-get -- \
   --keyservice tcp://SOPS_SERVER:5000 -f SSH_KEY --setup - \
   >> /mnt/home/vic/.config/sops/age/keys.txt
 
 # Finally install nixos
-nixos-install --root /mnt --flake /mnt/home/vic/hk/vix#HOST
+nixos-install --root /mnt --flake /mnt/home/vic/vix#HOST
 
 # You will be prompted for a root password by the installer
 # Dont forget to choot and setup password for users.
@@ -31,14 +31,14 @@ nixos-install --root /mnt --flake /mnt/home/vic/hk/vix#HOST
 
 ## Installing on Windows-WSL2 (Boot NixOS-WSL2)
 
-TODO: Generate WSL2 tarball (Issue #83)
+TODO: Generate WSL2 tarball (Issue [#83](issues/83))
 
 ```
 # * import and boot from NixOS-WSL
 # * clone, link-flake and setup-sops-keys (see NixOS install)
 
 # apply configuration
-nix run path:~/hk/vix#os-rebuild -- HOST switch
+nix run path:~/vix#os-rebuild -- HOST switch
 
 # on a windows terminal:
 > wsl.exe --terminate NixOS
@@ -53,22 +53,22 @@ We recommend [Lix Installer](https://lix.systems/install/), and
 using `install macos --volume-label` if you are using multiple MacOS installations.
 
 ```
-# * import and boot from NixOS-WSL
+# * install nix
 # * clone, link-flake and setup-sops-keys (see NixOS install)
 
 # apply configuration
-nix run path:~/hk/vix#os-rebuild -- HOST switch
+nix run path:~/vix#os-rebuild -- HOST switch
 ```
 
 ## Every day usage
 
 ```bash
-nix run path:~/hk/vix#os-rebuild -- HOST switch
+nix run path:~/vix#os-rebuild -- HOST switch
 ```
 
 ## Hosts
 
-Defined at `/hosts` directory.
+Defined at [`/hosts`](tree/main/hosts) directory.
 
 [![Workflow](https://github.com/vic/vix/actions/workflows/build-systems.yaml/badge.svg)](https://github.com/vic/vix/actions/workflows/build-systems.yaml)
 
