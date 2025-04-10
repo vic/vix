@@ -13,6 +13,7 @@
   jb = "jj bookmark";
   jc = "jj commit -i";
   jd = { expansion = "jj describe -m \"%\""; setCursor = true; };
+  jdd = "jj diff";
   jdt = "jj show --tool difft";
   je = "jj edit";
   jf = "jj git fetch";
