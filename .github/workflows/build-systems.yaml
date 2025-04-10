@@ -12,6 +12,7 @@ jobs:
       nixos: ${{ steps.finder.outputs.nixos }}
       darwin: ${{ steps.finder.outputs.darwin }}
     steps:
+      - uses: cachix/install-nix-action@v31
       - uses: actions/checkout@v4
       - id: finder
         run: |
