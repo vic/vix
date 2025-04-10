@@ -1,0 +1,21 @@
+name: sops-rotate-reminder
+on:
+  repository_dispatch:
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 7 3 * *'
+jobs:
+  createIssue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v30
+      - name: nix flake update
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run:
+          gh issue create \
+            --title "SOPS rotation reminder" \
+            --body "Please rotate, I cannot do it since I have no secrets." \
+            --label "reminder,sops-rotate" \
+            --assignee ${{ github.actor }}
