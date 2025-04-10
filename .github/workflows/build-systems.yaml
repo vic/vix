@@ -36,7 +36,7 @@ jobs:
     steps:
       - uses: cachix/install-nix-action@v31
       - uses: actions/checkout@v4
-      - run: nix build --no-link --print-out-paths --print-debug-logs .#.nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
+      - run: nix build --no-link --print-out-paths --quiet .#.nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
 
   darwin:
     name: darwin-${{ matrix.host }}
@@ -48,7 +48,7 @@ jobs:
     steps:
       - uses: cachix/install-nix-action@v31
       - uses: actions/checkout@v4
-      - run: nix build  --no-link --print-out-paths --print-debug-logs .#.darwinConfigurations.${{ matrix.host }}.system
+      - run: nix build  --no-link --print-out-paths --quiet .#.darwinConfigurations.${{ matrix.host }}.system
 
   darwin13:
     name: darwin13-${{ matrix.host }}
@@ -60,6 +60,6 @@ jobs:
     steps:
       - uses: cachix/install-nix-action@v31
       - uses: actions/checkout@v4
-      - run: nix build  --no-link --print-out-paths --print-debug-logs .#.darwinConfigurations.${{ matrix.host }}.system
+      - run: nix build  --no-link --print-out-paths --quiet .#.darwinConfigurations.${{ matrix.host }}.system
 
 
