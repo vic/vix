@@ -66,6 +66,12 @@ nix run path:~/vix#os-rebuild -- HOST switch
 nix run path:~/vix#os-rebuild -- HOST switch
 ```
 
+## Rotate Secrets
+
+```bash
+nix develop .#nixos -c vic-sops-rotate
+```
+
 ## Hosts
 
 Defined at [`/hosts`]([tree/main/hosts](https://github.com/vic/vix/tree/main/hosts) directory.
