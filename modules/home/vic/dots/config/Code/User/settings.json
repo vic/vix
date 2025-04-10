@@ -160,7 +160,7 @@
     "find-it-faster.general.openFileInPreviewEditor": true,
     "direnv.restart.automatic": true,
     "window.autoDetectColorScheme": true,
-    "workbench.preferredLightColorTheme": "Github Light Theme",
+    "workbench.preferredLightColorTheme": "Dracula Theme Soft",
     "workbench.preferredDarkColorTheme": "Midnight Purple 2077",
     "workbench.view.showQuietly": {
         "workbench.panel.output": false

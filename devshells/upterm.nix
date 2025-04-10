@@ -24,7 +24,8 @@ let
       pkgs.bash
     ] ++ (pkgs.lib.optionals (pkgs.config.allowUnfree) [ pkgs.vscode ]);
     text = ''
-      export ssh_config_text="${ssh_config_text}"
+      mkdir -p ~/.ssh
+      echo "${ssh_config_text}" > ~/.ssh/config
       ${pkgs.openssh}/bin/ssh-agent ${pkgs.bash}/bin/bash ${./upterm/gh-action.bash}
     '';
   };
