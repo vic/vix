@@ -15,6 +15,13 @@ fi
 """
 
 [[commands]]
+name = "vic-sops-rotate"
+help = "Rotate sops secrets"
+command = """
+ls -1 modules/home/vic/secrets{.yaml,/*} | xargs -n 1 sops rotate -i
+"""
+
+[[commands]]
 name = "logs-home-manager-vic"
 help = "See logs for home-manager-vic activation"
 command = """
