@@ -16,7 +16,7 @@ let
       platform = os.config.nixpkgs.hostPlatform;
       darwin-rebuild = lib.getExe inputs.nix-darwin.packages.${platform.system}.darwin-rebuild;
       nixos-rebuild = lib.getExe pkgs.nixos-rebuild;
-      flake-param = ''--flake "path:${inputs.self}#${name}"'';
+      flake-param = ''--flake "path:${inputs.self}#${name}" --repair'';
     in
     pkgs.writeShellApplication {
       name = "${name}-os-rebuild";
