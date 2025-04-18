@@ -320,11 +320,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744833442,
-        "narHash": "sha256-BBMWW2m64Grcc5FlXz74+vdkUyCJOfUGnl+VcS/4x44=",
+        "lastModified": 1744919155,
+        "narHash": "sha256-IJksPW32V9gid9vDxoloJMRk+YGjxq5drFHBFeBkKU8=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "c6b75d69b6994ba68ec281bd36faebcc56097800",
+        "rev": "72526a5f7cde2ef9075637802a1e2a8d2d658f70",
         "type": "github"
       },
       "original": {
@@ -418,11 +418,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744784266,
-        "narHash": "sha256-DgvMekzi/+QCVwKyvLdxabgAyxpi+iANADyoR9yTpIk=",
+        "lastModified": 1744870665,
+        "narHash": "sha256-R5jG5iydWjN+pfWi78RuAYj57lV/ZfIqocrIrE9Kzbc=",
         "owner": "yusdacra",
         "repo": "nix-cargo-integration",
-        "rev": "2b6ba726da45d80205a5d636d5abb137be701ed8",
+        "rev": "1438f712c9b5575ade77eec783c6b35f70181721",
         "type": "github"
       },
       "original": {
@@ -713,11 +713,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744826984,
-        "narHash": "sha256-oVRn+J9I6c6vyokjkwh8Bty+cqADFpQnmMg/A6hK0wQ=",
+        "lastModified": 1744895532,
+        "narHash": "sha256-/7XoZbYeG9EwK/pLwtsVgvXkRKjzMniZkkkE6+Y8NUs=",
         "ref": "refs/heads/master",
-        "rev": "47c785b9160c31ab360e15c7b2f849e5225ecc66",
-        "revCount": 2199,
+        "rev": "8fd044833e40440e7b9d7a2c08281f404e5f5ed7",
+        "revCount": 2204,
         "type": "git",
         "url": "https://seed.radicle.xyz/z3gqcJUoA1n9HaHKufZs5FCSGazv5.git"
       },

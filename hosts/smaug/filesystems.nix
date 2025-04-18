@@ -6,12 +6,12 @@
 {
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/28a29cc4-7325-4911-a96a-9d82d1fb2021";
+    device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/856A-9AB5";
+    device = "/dev/disk/by-label/boot";
     fsType = "vfat";
     options = [
       "fmask=0077"
@@ -19,13 +19,13 @@
     ];
   };
 
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/fc6e67f6-3b0f-4a6b-b7ee-6977b5fc98d6";
-    fsType = "ext4";
-  };
+  # fileSystems."/home" = {
+  #   device = "/dev/disk/by-uuid/fc6e67f6-3b0f-4a6b-b7ee-6977b5fc98d6";
+  #   fsType = "ext4";
+  # };
 
-  swapDevices = [
-    { device = "/dev/disk/by-uuid/6f9b9136-d3aa-4c2d-9e7e-b5aea574bca0"; }
-  ];
+  # swapDevices = [
+  #   { device = "/dev/disk/by-uuid/6f9b9136-d3aa-4c2d-9e7e-b5aea574bca0"; }
+  # ];
 
 }

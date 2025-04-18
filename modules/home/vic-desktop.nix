@@ -1,13 +1,14 @@
-{ pkgs, ... }:
+{ pkgs, osConfig, lib, ... }:
 {
 
-  home.packages = with pkgs; [
-    librewolf
-    vscode
-    wezterm
-    ghostty
-    code-cursor
-    zed-editor
-  ];
+  home.packages = ([
+    pkgs.librewolf
+    pkgs.vscode
+    pkgs.wezterm
+    pkgs.ghostty
+  ]) ++ (lib.optionals (osConfig.networking.hostName != "bombadil") [
+    pkgs.code-cursor
+    pkgs.zed-editor
+  ]);
 
 }

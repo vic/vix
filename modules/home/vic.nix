@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   perSystem,
   osConfig,
@@ -7,9 +8,7 @@
 {
 
   imports = [
-    ./devshells.nix
     ./nix-registry.nix
-    ./nix-index.nix
     ./vic/secrets.nix
     ./vic/ssh.nix
     ./vic/fish.nix
@@ -18,15 +17,27 @@
     ./vic/doom.nix
     ./vic/nvim.nix
     ./vic/dots.nix
-  ];
+  ] ++ (lib.optionals (osConfig.networking.hostName != "bombadil") [
+    ./devshells.nix
+    ./nix-index.nix
+  ]);
 
   home.packages =
     let
-      anywhere = [
-        perSystem.nix-versions.default
+      nonBombadil = lib.optionals (osConfig.networking.hostName != "bombadil") [
         perSystem.nox.default
         perSystem.self.devicon-lookup # for eee
         perSystem.self.leader
+        pkgs.yazi # file tui
+        pkgs.zoxide # cd
+        pkgs.nix-search-cli
+        pkgs.nixd # lsp
+        pkgs.nixfmt-rfc-style
+        pkgs.ispell
+      ];
+
+      anywhere = nonBombadil ++ [
+        perSystem.nix-versions.default
         perSystem.self.vic-sops-get
         pkgs.tree
         pkgs.fzf
@@ -34,19 +45,13 @@
         pkgs.bat # cat
         pkgs.bottom
         pkgs.htop
-        pkgs.yazi # file tui
         pkgs.eza # ls
-        pkgs.zoxide # cd
         pkgs.fd # find
         pkgs.lazygit # no magit
         pkgs.tig # alucard
         pkgs.cachix
         pkgs.gh
         pkgs.jq
-        pkgs.nix-search-cli
-        pkgs.nixd # lsp
-        pkgs.nixfmt-rfc-style
-        pkgs.ispell
       ];
 
       perHost = {
