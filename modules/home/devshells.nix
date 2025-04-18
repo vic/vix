@@ -28,9 +28,6 @@ in
     # devenv
   ];
 
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
-
   home.file.".envrc".text = ''
     export FLAKE="$HOME/.flake"
   '';

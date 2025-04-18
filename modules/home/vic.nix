@@ -2,9 +2,12 @@
   lib,
   pkgs,
   perSystem,
-  osConfig,
+  osConfig ? null,
   ...
-}:
+}@args:
+let
+  hostName = if osConfig == null then "bombadil" else osConfig.networking.hostName;
+in
 {
 
   imports =
@@ -18,7 +21,7 @@
       ./vic/nvim.nix
       ./vic/dots.nix
     ]
-    ++ (lib.optionals (osConfig.networking.hostName != "bombadil") [
+    ++ (lib.optionals (hostName != "bombadil") [
       ./nix-registry.nix
       ./devshells.nix
       ./nix-index.nix
@@ -26,7 +29,7 @@
 
   home.packages =
     let
-      nonBombadil = lib.optionals (osConfig.networking.hostName != "bombadil") [
+      nonBombadil = lib.optionals (hostName != "bombadil") [
         perSystem.nox.default
         perSystem.self.devicon-lookup # for eee
         perSystem.self.leader
@@ -64,6 +67,7 @@
         ];
         bombadil = [
           pkgs.home-manager
+          pkgs.gnome-disk-utility
         ];
       };
 
@@ -76,12 +80,15 @@
       };
 
       packages =
-        anywhere ++ (perHost.${osConfig.networking.hostName} or [ ]) ++ (perPlatform.${pkgs.system} or [ ]);
+        anywhere ++ (perHost.${hostName} or [ ]) ++ (perPlatform.${pkgs.system} or [ ]);
 
     in
     packages;
 
   programs.nh.enable = true;
   programs.home-manager.enable = true;
+
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 
 }
