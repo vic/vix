@@ -54,7 +54,6 @@
         pkgs.tig # alucard
         pkgs.cachix
         pkgs.jq
-        pkgs.gparted
       ];
 
       perHost = {
@@ -70,6 +69,7 @@
 
       perPlatform = {
         "x86_64-linux" = [
+          pkgs.gparted
           pkgs.wl-clipboard
           perSystem.self.copilot-language-server # tab tab tab
         ];
