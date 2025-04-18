@@ -1,7 +1,6 @@
 #  nix build .#.nixosConfigurations.bombadil.config.system.build.isoImage
 {
   modulesPath,
-  pkgs,
   config,
   lib,
   inputs,
@@ -25,6 +24,8 @@
     fsType = "ext4";
   };
 
+  users.users.vic.uid = 1000;
+  users.users.nixos.uid = 1001;
 
   vix.features.macos-keys.enable = true;
 

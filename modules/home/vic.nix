@@ -7,20 +7,22 @@
 }:
 {
 
-  imports = [
-    ./nix-registry.nix
-    ./vic/secrets.nix
-    ./vic/ssh.nix
-    ./vic/fish.nix
-    ./vic/git.nix
-    ./vic/jujutsu.nix
-    ./vic/doom.nix
-    ./vic/nvim.nix
-    ./vic/dots.nix
-  ] ++ (lib.optionals (osConfig.networking.hostName != "bombadil") [
-    ./devshells.nix
-    ./nix-index.nix
-  ]);
+  imports =
+    [
+      ./vic/secrets.nix
+      ./vic/ssh.nix
+      ./vic/fish.nix
+      ./vic/git.nix
+      ./vic/jujutsu.nix
+      ./vic/doom.nix
+      ./vic/nvim.nix
+      ./vic/dots.nix
+    ]
+    ++ (lib.optionals (osConfig.networking.hostName != "bombadil") [
+      ./nix-registry.nix
+      ./devshells.nix
+      ./nix-index.nix
+    ]);
 
   home.packages =
     let
@@ -34,6 +36,7 @@
         pkgs.nixd # lsp
         pkgs.nixfmt-rfc-style
         pkgs.ispell
+        pkgs.gh
       ];
 
       anywhere = nonBombadil ++ [
@@ -50,8 +53,8 @@
         pkgs.lazygit # no magit
         pkgs.tig # alucard
         pkgs.cachix
-        pkgs.gh
         pkgs.jq
+        pkgs.gparted
       ];
 
       perHost = {
@@ -59,6 +62,9 @@
           # pkgs.obsidian # notion
           perSystem.radicle.radicle-full
           perSystem.nix-inspect.default # TODO: enabling it causes GH-action to fail
+        ];
+        bombadil = [
+          pkgs.home-manager
         ];
       };
 
