@@ -4,7 +4,7 @@
   perSystem,
   osConfig ? null,
   ...
-}@args:
+}:
 let
   hostName = if osConfig == null then "bombadil" else osConfig.networking.hostName;
 in
@@ -79,8 +79,7 @@ in
         ];
       };
 
-      packages =
-        anywhere ++ (perHost.${hostName} or [ ]) ++ (perPlatform.${pkgs.system} or [ ]);
+      packages = anywhere ++ (perHost.${hostName} or [ ]) ++ (perPlatform.${pkgs.system} or [ ]);
 
     in
     packages;
