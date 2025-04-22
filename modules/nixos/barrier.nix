@@ -3,7 +3,7 @@
 
   environment.systemPackages = with pkgs; [
     anydesk
-    perSystem.input-leap.input-leap
+    perSystem.versioned.input-leap
   ];
 
   networking.firewall = {

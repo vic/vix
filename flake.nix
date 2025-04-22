@@ -108,10 +108,16 @@
     lazyjj.flake = false;
 
     jjui.url = "github:idursun/jjui";
-    jjui.flake = false;
 
-    input-leap.url = "https://nix-versions.alwaysdata.net/flake.zip/input-leap";
-    input-leap.inputs.nixpkgs.follows = "nixpkgs";
+    ntv.url = "github:vic/ntv?dir=nix/flakeModules";
+    ntv.inputs.nixpkgs.follows = "nixpkgs";
+    ntv.inputs.systems.follows = "systems";
+    ntv.inputs.devshell.follows = "devshell";
+    ntv.inputs.flake-parts.follows = "flake-parts";
+
+    versioned.url = "https://nix-versions.alwaysdata.net/flake.zip/input-leap";
+    versioned.inputs.nixpkgs.follows = "nixpkgs";
+    versioned.inputs.ntv.follows = "ntv";
 
   };
 

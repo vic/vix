@@ -30,9 +30,9 @@
         };
     in
     [
-      (jj-tui-wrap perSystem.self.lazyjj "--add-flags --jj-bin --add-flags ${jj-for-tui}/bin/jj")
-      (jj-tui-wrap perSystem.self.jj-fzf "--add-flags --key-bindings")
-      (jj-tui-wrap perSystem.self.jjui "")
+      (jj-tui-wrap pkgs.lazyjj "--add-flags --jj-bin --add-flags ${jj-for-tui}/bin/jj")
+      (jj-tui-wrap pkgs.jj-fzf "--add-flags --key-bindings")
+      (jj-tui-wrap perSystem.jjui.default "")
     ];
 
   programs.jujutsu = {
