@@ -7,7 +7,7 @@ pkgs.rustPlatform.buildRustPackage {
   name = pname;
   src = inputs.lazyjj;
   useFetchCargoVendor = true;
-  cargoHash = "sha256-rm4f8QLamtJLZ3Vag2B/SnBm7iYcR1fDPm97r8cvc/M=";
+  cargoHash = "sha256-1gaOUL+7PjleKMoEQ8ioVjT0thhX5Qe99QXYbOmXFiQ=";
   doCheck = false; # rust tests are failing
   meta.mainProgram = pname;
 }
