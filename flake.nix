@@ -110,6 +110,9 @@
     jjui.url = "github:idursun/jjui";
     jjui.flake = false;
 
+    input-leap.url = "https://nix-versions.alwaysdata.net/flake.zip/input-leap";
+    input-leap.inputs.nixpkgs.follows = "nixpkgs";
+
   };
 
   outputs =

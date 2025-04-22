@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, perSystem, ... }:
 {
 
   environment.systemPackages = with pkgs; [
     anydesk
-    input-leap
+    perSystem.input-leap.input-leap
   ];
 
   networking.firewall = {
