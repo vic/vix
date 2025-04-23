@@ -4,7 +4,7 @@
   imports = with inputs.self.nixosModules; [
     nix-features
     bootable
-    gnome-desktop
+    xfce-desktop
     barrier
     vic
     vic-autologin
