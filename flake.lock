@@ -403,13 +403,23 @@
       }
     },
     "jjui": {
-      "flake": false,
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ]
+      },
       "locked": {
-        "lastModified": 1745269043,
-        "narHash": "sha256-xSIyI1/A41w225B2+esbeoWegA8Nv7XCrmET4bxXKhA=",
+        "lastModified": 1745351251,
+        "narHash": "sha256-2M69r3r4VeESymiJzLr2tfKBsmTcAZJsCLEYQkRKoMw=",
         "owner": "idursun",
         "repo": "jjui",
-        "rev": "6e27fe86137c122e7f5eb807f79a8856aee0977a",
+        "rev": "24872197db930a780f91a77a0ea8db660f0e03fe",
         "type": "github"
       },
       "original": {

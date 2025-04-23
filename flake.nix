@@ -108,6 +108,9 @@
     lazyjj.flake = false;
 
     jjui.url = "github:idursun/jjui";
+    jjui.inputs.nixpkgs.follows = "nixpkgs";
+    jjui.inputs.flake-parts.follows = "flake-parts";
+    jjui.inputs.systems.follows = "systems";
 
     ntv.url = "github:vic/ntv?dir=nix/flakeModules";
     ntv.inputs.nixpkgs.follows = "nixpkgs";

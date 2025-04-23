@@ -15,24 +15,24 @@
       };
 
       jj-tui-wrap =
-        drv: extra:
+        main: drv: extra:
         pkgs.stdenvNoCC.mkDerivation {
           inherit (drv) name meta;
           nativeBuildInputs = [ pkgs.makeWrapper ];
           phases = "wrap";
           wrap = ''
             makeWrapper \
-              "${drv}/bin/${drv.meta.mainProgram}" \
-              "$out/bin/${drv.meta.mainProgram}" \
+              "${drv}/bin/${main}" \
+              "$out/bin/${main}" \
               --prefix PATH : ${jj-for-tui}/bin \
               ${extra}
           '';
         };
     in
     [
-      (jj-tui-wrap pkgs.lazyjj "--add-flags --jj-bin --add-flags ${jj-for-tui}/bin/jj")
-      (jj-tui-wrap pkgs.jj-fzf "--add-flags --key-bindings")
-      (jj-tui-wrap perSystem.jjui.default "")
+      (jj-tui-wrap "lazyjj" pkgs.lazyjj "--add-flags --jj-bin --add-flags ${jj-for-tui}/bin/jj")
+      (jj-tui-wrap "jj-fzf" pkgs.jj-fzf "--add-flags --key-bindings")
+      (jj-tui-wrap "jjui" perSystem.jjui.default "")
     ];
 
   programs.jujutsu = {
