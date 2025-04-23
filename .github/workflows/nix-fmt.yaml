@@ -16,4 +16,4 @@ jobs:
         with:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix build .#checks.x86_64-linux.formatted
+      - run: nix fmt -- --ci

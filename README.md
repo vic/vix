@@ -74,7 +74,7 @@ nix develop .#nixos -c vic-sops-rotate
 
 ## Hosts
 
-Defined at [`/hosts`]([tree/main/hosts](https://github.com/vic/vix/tree/main/hosts) directory.
+Defined at [`/modules/flake/osConfigurations.nix`](https://github.com/vic/vix/tree/main/modules/flake/osConfigurations.nix).
 
 [![Workflow](https://github.com/vic/vix/actions/workflows/build-systems.yaml/badge.svg)](https://github.com/vic/vix/actions/workflows/build-systems.yaml)
 
