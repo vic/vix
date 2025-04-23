@@ -13,7 +13,7 @@
     vic
     vic-autologin
     bootable
-    gnome-desktop
+    kde-desktop
     barrier
     macos-keys
     kvm-intel
