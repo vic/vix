@@ -57,6 +57,7 @@ in
         pkgs.tig # alucard
         pkgs.cachix
         pkgs.jq
+        pkgs.helix
       ];
 
       perHost = {

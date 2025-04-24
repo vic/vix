@@ -9,14 +9,14 @@
 
 {
   imports = with inputs.self.nixosModules; [
+    barrier
+    bootable
+    kde-desktop
+    kvm-amd
+    macos-keys
     nix-features
     vic
     vic-autologin
-    bootable
-    gnome-desktop
-    barrier
-    macos-keys
-    kvm-amd
     ./static.nix
     ./filesystems.nix
     ./hardware-configuration.nix
