@@ -14,4 +14,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT }}
         run:
-          nix develop . -c gh-flake-update
+          nix run .#gh-flake-update
