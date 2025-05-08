@@ -31,11 +31,11 @@
                 dry="true"
               ;;
               "-f" | "--file")
-                file="${./..}/modules/home/vic/secrets/$1"
+                file="${./..}/vic/secrets/$1"
                 shift
               ;;
               "-a" | "--attr")
-                file="${./..}/modules/home/vic/secrets.yaml"
+                file="${./..}/vic/secrets.yaml"
                 extract="[\"$1\"]"
                 shift
               ;;

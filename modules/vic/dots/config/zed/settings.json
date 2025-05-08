@@ -7,6 +7,13 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "assistant": {
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "claude-3-5-sonnet"
+    },
+    "version": "2"
+  },
   "current_line_highlight": "gutter",
   "load_direnv": "direct",
   "vim_mode": true,
@@ -14,7 +21,7 @@
   "buffer_font_size": 16,
   "theme": {
     "mode": "system",
-    "light": "One Light",
+    "light": "Ayu Dark",
     "dark": "Base16 Rebecca"
   }
 }
