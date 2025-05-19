@@ -36,7 +36,7 @@ let
         {
           networking.hostName = lib.mkDefault name;
           nixpkgs.hostPlatform = lib.mkDefault system;
-          system.stateVersion = lib.mkDefault "25.05";
+          system.stateVersion = "25.05";
         }
       ];
     };
@@ -52,7 +52,7 @@ let
         {
           networking.hostName = lib.mkDefault name;
           nixpkgs.hostPlatform = lib.mkDefault system;
-          system.stateVersion = lib.mkDefault 6;
+          system.stateVersion = 6;
         }
       ];
     };
