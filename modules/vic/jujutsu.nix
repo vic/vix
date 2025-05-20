@@ -92,13 +92,44 @@
           };
 
           aliases = {
-            s = ["show"];
+            s = [ "show" ];
 
-            sq = ["squash" "-i"];
-            sU = ["squash" "-i" "-f" "@+" "-t" "@"];
-            su = ["squash" "-i" "-f" "@" "-t" "@+"];
-            sd = ["squash" "-i" "-f" "@" "-t" "@-"];
-            sD = ["squash" "-i" "-f" "@-" "-t" "@"];
+            sq = [
+              "squash"
+              "-i"
+            ];
+            sU = [
+              "squash"
+              "-i"
+              "-f"
+              "@+"
+              "-t"
+              "@"
+            ];
+            su = [
+              "squash"
+              "-i"
+              "-f"
+              "@"
+              "-t"
+              "@+"
+            ];
+            sd = [
+              "squash"
+              "-i"
+              "-f"
+              "@"
+              "-t"
+              "@-"
+            ];
+            sD = [
+              "squash"
+              "-i"
+              "-f"
+              "@-"
+              "-t"
+              "@"
+            ];
 
             l = [
               "log"
