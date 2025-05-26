@@ -8,6 +8,7 @@ let
     "cursor"
     "vscode"
     "anydesk"
+    "copilot-language-server"
   ];
 in
 {

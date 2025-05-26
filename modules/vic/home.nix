@@ -1,4 +1,4 @@
-{ inputs, lib, ... }:
+{ inputs, ... }:
 let
   flake.homeConfigurations.vic = vic_at "mordor";
   flake.homeConfigurations."vic@mordor" = vic_at "mordor";

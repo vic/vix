@@ -24,6 +24,10 @@
 
         secrets = {
           "hello" = { };
+          "groq_api_key" = { };
+          "gemini_api_key" = { };
+          "copilot_api_key" = { };
+          "anthropic_api_key" = { };
           "ssh/id_ed25519" = {
             format = "binary";
             sopsFile = ./secrets/mordor;
@@ -37,6 +41,12 @@
         templates = {
           "hello.toml".content = ''
             hello = "Wooo ${config.sops.placeholder.hello} Hoo";
+          '';
+          "llm_apis.env".content = ''
+            GEMINI_API_KEY="${config.sops.placeholder.gemini_api_key}"
+            OPENAI_API_KEY="${config.sops.placeholder.copilot_api_key}"
+            ANTHROPIC_API_KEY="${config.sops.placeholder.anthropic_api_key}"
+            GROQ_API_KEY="${config.sops.placeholder.groq_api_key}"
           '';
         };
       };

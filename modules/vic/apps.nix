@@ -1,3 +1,4 @@
+{ inputs, ... }:
 let
   flake.modules.homeManager.vic.imports = [
     nonBombadil
@@ -11,6 +12,8 @@ let
       home.packages = [
         pkgs.gparted
         pkgs.wl-clipboard
+        pkgs.copilot-language-server
+        pkgs.aider-chat
         # perSystem.self.copilot-language-server # tab tab tab
       ];
     };
@@ -44,9 +47,8 @@ let
       programs.home-manager.enable = true;
 
       home.packages = [
-
-        #perSystem.nix-versions.default
-        #perSystem.self.vic-sops-get
+        #inputs.nix-versions.packages.${pkgs.system}.default
+        inputs.self.packages.${pkgs.system}.vic-sops-get
         pkgs.tree
         pkgs.fzf
         pkgs.ripgrep # grep
@@ -60,6 +62,7 @@ let
         pkgs.cachix
         pkgs.jq
         pkgs.home-manager
+        pkgs.helix
       ];
     };
 

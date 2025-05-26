@@ -46,6 +46,7 @@
           "*.key"
           "/vic"
           "*~"
+          ".aider*"
         ];
         includes = [ ];
         # { path = "${DOTS}/git/something"; }

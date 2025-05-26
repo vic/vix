@@ -85,11 +85,11 @@
   :config
   (add-hook 'lsp-mode-hook 'lsp-ui-mode)
   :custom
-  (lsp-headerline-breadcrumb-enable t)
+  ;;(lsp-headerline-breadcrumb-enable t)
   (lsp-eldoc-render-all t)
-  (lsp-idle-delay 0.6)
+  ;;(lsp-idle-delay 0.6)
   ;; enable / disable the hints as you prefer:
-  (lsp-inlay-hint-enable t)
+  ;;(lsp-inlay-hint-enable t)
 
 ;; These are optional configurations. See https://emacs-lsp.github.io/lsp-mode/page/lsp-rust-analyzer/#lsp-rust-analyzer-display-chaining-hints for a full list
   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
@@ -111,10 +111,23 @@
 
 (use-package! eee
   :custom
-  (ee-terminal-command "ghostty")
+  (ee-terminal-command "wezterm")
   :config
-  (ee-define "ee-lazyjj" default-directory (string-trim-right (expand-file-name "~/.flake/modules/home/vic/dots/config/doom/ee-lazyjj.bash")) nil ignore)
-  (ee-define "ee-jj-fzf" default-directory (string-trim-right (expand-file-name "~/.flake/modules/home/vic/dots/config/doom/ee-jj-fzf.bash")) nil ignore)
+  (ee-define "ee-jjui" (ee-get-project-dir-or-current-dir) "jjui;" nil ignore)
+  (ee-define "ee-fish" (ee-get-project-dir-or-current-dir) "fish;" nil ignore)
+  (ee-define "ee-nix-fmt" (ee-get-project-dir-or-current-dir) "nix fmt>&2;read;" nil ignore)
+  (ee-define "ee-nix-check" (ee-get-project-dir-or-current-dir) "nix flake checl>&2;read;" nil ignore)
+  (map! :leader
+        (:prefix ("e" . "Execute")
+         :desc "jjui" "j" #'ee-jjui
+         :desc "fish" "t" #'ee-fish
+         :desc "find" "f" #'ee-find
+         :desc "grep" "g" #'ee-rg
+         :desc "yazi" "d" #'ee-yazi
+         (:prefix ("n" . "Nix")
+           :desc "check" "c" #'ee-nix-check
+           :desc "fmt" "f" #'ee-nix-fmt)
+         ))
   )
 
 
@@ -123,20 +136,32 @@
 
 (use-package! gptel
   :config
-  (setq
-   gptel-model 'gpt-4o
-   gptel-backend
-        ;; Github Models offers an OpenAI compatible API
-        (gptel-make-openai "Github Models" ;Any name you want
-        :host "models.inference.ai.azure.com"
-        :endpoint "/chat/completions?api-version=2024-05-01-preview"
-        :stream t
-        :key (shell-command-to-string "vic-sops-get -a gh_actions_pat")
-        :models '(claude-3.5-sonnet gpt-4o))
-   ))
+  (setq vic/gptel-gh-backend
+   ;; Github Models offers an OpenAI compatible API
+   (gptel-make-openai "Github Models" ;Any name you want
+     :host "models.inference.ai.azure.com"
+     :endpoint "/chat/completions?api-version=2024-05-01-preview"
+     :stream t
+     :key (shell-command-to-string "vic-sops-get -a gh_actions_pat")
+     :models '(claude-3.5-sonnet gpt-4o)))
+
+  (setq vic/gptel-gemini-backend
+   (gptel-make-gemini "Gemini"
+      :key (shell-command-to-string "vic-sops-get -a gemini_api_key")
+      :stream t))
+
+  (setq gptel-model 'gpt-4o)
+  (setq gptel-backend vic/gptel-gh-backend)
+  )
+
+(use-package aider
+  :config
+  (setq aider-args '("--model" "sonnet"))
+  (require 'aider-doom))
+
 
 (use-package! copilot
-  :hook (prog-mode . copilot-mode)
+  ;; :hook (prog-mode . copilot-mode)
 
   :config
   (add-to-list 'copilot-indentation-alist '(prog-mode 2))
@@ -155,6 +180,7 @@
       (copilot-accept-completion-by-word)
     (copilot-complete)))
 
+
 (map! :nvir
       "<backtab>" 'copilot-complete-or-indent
       "<tab>" 'copilot-accept-completion
@@ -171,6 +197,7 @@
 (map! :m "[ [" 'better-jumper-jump-backward)
 (map! :m "] ]" 'better-jumper-jump-forward)
 
+
 (setq god-global-mode -1)
 (god-mode-all -1)
 (map! :leader :desc "God Mode" "<escape>" 'god-execute-with-current-bindings)
@@ -185,7 +212,7 @@
     (cons beg end)))
 
 (setq hl-line-range-function #'my-hl-line-range-function)
-
+(setq-default eldoc-echo-area-use-multiline-p nil)
 
 
 ;; from https://gist.github.com/yorickvP/6132f237fbc289a45c808d8d75e0e1fb

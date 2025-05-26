@@ -49,6 +49,7 @@
 ;; (unpin! t)
 
 (package! eee
+  :pin "b136e5a"
   :recipe (:host github :repo "eval-exec/eee.el"
            :files (:defaults "*.el" "*.sh")))
 
@@ -62,3 +63,5 @@
 
 (package! gptel
   :recipe (:host github :repo "karthink/gptel"))
+
+(package! aider :recipe (:host github :repo "tninja/aider.el" ))
