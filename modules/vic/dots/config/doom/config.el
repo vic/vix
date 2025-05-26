@@ -152,6 +152,12 @@
 
   (setq gptel-model 'gpt-4o)
   (setq gptel-backend vic/gptel-gh-backend)
+
+  (map! :leader
+        (:prefix ("G" . "GPT")
+         :desc "gptel" "g" #'gptel
+         :desc "gptel" "G" #'gptel-menu
+         ))
   )
 
 (use-package aider
