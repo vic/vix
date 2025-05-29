@@ -14,6 +14,8 @@ let
         pkgs.wl-clipboard
         pkgs.copilot-language-server
         pkgs.aider-chat
+        pkgs.qutebrowser
+        pkgs.multimarkdown
         # perSystem.self.copilot-language-server # tab tab tab
       ];
     };

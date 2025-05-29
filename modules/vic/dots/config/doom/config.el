@@ -142,15 +142,16 @@
      :host "models.inference.ai.azure.com"
      :endpoint "/chat/completions?api-version=2024-05-01-preview"
      :stream t
-     :key (shell-command-to-string "vic-sops-get -a gh_actions_pat")
-     :models '(claude-3.5-sonnet gpt-4o)))
+     :key (shell-command-to-string "vic-sops-get -a gh_models_pat")
+     ;; :models '(claude-3.5-sonnet gpt-4o)
+     ))
 
   (setq vic/gptel-gemini-backend
    (gptel-make-gemini "Gemini"
       :key (shell-command-to-string "vic-sops-get -a gemini_api_key")
       :stream t))
 
-  (setq gptel-model 'gpt-4o)
+  ;; (setq gptel-model 'gpt-4o)
   (setq gptel-backend vic/gptel-gh-backend)
 
   (map! :leader
@@ -218,7 +219,7 @@
     (cons beg end)))
 
 (setq hl-line-range-function #'my-hl-line-range-function)
-(setq-default eldoc-echo-area-use-multiline-p nil)
+(setq eldoc-echo-area-use-multiline-p 1)
 
 
 ;; from https://gist.github.com/yorickvP/6132f237fbc289a45c808d8d75e0e1fb
