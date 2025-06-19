@@ -43,9 +43,9 @@
     systems.url = "github:nix-systems/default";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.url = "github:numtide/treefmt-nix";
-    versioned.inputs.nixpkgs.follows = "nixpkgs";
-    versioned.inputs.ntv.follows = "ntv";
-    versioned.url = "https://nix-versions.alwaysdata.net/flake.zip/input-leap";
+    #versioned.inputs.nixpkgs.follows = "nixpkgs";
+    #versioned.inputs.ntv.follows = "ntv";
+    #versioned.url = "https://nix-versions.alwaysdata.net/flake.zip/lazamar:input-leap";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     nixos-wsl.url = "github:nix-community/nixos-wsl";

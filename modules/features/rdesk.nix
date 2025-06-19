@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ ... }:
 let
 
   flake.modules.homeManager.rdesk =
@@ -6,7 +6,8 @@ let
     {
       home.packages = lib.optionals pkgs.stdenvNoCC.isLinux [
         pkgs.anydesk
-        inputs.versioned.packages.${pkgs.system}.input-leap
+        #inputs.versioned.packages.${pkgs.system}.input-leap
+        # pkgs.input-leap
       ];
     };
 
