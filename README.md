@@ -1,5 +1,22 @@
 # Vic's Nix Environment
 
+
+### [Dendritic](https://github.com/mightyiam/dendritic) setup
+
+My `flake.nix` file serves mainly for listing dependencies and adding nix config and caches.
+The entrypoint is `default.nix` which simply uses [vic/import-tree](https://github.com/vic/import-tree) to load all `./modules/**/*.nix` flake-parts modules.
+
+[Hosts](https://github.com/vic/vix/blob/main/modules/hosts) are flake exposed at [osConfigurations.nix](https://github.com/vic/vix/blob/main/modules/flake/osConfigurations.nix). Each host instance loads a `modules.nixos.${hostname}` or `modules.darwin.${hostname}` and I also have base modules for each type of host `modules.nixos.wsl`, `modules.nixos.nixos` and `modules.darwin.darwin`. These can be found under the [features](https://github.com/vic/vix/blob/main/modules/features) directory. Each host particular configuration also mixins some other features as needed.
+
+
+Most host [include](https://github.com/vic/vix/blob/main/modules/hosts/mordor/configuration.nix) their respective (darwin/nixos) [`vic` user](https://github.com/vic/vix/blob/main/modules/vic/user.nix) configuration module.
+My home-managed features are under the [vic](https://github.com/vic/vix/blob/main/modules/vic) directory and they
+are mixed automatically under the a single `modules.homeManager.vic`, flake exposed by [vic/home.nix](https://github.com/vic/vix/blob/main/modules/vic/home.nix).
+
+### CI
+
+There's an [action](https://github.com/vic/vix/blob/main/.github/workflows/build-systems.yaml) that [builds each host](https://github.com/vic/vix/actions/workflows/build-systems.yaml) independently pusing builds at vix cachix. so that evaluating later locally will just download those cached derivations.
+
 ## Bootstrapping 
 
 ### Installing NixOS (Boot from Bombadil USB)
