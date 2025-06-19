@@ -9,6 +9,7 @@ let
 
   flake.modules.darwin.vic.imports = [
     user
+    darwin
     home
   ];
 
@@ -32,6 +33,8 @@ let
       ];
     };
   };
+
+  darwin.system.primaryUser = "vic";
 
   user =
     { pkgs, ... }:
