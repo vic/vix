@@ -216,11 +216,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1750332743,
-        "narHash": "sha256-08MO3955AyMKoEkJENhbAZfAejzPpDe9NwEeh+0mezI=",
+        "lastModified": 1750372489,
+        "narHash": "sha256-ibsjw9yzDPcs44htKxBskKchkvtRVA9VtmW67jVple8=",
         "owner": "idursun",
         "repo": "jjui",
-        "rev": "1eea7746d00f181cda5722797bccad3b08d48f60",
+        "rev": "38cc7d12e1f4c73050b8cbd4e705bb58a001959f",
         "type": "github"
       },
       "original": {
