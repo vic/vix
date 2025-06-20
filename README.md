@@ -3,6 +3,8 @@
 
 ### [Dendritic](https://github.com/mightyiam/dendritic) setup
 
+> I'll be moving generic/reusable configurations into [Dennix](https://github.com/vic/dennix) and dogfooding them in here.
+
 My `flake.nix` file serves mainly for listing dependencies and adding nix config and caches.
 The entrypoint is `default.nix` which simply uses [vic/import-tree](https://github.com/vic/import-tree) to load all `./modules/**/*.nix` flake-parts modules.
 
