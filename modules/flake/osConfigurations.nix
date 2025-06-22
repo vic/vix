@@ -1,5 +1,13 @@
 { inputs, lib, ... }:
 let
+  inherit (inputs.self.lib.mk-os)
+    wsl
+    linux
+    linux-arm
+    darwin
+    darwin-intel
+    ;
+
   flake.nixosConfigurations = {
     annatar = wsl "annatar";
     mordor = linux "mordor";
@@ -13,49 +21,9 @@ let
 
   flake.darwinConfigurations = {
     yavanna = darwin-intel "yavanna";
-    varda = darwin-arm "varda";
-    bert = darwin-arm "bert";
+    varda = darwin "varda";
+    bert = darwin "bert";
   };
-
-  wsl = mkNixos "x86_64-linux" "wsl";
-
-  linux = mkNixos "x86_64-linux" "nixos";
-  linux-arm = mkNixos "aarch64-linux" "nixos";
-
-  darwin-intel = mkDarwin "x86_64-darwin";
-  darwin-arm = mkDarwin "aarch64-darwin";
-
-  mkNixos =
-    system: cls: name:
-    inputs.nixpkgs.lib.nixosSystem {
-      inherit system;
-      modules = [
-        inputs.self.modules.nixos.${cls}
-        inputs.self.modules.nixos.${name}
-        inputs.self.modules.nixos.${system}
-        {
-          networking.hostName = lib.mkDefault name;
-          nixpkgs.hostPlatform = lib.mkDefault system;
-          system.stateVersion = "25.05";
-        }
-      ];
-    };
-
-  mkDarwin =
-    system: name:
-    inputs.nix-darwin.lib.darwinSystem {
-      inherit system;
-      modules = [
-        inputs.self.modules.darwin.darwin
-        inputs.self.modules.darwin.${name}
-        inputs.self.modules.darwin.${system}
-        {
-          networking.hostName = lib.mkDefault name;
-          nixpkgs.hostPlatform = lib.mkDefault system;
-          system.stateVersion = 6;
-        }
-      ];
-    };
 
 in
 {
