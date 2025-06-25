@@ -1,63 +1,63 @@
 {
     "vspacecode.bindingOverrides": [
         {
-          "keys": "f.b",
-          "name": "FileBrowser Open",
-          "type": "command",
-          "command":"file-browser.open",
+            "keys": "f.b",
+            "name": "FileBrowser Open",
+            "type": "command",
+            "command": "file-browser.open"
         },
         {
-          "keys": "p.e",
-          "name": "Yazi",
-          "type": "command",
-          "command":"vscodeyazi.openYazi",
+            "keys": "p.e",
+            "name": "Yazi",
+            "type": "command",
+            "command": "vscodeyazi.openYazi"
         },
         {
-          "keys": "p.F",
-          "name": "nix fmt",
-          "type": "command",
-          "command": "runCommands",
+            "keys": "p.F",
+            "name": "nix fmt",
+            "type": "command",
+            "command": "runCommands",
             "args": {
-              "commands": [
-                "workbench.action.terminal.focus",
-                {
-                    "command": "workbench.action.terminal.sendSequence",
-                    "args": {
-                      "text": "nix fmt\n"
+                "commands": [
+                    "workbench.action.terminal.focus",
+                    {
+                        "command": "workbench.action.terminal.sendSequence",
+                        "args": {
+                            "text": "nix fmt\n"
+                        }
                     }
-                }
-              ]
+                ]
             }
         },
         {
-          "keys": "g.g",
-          "name": "LazyGit",
-          "type": "command",
-          "command":"lazygit.openLazygit",
+            "keys": "g.g",
+            "name": "LazyGit",
+            "type": "command",
+            "command": "lazygit.openLazygit"
         },
         {
-          "keys": "f.f",
-          "name": "Fuzzy find file in project",
-          "type": "command",
-          "command":"find-it-faster.findFiles",
+            "keys": "f.f",
+            "name": "Fuzzy find file in project",
+            "type": "command",
+            "command": "find-it-faster.findFiles"
         },
         {
-          "keys": "f.p",
-          "name": "Fuzzy find file in project",
-          "type": "command",
-          "command":"find-it-faster.findFiles",
+            "keys": "f.p",
+            "name": "Fuzzy find file in project",
+            "type": "command",
+            "command": "find-it-faster.findFiles"
         },
         {
-          "keys": "s.p",
-          "name": "Fuzzy search in project",
-          "type": "command",
-          "command":"find-it-faster.findWithinFiles",
+            "keys": "s.p",
+            "name": "Fuzzy search in project",
+            "type": "command",
+            "command": "find-it-faster.findWithinFiles"
         },
         {
-          "keys": "s.f",
-          "name": "Fuzzy search same file type in project",
-          "type": "command",
-          "command":"find-it-faster.findWithinFilesWithType",
+            "keys": "s.f",
+            "name": "Fuzzy search same file type in project",
+            "type": "command",
+            "command": "find-it-faster.findWithinFilesWithType"
         }
     ],
     "window.customTitleBarVisibility": "windowed",
@@ -131,7 +131,7 @@
     },
     "git.confirmSync": false,
     "editor.inlineSuggest.edits.showCollapsed": true,
-    "workbench.colorTheme": "Midnight Purple 2077",
+    "workbench.colorTheme": "Default Dark+",
     "editor.renderLineHighlight": "gutter",
     "editor.renderLineHighlightOnlyWhenFocus": true,
     "editor.inlayHints.enabled": "offUnlessPressed",
@@ -142,7 +142,6 @@
     },
     "editor.fontSize": 18,
     "workbench.editor.highlightModifiedTabs": true,
-    "workbench.editor.tabSizing": "shrink",
     "find-it-faster.general.useTerminalInEditor": true,
     "find-it-faster.findFiles.previewWindowConfig": "right,50%,border-left,+{2}+3/3,~3",
     "find-it-faster.findWithinFiles.fuzzRipgrepQuery": true,
@@ -160,7 +159,6 @@
     "find-it-faster.general.openFileInPreviewEditor": true,
     "direnv.restart.automatic": true,
     "window.autoDetectColorScheme": true,
-    "workbench.preferredLightColorTheme": "Dracula Theme Soft",
     "workbench.view.showQuietly": {
         "workbench.panel.output": false
     },
@@ -168,8 +166,6 @@
     "workbench.editor.limit.enabled": false,
     "workbench.editor.limit.value": 1,
     "errorLens.statusBarColorsEnabled": true,
-    "workbench.sideBar.location": "right",
-    "workbench.activityBar.location": "top",
     "workbench.editor.limit.excludeDirty": true,
     "workbench.editor.limit.perEditorGroup": true,
     "cursor.cmdk.useThemedDiffBackground": true,
@@ -180,5 +176,33 @@
     "opensource-explorer.defaultView": "recent",
     "debug.openExplorerOnEnd": true,
     "jjk.enableAnnotations": false,
-    "workbench.preferredHighContrastColorTheme": "Abyss"
+    "zig.zls.enabled": "off",
+    "workbench.preferredHighContrastColorTheme": "Visual Studio Light",
+    "files.watcherExclude": {
+        "**/.bloop": true,
+        "**/.metals": true
+    },
+    "errorLens.enabled": false,
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false,
+        "rust": false
+    },
+    "workbench.preferredLightColorTheme": "Atom One Dark",
+    "cursor.cpp.disabledLanguages": [
+        "plaintext",
+        "markdown",
+        "scminput",
+        "rust"
+    ],
+    "cursor.composer.shouldChimeAfterChatFinishes": true,
+    "workbench.activityBar.location": "top",
+    "errorLens.enabledDiagnosticLevels": [
+        "warning",
+        "info",
+        "error"
+    ],
+    "workbench.preferredDarkColorTheme": "Visual Studio Dark"
 }

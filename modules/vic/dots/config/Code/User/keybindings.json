@@ -226,5 +226,22 @@
 	{
 		"key": "shift+`",
 		"command": "-vscodeyazi.openYazi"
+	},
+	{
+		"key": "ctrl+shift+/",
+		"command": "workbench.action.openQuickChat",
+		"when": "chatIsEnabled"
+	},
+	{
+		"key": "ctrl+shift+e",
+		"command": "workbench.files.action.focusFilesExplorer"
+	},
+	{
+		"key": "ctrl+shift+r",
+		"command": "workbench.action.showAllEditors"
+	},
+	{
+		"key": "ctrl+k ctrl+p",
+		"command": "-workbench.action.showAllEditors"
 	}
 ]

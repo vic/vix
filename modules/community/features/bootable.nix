@@ -1,12 +1,8 @@
 {
 
   flake.modules.nixos.bootable =
-    { lib, modulesPath, ... }:
+    { lib, ... }:
     {
-      imports = [
-        (modulesPath + "/installer/scan/not-detected.nix")
-      ];
-
       # Bootloader.
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
@@ -20,9 +16,6 @@
 
       # Enable networking
       networking.networkmanager.enable = true;
-
-      # Set your time zone.
-      time.timeZone = "America/Mexico_City";
 
       # Select internationalisation properties.
       i18n.defaultLocale = "en_US.UTF-8";

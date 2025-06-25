@@ -8,10 +8,8 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "show_edit_predictions": false,
-  "git": {
-    "inline_blame": {
-      "enabled": false
-    }
+  "inline_blame": {
+    "enabled": false
   },
   "outline_panel": {
     "dock": "right"
@@ -21,7 +19,7 @@
       "settings": {}
     }
   },
-  "agent": {
+  "assistant": {
     "default_profile": "ask",
     "profiles": {
       "ask": {
@@ -53,6 +51,6 @@
   "theme": {
     "mode": "system",
     "light": "Quiet Light",
-    "dark": "Base16 Material"
+    "dark": "Ayu Dark"
   }
 }
