@@ -1,11 +1,6 @@
-{ inputs, ... }:
-{
-  flake.modules.homeManager.vic =
-    { pkgs, ... }:
-    {
-
-      home.packages =
-        let
+# https://oppi.li/posts/configuring_jujutsu/
+# https://github.com/jj-vcs/jj/discussions/5812
+# https://gist.github.com/thoughtpolice/8f2fd36ae17cd11b8e7bd93a70e31ad6 { inputs, ... }: { flake.modules.homeManager.vic = { pkgs, ... }: { home.packages = let
           jj-for-tui = pkgs.stdenvNoCC.mkDerivation {
             inherit (pkgs.jujutsu) name version meta;
             nativeBuildInputs = [ pkgs.makeWrapper ];
@@ -33,9 +28,9 @@
             };
         in
         [
-          (jj-tui-wrap "lazyjj" pkgs.lazyjj "--add-flags --jj-bin --add-flags ${jj-for-tui}/bin/jj")
+          (jj-tui-wrap "lazyjj" pkgs.lazyjj "")
           (jj-tui-wrap "jj-fzf" pkgs.jj-fzf "--add-flags --key-bindings")
-          (jj-tui-wrap "jjui" inputs.jjui.packages.${pkgs.system}.default "")
+          (jj-tui-wrap "jjui" pkgs.jjui "")
         ];
 
       programs.jujutsu = {

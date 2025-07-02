@@ -21,10 +21,6 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     import-tree.url = "github:vic/import-tree";
-    jjui.inputs.flake-parts.follows = "flake-parts";
-    jjui.inputs.nixpkgs.follows = "nixpkgs";
-    jjui.inputs.systems.follows = "systems";
-    jjui.url = "github:idursun/jjui";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
