@@ -1,7 +1,13 @@
 # https://oppi.li/posts/configuring_jujutsu/
 # https://github.com/jj-vcs/jj/discussions/5812
 # https://gist.github.com/thoughtpolice/8f2fd36ae17cd11b8e7bd93a70e31ad6
-{ inputs, ... }: { flake.modules.homeManager.vic = { pkgs, ... }: { home.packages = let
+{ ... }:
+{
+  flake.modules.homeManager.vic =
+    { pkgs, ... }:
+    {
+      home.packages =
+        let
           jj-for-tui = pkgs.stdenvNoCC.mkDerivation {
             inherit (pkgs.jujutsu) name version meta;
             nativeBuildInputs = [ pkgs.makeWrapper ];
