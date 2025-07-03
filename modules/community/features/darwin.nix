@@ -1,6 +1,11 @@
 { inputs, ... }:
 let
 
+  flake-file.inputs = {
+    nix-darwin.follows.nixpkgs = "nixpkgs";
+    nix-darwin.url = "github:LnL7/nix-darwin";
+  };
+
   flake.modules.darwin.darwin.imports = [
     inputs.home-manager.darwinModules.home-manager
     nix-darwin-pkgs
@@ -31,5 +36,5 @@ let
     };
 in
 {
-  inherit flake;
+  inherit flake flake-file;
 }

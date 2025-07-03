@@ -47,6 +47,14 @@
     import-tree = {
       url = "github:vic/import-tree";
     };
+    nix-darwin = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+      url = "github:LnL7/nix-darwin";
+    };
     nix-index-database = {
       inputs = {
         nixpkgs = {
