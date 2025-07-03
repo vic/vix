@@ -2,15 +2,13 @@
 
 ### [Dendritic](https://github.com/mightyiam/dendritic) setup
 
-My `flake.nix` is auto-generated using [`vic/flake-file`](https://github.com/vic/flake-file).
-Particularly, I use the
-[`flake-file.flakeModules.dendritic`](https://github.com/vic/flake-file/tree/main/modules/dendritic) module,
-by importing it on [modules/flake/dendritic.nix](https://github.com/vic/vix/blob/main/modules/flake/dendritic.nix).
+My `flake.nix` file is auto-generated using [`vic/flake-file`](https://github.com/vic/flake-file).
 
-> I'll be moving generic/reusable configurations into [Dennix](https://github.com/vic/dennix) and dogfooding them in here.
+In [modules/flake/dendritic.nix](https://github.com/vic/vix/blob/main/modules/flake/dendritic.nix), I import
+the [`flake-file.flakeModules.dendritic`](https://github.com/vic/flake-file/tree/main/modules/dendritic) module,
+which makes [vic/import-tree](https://github.com/vic/import-tree) load all `./modules/**/*.nix` files.
 
-My `flake.nix` file serves mainly for listing dependencies and adding nix config and caches.
-The entrypoint is `default.nix` which simply uses [vic/import-tree](https://github.com/vic/import-tree) to load all `./modules/**/*.nix` flake-parts modules.
+> I'm also working on moving some of my generic configuration into the modules/community directory, for use in [Dennix](https://github.com/vic/dennix) Layers, so they can be useful for others.
 
 [Hosts](https://github.com/vic/vix/blob/main/modules/hosts) are flake exposed at [osConfigurations.nix](https://github.com/vic/vix/blob/main/modules/flake/osConfigurations.nix). Each host instance loads a `modules.nixos.${hostname}` or `modules.darwin.${hostname}` and I also have base modules for each type of host `modules.nixos.wsl`, `modules.nixos.nixos` and `modules.darwin.darwin`. These can be found under the [features](https://github.com/vic/vix/blob/main/modules/features) directory. Each host particular configuration also mixins some other features as needed.
 
