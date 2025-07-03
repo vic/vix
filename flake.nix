@@ -12,7 +12,8 @@
   };
 
   inputs = {
-
+    files.url = "github:mightyiam/files";
+    flake-file.url = "github:vic/flake-file";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
     devshell.url = "github:numtide/devshell";
     doom-emacs.flake = false;

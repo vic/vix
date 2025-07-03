@@ -116,6 +116,21 @@
         "type": "github"
       }
     },
+    "files": {
+      "locked": {
+        "lastModified": 1750263550,
+        "narHash": "sha256-EW/QJ8i/13GgiynBb6zOMxhLU1uEkRqmzbIDEP23yVA=",
+        "owner": "mightyiam",
+        "repo": "files",
+        "rev": "5f4ef1fd1f9012354a9748be093e277675d10f07",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mightyiam",
+        "repo": "files",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -129,6 +144,21 @@
       "original": {
         "owner": "edolstra",
         "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-file": {
+      "locked": {
+        "lastModified": 1751489497,
+        "narHash": "sha256-ILmdLKVO8Ob9bogmzuLb6H1wBQ8zhrRHIrt7fvEs8aE=",
+        "owner": "vic",
+        "repo": "flake-file",
+        "rev": "a68cc553b73b1ef0c5fc714ee0472ac8d766a503",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "flake-file",
         "type": "github"
       }
     },
@@ -331,6 +361,8 @@
         "SPC": "SPC",
         "devshell": "devshell",
         "doom-emacs": "doom-emacs",
+        "files": "files",
+        "flake-file": "flake-file",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
