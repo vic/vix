@@ -149,11 +149,11 @@
     },
     "flake-file": {
       "locked": {
-        "lastModified": 1751506538,
-        "narHash": "sha256-7WnzMZ0wrroQKuGKV5hKhzAAc5Ai5mOa5UJufPl+F0c=",
+        "lastModified": 1751513244,
+        "narHash": "sha256-7H0zYsAbFATFIx1l8tFq6/bejHxRtuY+k/kYyqGl9xA=",
         "owner": "vic",
         "repo": "flake-file",
-        "rev": "aac8dc10d906b0a1de28557913f8cb6cead03947",
+        "rev": "93c92adaaa8dd03614dd8da200c4b07c25145628",
         "type": "github"
       },
       "original": {
