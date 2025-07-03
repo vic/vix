@@ -21,7 +21,6 @@ let
       modules = [
         inputs.self.modules.nixos.${cls}
         inputs.self.modules.nixos.${name}
-        inputs.self.modules.nixos.${system}
         {
           networking.hostName = lib.mkDefault name;
           nixpkgs.hostPlatform = lib.mkDefault system;
@@ -37,7 +36,6 @@ let
       modules = [
         inputs.self.modules.darwin.darwin
         inputs.self.modules.darwin.${name}
-        inputs.self.modules.darwin.${system}
         {
           networking.hostName = lib.mkDefault name;
           nixpkgs.hostPlatform = lib.mkDefault system;
