@@ -47,14 +47,6 @@
     import-tree = {
       url = "github:vic/import-tree";
     };
-    nix-darwin = {
-      inputs = {
-        nixpkgs = {
-          follows = "nixpkgs";
-        };
-      };
-      url = "github:LnL7/nix-darwin";
-    };
     nix-index-database = {
       inputs = {
         nixpkgs = {
@@ -73,23 +65,6 @@
     };
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    };
-    ntv = {
-      inputs = {
-        devshell = {
-          follows = "devshell";
-        };
-        flake-parts = {
-          follows = "flake-parts";
-        };
-        nixpkgs = {
-          follows = "nixpkgs";
-        };
-        systems = {
-          follows = "systems";
-        };
-      };
-      url = "github:vic/ntv?dir=nix/flakeModules";
     };
     sops-nix = {
       inputs = {

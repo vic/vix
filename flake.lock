@@ -233,26 +233,6 @@
         "type": "github"
       }
     },
-    "nix-darwin": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1751313918,
-        "narHash": "sha256-HsJM3XLa43WpG+665aGEh8iS8AfEwOIQWk3Mke3e7nk=",
-        "owner": "LnL7",
-        "repo": "nix-darwin",
-        "rev": "e04a388232d9a6ba56967ce5b53a8a6f713cdfcf",
-        "type": "github"
-      },
-      "original": {
-        "owner": "LnL7",
-        "repo": "nix-darwin",
-        "type": "github"
-      }
-    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -325,37 +305,6 @@
         "type": "github"
       }
     },
-    "ntv": {
-      "inputs": {
-        "devshell": [
-          "devshell"
-        ],
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "dir": "nix/flakeModules",
-        "lastModified": 1743531887,
-        "narHash": "sha256-7MMXwJl7CqFp+IbaYoL+vXxIlE0FbfO6Lij0Fe3XR90=",
-        "owner": "vic",
-        "repo": "ntv",
-        "rev": "792d4321b68bb4d707c5342c3bb5b4401165f957",
-        "type": "github"
-      },
-      "original": {
-        "dir": "nix/flakeModules",
-        "owner": "vic",
-        "repo": "ntv",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "SPC": "SPC",
@@ -366,11 +315,9 @@
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
-        "nix-darwin": "nix-darwin",
         "nix-index-database": "nix-index-database",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
-        "ntv": "ntv",
         "sops-nix": "sops-nix",
         "systems": "systems_2",
         "treefmt-nix": "treefmt-nix",

@@ -1,5 +1,15 @@
 { inputs, ... }:
 {
+
+  flake-file.inputs = {
+    doom-emacs.flake = false;
+    doom-emacs.url = "github:doomemacs/doomemacs";
+
+    SPC.follows.nixpkgs = "nixpkgs";
+    SPC.follows.treefmt-nix = "treefmt-nix";
+    SPC.url = "github:vic/SPC";
+  };
+
   flake.modules.homeManager.vic =
     {
       pkgs,

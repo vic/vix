@@ -1,5 +1,6 @@
 { inputs, ... }:
 let
+
   flake.modules.darwin.darwin.imports = [
     inputs.home-manager.darwinModules.home-manager
     nix-darwin-pkgs
