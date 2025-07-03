@@ -1,52 +1,126 @@
+# DO-NOT-EDIT. This file was auto-generated.
 {
   description = "Vic's Nix Environment";
-
-  outputs = inputs: import ./. inputs;
-
+  inputs = {
+    SPC = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+        treefmt-nix = {
+          follows = "treefmt-nix";
+        };
+      };
+      url = "github:vic/SPC";
+    };
+    devshell = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+      url = "github:numtide/devshell";
+    };
+    doom-emacs = {
+      flake = false;
+      url = "github:doomemacs/doomemacs";
+    };
+    files = {
+      url = "github:mightyiam/files";
+    };
+    flake-file = {
+      url = "github:vic/flake-file";
+    };
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+    };
+    home-manager = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+      url = "github:nix-community/home-manager";
+    };
+    import-tree = {
+      url = "github:vic/import-tree";
+    };
+    nix-darwin = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+      url = "github:LnL7/nix-darwin";
+    };
+    nix-index-database = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+      url = "github:nix-community/nix-index-database";
+    };
+    nixos-wsl = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+      url = "github:nix-community/nixos-wsl";
+    };
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    };
+    ntv = {
+      inputs = {
+        devshell = {
+          follows = "devshell";
+        };
+        flake-parts = {
+          follows = "flake-parts";
+        };
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+        systems = {
+          follows = "systems";
+        };
+      };
+      url = "github:vic/ntv?dir=nix/flakeModules";
+    };
+    sops-nix = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+      url = "github:Mic92/sops-nix";
+    };
+    systems = {
+      url = "github:nix-systems/default";
+    };
+    treefmt-nix = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+      url = "github:numtide/treefmt-nix";
+    };
+    vscode-server = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+      url = "github:nix-community/nixos-vscode-server";
+    };
+  };
   nixConfig = {
     allow-import-from-derivation = true;
-    extra-trusted-public-keys = [
-      "vix.cachix.org-1:hP/Lpdsi1dB3AxK9o6coWh+xHzvAc4ztdDYuG7lC6dI="
-    ];
     extra-substituters = [ "https://vix.cachix.org" ];
+    extra-trusted-public-keys = [ "vix.cachix.org-1:hP/Lpdsi1dB3AxK9o6coWh+xHzvAc4ztdDYuG7lC6dI=" ];
   };
-
-  inputs = {
-    files.url = "github:mightyiam/files";
-    flake-file.url = "github:vic/flake-file";
-    devshell.inputs.nixpkgs.follows = "nixpkgs";
-    devshell.url = "github:numtide/devshell";
-    doom-emacs.flake = false;
-    doom-emacs.url = "github:doomemacs/doomemacs";
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
-    import-tree.url = "github:vic/import-tree";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
-    nix-index-database.url = "github:nix-community/nix-index-database";
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    ntv.inputs.devshell.follows = "devshell";
-    ntv.inputs.flake-parts.follows = "flake-parts";
-    ntv.inputs.nixpkgs.follows = "nixpkgs";
-    ntv.inputs.systems.follows = "systems";
-    ntv.url = "github:vic/ntv?dir=nix/flakeModules";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-    sops-nix.url = "github:Mic92/sops-nix";
-    SPC.inputs.nixpkgs.follows = "nixpkgs";
-    SPC.inputs.treefmt-nix.follows = "treefmt-nix";
-    SPC.url = "github:vic/SPC";
-    systems.url = "github:nix-systems/default";
-    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
-    treefmt-nix.url = "github:numtide/treefmt-nix";
-    #versioned.inputs.nixpkgs.follows = "nixpkgs";
-    #versioned.inputs.ntv.follows = "ntv";
-    #versioned.url = "https://nix-versions.alwaysdata.net/flake.zip/lazamar:input-leap";
-    vscode-server.inputs.nixpkgs.follows = "nixpkgs";
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
-    nixos-wsl.url = "github:nix-community/nixos-wsl";
-    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
-
-  };
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }

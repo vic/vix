@@ -1,4 +1,4 @@
-{ inputs, lib, ... }:
+{ inputs, ... }:
 let
   inherit (inputs.self.lib.mk-os)
     wsl

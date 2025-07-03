@@ -1,7 +1,5 @@
-{ inputs, ... }:
+{ ... }:
 {
-
-  imports = [ inputs.flake-file.flakeModules.dendritic ];
 
   flake-file = {
     description = "Vic's Nix Environment";
@@ -15,8 +13,7 @@
     };
 
     inputs = {
-      flake-file.url = "github:vic/flake-file";
-      devshell.follows.nixpkgs= "nixpkgs";
+      devshell.follows.nixpkgs = "nixpkgs";
       devshell.url = "github:numtide/devshell";
       doom-emacs.flake = false;
       doom-emacs.url = "github:doomemacs/doomemacs";
@@ -26,12 +23,12 @@
       nix-darwin.url = "github:LnL7/nix-darwin";
       nix-index-database.follows.nixpkgs = "nixpkgs";
       nix-index-database.url = "github:nix-community/nix-index-database";
-      ntv.follows.devshell= "devshell";
-      ntv.follows.flake-parts= "flake-parts";
-      ntv.follows.nixpkgs= "nixpkgs";
-      ntv.follows.systems= "systems";
+      ntv.follows.devshell = "devshell";
+      ntv.follows.flake-parts = "flake-parts";
+      ntv.follows.nixpkgs = "nixpkgs";
+      ntv.follows.systems = "systems";
       ntv.url = "github:vic/ntv?dir=nix/flakeModules";
-      sops-nix.follows.nixpkgs= "nixpkgs";
+      sops-nix.follows.nixpkgs = "nixpkgs";
       sops-nix.url = "github:Mic92/sops-nix";
       SPC.follows.nixpkgs = "nixpkgs";
       SPC.follows.treefmt-nix = "treefmt-nix";

@@ -1,7 +1,11 @@
 # Vic's Nix Environment
 
-
 ### [Dendritic](https://github.com/mightyiam/dendritic) setup
+
+My `flake.nix` is auto-generated using [`vic/flake-file`](https://github.com/vic/flake-file).
+Particularly, I use the
+[`flake-file.flakeModules.dendritic`](https://github.com/vic/flake-file/tree/main/modules/dendritic) module,
+by importing it on [modules/flake/dendritic.nix](https://github.com/vic/vix/blob/main/modules/flake/dendritic.nix).
 
 > I'll be moving generic/reusable configurations into [Dennix](https://github.com/vic/dennix) and dogfooding them in here.
 
@@ -9,7 +13,6 @@ My `flake.nix` file serves mainly for listing dependencies and adding nix config
 The entrypoint is `default.nix` which simply uses [vic/import-tree](https://github.com/vic/import-tree) to load all `./modules/**/*.nix` flake-parts modules.
 
 [Hosts](https://github.com/vic/vix/blob/main/modules/hosts) are flake exposed at [osConfigurations.nix](https://github.com/vic/vix/blob/main/modules/flake/osConfigurations.nix). Each host instance loads a `modules.nixos.${hostname}` or `modules.darwin.${hostname}` and I also have base modules for each type of host `modules.nixos.wsl`, `modules.nixos.nixos` and `modules.darwin.darwin`. These can be found under the [features](https://github.com/vic/vix/blob/main/modules/features) directory. Each host particular configuration also mixins some other features as needed.
-
 
 Most host [include](https://github.com/vic/vix/blob/main/modules/hosts/mordor/configuration.nix) their respective (darwin/nixos) [`vic` user](https://github.com/vic/vix/blob/main/modules/vic/user.nix) configuration module.
 My home-managed features are under the [vic](https://github.com/vic/vix/blob/main/modules/vic) directory and they
@@ -19,7 +22,7 @@ are mixed automatically under the a single `modules.homeManager.vic`, flake expo
 
 There's an [action](https://github.com/vic/vix/blob/main/.github/workflows/build-systems.yaml) that [builds each host](https://github.com/vic/vix/actions/workflows/build-systems.yaml) independently pusing builds at vix cachix. so that evaluating later locally will just download those cached derivations.
 
-## Bootstrapping 
+## Bootstrapping
 
 ### Installing NixOS (Boot from Bombadil USB)
 
@@ -98,14 +101,15 @@ Defined at [`/modules/flake/osConfigurations.nix`](https://github.com/vic/vix/tr
 [![Workflow](https://github.com/vic/vix/actions/workflows/build-systems.yaml/badge.svg)](https://github.com/vic/vix/actions/workflows/build-systems.yaml)
 
 ### Bombadil - ISO Image - x86_63-linux
+
 ```
 USB Bootable
 CI: ubuntu-latest
 Build: nix build .#.nixosConfigurations.installer.config.system.build.isoImage
 ```
 
-
 ### Varda - Darwin - aarm64-darwin
+
 ```
 Users: vic
 Host: MacMini M4
@@ -114,6 +118,7 @@ Build: darwin-rebuild --flake .#varda build
 ```
 
 ### Yavanna - Darwin - x86_64-darwin
+
 ```
 Users: vic
 Host: MacBook Pro Late-2011
@@ -122,6 +127,7 @@ Build: darwin-rebuild --flake .#yavanna build
 ```
 
 ### Niena - NixOS - x86_64-linux
+
 ```
 Users: vic
 Host: MacBook Pro Late-2011
@@ -130,6 +136,7 @@ Build: nixos-rebuild --flake .#niena build
 ```
 
 ### Mordor - NixOS - x86_64-linux
+
 ```
 Users: vic
 Host: ASUS ROG Tower.
@@ -138,6 +145,7 @@ Build: nixos-rebuild --flake .#mordor build
 ```
 
 ### Annatar - Windows WSL2 - x86_64-linux
+
 ```
 Users: vic
 Host: ASUS ROG Tower.
@@ -146,6 +154,7 @@ Build: nixos-rebuild --flake .#annatar build
 ```
 
 ### Nargun - NixOS - x86-64-linux
+
 ```
 Users: vic
 Host: Laptop Lenovo
@@ -154,6 +163,7 @@ Build: nixos-rebuild --flake .#nargun build
 ```
 
 ### Smaug - NixOS - x86-64-linux
+
 ```
 Users: vic
 Host: Laptop HP
@@ -162,6 +172,7 @@ Build: nixos-rebuild --flake .#smaug build
 ```
 
 ### Bill - Ubuntu - aarm64-linux
+
 ```
 Users: runner (vic)
 Host: GH Action Runner (Upterm + VSCode Remote)
@@ -170,6 +181,7 @@ Build: home-manager --flake .#runner@bill build
 ```
 
 ### Bert - MacOS - aarm64-darwin
+
 ```
 Users: runner (vic)
 Host: GH Action Runner (Upterm + VSCode Remote)
@@ -178,6 +190,7 @@ Build: home-manager --flake .#runner@bert build
 ```
 
 ### Tom - Ubuntu - x86_64-linux
+
 ```
 Users: runner (vic)
 Host: GH Action Runner (Upterm + VSCode Remote)
