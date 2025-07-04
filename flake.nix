@@ -1,6 +1,5 @@
 # DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
-# Use `nix run .#write-files` to regenerate it.
-
+# Use `nix run .#write-flake` to regenerate it.
 {
   description = "Vic's Nix Environment";
   inputs = {
@@ -15,6 +14,9 @@
       };
       url = "github:vic/SPC";
     };
+    allfollow = {
+      url = "github:spikespaz/allfollow";
+    };
     devshell = {
       inputs = {
         nixpkgs = {
@@ -26,9 +28,6 @@
     doom-emacs = {
       flake = false;
       url = "github:doomemacs/doomemacs";
-    };
-    files = {
-      url = "github:mightyiam/files";
     };
     flake-file = {
       url = "github:vic/flake-file";
@@ -74,6 +73,14 @@
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
     };
+    rust-overlay = {
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+      url = "github:oxalica/rust-overlay";
+    };
     sops-nix = {
       inputs = {
         nixpkgs = {
@@ -86,11 +93,6 @@
       url = "github:nix-systems/default";
     };
     treefmt-nix = {
-      inputs = {
-        nixpkgs = {
-          follows = "nixpkgs";
-        };
-      };
       url = "github:numtide/treefmt-nix";
     };
     vscode-server = {
