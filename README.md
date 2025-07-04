@@ -4,7 +4,7 @@
 [![Cachix](https://img.shields.io/badge/cachix-vix-blue.svg)](https://app.cachix.org/cache/vix)
 [![Dendritic Pattern](https://img.shields.io/badge/pattern-dendritic-6c3.svg)](https://vic.github.io/dendrix/Dendritic.html)
 
-Welcome! This repository is a friendly, modular, and shareable NixOS/MacOS/WSL configuration, designed both for my own use and as a template for anyone interested in the [Dendritic](https://vic.github.io/dendrix/Dendritic.html) pattern. Whether you're new to Nix or a seasoned user, you'll find reusable modules, clear structure, and plenty of pointers to help you get started or extend your own setup.
+Welcome! This repository is vic's, modular, and shareable NixOS/MacOS/WSL configuration, designed both for my own use and as a template for anyone interested in the [Dendritic](https://vic.github.io/dendrix/Dendritic.html) pattern. Whether you're new to Nix or a seasoned user, you'll find reusable modules, clear structure, and plenty of pointers to help you get started or extend your own setup.
 
 ---
 
@@ -17,8 +17,9 @@ Welcome! This repository is a friendly, modular, and shareable NixOS/MacOS/WSL c
 5. [Shareable Modules & Features](#shareable-modules--features)
    - [Community Modules Overview](#community-modules-overview)
 6. [For Contributors](#for-contributors)
-7. [CI & Caching](#ci--caching)
-8. [References](#references)
+7. [Quaerendo Invenietis](#quaerendo-invenietis)
+8. [CI & Caching](#ci--caching)
+9. [References](#references)
 
 ---
 
@@ -110,7 +111,7 @@ This repository is not just for me! Many modules are designed to be reused in yo
 - **kvm+amd.nix**: KVM/QEMU virtualization support for AMD CPUs.
 - **kvm+intel.nix**: KVM/QEMU virtualization support for Intel CPUs.
 - **macos-keys.nix**: (Alias/duplicate) MacOS key management.
-- **nix-setttings.nix**: Common Nix settings (spelling: should be `nix-settings.nix`).
+- **nix-setttings.nix**: Common Nix settings.
 - **nixos.nix**: NixOS-specific system settings.
 - **nvidia.nix**: NVIDIA GPU support and configuration.
 - **platform.nix**: Platform detection and helpers (Linux, Darwin, WSL, etc).
@@ -147,9 +148,16 @@ This repository is not just for me! Many modules are designed to be reused in yo
 
 ## For Contributors
 
-- Place generic modules in `modules/community/` for easy reuse.
-- Add host-specific config to `modules/hosts/HOST/`.
-- Expose new outputs in [`modules/flake/osConfigurations.nix`](modules/flake/osConfigurations.nix).
+- Contributions are accepted mostly for files under `modules/community/`.
+- All other modules like `modules/hosts/HOST/`, or `modules/vic` are most
+  likely only useful for me, but the most I can move to community the better.
+- My hosts are exposed at [`modules/flake/osConfigurations.nix`](modules/flake/osConfigurations.nix).
+
+---
+
+## Quaerendo Invenietis
+
+If you need help with something, just ask. I'll be happy to help.
 
 ---
 
@@ -158,14 +166,16 @@ This repository is not just for me! Many modules are designed to be reused in yo
 - [GitHub Actions](.github/workflows/build-systems.yaml) builds and caches all hosts.
 - [Cachix](https://app.cachix.org/cache/vix) used for binary caching.
 
+There's also actions for reminding me to SOP rotate secrets and flake updates.
+
 ---
 
 ## References
 
-- [Dendritic Pattern](https://vic.github.io/dendrix/Dendritic.html)
+- [Dendritic Pattern](https://github.com/mightyiam/dendritic)
 - [vic/flake-file](https://github.com/vic/flake-file)
 - [vic/import-tree](https://github.com/vic/import-tree)
-- [Dennix Layers](https://github.com/vic/dennix)
+- [Dendrix Layers](https://github.com/vic/dendrix)
 
 ---
 
