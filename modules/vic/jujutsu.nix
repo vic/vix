@@ -1,46 +1,30 @@
 # https://oppi.li/posts/configuring_jujutsu/
 # https://github.com/jj-vcs/jj/discussions/5812
 # https://gist.github.com/thoughtpolice/8f2fd36ae17cd11b8e7bd93a70e31ad6
-{ ... }:
+{ inputs, ... }:
 {
+  flake-file.inputs.jjui.url = "github:vic/jjui/exec";
+
   flake.modules.homeManager.vic =
     { pkgs, ... }:
     {
       home.packages =
-        let
-          jj-for-tui = pkgs.stdenvNoCC.mkDerivation {
-            inherit (pkgs.jujutsu) name version meta;
-            nativeBuildInputs = [ pkgs.makeWrapper ];
-            phases = "wrap";
-            wrap = ''
-              makeWrapper ${pkgs.jujutsu}/bin/jj $out/bin/jj \
-              --add-flags --config-file \
-              --add-flags "~/.config/jj/tui.toml"
-            '';
-          };
-
-          jj-tui-wrap =
-            main: drv: extra:
-            pkgs.stdenvNoCC.mkDerivation {
-              inherit (drv) name meta;
-              nativeBuildInputs = [ pkgs.makeWrapper ];
-              phases = "wrap";
-              wrap = ''
-                makeWrapper \
-                  "${drv}/bin/${main}" \
-                  "$out/bin/${main}" \
-                  --prefix PATH : ${jj-for-tui}/bin \
-                  ${extra}
-              '';
-            };
-        in
         [
-          (jj-tui-wrap "lazyjj" pkgs.lazyjj "")
-          (jj-tui-wrap "jj-fzf" pkgs.jj-fzf "--add-flags --key-bindings")
-          (jj-tui-wrap "jjui" pkgs.jjui "")
+          pkgs.lazyjj
+          pkgs.jj-fzf
+          inputs.jjui.packages.${pkgs.system}.jjui
         ];
 
-      programs.jujutsu = {
+      programs.jujutsu = let 
+        diff-formatter = [
+              (pkgs.lib.getExe pkgs.delta)
+              # "--pager"
+              # (pkgs.lib.getExe pkgs.bat)
+              # "--side-by-side"
+              "$left"
+              "$right"
+            ];
+      in {
         enable = true;
 
         # See https://jj-vcs.github.io/jj/v0.17.0/config
@@ -62,25 +46,29 @@
           };
 
           template-aliases = {
-            "format_short_id(id)" = "id.shortest().upper()"; # default is shortest(12)
-            "format_short_change_id(id)" = "format_short_id(id)";
-            "format_short_signature(signature)" = "signature.email()";
+              "format_short_id(id)" = "id.shortest().upper()"; # default is shortest(12)
+              "format_short_change_id(id)" = "format_short_id(id)";
+              "format_short_signature(signature)" = "signature.email()";
+              "format_timestamp(timestamp)" = "timestamp.ago()";
           };
+
+          "--scope" = [
+            {
+              "--when".commands = ["diff" "show"];
+              ui.pager = (pkgs.lib.getExe pkgs.delta);
+              ui.diff-formatter = diff-formatter;
+            }
+          ];
 
           ui = {
             default-command = [
               "status"
               "--no-pager"
             ];
-            diff.tool = [
-              (pkgs.lib.getExe pkgs.difftastic)
-              "--color=always"
-              "$left"
-              "$right"
-            ];
+            inherit diff-formatter;
             # pager = ":builtin";
             # editor = "nvim";
-            merge-editor = "vscode"; # meld
+            merge-editor = pkgs.meld; # meld
           };
 
           signing = {
@@ -89,8 +77,8 @@
             key = "~/.ssh/id_ed25519.pub";
           };
 
-          git = {
-            push-bookmark-prefix = "vic/jj-change-";
+          templates = {
+            git_push_bookmark = "vic/jj-change-";
           };
 
           aliases = {
@@ -156,31 +144,13 @@
         };
       };
 
-      home.file.".config/jj/tui.toml".source =
-        let
-          toml = {
-            ui.editor = "vim";
-            jj-fzf = {
-              show-keys = "true";
-              revsets.log = "..";
-              diff-mode = "jj-diff";
-            };
-            template-aliases = {
-              "format_short_id(id)" = "id.shortest().upper()"; # default is shortest(12)
-              "format_short_change_id(id)" = "format_short_id(id)";
-              "format_short_signature(signature)" = "signature.email()";
-              "format_timestamp(timestamp)" = "timestamp.ago()";
-            };
-          };
-          fmt = pkgs.formats.toml { };
-        in
-        fmt.generate "tui.toml" toml;
-
       home.file.".config/jjui/config.toml".source =
         let
           # https://github.com/idursun/jjui/wiki/Configuration
           toml = {
-
+            leader.m.help = "main";
+            leader.mm.help = "@ is main";
+            leader.mj.help = "@- is main";
           };
           fmt = pkgs.formats.toml { };
         in

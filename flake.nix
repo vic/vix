@@ -46,6 +46,9 @@
     import-tree = {
       url = "github:vic/import-tree";
     };
+    jjui = {
+      url = "github:vic/jjui/exec";
+    };
     nix-darwin = {
       inputs = {
         nixpkgs = {
