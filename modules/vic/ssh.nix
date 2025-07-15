@@ -55,6 +55,7 @@
 
       home.activation.link-ssh-id = lib.hm.dag.entryAfter [ "link-flake" "sops-nix" "reloadSystemd" ] ''
         run ln -sf "${config.sops.secrets."ssh/id_ed25519".path}" $HOME/.ssh/id_ed25519
+        run ln -sf "${config.sops.secrets."ssh/localhost_run".path}" $HOME/.ssh/id_localhost_run
       '';
     };
 }

@@ -38,6 +38,10 @@
             format = "binary";
             sopsFile = ./secrets/ssh-conf;
           };
+          "ssh/localhost_run" = {
+            format = "binary";
+            sopsFile = ./secrets/localhost_run;
+          };
         };
 
         templates = {
