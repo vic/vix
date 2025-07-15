@@ -7,6 +7,25 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "edit_predictions": {
+    "mode": "subtle",
+    "copilot": {
+      "proxy": null,
+      "proxy_no_verify": null,
+      "enterprise_uri": null
+    },
+    "enabled_in_text_threads": false
+  },
+  "languages": {
+    "Go": {
+      "show_edit_predictions": true
+    }
+  },
+  "ui_font_family": "VictorMono Nerd Font Mono",
+  "buffer_font_family": "JetBrainsMono Nerd Font Mono",
+  "ui_font_features": {
+    "calt": 1
+  },
   "show_edit_predictions": false,
   "git": {
     "inline_blame": {
@@ -16,11 +35,7 @@
   "outline_panel": {
     "dock": "right"
   },
-  "context_servers": {
-    "mcp-server-github": {
-      "settings": {}
-    }
-  },
+  "context_servers": {},
   "agent": {
     "default_profile": "ask",
     "profiles": {
@@ -48,11 +63,11 @@
   "current_line_highlight": "gutter",
   "load_direnv": "direct",
   "vim_mode": true,
-  "ui_font_size": 16,
-  "buffer_font_size": null,
+  "ui_font_size": 10,
+  "buffer_font_size": 16,
   "theme": {
     "mode": "system",
-    "light": "Quiet Light",
-    "dark": "Base16 Material"
+    "light": "One Light",
+    "dark": "One Dark"
   }
 }

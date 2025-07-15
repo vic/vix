@@ -8,8 +8,10 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "show_edit_predictions": false,
-  "inline_blame": {
-    "enabled": false
+  "git": {
+    "inline_blame": {
+      "enabled": false
+    }
   },
   "outline_panel": {
     "dock": "right"
@@ -19,7 +21,7 @@
       "settings": {}
     }
   },
-  "assistant": {
+  "agent": {
     "default_profile": "ask",
     "profiles": {
       "ask": {
@@ -46,11 +48,11 @@
   "current_line_highlight": "gutter",
   "load_direnv": "direct",
   "vim_mode": true,
-  "ui_font_size": 16,
-  "buffer_font_size": null,
+  "ui_font_size": 10,
+  "buffer_font_size": 16,
   "theme": {
     "mode": "system",
     "light": "Quiet Light",
-    "dark": "Ayu Dark"
+    "dark": "Base16 Material"
   }
 }
