@@ -2,7 +2,6 @@
 {
   flake-file.inputs = {
     nixos-wsl.url = "github:nix-community/nixos-wsl";
-    nixos-wsl.follows.nixpkgs = "nixpkgs";
   };
 
   flake.modules.nixos.wsl = {

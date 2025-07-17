@@ -3,7 +3,7 @@
 # https://gist.github.com/thoughtpolice/8f2fd36ae17cd11b8e7bd93a70e31ad6
 { inputs, ... }:
 {
-  flake-file.inputs.jjui.url = "github:vic/jjui/exec";
+  flake-file.inputs.jjui.url = "github:idursun/jjui";
 
   flake.modules.homeManager.vic =
     { pkgs, ... }:
@@ -152,9 +152,12 @@
         let
           # https://github.com/idursun/jjui/wiki/Configuration
           toml = {
-            leader.m.help = "main";
-            leader.mm.help = "@ is main";
-            leader.mj.help = "@- is main";
+            leader.e.help = "Edit file";
+            leader.e.send = [
+              "$"
+              "jj edit $change_id && $VISUAL $file"
+              "enter"
+            ];
           };
           fmt = pkgs.formats.toml { };
         in

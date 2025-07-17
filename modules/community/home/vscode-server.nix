@@ -1,7 +1,6 @@
 { inputs, ... }:
 {
   flake-file.inputs = {
-    vscode-server.follows.nixpkgs = "nixpkgs";
     vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 

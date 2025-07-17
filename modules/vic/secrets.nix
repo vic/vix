@@ -1,7 +1,6 @@
 { inputs, ... }:
 {
 
-  flake-file.inputs.sops-nix.follows.nixpkgs = "nixpkgs";
   flake-file.inputs.sops-nix.url = "github:Mic92/sops-nix";
 
   flake.modules.homeManager.vic =
