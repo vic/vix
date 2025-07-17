@@ -2,7 +2,6 @@
 let
 
   flake-file.inputs = {
-    nix-darwin.follows.nixpkgs = "nixpkgs";
     nix-darwin.url = "github:LnL7/nix-darwin";
   };
 

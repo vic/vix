@@ -2,6 +2,7 @@
   flake.modules.homeManager.vic =
     { pkgs, ... }:
     {
+      home.sessionVariables.VISUAL = "vim";
       home.sessionVariables.EDITOR = "vim";
       programs.neovim.enable = true;
       programs.neovim.viAlias = true;
