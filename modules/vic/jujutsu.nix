@@ -44,6 +44,8 @@
             user.name = "Victor Borja";
             user.email = "vborja@apache.org";
 
+            revsets.log = "default()";
+
             revset-aliases = {
               "trunk()" = "main@origin";
 
@@ -52,9 +54,17 @@
 
               # immutable heads:
               # main and not mine commits.
-              "immutable_heads()" = "trunk() | (trunk().. & ~mine())";
+              # "immutable_heads()" = "trunk() | (trunk().. & ~mine())";
+              "immutable_heads()" = "builtin_immutable_heads() | remote_bookmarks()";
 
+              "closest_bookmark(to)" = "heads(::to & bookmarks())";
+
+              # jjui default
               "default_log()" = "present(@) | ancestors(immutable_heads().., 2) | present(trunk())";
+
+              "default()" = "coalesce(trunk(),root())::present(@) | ancestors(visible_heads() & recent(), 2)";
+
+              "recent()" = "committer_date(after:'1 week ago')";
             };
 
             template-aliases = {
@@ -73,6 +83,19 @@
                 ui.pager = (pkgs.lib.getExe pkgs.delta);
                 ui.diff-formatter = diff-formatter;
               }
+              {
+                "--when".repositories = [ "~/hk/jjui" ];
+                revsets.log = "default()";
+                revset-aliases = {
+                  "trunk()" = "main@idursun";
+                  "vic" = "remote_bookmarks('', 'vic')";
+                  "idursun" = "remote_bookmarks('', 'idursun')";
+                  "default()" = "coalesce( trunk(), root() )::present(@) | ancestors(visible_heads() & recent(), 2) | idursun | vic";
+                };
+                aliases = {
+                  "n" = ["new" "main@idursun"];
+                };
+              }
             ];
 
             ui = {
@@ -84,6 +107,8 @@
               # pager = ":builtin";
               # editor = "nvim";
               merge-editor = pkgs.meld; # meld
+              conflict-marker-style = "git";
+              movement.edit = false;
             };
 
             signing = {
@@ -97,6 +122,9 @@
             };
 
             aliases = {
+              tug = ["bookmark" "move" "--from" "closest_bookmark(@-)" "--to" "@-"];
+              lr = ["log" "-r" "default() & recent()"];
+
               s = [ "show" ];
 
               sq = [
