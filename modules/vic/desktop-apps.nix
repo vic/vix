@@ -34,18 +34,17 @@ let
       ...
     }:
     {
-      home.packages =
-        [
-          pkgs.librewolf
-          pkgs.vscode
-          pkgs.wezterm
-        ]
-        ++ (lib.optionals (pkgs.system == "aarm64-darwin" || pkgs.stdenvNoCC.isLinux) [
-          pkgs.ghostty
-        ])
-        ++ (lib.optionals pkgs.stdenvNoCC.isLinux [
-          pkgs.gnome-disk-utility
-        ]);
+      home.packages = [
+        pkgs.librewolf
+        pkgs.vscode
+        pkgs.wezterm
+      ]
+      ++ (lib.optionals (pkgs.system == "aarm64-darwin" || pkgs.stdenvNoCC.isLinux) [
+        pkgs.ghostty
+      ])
+      ++ (lib.optionals pkgs.stdenvNoCC.isLinux [
+        pkgs.gnome-disk-utility
+      ]);
     };
 
 in

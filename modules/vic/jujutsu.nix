@@ -90,10 +90,14 @@
                   "trunk()" = "main@idursun";
                   "vic" = "remote_bookmarks('', 'vic')";
                   "idursun" = "remote_bookmarks('', 'idursun')";
-                  "default()" = "coalesce( trunk(), root() )::present(@) | ancestors(visible_heads() & recent(), 2) | idursun | vic";
+                  "default()" =
+                    "coalesce( trunk(), root() )::present(@) | ancestors(visible_heads() & recent(), 2) | idursun | vic";
                 };
                 aliases = {
-                  "n" = ["new" "main@idursun"];
+                  "n" = [
+                    "new"
+                    "main@idursun"
+                  ];
                 };
               }
             ];
@@ -122,8 +126,19 @@
             };
 
             aliases = {
-              tug = ["bookmark" "move" "--from" "closest_bookmark(@-)" "--to" "@-"];
-              lr = ["log" "-r" "default() & recent()"];
+              tug = [
+                "bookmark"
+                "move"
+                "--from"
+                "closest_bookmark(@-)"
+                "--to"
+                "@-"
+              ];
+              lr = [
+                "log"
+                "-r"
+                "default() & recent()"
+              ];
 
               s = [ "show" ];
 
