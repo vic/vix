@@ -305,11 +305,11 @@
   },
   {
     "key": "ctrl+x backspace",
-    "command": "vspacecode.space",
+    "command": "vspacecode.space"
   },
   {
     "key": "ctrl+x space",
-    "command": "vspacecode.space",
+    "command": "vspacecode.space"
   },
   {
     "key": "ctrl+x t",

@@ -4,12 +4,7 @@
   "chat.tools.autoApprove": true,
   "cursor.cmdk.useThemedDiffBackground": true,
   "cursor.composer.shouldChimeAfterChatFinishes": true,
-  "cursor.cpp.disabledLanguages": [
-    "plaintext",
-    "markdown",
-    "scminput",
-    "rust"
-  ],
+  "cursor.cpp.disabledLanguages": ["plaintext", "markdown", "scminput", "rust"],
   "debug.closeReadonlyTabsOnEnd": true,
   "debug.gutterMiddleClickAction": "none",
   "debug.openExplorerOnEnd": true,
@@ -37,37 +32,32 @@
     "editorError.foreground": "#fff0",
     "editorWarning.foreground": "#fff0",
     "editorInfo.foreground": "#fff0",
-    "editorHint.foreground": "#fff0",
-},
-"errorLens.problemRangeDecorationEnabled": true,
-"errorLens.decorations": {
+    "editorHint.foreground": "#fff0"
+  },
+  "errorLens.problemRangeDecorationEnabled": true,
+  "errorLens.decorations": {
     "errorRange": {
-        "border": "1px dashed red",
-        // "backgroundColor": "#ff000090",
-        // "color": "#ffffff",
+      "border": "1px dashed red"
+      // "backgroundColor": "#ff000090",
+      // "color": "#ffffff",
     },
     "warningRange": {
-        "border": "2px dotted #fa9121",
+      "border": "2px dotted #fa9121"
     },
     "infoRange": {
-        "textDecoration": ";background:linear-gradient(45deg,#ff8400,#00d9ff);background-clip:text;color:transparent;border-bottom:2px solid #00d9ff",
-        "backgroundColor": "#fff0",
+      "textDecoration": ";background:linear-gradient(45deg,#ff8400,#00d9ff);background-clip:text;color:transparent;border-bottom:2px solid #00d9ff",
+      "backgroundColor": "#fff0"
     },
     "hintRange": {
-        "textDecoration": ";box-shadow:0 0 5px 3px #2faf6470;border-radius:0.25em",
-    },
-},
-  "errorLens.severityText": [
-      "▣",
-      "◈",
-      "◉",
-      "⛆",
-  ],
+      "textDecoration": ";box-shadow:0 0 5px 3px #2faf6470;border-radius:0.25em"
+    }
+  },
+  "errorLens.severityText": ["▣", "◈", "◉", "⛆"],
   "errorLens.border": [
     "1px solid",
     "1px dotted",
     "1px dashed",
-    "1px solid #00000040",
+    "1px solid #00000040"
   ],
   "errorLens.codeLensEnabled": false,
   "errorLens.editorHoverPartsEnabled": {
@@ -76,11 +66,7 @@
     "sourceCodeEnabled": true
   },
   "errorLens.enabled": true,
-  "errorLens.enabledDiagnosticLevels": [
-    "warning",
-    "info",
-    "error"
-  ],
+  "errorLens.enabledDiagnosticLevels": ["warning", "info", "error"],
   "errorLens.fontSize": "-3px",
   "errorLens.removeLinebreaks": false,
   "errorLens.respectUpstreamEnabled": {
@@ -98,9 +84,9 @@
     "vscodevim.vim": 1
   },
   "vscode-neovim.compositeKeys": {
-     "jj": {
-        "command": "vscode-neovim.escape",
-     },
+    "jj": {
+      "command": "vscode-neovim.escape"
+    }
   },
   "files.exclude": {
     "**/.direnv": true,
@@ -169,81 +155,41 @@
   "vim.highlightedyank.enable": true,
   "vim.insertModeKeyBindings": [
     {
-      "before": [
-        "<C-h>"
-      ],
-      "commands": [
-        "github.copilot.generate"
-      ]
+      "before": ["<C-h>"],
+      "commands": ["github.copilot.generate"]
     },
     {
-      "after": [
-        "<Esc>"
-      ],
-      "before": [
-        "j",
-        "j"
-      ]
+      "after": ["<Esc>"],
+      "before": ["j", "j"]
     },
     {
-      "after": [
-        "<Esc>"
-      ],
-      "before": [
-        "j",
-        "k"
-      ]
+      "after": ["<Esc>"],
+      "before": ["j", "k"]
     },
     {
-      "after": [
-        "<Esc>"
-      ],
-      "before": [
-        "k",
-        "j"
-      ]
+      "after": ["<Esc>"],
+      "before": ["k", "j"]
     },
     {
-      "after": [
-        "<Esc>"
-      ],
-      "before": [
-        "k",
-        "k"
-      ]
+      "after": ["<Esc>"],
+      "before": ["k", "k"]
     },
     {
-      "after": [
-        "<Esc>"
-      ],
-      "before": [
-        "h",
-        "h"
-      ]
+      "after": ["<Esc>"],
+      "before": ["h", "h"]
     },
     {
-      "after": [
-        "<Esc>"
-      ],
-      "before": [
-        "l",
-        "l"
-      ]
+      "after": ["<Esc>"],
+      "before": ["l", "l"]
     }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": [
-        "<space>"
-      ],
-      "commands": [
-        "vspacecode.space"
-      ]
+      "before": ["<space>"],
+      "commands": ["vspacecode.space"]
     },
     {
-      "before": [
-        ","
-      ],
+      "before": [","],
       "commands": [
         "vspacecode.space",
         {
@@ -257,38 +203,21 @@
     //       "after": ["d", "d"]
     //   },
     {
-      "before": [
-        "<leader>",
-        "b"
-      ],
-      "commands": [
-        "bookmarks.list"
-      ]
+      "before": ["<leader>", "b"],
+      "commands": ["bookmarks.list"]
     },
     {
-      "before": [
-        "<C-a>"
-      ],
-      "commands": [
-        "cursorHome"
-      ]
+      "before": ["<C-a>"],
+      "commands": ["cursorHome"]
     },
     {
-      "before": [
-        "<C-e>"
-      ],
-      "commands": [
-        "cursorEnd"
-      ]
+      "before": ["<C-e>"],
+      "commands": ["cursorEnd"]
     },
     {
-      "before": [
-        "0"
-      ],
-      "commands": [
-        "cursorHome"
-      ]
-    },
+      "before": ["0"],
+      "commands": ["cursorHome"]
+    }
     // {
     //   "before": ["K"],
     //   "commands": ["lineBreakInsert"],
@@ -301,17 +230,11 @@
   "vim.useSystemClipboard": true,
   "vim.visualModeKeyBindingsNonRecursive": [
     {
-      "before": [
-        "<space>"
-      ],
-      "commands": [
-        "vspacecode.space"
-      ]
+      "before": ["<space>"],
+      "commands": ["vspacecode.space"]
     },
     {
-      "before": [
-        ","
-      ],
+      "before": [","],
       "commands": [
         "vspacecode.space",
         {
@@ -321,20 +244,12 @@
       ]
     },
     {
-      "before": [
-        ">"
-      ],
-      "commands": [
-        "editor.action.indentLines"
-      ]
+      "before": [">"],
+      "commands": ["editor.action.indentLines"]
     },
     {
-      "before": [
-        "<"
-      ],
-      "commands": [
-        "editor.action.outdentLines"
-      ]
+      "before": ["<"],
+      "commands": ["editor.action.outdentLines"]
     }
   ],
   "vim.visualstar": true,
@@ -397,7 +312,7 @@
       "keys": "s.f",
       "name": "Fuzzy search same file type in project",
       "type": "command"
-    },
+    }
   ],
   "window.autoDetectColorScheme": true,
   "window.customTitleBarVisibility": "windowed",
