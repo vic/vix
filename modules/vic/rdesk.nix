@@ -4,7 +4,19 @@ let
     inputs.self.modules.nixos.rdesk
   ];
 
-  flake.modules.homeManager.vic.imports = [ inputs.self.modules.homeManager.rdesk ];
+  remotes =
+    { pkgs, ... }:
+    {
+      home.packages = [
+        pkgs.kdePackages.krdc
+        pkgs.gsocket
+      ];
+    };
+
+  flake.modules.homeManager.vic.imports = [
+    inputs.self.modules.homeManager.rdesk
+    remotes
+  ];
 in
 {
   inherit flake;

@@ -332,7 +332,7 @@
   "workbench.list.smoothScrolling": true,
   "workbench.panel.defaultLocation": "top",
   "workbench.panel.showLabels": false,
-  "workbench.preferredDarkColorTheme": "Quiet Light",
+  "workbench.preferredDarkColorTheme": "Monokai Dimmed",
   "workbench.preferredHighContrastColorTheme": "Visual Studio Light",
   "workbench.preferredLightColorTheme": "Atom One Dark",
   "workbench.sideBar.location": "right",

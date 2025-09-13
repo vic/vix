@@ -25,6 +25,10 @@
       flake = false;
       url = "github:doomemacs/doomemacs";
     };
+    edgevpn = {
+      flake = false;
+      url = "github:mudler/edgevpn";
+    };
     flake-file = {
       url = "github:vic/flake-file";
     };

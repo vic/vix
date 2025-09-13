@@ -30,6 +30,10 @@
           "gemini_api_key" = { };
           "copilot_api_key" = { };
           "anthropic_api_key" = { };
+          "edge.token" = {
+            format = "binary";
+            sopsFile = ./secrets/edge.token;
+          };
           "ssh/id_ed25519" = {
             format = "binary";
             sopsFile = ./secrets/mordor;

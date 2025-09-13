@@ -44,13 +44,15 @@ let
 
   anywhere =
     { pkgs, ... }:
+    let
+      selfpkgs = inputs.self.packages.${pkgs.system};
+    in
     {
       programs.nh.enable = true;
       programs.home-manager.enable = true;
 
       home.packages = [
         #inputs.nix-versions.packages.${pkgs.system}.default
-        inputs.self.packages.${pkgs.system}.vic-sops-get
         pkgs.tree
         pkgs.fzf
         pkgs.ripgrep # grep
@@ -65,6 +67,10 @@ let
         pkgs.jq
         pkgs.home-manager
         pkgs.helix
+        pkgs.television
+        selfpkgs.vic-sops-get
+        selfpkgs.vic-sops-rotate
+        selfpkgs.vic-edge
       ];
     };
 

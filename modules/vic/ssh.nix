@@ -11,7 +11,7 @@
         enable = true;
         addKeysToAgent = "yes";
         controlMaster = "auto";
-        controlPath = "~/.ssh/%r@%h:%p";
+        controlPath = "~/.ssh/socket-%r@%h:%p";
         controlPersist = "10m";
         includes = [ "~/.config/sops-nix/secrets/ssh/sops_ssh_config" ];
 
@@ -19,6 +19,11 @@
           "github.com" = {
             identityFile = "~/.ssh/id_ed25519";
             extraOptions.ControlPersist = "no";
+          };
+
+          "edge" = {
+            host = "edge";
+            hostname = "192.168.192.168";
           };
 
           "uptermd.upterm.dev" = {

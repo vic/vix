@@ -1,5 +1,6 @@
 {
   "CopilotChat.nvim": { "branch": "main", "commit": "19a4d2990fe1f8c0697636059500d521793cede0" },
+  "codecompanion.nvim": { "branch": "main", "commit": "9544c1feac7298d8ef6f3c92bc45da57b6acffb6" },
   "haunt.nvim": { "branch": "master", "commit": "5f96968844f77fef4756df0f14b9d8e9077691e0" },
   "hunk.nvim": { "branch": "master", "commit": "1e0a4d719c780bb8b0690a54915601508ced321e" },
   "jj.nvim": { "branch": "main", "commit": "b8eb856228e42bc5548842cc9d43d49c39d7d180" },

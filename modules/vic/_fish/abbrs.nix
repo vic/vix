@@ -7,6 +7,15 @@
   nr = "nix run";
   nf = "fd --glob '*.nix' -X nixfmt {}";
 
+  # nvim
+  vir = ''
+    nvim -c "'0"
+  '';
+
+  vtv = ''
+    nvim -c ":Tv"
+  '';
+
   # jj
   jz = "jj-fzf";
   lj = "lazyjj";
