@@ -1,6 +1,7 @@
-theme = rebecca
+# theme = rebecca
+theme = catppuccin-mocha
 font-family = "JetBrainsMono NFM Light"
-font-size = 22
+font-size = 16
 
 
 mouse-hide-while-typing = true
@@ -22,5 +23,55 @@ keybind = ctrl+l=clear_screen
 # keybind = ctrl+s=text:"hello world"\x1b[1;5Z
 
 
+shell-integration-features = no-cursor,sudo,no-title
+cursor-style = block
+adjust-cell-height = 35%
+# background-opacity = 0.96
+# mouse-hide-while-typing = true
+mouse-scroll-multiplier = 2
+window-padding-balance = true
+window-save-state = always
+macos-titlebar-style = transparent
+window-colorspace = "display-p3"
+# background = 1C2021
+# foreground = d4be98
+# keybindings
+keybind = alt+,>r=reload_config
+keybind = alt+,>x=close_surface
+keybind = alt+,>n=new_window
+# tabs
+keybind = alt+,>c=new_tab
+keybind = alt+,>shift+l=next_tab
+keybind = alt+,>shift+h=previous_tab
+keybind = alt+,>comma=move_tab:-1
+keybind = alt+,>period=move_tab:1
+# quick t switch
+keybind = alt+,>1=goto_tab:1
+keybind = alt+,>2=goto_tab:2
+keybind = alt+,>3=goto_tab:3
+keybind = alt+,>4=goto_tab:4
+keybind = alt+,>5=goto_tab:5
+keybind = alt+,>6=goto_tab:6
+keybind = alt+,>7=goto_tab:7
+keybind = alt+,>8=goto_tab:8
+keybind = alt+,>9=goto_tab:9
+# split
+keybind = alt+,>\=new_split:right
+keybind = alt+,>-=new_split:down
+keybind = alt+,>j=goto_split:bottom
+keybind = alt+,>k=goto_split:top
+keybind = alt+,>h=goto_split:left
+keybind = alt+,>l=goto_split:right
+keybind = alt+,>z=toggle_split_zoom
+keybind = alt+,>e=equalize_splits
+# other
+copy-on-select = clipboard
 
+
+adjust-cursor-thickness=5000%
+unfocused-split-opacity = 0.35
+unfocused-split-fill = 220022
+mouse-hide-while-typing = true
+window-padding-x = 5
+window-padding-y = 5
 
