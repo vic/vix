@@ -70,7 +70,6 @@ let
         pkgs.television
         selfpkgs.vic-sops-get
         selfpkgs.vic-sops-rotate
-        selfpkgs.vic-edge
       ];
     };
 

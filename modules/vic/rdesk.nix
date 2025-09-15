@@ -4,18 +4,25 @@ let
     inputs.self.modules.nixos.rdesk
   ];
 
-  remotes =
+  linux =
+    { pkgs, lib, ... }:
+    lib.mkIf pkgs.stdenvNoCC.isLinux {
+      home.packages = [ pkgs.kdePackages.krdc ];
+    };
+
+  any =
     { pkgs, ... }:
     {
       home.packages = [
-        pkgs.kdePackages.krdc
+        inputs.self.packages.${pkgs.system}.vic-edge
         pkgs.gsocket
       ];
     };
 
   flake.modules.homeManager.vic.imports = [
     inputs.self.modules.homeManager.rdesk
-    remotes
+    linux
+    any
   ];
 in
 {
