@@ -4,7 +4,7 @@
   };
 
   flake.modules.homeManager.vic =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
       home.sessionVariables.VISUAL = "vim";
       home.sessionVariables.EDITOR = "vim";
@@ -12,13 +12,14 @@
       programs.neovim.viAlias = true;
       programs.neovim.vimAlias = true;
       programs.neovim.withNodeJs = true;
-      programs.neovim.extraPackages = with pkgs; [
-        zig
-        sqlite
-        treefmt
-        gcc
-        gnumake
-      ];
+      programs.neovim.extraPackages =
+        (with pkgs; [
+          sqlite
+          treefmt
+          gcc
+          gnumake
+        ])
+        ++ (lib.optionals pkgs.stdenv.isLinux [ pkgs.zig ]);
       programs.neovim.plugins = with pkgs; [
         vimPlugins.nvim-treesitter-parsers.go
         vimPlugins.nvim-treesitter-parsers.rust
