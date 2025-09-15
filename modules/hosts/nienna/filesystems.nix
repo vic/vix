@@ -5,12 +5,12 @@
   flake.modules.nixos.nienna = {
 
     fileSystems."/" = {
-      device = "/dev/disk/by-uuid/49a514f4-ba6e-47aa-b3c0-83a650c2e22d";
+      device = "/dev/disk/by-uuid/389d7756-a765-4be8-81eb-6712e893e705";
       fsType = "ext4";
     };
 
     fileSystems."/boot" = {
-      device = "/dev/disk/by-uuid/45F4-4CED";
+      device = "/dev/disk/by-uuid/67E3-17ED";
       fsType = "vfat";
       options = [
         "fmask=0077"
@@ -18,9 +18,7 @@
       ];
     };
 
-    swapDevices = [
-      { device = "/dev/disk/by-uuid/f774218c-ec59-427d-bada-8eb7b6b928b8"; }
-    ];
+    swapDevices = [ ];
 
   };
 }

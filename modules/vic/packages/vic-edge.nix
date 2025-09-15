@@ -13,7 +13,7 @@ let
             ADDRESS="''${ADDRESS:-"192.168.192.192/24"}" \
             EDGEVPNLOGLEVEL="''${EDGEVPNLOGLEVEL:-debug}" \
             EDGEVPNTOKEN="''${EDGEVPNTOKEN:-$(< "''${HOME}"/.config/sops-nix/secrets/edge.token)}" \
-            ${edgevpn}/bin/edgevpn
+            ${edgevpn}/bin/edgevpn "$@"
         '';
       };
     };
