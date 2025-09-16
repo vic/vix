@@ -1,8 +1,12 @@
-{
-  flake.modules.nixos.nix-settings =
+let
+  flake.modules.nixos = { inherit nix-settings; };
+  flake.modules.darwin = { inherit nix-settings; };
+
+  nix-settings =
     { pkgs, config, ... }:
     {
       nix = {
+        optimise.automatic = true;
         settings = {
           substituters = [
             "https://vix.cachix.org"
@@ -13,7 +17,6 @@
             "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
           ];
 
-          auto-optimise-store = true;
           experimental-features = [
             "nix-command"
             "flakes"
@@ -26,9 +29,12 @@
         };
         gc = pkgs.lib.optionalAttrs config.nix.enable {
           automatic = true;
-          dates = "weekly";
+          # interval = "weekly"; # TODO!
           options = "--delete-older-than 7d";
         };
       };
     };
+in
+{
+  inherit flake;
 }

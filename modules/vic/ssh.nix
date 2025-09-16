@@ -1,4 +1,4 @@
-{
+let
   flake.modules.homeManager.vic =
     {
       lib,
@@ -63,4 +63,7 @@
         run ln -sf "${config.sops.secrets."ssh/localhost_run".path}" $HOME/.ssh/id_localhost_run
       '';
     };
+in
+{
+  inherit flake;
 }

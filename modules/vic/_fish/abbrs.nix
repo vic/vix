@@ -7,7 +7,7 @@
   nr = "nix run";
   nf = "fd --glob '*.nix' -X nixfmt {}";
 
-  vr = {
+  vir = {
     expansion = "nvim -c \"'0%\"";
     setCursor = true;
   };

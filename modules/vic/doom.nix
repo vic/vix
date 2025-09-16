@@ -1,5 +1,5 @@
 { inputs, ... }:
-{
+let
 
   flake-file.inputs = {
     doom-emacs.flake = false;
@@ -53,27 +53,32 @@
 
       SPC = inputs.SPC.packages.${pkgs.system}.SPC.override { emacs = emacsPkg; };
 
+      doom = {
+        programs.emacs.enable = true;
+        programs.emacs.package = emacsPkg;
+        #services.emacs.enable = true;
+        services.emacs.package = emacsPkg;
+        services.emacs.extraOptions = [
+          "--init-directory"
+          "~/.config/emacs"
+        ];
+
+        home.packages = [
+          SPC
+          (pkgs.writeShellScriptBin "doom" ''exec $HOME/.config/emacs/bin/doom "$@"'')
+          (pkgs.writeShellScriptBin "doomscript" ''exec $HOME/.config/emacs/bin/doomscript "$@"'')
+          (pkgs.writeShellScriptBin "d" ''exec emacsclient -nw -a "doom run -nw --"  "$@"'')
+        ];
+
+        home.activation.doom-install = lib.hm.dag.entryAfter [ "link-ssh-id" ] ''
+          run ${lib.getExe doom-install}
+        '';
+      };
+
     in
-    {
-      programs.emacs.enable = true;
-      programs.emacs.package = emacsPkg;
-      services.emacs.enable = true;
-      services.emacs.package = emacsPkg;
-      services.emacs.extraOptions = [
-        "--init-directory"
-        "~/.config/emacs"
-      ];
-
-      home.packages = [
-        SPC
-        (pkgs.writeShellScriptBin "doom" ''exec $HOME/.config/emacs/bin/doom "$@"'')
-        (pkgs.writeShellScriptBin "doomscript" ''exec $HOME/.config/emacs/bin/doomscript "$@"'')
-        (pkgs.writeShellScriptBin "d" ''exec emacsclient -nw -a "doom run -nw --"  "$@"'')
-      ];
-
-      home.activation.doom-install = lib.hm.dag.entryAfter [ "link-ssh-id" ] ''
-        run ${lib.getExe doom-install}
-      '';
-
-    };
+    lib.mkIf pkgs.stdenvNoCC.isLinux doom;
+in
+{
+  inherit flake-file;
+  inherit flake;
 }

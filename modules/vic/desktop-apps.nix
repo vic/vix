@@ -20,7 +20,7 @@ let
       lib,
       ...
     }:
-    lib.mkIf (osConfig.networking.hostName != "bombadil") {
+    lib.mkIf (pkgs.stdenvNoCC.isLinux && osConfig.networking.hostName != "bombadil") {
       home.packages = [
         pkgs.code-cursor
         pkgs.zed-editor
@@ -36,14 +36,14 @@ let
     {
       home.packages = [
         pkgs.librewolf
-        pkgs.vscode
-        pkgs.wezterm
       ]
       ++ (lib.optionals (pkgs.system == "aarm64-darwin" || pkgs.stdenvNoCC.isLinux) [
         pkgs.ghostty
       ])
       ++ (lib.optionals pkgs.stdenvNoCC.isLinux [
         pkgs.gnome-disk-utility
+        pkgs.vscode
+        pkgs.wezterm
       ]);
     };
 

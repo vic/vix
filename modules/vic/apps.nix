@@ -28,7 +28,7 @@ let
       osConfig,
       ...
     }:
-    lib.mkIf (osConfig.networking.hostName != "bombadil") {
+    lib.mkIf (pkgs.stdenvNoCC.isLinux && osConfig.networking.hostName != "bombadil") {
       home.packages = [
         #perSystem.nox.default
         #perSystem.self.devicon-lookup # for eee
@@ -54,7 +54,7 @@ let
 
       home.packages = [
         #inputs.nix-versions.packages.${pkgs.system}.default
-        pkgs.tree
+        # pkgs.tree
         pkgs.fzf
         pkgs.ripgrep # grep
         pkgs.bat # cat
@@ -62,8 +62,8 @@ let
         pkgs.htop
         pkgs.eza # ls
         pkgs.fd # find
-        pkgs.lazygit # no magit
-        pkgs.tig # alucard
+        # pkgs.lazygit # no magit
+        # pkgs.tig # alucard
         pkgs.cachix
         pkgs.jq
         pkgs.home-manager

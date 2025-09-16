@@ -7,13 +7,14 @@ let
 
   flake.modules.darwin.darwin.imports = [
     inputs.home-manager.darwinModules.home-manager
+    inputs.self.modules.darwin.nix-settings
     nix-darwin-pkgs
     darwin-cfg
   ];
 
   darwin-cfg = {
     # Determinate uses its own daemon to manage the Nix installation
-    nix.enable = false;
+    # nix.enable = false;
 
     system.defaults.trackpad.Clicking = true;
     system.defaults.trackpad.TrackpadThreeFingerDrag = true;
@@ -33,6 +34,8 @@ let
         darwin-uninstaller
       ];
     };
+
+  # TODO: link home-manager apps.
 in
 {
   inherit flake flake-file;
