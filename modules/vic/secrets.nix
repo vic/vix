@@ -27,7 +27,7 @@
         secrets = {
           "hello" = { };
           "groq_api_key" = { };
-          "gemini_api_key" = { };
+          "gemini_eco_key" = { };
           "copilot_api_key" = { };
           "anthropic_api_key" = { };
           "edge.token" = {
@@ -53,7 +53,7 @@
             hello = "Wooo ${config.sops.placeholder.hello} Hoo";
           '';
           "llm_apis.env".content = ''
-            GEMINI_API_KEY="${config.sops.placeholder.gemini_api_key}"
+            GEMINI_API_KEY="${config.sops.placeholder.gemini_eco_key}"
             OPENAI_API_KEY="${config.sops.placeholder.copilot_api_key}"
             ANTHROPIC_API_KEY="${config.sops.placeholder.anthropic_api_key}"
             GROQ_API_KEY="${config.sops.placeholder.groq_api_key}"

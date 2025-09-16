@@ -148,7 +148,7 @@
 
   (setq vic/gptel-gemini-backend
    (gptel-make-gemini "Gemini"
-      :key (shell-command-to-string "vic-sops-get -a gemini_api_key")
+      :key (shell-command-to-string "vic-sops-get -a gemini_eco_key")
       :stream t))
 
   ;; (setq gptel-model 'gpt-4o)

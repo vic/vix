@@ -8,20 +8,8 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "edit_predictions": {
-    "mode": "subtle",
-    "copilot": {
-      "proxy": null,
-      "proxy_no_verify": null,
-      "enterprise_uri": null
-    },
-    "enabled_in_text_threads": false
+    "mode": "subtle"
   },
-  "languages": {
-    "Go": {
-      "show_edit_predictions": true
-    }
-  },
-  "ui_font_family": "VictorMono Nerd Font Mono",
   "buffer_font_family": "JetBrainsMono Nerd Font Mono",
   "ui_font_features": {
     "calt": 1
@@ -35,35 +23,10 @@
   "outline_panel": {
     "dock": "right"
   },
-  "context_servers": {},
-  "agent": {
-    "default_profile": "ask",
-    "profiles": {
-      "ask": {
-        "name": "ask",
-        "tools": {
-          "thinking": true
-        },
-        "enable_all_context_servers": false,
-        "context_servers": {}
-      },
-      "what": {
-        "name": "what",
-        "tools": {},
-        "enable_all_context_servers": false,
-        "context_servers": {}
-      }
-    },
-    "default_model": {
-      "provider": "copilot_chat",
-      "model": "claude-3.7-sonnet-thought"
-    },
-    "version": "2"
-  },
   "current_line_highlight": "gutter",
   "load_direnv": "direct",
   "vim_mode": true,
-  "ui_font_size": 10,
+  "ui_font_size": 16,
   "buffer_font_size": 16,
   "theme": {
     "mode": "system",

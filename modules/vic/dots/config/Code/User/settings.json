@@ -38,8 +38,6 @@
   "errorLens.decorations": {
     "errorRange": {
       "border": "1px dashed red"
-      // "backgroundColor": "#ff000090",
-      // "color": "#ffffff",
     },
     "warningRange": {
       "border": "2px dotted #fa9121"
@@ -198,10 +196,6 @@
         }
       ]
     },
-    //  {
-    //       "before": ["<leader>", "d"],
-    //       "after": ["d", "d"]
-    //   },
     {
       "before": ["<leader>", "b"],
       "commands": ["bookmarks.list"]
@@ -218,11 +212,6 @@
       "before": ["0"],
       "commands": ["cursorHome"]
     }
-    // {
-    //   "before": ["K"],
-    //   "commands": ["lineBreakInsert"],
-    //   "silent": true
-    // }
   ],
   "vim.showMarksInGutter": true,
   "vim.sneak": true,
@@ -317,7 +306,6 @@
   "window.autoDetectColorScheme": true,
   "window.customTitleBarVisibility": "windowed",
   "window.density.editorTabHeight": "compact",
-  "workbench.activityBar.location": "top",
   "workbench.editor.centeredLayoutFixedWidth": true,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.limit.enabled": false,

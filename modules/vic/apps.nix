@@ -16,6 +16,7 @@ let
         pkgs.aider-chat
         pkgs.qutebrowser
         pkgs.multimarkdown
+        pkgs.gemini-cli-bin
         # perSystem.self.copilot-language-server # tab tab tab
       ];
     };

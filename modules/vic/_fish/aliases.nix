@@ -5,4 +5,6 @@
   tree = "exa -T";
   # "." = "exa -g";
   ".." = "cd ..";
+  vf = ''vim -c "lua Snacks.picker.files()"'';
+  vg = ''vim -c "lua Snacks.picker.grep()"'';
 }

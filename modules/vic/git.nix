@@ -53,6 +53,8 @@
           "old"
           "*~"
           ".aider*"
+          ".crush*"
+          "CRUSH.md"
         ];
         includes = [ ];
         # { path = "${DOTS}/git/something"; }

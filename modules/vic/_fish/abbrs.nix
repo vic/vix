@@ -7,14 +7,15 @@
   nr = "nix run";
   nf = "fd --glob '*.nix' -X nixfmt {}";
 
-  # nvim
-  vir = ''
-    nvim -c "'0"
-  '';
+  vr = {
+    expansion = "nvim -c \"'0%\"";
+    setCursor = true;
+  };
 
-  vtv = ''
-    nvim -c ":Tv"
-  '';
+  vt = {
+    expansion = "nvim -c \":Tv %\"";
+    setCursor = true;
+  };
 
   # jj
   jz = "jj-fzf";
