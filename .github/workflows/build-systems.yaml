@@ -49,7 +49,8 @@ jobs:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - run: nix build --accept-flake-config --no-link --print-out-paths .#.nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
-      - run: echo "::set-output name=result::$(readlink -f ./result)"
+      - id: ${{matrix.host}}
+        run: echo "${{matrix.host}}: <code>$(readlink -f ./result)</code>" >> "$GITHUB_STEP_SUMMARY"
 
   aarm64-linux:
     name: ${{ matrix.host }} aarm64-linux
@@ -66,7 +67,8 @@ jobs:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - run: nix build --accept-flake-config --no-link --print-out-paths .#.nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
-      - run: echo "::set-output name=result::$(readlink -f ./result)"
+      - id: ${{matrix.host}}
+        run: echo "${{matrix.host}}: <code>$(readlink -f ./result)</code>" >> "$GITHUB_STEP_SUMMARY"
 
   aarch64-darwin:
     name: ${{ matrix.host }} aarch64-darwin
@@ -83,7 +85,8 @@ jobs:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - run: nix build --accept-flake-config  --no-link --print-out-paths .#.darwinConfigurations.${{ matrix.host }}.config.system.build.toplevel
-      - run: echo "::set-output name=result::$(readlink -f ./result)"
+      - id: ${{matrix.host}}
+        run: echo "${{matrix.host}}: <code>$(readlink -f ./result)</code>" >> "$GITHUB_STEP_SUMMARY"
 
   x86_64-darwin:
     name: ${{ matrix.host }} x86_64-darwin
@@ -100,4 +103,5 @@ jobs:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - run: nix build --accept-flake-config --no-link --print-out-paths .#.darwinConfigurations.${{ matrix.host }}.config.system.build.toplevel
-      - run: echo "::set-output name=result::$(readlink -f ./result)"
+      - id: ${{matrix.host}}
+        run: echo "${{matrix.host}}: <code>$(readlink -f ./result)</code>" >> "$GITHUB_STEP_SUMMARY"
