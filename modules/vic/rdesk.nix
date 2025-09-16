@@ -7,7 +7,10 @@ let
   linux =
     { pkgs, lib, ... }:
     lib.mkIf pkgs.stdenvNoCC.isLinux {
-      home.packages = [ pkgs.kdePackages.krdc ];
+      home.packages = [
+        pkgs.kdePackages.krdc
+        pkgs.xpra
+      ];
     };
 
   any =

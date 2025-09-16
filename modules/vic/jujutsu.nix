@@ -110,7 +110,12 @@
               inherit diff-formatter;
               # pager = ":builtin";
               # editor = "nvim";
-              merge-editor = pkgs.meld; # meld
+              # merge-editor = pkgs.meld; # meld
+              diff-editor = [
+                "nvim"
+                "-c"
+                "DiffEditor $left $right $output"
+              ];
               conflict-marker-style = "git";
               movement.edit = false;
             };

@@ -1,6 +1,7 @@
 {
   perSystem.treefmt.programs = {
     stylua.enable = true;
+    fish_indent.enable = true;
   };
 
   flake.modules.homeManager.vic =

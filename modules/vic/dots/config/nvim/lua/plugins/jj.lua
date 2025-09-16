@@ -8,14 +8,14 @@ return {
 		config = function()
 			require("jj").setup({})
 			local cmd = require("jj.cmd")
-			vim.keymap.set("n", "<leader>jj", "<cmd>J<CR>", { desc = "JJ" })
+			vim.keymap.set("n", "<leader>ju", "<cmd>HauntTerm -t jjui jjui<CR>", { desc = "jjui" })
+
 			vim.keymap.set("n", "<leader>jd", cmd.describe, { desc = "JJ describe" })
-			vim.keymap.set("n", "<leader>jl", cmd.log, { desc = "JJ log" })
 			vim.keymap.set("n", "<leader>je", cmd.edit, { desc = "JJ edit" })
 			vim.keymap.set("n", "<leader>jn", cmd.new, { desc = "JJ new" })
-			vim.keymap.set("n", "<leader>js", cmd.status, { desc = "JJ status" })
+			vim.keymap.set("n", "<leader>jj", cmd.status, { desc = "JJ status" })
 			vim.keymap.set("n", "<leader>ji", cmd.diff, { desc = "JJ diff" })
-			vim.keymap.set("n", "<leader>jq", cmd.squash, { desc = "JJ squash" })
+			vim.keymap.set("n", "<leader>jq", cmd.squash, { desc = "JJ squash -i" })
 
 			-- Pickers
 			vim.keymap.set("n", "<leader>gj", function()

@@ -16,6 +16,7 @@
       #home.file.".config/fish/conf.d/init-leader.fish".source =
       #  "${inputs.cli-leader.outPath}/assets/leader.fish.sh";
       home.file.".config/fish/conf.d/vscode-vim.fish".text = code-visual;
+      home.file.".config/fish/conf.d/tv.fish".source = ./_fish/tv.fish;
 
       programs.fzf.enable = true;
       programs.fzf.enableFishIntegration = true;
