@@ -82,7 +82,7 @@ jobs:
         with:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix build --accept-flake-config  --no-link --print-out-paths .#.darwinConfigurations.${{ matrix.host }}.system.build.toplevel
+      - run: nix build --accept-flake-config  --no-link --print-out-paths .#.darwinConfigurations.${{ matrix.host }}.config.system.build.toplevel
       - run: echo "::set-output name=result::$(readlink -f ./result)"
 
   x86_64-darwin:
@@ -99,6 +99,5 @@ jobs:
         with:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix build --accept-flake-config --no-link --print-out-paths .#.darwinConfigurations.${{ matrix.host }}.system.build.toplevel
+      - run: nix build --accept-flake-config --no-link --print-out-paths .#.darwinConfigurations.${{ matrix.host }}.config.system.build.toplevel
       - run: echo "::set-output name=result::$(readlink -f ./result)"
-
