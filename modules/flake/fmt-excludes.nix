@@ -5,7 +5,7 @@
     ".envrc"
     ".leaderrc"
     "*.el" # TODO contribute an emacs treefmt
-    "*/config/nvim/*"
+    "**/.gitignore"
     "*/config/ghostty/*"
     "*/config/wezterm/*"
     "*/vic/dots/vscode/*"

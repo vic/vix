@@ -1,11 +1,12 @@
-return { {
+return {
+	{
 		"folke/snacks.nvim",
 		priority = 1000,
 		lazy = false,
 		---@type snacks.Config
 		opts = {
 			bigfile = { enabled = true },
-			dashboard = require('plugins.snacks.dashboard'),
+			dashboard = require("plugins.snacks.dashboard"),
 			explorer = { enabled = true },
 			indent = { enabled = true },
 			input = { enabled = true },
@@ -25,7 +26,7 @@ return { {
 				},
 			},
 		},
-		keys = require('plugins.snacks.keys'),
-		init = require('plugins.snacks.initf'),
+		keys = require("plugins.snacks.keys"),
+		init = require("plugins.snacks.initf"),
 	},
 }

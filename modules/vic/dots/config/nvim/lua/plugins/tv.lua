@@ -1,3 +1,3 @@
 return {
- { 'prabirshrestha/tv.vim' }
+	{ "prabirshrestha/tv.vim" },
 }

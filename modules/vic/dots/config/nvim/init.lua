@@ -1,7 +1,7 @@
 if vim.g.vscode then
-    -- VSCode extension
+	-- VSCode extension
 else
-   require 'prelude'
-   require 'lazy-bootstrap'
-   require("lazy").setup("plugins")
-end 
+	require("prelude")
+	require("lazy-bootstrap")
+	require("lazy").setup("plugins")
+end
