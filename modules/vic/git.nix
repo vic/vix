@@ -55,6 +55,8 @@
           ".aider*"
           ".crush*"
           "CRUSH.md"
+          "GEMINI.md"
+          "CLAUDE.md"
         ];
         includes = [ ];
         # { path = "${DOTS}/git/something"; }

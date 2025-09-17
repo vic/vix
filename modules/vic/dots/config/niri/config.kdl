@@ -2,6 +2,16 @@
 // "/-" comments out the following node.
 // Check the wiki for a full description of the configuration:
 // https://yalter.github.io/niri/Configuration:-Introduction
+environment {
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+ // DISPLAY ":0"
+}
+cursor {
+    // xcursor-theme "breeze_cursors"
+    xcursor-size 48
+    hide-when-typing
+    hide-after-inactive-ms 1000
+}
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://yalter.github.io/niri/Configuration:-Input
@@ -29,10 +39,10 @@ input {
     touchpad {
         // off
         tap
-        // dwt
+        dwt
         // dwtp
-        // drag false
-        // drag-lock
+        drag true
+        drag-lock
         natural-scroll
  // accel-speed 0.2
         // accel-profile "flat"
@@ -58,10 +68,18 @@ input {
 
     }
     // Uncomment this to make the mouse warp to the center of newly focused windows.
-    warp-mouse-to-focus
+    warp-mouse-to-focus mode="center-xy-always"
     // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    focus-follows-mouse max-scroll-amount="0%"
+    // focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse
+    workspace-auto-back-and-forth
+ // mod-key "Alt"
+    // mod-key-nested "Super"
+}
+/-switch-events {
+lid-close { spawn "notify-send" "The laptop lid is closed!"; }
+lid-open { spawn "notify-send" "The laptop lid is open!"; }
 }
 // You can configure outputs by their name, which you can find
 // by running `niri msg outputs` while inside a niri instance.
@@ -95,10 +113,16 @@ transform "normal"
 // automatically.
 position x=1280 y=0
 }
+// Put swaybg inside the overview backdrop.
+layer-rule {
+    match namespace="^wallpaper$"
+    place-within-backdrop true
+}
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Layout
 layout {
+    background-color "transparent"
     // Set gaps around windows in logical pixels.
     gaps 16
     // When to center a column when changing focus, options are:
@@ -108,6 +132,7 @@ layout {
     // - "on-overflow", focusing a column will center it if it doesn't fit
     //   together with the previously focused column.
     center-focused-column "never"
+    always-center-single-column
     // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
     preset-column-widths {
         // Proportion sets the width as a fraction of the output width, taking gaps into account.
@@ -148,7 +173,7 @@ layout {
         // - RGB hex: "#rgb", "#rgba", "#rrggbb", "#rrggbbaa"
         // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
         // Color of the ring on the active monitor.
-        active-color "#7fc8ff"
+        active-color "#994ae8"
         // Color of the ring on inactive monitors.
         //
         // The focus ring only draws around the active window, so the only place
@@ -216,17 +241,26 @@ layout {
         // You can also change the shadow color and opacity.
         color "#0007"
     }
- // Struts shrink the area occupied by windows, similarly to layer-shell panels.
+    // Struts shrink the area occupied by windows, similarly to layer-shell panels.
     // You can think of them as a kind of outer gaps. They are set in logical pixels.
     // Left and right struts will cause the next window to the side to always be visible.
     // Top and bottom struts will simply add outer gaps in addition to the area occupied by
     // layer-shell panels and regular gaps.
     /-struts {
-        left 64
-        right 64
-        top 64
-        bottom 64
+    left 4
+    right 4
+    top 4
+    bottom 4
     }
+    tab-indicator {
+        hide-when-single-tab
+        place-within-column
+        position "right"
+        active-color "cyan"
+        inactive-color "magenta"
+        width 3
+    }
+    empty-workspace-above-first
 }
 // Add lines like this to spawn processes at startup.
 // Note that running niri as a session supports xdg-desktop-autostart,
@@ -235,6 +269,10 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "ghostty"
 spawn-at-startup "xfce4-panel"
+spawn-at-startup "xfce4-power-manager"
+spawn-at-startup "blueman-applet"
+spawn-at-startup "nm-applet"
+spawn-sh-at-startup "swaybg -i ~/.background.jpg"
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 hotkey-overlay {
@@ -257,12 +295,42 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 // The wiki explains how to configure individual animations:
 // https://yalter.github.io/niri/Configuration:-Animations
 animations {
- // Uncomment to turn off all animations.
+    // Uncomment to turn off all animations.
+    // You can also put "off" into each individual animation to disable it.
     // off
-
     // Slow down all animations by this factor. Values below 1 speed them up instead.
-    // slowdown 3.0
-
+    slowdown 1.5
+    // Individual animations.
+    workspace-switch {
+        spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+    }
+    window-open {
+        duration-ms 150
+        curve "ease-out-expo"
+    }
+    window-close {
+        duration-ms 150
+        curve "ease-out-quad"
+    }
+    horizontal-view-movement {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+    }
+    window-movement {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+    }
+    window-resize {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+    }
+    config-notification-open-close {
+        spring damping-ratio=0.6 stiffness=1000 epsilon=0.001
+    }
+    screenshot-ui-open {
+        duration-ms 200
+        curve "ease-out-quad"
+    }
+    overview-open-close {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+    }
 }
 // Window rules let you adjust behavior for individual windows.
 // Find more information on the wiki:
@@ -297,9 +365,12 @@ block-out-from "screen-capture"
 }
 // Example: enable rounded corners for all windows.
 // (This example rule is commented out with a "/-" in front.)
-/-window-rule {
-geometry-corner-radius 12
-clip-to-geometry true
+window-rule {
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+overview {
+    backdrop-color "#663399"
 }
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
@@ -323,7 +394,7 @@ binds {
     Mod+A hotkey-overlay-title="Launch: xfce4-appfinder" {
         spawn "xfce4-appfinder"
     }
-    Mod+P hotkey-overlay-title="Settings: xfce4-settings" {
+    Mod+S hotkey-overlay-title="Settings: xfce4-settings" {
         spawn "xfce4-settings-manager"
     }
     // Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
@@ -753,7 +824,7 @@ binds {
     }
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
-    Mod+Shift+P {
+    Mod+Alt+P {
         power-off-monitors
     }
 }
