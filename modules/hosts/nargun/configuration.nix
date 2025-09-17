@@ -1,10 +1,5 @@
 { inputs, lib, ... }:
 let
-  niri-desktop = {
-    programs.niri.enable = true;
-    services.displayManager.defaultSession = lib.mkForce "niri";
-  };
-
   flake.modules.nixos.nargun.imports = with inputs.self.modules.nixos; [
     vic
     niri-desktop

@@ -1,5 +1,4 @@
-{
-
+{lib, ...}: {
   flake.modules.nixos.xfce-desktop = {
     # https://gist.github.com/nat-418/1101881371c9a7b419ba5f944a7118b0
     services.xserver = {
@@ -11,9 +10,8 @@
     };
 
     services.displayManager = {
-      defaultSession = "xfce";
+      defaultSession = lib.mkDefault "xfce";
       enable = true;
     };
   };
-
 }
