@@ -1,4 +1,3 @@
-tv init fish | source
 bind \t __tv_complete
 
 function __tv_complete -d 'fish completion widget with tv'
