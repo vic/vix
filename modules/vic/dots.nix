@@ -20,6 +20,7 @@
         source = ./dots/ssh;
       };
 
+      home.file.".config/niri".source = dotsLink "config/niri";
       home.file.".config/nvim".source = dotsLink "config/nvim";
       home.file.".config/doom".source = dotsLink "config/doom";
       home.file.".config/zed".source = dotsLink "config/zed";
