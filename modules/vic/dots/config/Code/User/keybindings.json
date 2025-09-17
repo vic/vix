@@ -299,7 +299,7 @@
     "when": "editorFocus && inlineChatHasEditsAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput || editorFocus && inlineChatHasProvider && inlineChatPossible && !editorReadonly && !editorSimpleInput"
   },
   {
-    "key": "ctrl+alt+meta+i",
+    "key": "ctrl+x i",
     "command": "inlineChat.start",
     "when": "inlineChatHasEditsAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput || inlineChatHasProvider && inlineChatPossible && !editorReadonly && !editorSimpleInput"
   },
@@ -469,8 +469,18 @@
     "when": "github.copilot.activated"
   },
   {
-    "key": "ctrl+x c",
+    "key": "shift+tab",
     "command": "editor.action.triggerSuggest",
     "when": "editorHasCompletionItemProvider && textInputFocus && !editorReadonly && !suggestWidgetVisible"
+  },
+  {
+    "key": "l",
+    "command": "-list.select",
+    "when": "listFocus && !inputFocus"
+  },
+  {
+    "key": "ctrl+x ;",
+    "command": "workbench.action.maximizeEditorHideSidebar",
+    "when": "auxiliaryBarVisible || sideBarVisible || editorPartMultipleEditorGroups && !editorPartMaximizedEditorGroup"
   }
 ]

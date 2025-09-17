@@ -5,8 +5,20 @@
   };
 
   flake.modules.homeManager.vic =
-    { pkgs, lib, ... }:
+    { pkgs, lib, config, ... }:
+    let
+      vim_variant = name: inputs: pkgs.writeShellApplication {
+        inherit name;
+	runtimeEnv = { NVIM_APPNAME = name; };
+	runtimeInputs = [ config.programs.neovim.package ] ++ inputs;
+	text = ''exec nvim "$@"'';
+      };
+      astrovim = vim_variant "astrovim" [];
+      lazyvim = vim_variant "lazyvim" [];
+      vscode-vim = vim_variant "vscode-vim" [];
+    in
     {
+      home.packages = [ lazyvim vscode-vim astrovim pkgs.neovim-remote ];
       home.sessionVariables.VISUAL = "vim";
       home.sessionVariables.EDITOR = "vim";
       programs.neovim.enable = true;

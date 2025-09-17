@@ -26,12 +26,6 @@ let
   use_vix_llm = ''
     use_vix_llm() {
       source $HOME/.config/sops-nix/secrets/rendered/llm_apis.env
-      export GEMINI_API_KEY
-      export GOOGLE_AI_API_KEY="''${GEMINI_API_KEY}"
-      # export OPENAI_API_KEY
-      # export OPENAI_API_BASE="https://api.githubcopilot.com"
-      # export ANTHROPIC_API_KEY
-      # export GROQ_API_KEY
     }
   '';
 

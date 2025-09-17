@@ -113,12 +113,12 @@
   "github.copilot.chat.scopeSelection": true,
   "github.copilot.enable": {
     "*": false,
-    "markdown": false,
     "plaintext": false,
-    "rust": false,
-    "scminput": false
+    "markdown": false,
+    "scminput": false,
+    "rust": false
   },
-  "github.copilot.nextEditSuggestions.enabled": true,
+  "github.copilot.nextEditSuggestions.enabled": false,
   "jjk.enableAnnotations": false,
   "opensource-explorer.defaultClonePath": "~/hk",
   "opensource-explorer.defaultView": "recent",
@@ -155,30 +155,6 @@
     {
       "before": ["<C-h>"],
       "commands": ["github.copilot.generate"]
-    },
-    {
-      "after": ["<Esc>"],
-      "before": ["j", "j"]
-    },
-    {
-      "after": ["<Esc>"],
-      "before": ["j", "k"]
-    },
-    {
-      "after": ["<Esc>"],
-      "before": ["k", "j"]
-    },
-    {
-      "after": ["<Esc>"],
-      "before": ["k", "k"]
-    },
-    {
-      "after": ["<Esc>"],
-      "before": ["h", "h"]
-    },
-    {
-      "after": ["<Esc>"],
-      "before": ["l", "l"]
     }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
@@ -320,14 +296,35 @@
   "workbench.list.smoothScrolling": true,
   "workbench.panel.defaultLocation": "top",
   "workbench.panel.showLabels": false,
-  "workbench.preferredDarkColorTheme": "Monokai Dimmed",
+  "workbench.preferredDarkColorTheme": "Default Light+",
   "workbench.preferredHighContrastColorTheme": "Visual Studio Light",
-  "workbench.preferredLightColorTheme": "Atom One Dark",
-  "workbench.sideBar.location": "right",
   "workbench.view.showQuietly": {
     "workbench.panel.output": false
   },
   "zenMode.showTabs": "none",
   "zig.path": "zig",
-  "zig.zls.enabled": "on"
+  "zig.zls.enabled": "on",
+  "geminicodeassist.contextExclusionFile": ".aiexclude,old",
+  "geminicodeassist.enableTelemetry": false,
+  "workbench.activityBar.location": "top",
+  "chat.tools.terminal.autoApprove": {
+    "cargo build": true,
+    "timeout": true,
+    "mkdir": true,
+    "touch": true,
+    "cargo clippy": true,
+    "jn": true,
+    "printf": true,
+    "Cargo.toml": true,
+    "cd /home/vic/hk/roke/crates/delta-lambda && printf '[package]\\nname = \"delta-lambda\"\\nversion = \"0.1.0\"\\nedition = \"2021\"\\n\\n[lib]\\nname = \"delta_lambda\"\\npath = \"src/lib.rs\"\\n\\n[dependencies]\\ndelta-types = { path = \"../delta-types\" }\\nnom = \"8.0.0\"\\n' > Cargo.toml": {
+      "approve": true,
+      "matchCommandLine": true
+    }
+  },
+  "chat.tools.global.autoApprove": true,
+  "terminal.integrated.stickyScroll.enabled": false,
+  "remote.SSH.configFile": "/home/vic/.ssh/config.local",
+  "file-browser.labelIgnoredFiles": true,
+  "file-browser.hideDotfiles": false,
+  "workbench.preferredLightColorTheme": "Palenight Italic"
 }

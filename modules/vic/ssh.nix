@@ -13,7 +13,7 @@ let
         controlMaster = "auto";
         controlPath = "~/.ssh/socket-%r@%h:%p";
         controlPersist = "10m";
-        includes = [ "~/.config/sops-nix/secrets/ssh/sops_ssh_config" ];
+        includes = [ "~/.config/sops-nix/secrets/ssh/sops_ssh_config" "~/.ssh/config.local" ];
 
         matchBlocks = {
           "github.com" = {

@@ -1,5 +1,5 @@
-# theme = rebecca
-theme = catppuccin-mocha
+theme = Rebecca
+# theme = catppuccin-mocha
 font-family = "JetBrainsMono NFM Light"
 font-size = 16
 

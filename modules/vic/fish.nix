@@ -22,7 +22,7 @@
       home.file.".config/fish/conf.d/tvtab.fish".source = ./_fish/tv.fish;
 
       programs.fzf.enable = true;
-      programs.fzf.enableFishIntegration = true;
+      # programs.fzf.enableFishIntegration = true;
 
       programs.fish = {
         enable = true;

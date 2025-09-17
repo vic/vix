@@ -22,6 +22,9 @@
 
       home.file.".config/niri".source = dotsLink "config/niri";
       home.file.".config/nvim".source = dotsLink "config/nvim";
+      home.file.".config/astrovim".source = dotsLink "config/astrovim";
+      home.file.".config/lazyvim".source = dotsLink "config/lazyvim";
+      home.file.".config/vscode-vim".source = dotsLink "config/vscode-vim";
       home.file.".config/doom".source = dotsLink "config/doom";
       home.file.".config/zed".source = dotsLink "config/zed";
       home.file.".config/wezterm".source = dotsLink "config/wezterm";

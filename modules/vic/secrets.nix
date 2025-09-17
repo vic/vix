@@ -27,6 +27,7 @@ let
         secrets = {
           "hello" = { };
           "groq_api_key" = { };
+          "openrouter_api_key" = { };
           "gemini_eco_key" = { };
           "copilot_api_key" = { };
           "anthropic_api_key" = { };
@@ -53,10 +54,11 @@ let
             hello = "Wooo ${config.sops.placeholder.hello} Hoo";
           '';
           "llm_apis.env".content = ''
-            GEMINI_API_KEY="${config.sops.placeholder.gemini_eco_key}"
-            OPENAI_API_KEY="${config.sops.placeholder.copilot_api_key}"
-            ANTHROPIC_API_KEY="${config.sops.placeholder.anthropic_api_key}"
-            GROQ_API_KEY="${config.sops.placeholder.groq_api_key}"
+            export OPENROUTER_API_KEY="${config.sops.placeholder.openrouter_api_key}"
+            export GEMINI_API_KEY="${config.sops.placeholder.gemini_eco_key}"
+            export OPENAI_API_KEY="${config.sops.placeholder.copilot_api_key}"
+            export ANTHROPIC_API_KEY="${config.sops.placeholder.anthropic_api_key}"
+            export GROQ_API_KEY="${config.sops.placeholder.groq_api_key}"
           '';
         };
       };
