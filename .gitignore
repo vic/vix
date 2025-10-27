@@ -4,3 +4,4 @@ old
 .devenv
 .direnv
 .DS_Store
+*cow*
