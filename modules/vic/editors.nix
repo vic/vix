@@ -2,7 +2,10 @@
 {
   vix.vic.provides.editors = _: {
     includes = [
-      (vix.unfree [ "cursor" "vscode"])
+      (vix.unfree [
+        "cursor"
+        "vscode"
+      ])
     ];
 
     homeManager =
