@@ -1,5 +1,5 @@
 {
-  vix.vic.provides.cli-tui = _: {
+  vic.cli-tui = _: {
 
     homeManager =
       { pkgs, ... }:
@@ -14,6 +14,7 @@
           pkgs.fd # find
           pkgs.jq
           pkgs.television
+          pkgs.diffnav
         ];
       };
 

@@ -1,7 +1,10 @@
 cha
 result
 old
+.envrc
+.envrc.local
 .devenv
 .direnv
 .DS_Store
+.jj
 *cow*

@@ -1,5 +1,5 @@
 {
-  vix.vic.provides.fonts = _: {
+  vic.fonts = _: {
     nixos =
       { pkgs, ... }:
       {

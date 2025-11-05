@@ -1,5 +1,5 @@
 {
-  vix.vic.provides.terminals = _: {
+  vic.terminals = _: {
 
     darwin =
       { pkgs, ... }:

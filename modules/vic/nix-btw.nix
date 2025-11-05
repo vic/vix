@@ -1,7 +1,7 @@
 {
   # flake-file.inputs.ntv.url = "github:vic/ntv";
 
-  vix.vic.provides.nix-btw = _: {
+  vic.nix-btw = _: {
 
     homeManager =
       { pkgs, ... }:

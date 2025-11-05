@@ -1,5 +1,5 @@
 {
-  vix.vic.provides.browser = _: {
+  vic.browser = _: {
 
     homeManager =
       { pkgs, ... }:

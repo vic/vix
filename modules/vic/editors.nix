@@ -1,11 +1,8 @@
-{ vix, ... }:
+{ __findFile, ... }:
 {
-  vix.vic.provides.editors = _: {
+  vic.editors = _: {
     includes = [
-      (vix.unfree [
-        "cursor"
-        "vscode"
-      ])
+      (<den/unfree> [ "cursor" "vscode" ])
     ];
 
     homeManager =

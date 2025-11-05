@@ -1,5 +1,5 @@
 {
-  vix.vic.provides.hm-backup = _: {
+  vic.hm-backup = _: {
     nixos.home-manager.backupFileExtension = "hm-backup";
   };
 }

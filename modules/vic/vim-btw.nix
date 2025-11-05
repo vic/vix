@@ -1,5 +1,5 @@
 {
-  vix.vic.provides.vim-btw = _: {
+  vic.vim-btw = {
 
     homeManager =
       {
