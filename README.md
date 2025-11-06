@@ -38,9 +38,9 @@ modules/
 
 ### 1. Custom Namespace ([`vix.nix`](modules/community/vix.nix))
 ```nix
-den.aspects.vix.provides = { }; # you can also use flake.aspects to expose all to flake.modules.
-flake.vix = config.den.aspects.vix.provides; # I just want to expose the vix aspect tree.
-_module.args.vix = config.den.aspects.vix.provides;
+den.aspects.vix = { }; # you can also use flake.aspects to expose all to flake.modules.
+flake.vix = config.den.aspects.vix._; # I just want to expose the vix aspect tree.
+_module.args.vix = config.den.aspects.vix._;
 ```
 
 Creates `vix.*` namespace. Everything under `vix` belongs to this config.
@@ -75,7 +75,7 @@ Profiles select aspects by host/user name. `vix.nargun` wired automatically for 
 
 ### 4. Aspect Composition with Variants ([`nargun.nix`](modules/hosts/nargun.nix))
 ```nix
-vix.nargun.provides = {
+vix.nargun._ = {
   base.includes = [ vix.dev-laptop ];
   hw.includes = [ vix.kvm-amd vix.niri-desktop ];
 };
@@ -89,8 +89,8 @@ Sub-aspects via `provides.X` become `_.X`. Hardware and VM share `base`.
 ```nix
 vix.vic._.common-host-env = { host, user }: {
   includes = map (f: f { inherit host user; }) [
-    vix.vic.provides.admin
-    vix.vic.provides.fish
+    vix.vic._.admin
+    vix.vic._.fish
     // ... more aspects
   ];
 };
@@ -99,7 +99,7 @@ User profile calls this with context. Each aspect receives `{ host, user }`.
 
 ### 6. Multi-Class Aspects ([`fish.nix`](modules/vic/fish.nix))
 ```nix
-vix.vic.provides.fish = { user, ... }: {
+vix.vic._.fish = { user, ... }: {
   nixos.users.users.${user.userName}.shell = pkgs.fish;
   homeManager.programs.fish.enable = true;
 };
