@@ -1,5 +1,5 @@
 {
-  vic.fonts = _: {
+  vic.fonts = {
     nixos =
       { pkgs, ... }:
       {

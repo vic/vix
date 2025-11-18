@@ -1,6 +1,6 @@
 {
   # Use hjem instead of mkOutOfStoreSymlink !
-  vic.dots = _: {
+  vic.dots = {
     homeManager =
       { config, pkgs, ... }:
       let

@@ -1,6 +1,6 @@
 { __findFile, ... }:
 {
-  vic.editors = _: {
+  vic.editors = {
     includes = [
       (<den/unfree> [ "cursor" "vscode" ])
     ];

@@ -6,8 +6,6 @@ let
   };
 
   vix.darwin.darwin.imports = [
-    inputs.home-manager.darwinModules.home-manager
-    inputs.self.modules.darwin.nix-settings
     nix-darwin-pkgs
     darwin-cfg
   ];

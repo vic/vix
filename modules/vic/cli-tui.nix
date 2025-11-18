@@ -1,5 +1,5 @@
 {
-  vic.cli-tui = _: {
+  vic.cli-tui = {
 
     homeManager =
       { pkgs, ... }:
@@ -15,6 +15,7 @@
           pkgs.jq
           pkgs.television
           pkgs.diffnav
+          # pkgs.awrit # browser
         ];
       };
 

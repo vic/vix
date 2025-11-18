@@ -1,5 +1,5 @@
 {
-  vic.browser = _: {
+  vic.browser = {
 
     homeManager =
       { pkgs, ... }:

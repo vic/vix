@@ -1,7 +1,7 @@
 {
   # flake-file.inputs.ntv.url = "github:vic/ntv";
 
-  vic.nix-btw = _: {
+  vic.nix-btw = {
 
     homeManager =
       { pkgs, ... }:
@@ -10,6 +10,8 @@
           pkgs.nix-search-cli
           pkgs.nixd # lsp
           pkgs.cachix
+          pkgs.nix-inspect
+          pkgs.nox
         ];
 
         programs.nh.enable = true;

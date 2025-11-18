@@ -29,9 +29,7 @@
         let
           diff-formatter = [
             (pkgs.lib.getExe pkgs.difftastic)
-            # "--pager"
-            # (pkgs.lib.getExe pkgs.bat)
-            # "--side-by-side"
+            "--color=always"
             "$left"
             "$right"
           ];
@@ -80,7 +78,6 @@
                   "diff"
                   "show"
                 ];
-                ui.pager = (pkgs.lib.getExe pkgs.bat);
                 ui.diff-formatter = diff-formatter;
               }
               {
@@ -105,16 +102,13 @@
             ui = {
               default-command = [
                 "status"
+                "--no-pager"
               ];
               inherit diff-formatter;
-              # pager = ":builtin";
+              pager = ":builtin";
               # editor = "nvim";
-              # merge-editor = pkgs.meld; # meld
-              diff-editor = [
-                "nvim"
-                "-c"
-                "DiffEditor $left $right $output"
-              ];
+              diff-editor = "meld-3";
+              merge-editor = "meld";
               conflict-marker-style = "git";
               movement.edit = false;
             };

@@ -7,7 +7,7 @@
     SPC.url = "github:vic/SPC";
   };
 
-  vic.doom-btw = { HM, user, OS, ... }: {
+  vic.doom-btw = {
     homeManager =
       { pkgs, ... }:
       let

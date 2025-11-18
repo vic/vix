@@ -1,5 +1,5 @@
 {
-  vic.terminals = _: {
+  vic.terminals = {
 
     darwin =
       { pkgs, ... }:
@@ -13,6 +13,7 @@
         home.packages = [
           pkgs.ghostty
           pkgs.wezterm
+          pkgs.kitty
         ];
       };
 
