@@ -101,12 +101,18 @@
 
             ui = {
               default-command = [
-                "status"
-                "--no-pager"
+                "log" 
+                "--no-pager" 
+                "--reversed" 
+                "--stat" 
+                "--template" 
+                "builtin_log_compact_full_description"
+                "--limit"
+                "3"
               ];
               inherit diff-formatter;
-              pager = ":builtin";
-              # editor = "nvim";
+              # pager = "diffnav";
+              editor = "nvim";
               diff-editor = "meld-3";
               merge-editor = "meld";
               conflict-marker-style = "git";

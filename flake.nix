@@ -34,7 +34,7 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-index-database.url = "github:nix-community/nix-index-database";
     nixos-wsl.url = "github:nix-community/nixos-wsl";
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     nixpkgs-lib.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
     systems.url = "github:nix-systems/default";

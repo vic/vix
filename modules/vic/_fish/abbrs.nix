@@ -22,12 +22,12 @@
   lj = "lazyjj";
   jb = "jj bookmark";
   jc = "jj commit -i";
-  jd = {
+  jD = {
     expansion = "jj describe -m \"%\"";
     setCursor = true;
   };
-  jdd = "jj diff";
-  jdt = "jj show --tool difft";
+  jd = "jj diff --git | diffnav";
+  jdg = "jj diff --git";
   je = "jj edit";
   jf = "jj git fetch";
   jg = "jj git";
