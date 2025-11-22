@@ -326,5 +326,5 @@
   "remote.SSH.configFile": "/home/vic/.ssh/config.local",
   "file-browser.labelIgnoredFiles": true,
   "file-browser.hideDotfiles": false,
-  "workbench.preferredLightColorTheme": "Tomorrow Night Blue"
+  "workbench.preferredLightColorTheme": "Palenight Theme"
 }
