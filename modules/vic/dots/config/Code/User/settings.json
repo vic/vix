@@ -326,5 +326,9 @@
   "remote.SSH.configFile": "/home/vic/.ssh/config.local",
   "file-browser.labelIgnoredFiles": true,
   "file-browser.hideDotfiles": false,
-  "workbench.preferredLightColorTheme": "Palenight Theme"
+  "chat.emptyState.history.enabled": true,
+  "semanticdiff.defaultDiffViewer": true,
+  "semanticdiff.closeOriginalTab": true,
+  "workbench.preferredLightColorTheme": "Monokai",
+  "workbench.colorTheme": "Monokai Pro Light (Filter Sun)"
 }
