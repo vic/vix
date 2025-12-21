@@ -80,23 +80,24 @@
                 ];
                 ui.diff-formatter = diff-formatter;
               }
-              {
-                "--when".repositories = [ "~/hk/jjui" ];
-                revsets.log = "default()";
-                revset-aliases = {
-                  "trunk()" = "main@idursun";
-                  "vic" = "remote_bookmarks('', 'vic')";
-                  "idursun" = "remote_bookmarks('', 'idursun')";
-                  "default()" =
-                    "coalesce( trunk(), root() )::present(@) | ancestors(visible_heads() & recent(), 2) | idursun | vic";
-                };
-                aliases = {
-                  "n" = [
-                    "new"
-                    "main@idursun"
-                  ];
-                };
-              }
+              # {
+              #   "--when".repositories = [ "~/hk/jjui" ];
+              #   revsets.log = "default()";
+              #   revset-aliases = {
+              #     "trunk()" = "main@idursun";
+              #     "yc" = "remote_bookmarks('', 'exact:yc')";
+              #     "vic" = "remote_bookmarks('', 'exact:vic')";
+              #     "idursun" = "remote_bookmarks('', 'exact:idursun')";
+              #     "default()" =
+              #       "coalesce( trunk(), root() )::present(@) | ancestors(visible_heads() & recent(), 2) | idursun | vic";
+              #   };
+              #   aliases = {
+              #     "n" = [
+              #       "new"
+              #       "main@idursun"
+              #     ];
+              #   };
+              # }
             ];
 
             ui = {

@@ -42,6 +42,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/treefmt-nix";
     };
+    trix = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:aanderse/trix";
+    };
     vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 
