@@ -21,6 +21,12 @@
       inputs.nixpkgs-lib.follows = "nixpkgs-lib";
       url = "github:hercules-ci/flake-parts";
     };
+    helium = {
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+      url = "github:vikingnope/helium-browser-nix-flake";
+    };
     home-manager = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/home-manager";
