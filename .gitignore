@@ -1,0 +1,3 @@
+inputs.nix
+*.cow*
+result/

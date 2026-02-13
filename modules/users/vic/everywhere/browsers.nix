@@ -1,0 +1,15 @@
+{ inputs, lib, ... }:
+{
+
+  flake-file.inputs.helium = {
+    url = "github:schembriaiden/helium-browser-nix-flake";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  vic.everywhere.nixos =
+    { pkgs, system', ... }:
+    {
+      users.users.vic.packages = [ (system' inputs.helium).packages.helium ];
+    };
+
+}
