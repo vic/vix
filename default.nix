@@ -13,7 +13,7 @@ let
       inputs
       // {
         # Uncomment to override local checkouts for development
-        # den = import ./../den;
+        den = import ./../den/nix;
       }
     );
 
