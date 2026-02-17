@@ -11,10 +11,10 @@
     inputs.flake-parts.follows = "flake-parts";
   };
 
-  vic.everywhere.nixos =
+  vic.everywhere.user =
     { pkgs, system', ... }:
     {
-      users.users.vic.packages = with pkgs; [
+      packages = with pkgs; [
         git
         jujutsu
         # (system' inputs.jjui).packages.jjui # NO unflake self.inputs!

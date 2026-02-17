@@ -23,5 +23,11 @@ let
 in
 {
   vic = { inherit everywhere; };
+
   den.aspects.vic.includes = [ vic.everywhere ];
+  den.aspects.vic.user.description = "El Oeiuwq";
+
+  den.aspects.nargun.includes = [
+    (den.provides.unfree [ "vscode" ])
+  ];
 }

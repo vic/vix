@@ -1,272 +1,272 @@
 {
   "pins": {
     "unflake_github_anthrofract_jjdag": {
-      "branch": "master",
-      "hash": "sha256-6qtAXuxaxSo5iKGFUO4QwAx0sYyDg1kOwRBzNbRLSPw=",
-      "repository": {
-        "owner": "anthrofract",
-        "repo": "jjdag",
-        "type": "GitHub"
-      },
-      "revision": "1135237f2aff1da4d01cd1a5c94c19aad8882d57",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/anthrofract/jjdag/archive/1135237f2aff1da4d01cd1a5c94c19aad8882d57.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "anthrofract",
+        "repo": "jjdag"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "1135237f2aff1da4d01cd1a5c94c19aad8882d57",
+      "url": "https://github.com/anthrofract/jjdag/archive/1135237f2aff1da4d01cd1a5c94c19aad8882d57.tar.gz",
+      "hash": "sha256-6qtAXuxaxSo5iKGFUO4QwAx0sYyDg1kOwRBzNbRLSPw="
     },
     "unflake_github_edolstra_flake-compat_flake_false": {
-      "branch": "master",
-      "hash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
-      "repository": {
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "type": "GitHub"
-      },
-      "revision": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/edolstra/flake-compat/archive/5edf11c44bc78a0d334f6334cdaf7d60d732daab.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "edolstra",
+        "repo": "flake-compat"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+      "url": "https://github.com/edolstra/flake-compat/archive/5edf11c44bc78a0d334f6334cdaf7d60d732daab.tar.gz",
+      "hash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns="
     },
     "unflake_github_hercules-ci_flake-parts": {
-      "branch": "main",
-      "hash": "sha256-AnYjnFWgS49RlqX7LrC4uA+sCCDBj0Ry/WOJ5XWAsa0=",
-      "repository": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "GitHub"
-      },
-      "revision": "57928607ea566b5db3ad13af0e57e921e6b12381",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/hercules-ci/flake-parts/archive/57928607ea566b5db3ad13af0e57e921e6b12381.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "hercules-ci",
+        "repo": "flake-parts"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "57928607ea566b5db3ad13af0e57e921e6b12381",
+      "url": "https://github.com/hercules-ci/flake-parts/archive/57928607ea566b5db3ad13af0e57e921e6b12381.tar.gz",
+      "hash": "sha256-AnYjnFWgS49RlqX7LrC4uA+sCCDBj0Ry/WOJ5XWAsa0="
     },
     "unflake_github_idursun_jjui": {
-      "branch": "main",
-      "hash": "sha256-SuZhBvPp4TkqqOy87wgTt3lw5nKCsZ1hrDFUDN4p1M4=",
-      "repository": {
-        "owner": "idursun",
-        "repo": "jjui",
-        "type": "GitHub"
-      },
-      "revision": "89792cbf1f16ef555fa352a01f3e2929cd6821aa",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/idursun/jjui/archive/89792cbf1f16ef555fa352a01f3e2929cd6821aa.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "idursun",
+        "repo": "jjui"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "89792cbf1f16ef555fa352a01f3e2929cd6821aa",
+      "url": "https://github.com/idursun/jjui/archive/89792cbf1f16ef555fa352a01f3e2929cd6821aa.tar.gz",
+      "hash": "sha256-SuZhBvPp4TkqqOy87wgTt3lw5nKCsZ1hrDFUDN4p1M4="
     },
     "unflake_github_jacopone_antigravity-nix": {
-      "branch": "master",
-      "hash": "sha256-neRXwIILc8BUFHeT0UM2Mj8Wt1oo4UPpmm4NkfBwQOY=",
-      "repository": {
-        "owner": "jacopone",
-        "repo": "antigravity-nix",
-        "type": "GitHub"
-      },
-      "revision": "acc9baf089a67ef7456117ef31285e34c3294984",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/jacopone/antigravity-nix/archive/acc9baf089a67ef7456117ef31285e34c3294984.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "jacopone",
+        "repo": "antigravity-nix"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "acc9baf089a67ef7456117ef31285e34c3294984",
+      "url": "https://github.com/jacopone/antigravity-nix/archive/acc9baf089a67ef7456117ef31285e34c3294984.tar.gz",
+      "hash": "sha256-neRXwIILc8BUFHeT0UM2Mj8Wt1oo4UPpmm4NkfBwQOY="
     },
     "unflake_github_lnl7_nix-darwin": {
-      "branch": "master",
-      "hash": "sha256-6J/JoK9iL7sHvKJcGW2KId2agaKv1OGypsa7kN+ZBD4=",
-      "repository": {
-        "owner": "lnl7",
-        "repo": "nix-darwin",
-        "type": "GitHub"
-      },
-      "revision": "6c5a56295d2a24e43bcd8af838def1b9a95746b2",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/lnl7/nix-darwin/archive/6c5a56295d2a24e43bcd8af838def1b9a95746b2.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "lnl7",
+        "repo": "nix-darwin"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "6c5a56295d2a24e43bcd8af838def1b9a95746b2",
+      "url": "https://github.com/lnl7/nix-darwin/archive/6c5a56295d2a24e43bcd8af838def1b9a95746b2.tar.gz",
+      "hash": "sha256-6J/JoK9iL7sHvKJcGW2KId2agaKv1OGypsa7kN+ZBD4="
     },
     "unflake_github_nix-community_nix-index-database": {
-      "branch": "main",
-      "hash": "sha256-hy0gcAgAcxrnSWKGuNO+Ob0x6jQ2xkR6hoaR0qJBHYs=",
-      "repository": {
-        "owner": "nix-community",
-        "repo": "nix-index-database",
-        "type": "GitHub"
-      },
-      "revision": "2684bb8080a6f2ca5f9d494de5ef875bc1c4ecdb",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/nix-community/nix-index-database/archive/2684bb8080a6f2ca5f9d494de5ef875bc1c4ecdb.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "nix-index-database"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "2684bb8080a6f2ca5f9d494de5ef875bc1c4ecdb",
+      "url": "https://github.com/nix-community/nix-index-database/archive/2684bb8080a6f2ca5f9d494de5ef875bc1c4ecdb.tar.gz",
+      "hash": "sha256-hy0gcAgAcxrnSWKGuNO+Ob0x6jQ2xkR6hoaR0qJBHYs="
     },
     "unflake_github_nix-community_nixos-vscode-server": {
-      "branch": "master",
-      "hash": "sha256-yHmd2B13EtBUPLJ+x0EaBwNkQr9LTne1arLVxT6hSnY=",
-      "repository": {
-        "owner": "nix-community",
-        "repo": "nixos-vscode-server",
-        "type": "GitHub"
-      },
-      "revision": "92ce71c3ba5a94f854e02d57b14af4997ab54ef0",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/nix-community/nixos-vscode-server/archive/92ce71c3ba5a94f854e02d57b14af4997ab54ef0.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "nixos-vscode-server"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "92ce71c3ba5a94f854e02d57b14af4997ab54ef0",
+      "url": "https://github.com/nix-community/nixos-vscode-server/archive/92ce71c3ba5a94f854e02d57b14af4997ab54ef0.tar.gz",
+      "hash": "sha256-yHmd2B13EtBUPLJ+x0EaBwNkQr9LTne1arLVxT6hSnY="
     },
     "unflake_github_nix-community_nixos-wsl": {
-      "branch": "main",
-      "hash": "sha256-v/LA5ZSJ+JQYzMSKB4sySM0wKfsAqddNzzxLLnbsV/E=",
-      "repository": {
-        "owner": "nix-community",
-        "repo": "nixos-wsl",
-        "type": "GitHub"
-      },
-      "revision": "5b50ea1aaa14945d4794c80fcc99c4aa1db84d2d",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/nix-community/nixos-wsl/archive/5b50ea1aaa14945d4794c80fcc99c4aa1db84d2d.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "nixos-wsl"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "5b50ea1aaa14945d4794c80fcc99c4aa1db84d2d",
+      "url": "https://github.com/nix-community/nixos-wsl/archive/5b50ea1aaa14945d4794c80fcc99c4aa1db84d2d.tar.gz",
+      "hash": "sha256-v/LA5ZSJ+JQYzMSKB4sySM0wKfsAqddNzzxLLnbsV/E="
     },
     "unflake_github_nix-community_nixpkgs-lib": {
-      "branch": "master",
-      "hash": "sha256-OAOcOMYrZwP1DS6sxGKNXdJjsTq+UtZiouBdW4X7LX8=",
-      "repository": {
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "type": "GitHub"
-      },
-      "revision": "f472c854add422e3723c6fee2a470bbbec434006",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/nix-community/nixpkgs.lib/archive/f472c854add422e3723c6fee2a470bbbec434006.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "f472c854add422e3723c6fee2a470bbbec434006",
+      "url": "https://github.com/nix-community/nixpkgs.lib/archive/f472c854add422e3723c6fee2a470bbbec434006.tar.gz",
+      "hash": "sha256-OAOcOMYrZwP1DS6sxGKNXdJjsTq+UtZiouBdW4X7LX8="
     },
     "unflake_github_nix-systems_default": {
-      "branch": "main",
-      "hash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-      "repository": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "GitHub"
-      },
-      "revision": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/nix-systems/default/archive/da67096a3b9bf56a91d16901293e51ba5b49a27e.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-systems",
+        "repo": "default"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+      "url": "https://github.com/nix-systems/default/archive/da67096a3b9bf56a91d16901293e51ba5b49a27e.tar.gz",
+      "hash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768="
     },
     "unflake_github_nixos_nixpkgs_ref_nixos-unstable": {
-      "branch": "nixos-unstable",
-      "hash": "sha256-gf2AmWVTs8lEq7z/3ZAsgnZDhWIckkb+ZnAo5RzSxJg=",
-      "repository": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "type": "GitHub"
-      },
-      "revision": "a82ccc39b39b621151d6732718e3e250109076fa",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/nixos/nixpkgs/archive/a82ccc39b39b621151d6732718e3e250109076fa.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "nixos",
+        "repo": "nixpkgs"
+      },
+      "branch": "nixos-unstable",
+      "submodules": false,
+      "revision": "a82ccc39b39b621151d6732718e3e250109076fa",
+      "url": "https://github.com/nixos/nixpkgs/archive/a82ccc39b39b621151d6732718e3e250109076fa.tar.gz",
+      "hash": "sha256-gf2AmWVTs8lEq7z/3ZAsgnZDhWIckkb+ZnAo5RzSxJg="
     },
     "unflake_github_nixos_nixpkgs_ref_nixpkgs-unstable": {
-      "branch": "nixpkgs-unstable",
-      "hash": "sha256-LovWTGDwXhkfCOmbgLVA10bvsi/P8eDDpRudgk68HA8=",
-      "repository": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "type": "GitHub"
-      },
-      "revision": "2343bbb58f99267223bc2aac4fc9ea301a155a16",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/nixos/nixpkgs/archive/2343bbb58f99267223bc2aac4fc9ea301a155a16.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "nixos",
+        "repo": "nixpkgs"
+      },
+      "branch": "nixpkgs-unstable",
+      "submodules": false,
+      "revision": "2343bbb58f99267223bc2aac4fc9ea301a155a16",
+      "url": "https://github.com/nixos/nixpkgs/archive/2343bbb58f99267223bc2aac4fc9ea301a155a16.tar.gz",
+      "hash": "sha256-LovWTGDwXhkfCOmbgLVA10bvsi/P8eDDpRudgk68HA8="
     },
     "unflake_github_numtide_flake-utils": {
-      "branch": "main",
-      "hash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-      "repository": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "GitHub"
-      },
-      "revision": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/numtide/flake-utils/archive/11707dc2f618dd54ca8739b309ec4fc024de578b.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "numtide",
+        "repo": "flake-utils"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+      "url": "https://github.com/numtide/flake-utils/archive/11707dc2f618dd54ca8739b309ec4fc024de578b.tar.gz",
+      "hash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI="
     },
     "unflake_github_schembriaiden_helium-browser-nix-flake": {
-      "branch": "main",
-      "hash": "sha256-f8e4IoLZY0xh/eFt99nKizyQxUKr0atmc21lGLkp9io=",
-      "repository": {
-        "owner": "schembriaiden",
-        "repo": "helium-browser-nix-flake",
-        "type": "GitHub"
-      },
-      "revision": "9a6ce68bcf28366de6240ed9e37786d476c203fe",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/schembriaiden/helium-browser-nix-flake/archive/9a6ce68bcf28366de6240ed9e37786d476c203fe.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "schembriaiden",
+        "repo": "helium-browser-nix-flake"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "9a6ce68bcf28366de6240ed9e37786d476c203fe",
+      "url": "https://github.com/schembriaiden/helium-browser-nix-flake/archive/9a6ce68bcf28366de6240ed9e37786d476c203fe.tar.gz",
+      "hash": "sha256-f8e4IoLZY0xh/eFt99nKizyQxUKr0atmc21lGLkp9io="
     },
     "unflake_github_sunaku_enthium_ref_v10_flake_false": {
-      "hash": "sha256-/bsC7paA1XZgFRo9Ro5EjEq+Ci0WoiCCiW9JZlAXYQE=",
-      "pre_releases": false,
-      "release_prefix": null,
-      "repository": {
-        "owner": "sunaku",
-        "repo": "enthium",
-        "type": "GitHub"
-      },
-      "revision": "e8a622a52db518c41c32d0c3446469f250b16099",
-      "submodules": false,
       "type": "GitRelease",
-      "url": "https://api.github.com/repos/sunaku/enthium/tarball/refs/tags/v10",
+      "repository": {
+        "type": "GitHub",
+        "owner": "sunaku",
+        "repo": "enthium"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
       "version": "v10",
-      "version_upper_bound": null
+      "revision": "e8a622a52db518c41c32d0c3446469f250b16099",
+      "url": "https://api.github.com/repos/sunaku/enthium/tarball/refs/tags/v10",
+      "hash": "sha256-/bsC7paA1XZgFRo9Ro5EjEq+Ci0WoiCCiW9JZlAXYQE="
     },
     "unflake_github_vic_den": {
-      "branch": "main",
-      "hash": "sha256-iVcJJN1U4Cx7HWhem3944UPj/10jFaZyjPv0IvsBWJo=",
-      "repository": {
-        "owner": "vic",
-        "repo": "den",
-        "type": "GitHub"
-      },
-      "revision": "36b571d06f1bda73a940bea0bec498bd7c75c3b6",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/vic/den/archive/36b571d06f1bda73a940bea0bec498bd7c75c3b6.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "vic",
+        "repo": "den"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "5478f8e93f8eeb7845a1d88dd2934d0662724efd",
+      "url": "https://github.com/vic/den/archive/5478f8e93f8eeb7845a1d88dd2934d0662724efd.tar.gz",
+      "hash": "sha256-aD/V7cEem2YXUJEmbAtZFHLEkNEb90TZQXs1M7Gauak="
     },
     "unflake_github_vic_flake-aspects": {
-      "branch": "main",
-      "hash": "sha256-U15OaMr9AcJiB1wW2uCFzFO+DnQ3jJSvln+ZR/+Q0vE=",
-      "repository": {
-        "owner": "vic",
-        "repo": "flake-aspects",
-        "type": "GitHub"
-      },
-      "revision": "61524836788ef6991a82e7d34ebb0ccc05d374ed",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/vic/flake-aspects/archive/61524836788ef6991a82e7d34ebb0ccc05d374ed.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "vic",
+        "repo": "flake-aspects"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "cb78001b60fb34b8fabb8f78b082a6cf6c8a548d",
+      "url": "https://github.com/vic/flake-aspects/archive/cb78001b60fb34b8fabb8f78b082a6cf6c8a548d.tar.gz",
+      "hash": "sha256-a50O/36ySKext94tOnv7ucfLD75C1aHTWP+Um0w35R0="
     },
     "unflake_github_vic_flake-file": {
-      "branch": "main",
-      "hash": "sha256-n68HeYEQJ67hMH2LPI0cERD2pkpNe5dyeOGg11uZ7rc=",
-      "repository": {
-        "owner": "vic",
-        "repo": "flake-file",
-        "type": "GitHub"
-      },
-      "revision": "9d89918faacdbd2ce26d0aa7298da0fecad8b437",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/vic/flake-file/archive/9d89918faacdbd2ce26d0aa7298da0fecad8b437.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "vic",
+        "repo": "flake-file"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "9d89918faacdbd2ce26d0aa7298da0fecad8b437",
+      "url": "https://github.com/vic/flake-file/archive/9d89918faacdbd2ce26d0aa7298da0fecad8b437.tar.gz",
+      "hash": "sha256-n68HeYEQJ67hMH2LPI0cERD2pkpNe5dyeOGg11uZ7rc="
     },
     "unflake_github_vic_import-tree": {
-      "branch": "main",
-      "hash": "sha256-oYO4poyw0Sb/db2PigqugMlDwsvwLg6CSpFrMUWxA3Q=",
-      "repository": {
-        "owner": "vic",
-        "repo": "import-tree",
-        "type": "GitHub"
-      },
-      "revision": "c968d3b54d12cf5d9c13f16f7c545a06c9d1fde6",
-      "submodules": false,
       "type": "Git",
-      "url": "https://github.com/vic/import-tree/archive/c968d3b54d12cf5d9c13f16f7c545a06c9d1fde6.tar.gz"
+      "repository": {
+        "type": "GitHub",
+        "owner": "vic",
+        "repo": "import-tree"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "c968d3b54d12cf5d9c13f16f7c545a06c9d1fde6",
+      "url": "https://github.com/vic/import-tree/archive/c968d3b54d12cf5d9c13f16f7c545a06c9d1fde6.tar.gz",
+      "hash": "sha256-oYO4poyw0Sb/db2PigqugMlDwsvwLg6CSpFrMUWxA3Q="
     },
     "unflake_tarball_https---channels-nixos-org-nixpkgs-unstable-nixexprs-tar-xz": {
-      "hash": "sha256-9SFCZkVcpDOV6unH5hVEy4+dB0rxMuUoBnDAO6vshac=",
       "type": "Tarball",
-      "url": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz"
+      "url": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz",
+      "hash": "sha256-9SFCZkVcpDOV6unH5hVEy4+dB0rxMuUoBnDAO6vshac="
     }
   },
   "version": 7

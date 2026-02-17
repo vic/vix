@@ -1,8 +1,8 @@
 {
-  vic.everywhere.nixos =
+  vic.everywhere.user =
     { pkgs, ... }:
     {
-      users.users.vic.packages = with pkgs; [
+      packages = with pkgs; [
         nh
         jq
         direnv

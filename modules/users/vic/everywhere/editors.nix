@@ -11,14 +11,13 @@
   };
 
   vic.everywhere.includes = [
-    (den.provides.unfree [ "vscode" ])
     (vix.vscode-server)
   ];
 
-  vic.everywhere.nixos =
+  vic.everywhere.user =
     { pkgs, system', ... }:
     {
-      users.users.vic.packages = with pkgs; [
+      packages = with pkgs; [
         vim
         vscode
         emacs-nox

@@ -6,10 +6,10 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  vic.everywhere.nixos =
+  vic.everywhere.user =
     { pkgs, system', ... }:
     {
-      users.users.vic.packages = [ (system' inputs.helium).packages.helium ];
+      packages = [ (system' inputs.helium).packages.helium ];
     };
 
 }
