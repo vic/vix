@@ -7,15 +7,17 @@ let
       specialArgs = { inherit inputs; };
     }).config;
 
-  withInputs =
-    inputs: outputs:
-    outputs (
-      inputs
-      // {
-        # Uncomment to override local checkouts for development
-        den = import ./../den/nix;
-      }
-    );
+  sources = import ./npins;
+  inputs = {
+    # Local checkouts — direct imports (no flake.nix at these paths)
+    den         = import ./../den/nix;
+    flake-file  = import ./../flake-file/modules;
+    import-tree = import ./../import-tree;
+    with-inputs = import ./../with-inputs;
+
+    # helium's flake.nix declares inputs.utils — redirect it to our pinned flake-utils
+    helium.inputs.utils.follows = "flake-utils";
+  };
 
 in
-import ./unflake.nix withInputs outputs
+inputs.with-inputs sources inputs outputs

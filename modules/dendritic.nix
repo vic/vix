@@ -2,7 +2,7 @@
 {
   imports = [
     inputs.den.flakeModule
-    inputs.flake-file.flakeModules.unflake
+    inputs.flake-file.flakeModules.npins
   ];
 
   flake-file.inputs = {
