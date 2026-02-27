@@ -17,8 +17,7 @@
       packages = with pkgs; [
         git
         jujutsu
-        # (system' inputs.jjui).packages.jjui # NO unflake self.inputs!
-        jjui
+        (system' inputs.jjui).packages.jjui
         (system' inputs.jjdag).packages.jjdag
       ];
     };

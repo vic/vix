@@ -6,13 +6,8 @@
   ...
 }:
 let
-  everywhere.description = ''
-    This aspect is vic's user base environment
-    on every host where vic exists.
-  '';
-
-  everywhere.__functor = den.lib.parametric;
-  everywhere.includes = [
+  includes = [
+    den.provides.define-user
     den.provides.primary-user
     (den.provides.user-shell "fish")
     (vix.autologin)
@@ -22,12 +17,13 @@ let
   ];
 in
 {
-  vic = { inherit everywhere; };
-
-  den.aspects.vic.includes = [ vic.everywhere ];
   den.aspects.vic.user.description = "El Oeiuwq";
+  den.aspects.vic.includes = [ vic.everywhere ];
 
+  den.aspects.nargun.nixos.documentation.enable = false;
   den.aspects.nargun.includes = [
     (den.provides.unfree [ "vscode" ])
   ];
+
+  vic.everywhere = den.lib.parametric { inherit includes; };
 }

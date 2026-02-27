@@ -1,6 +1,6 @@
 { lib, ... }:
-{
-  dev.apps.facter =
+let
+  facter =
     pkgs:
     pkgs.writeShellApplication {
       name = "facter";
@@ -13,4 +13,7 @@
         mv facter.json modules/hosts/"$host"/facter.json
       '';
     };
+in
+{
+  dev.apps = pkgs: [ (facter pkgs) ];
 }

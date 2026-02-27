@@ -1,8 +1,8 @@
 # Usage: nix-shell.
 # or in .envrc: `use nix`
 let
-  inherit (outputs) inputs dev;
   outputs = import ./.;
-  shell = dev.sh (import inputs.nixpkgs { });
+  inherit (outputs) inputs dev;
+  pkgs = import inputs.nixpkgs { };
 in
-shell
+dev.sh pkgs

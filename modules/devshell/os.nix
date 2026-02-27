@@ -1,14 +1,10 @@
+{ inputs, den, ... }:
+let
+  apps = den.lib.nh.denApps {
+    fromFlake = false;
+    outPrefix = [ "flake" ];
+  };
+in
 {
-  dev.apps.nh = pkgs: pkgs.nh;
-  dev.apps.os =
-    pkgs:
-    pkgs.writeShellApplication {
-      name = "os";
-      text = ''
-        set -euo pipefail
-        task="''${1:-build}"
-        host="''${2:-$(hostname -s)}"
-        nh os "$task" --file ./default.nix flake.nixosConfigurations."$host" "''${@:3}"
-      '';
-    };
+  dev.apps = apps;
 }

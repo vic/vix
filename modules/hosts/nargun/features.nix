@@ -5,7 +5,6 @@ let
     mexico
     niri-desktop
     xfce-desktop
-    gnome-desktop
     bluetooth
     hw-detect
     hostname

@@ -6,12 +6,23 @@
   ];
 
   flake-file.inputs = {
-    nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz";
-    nixpkgs-lib.follows = "nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     den.url = "github:vic/den";
     import-tree.url = "github:vic/import-tree";
     flake-file.url = "github:vic/flake-file";
     flake-aspects.url = "github:vic/flake-aspects";
+    with-inputs.url = "github:vic/with-inputs";
+
+    # Dont need these
+    nixpkgs-lib.follows = "";
+    flake-parts.follows = "";
+    flake-utils.follows = "";
+    flake-compat.follows = "";
+    systems.follows = "";
+
+    # needed by some deps like jjui and others
+    fp.url = "github:hercules-ci/flake-parts";
   };
+
 }

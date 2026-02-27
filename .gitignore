@@ -1,3 +1,4 @@
-inputs.nix
 *.cow*
+flake.lock
+inputs.nix
 result/
