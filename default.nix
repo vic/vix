@@ -14,9 +14,6 @@ let
     flake-file  = import ./../flake-file/modules;
     import-tree = import ./../import-tree;
     with-inputs = import ./../with-inputs;
-
-    # helium's flake.nix declares inputs.utils — redirect it to our pinned flake-utils
-    helium.inputs.utils.follows = "flake-utils";
   };
 
 in
