@@ -15,7 +15,16 @@
     pkgs.writeShellApplication {
       name = "write-npins";
       text = ''
-        write-unflake --backend npins "$@"
+        nix-shell npins.nix -A flake-file.sh --run write-npins
+      '';
+    };
+
+  dev.apps.write-deps =
+    pkgs:
+    pkgs.writeShellApplication {
+      name = "write-deps";
+      text = ''
+        nix-shell npins.nix -A flake-file.sh --run write-deps
       '';
     };
 

@@ -7,7 +7,7 @@ let
       specialArgs = { inherit inputs; };
     }).config;
 
-  sources = import ./npins;
+  sources = import ./deps.nix;
   inputs = {
     # Local checkouts — direct imports (no flake.nix at these paths)
     den         = import ./../den/nix;

@@ -8,7 +8,7 @@
         set -euo pipefail
         task="''${1:-build}"
         host="''${2:-$(hostname -s)}"
-        nh os "$task" --file . flake.nixosConfigurations."$host" "''${@:3}"
+        nh os "$task" --file ./default.nix flake.nixosConfigurations."$host" "''${@:3}"
       '';
     };
 }

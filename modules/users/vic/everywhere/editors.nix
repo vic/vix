@@ -10,6 +10,11 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  flake-file.inputs.neomacs = {
+    url = "github:eval-exec/neomacs";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   vic.everywhere.includes = [
     (vix.vscode-server)
   ];
