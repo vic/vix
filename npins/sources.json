@@ -9,9 +9,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "371f4cb914d8dc5646e95ef3413f95bfc97495ef",
-      "url": "https://github.com/jacopone/antigravity-nix/archive/371f4cb914d8dc5646e95ef3413f95bfc97495ef.tar.gz",
-      "hash": "sha256-+3HofR35IJ2qETWVCSOqBVE7AEn3f0VVsN2kw4LdRTk="
+      "revision": "a3f1dbd5bfb73fc8cdb620fb501ee3e40b9eaaba",
+      "url": "https://github.com/jacopone/antigravity-nix/archive/a3f1dbd5bfb73fc8cdb620fb501ee3e40b9eaaba.tar.gz",
+      "hash": "sha256-txrIbUwypE+ji7t0mnDVlru2uANp9jCt2SVNfMppdGQ="
     },
     "crane": {
       "type": "GitRelease",
@@ -38,9 +38,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "679b9e8627634cfa33602557249b7d086c255ba4",
-      "url": "https://github.com/vic/den/archive/679b9e8627634cfa33602557249b7d086c255ba4.tar.gz",
-      "hash": "sha256-YbWJ0S+rCAIsNl/7289C++XTU0PjQVdqf2BZwcOeDQM="
+      "revision": "e62bc38bd0de8c4b86574b040925ed10c94707ac",
+      "url": "https://github.com/vic/den/archive/e62bc38bd0de8c4b86574b040925ed10c94707ac.tar.gz",
+      "hash": "sha256-mDBBsZkWlX2Q9IOxSxJzjRUErZhKizs4LuIRAznYeNw="
     },
     "enthium": {
       "type": "GitRelease",
@@ -119,9 +119,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "c6ebc59c85ee54cfb68163d06d1a3149ce0fe431",
-      "url": "https://github.com/vic/import-tree/archive/c6ebc59c85ee54cfb68163d06d1a3149ce0fe431.tar.gz",
-      "hash": "sha256-6apV5N1F5tTD8JY9AUGnkWmy56HqDPn4MNFRsq4Rg+s="
+      "revision": "c41e7d58045f9057880b0d85e1152d6a4430dbf1",
+      "url": "https://github.com/vic/import-tree/archive/c41e7d58045f9057880b0d85e1152d6a4430dbf1.tar.gz",
+      "hash": "sha256-BtZ2dtkBdSUnFPPFc+n0kcMbgaTxzFNPv2iaO326Ffg="
     },
     "jjdag": {
       "type": "Git",
@@ -145,9 +145,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "6c6f195c32c429ee438bb74596a476c9ef0e6058",
-      "url": "https://github.com/idursun/jjui/archive/6c6f195c32c429ee438bb74596a476c9ef0e6058.tar.gz",
-      "hash": "sha256-24V4U94ch+gCJ+2TahLoSOUTZVPteg0JLtFrxxqYWmE="
+      "revision": "2d1d51af2aee71bb42ae8d18927b6267120664ba",
+      "url": "https://github.com/idursun/jjui/archive/2d1d51af2aee71bb42ae8d18927b6267120664ba.tar.gz",
+      "hash": "sha256-phudVZXovYnBglCYu+TFbNWuOeP+3AOk6vL8BbnugxY="
     },
     "neomacs": {
       "type": "GitRelease",
@@ -242,9 +242,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "f600ea449c7b5bb596fa1cf21c871cc5b9e31316",
-      "url": "https://github.com/oxalica/rust-overlay/archive/f600ea449c7b5bb596fa1cf21c871cc5b9e31316.tar.gz",
-      "hash": "sha256-zJhgAGnbVKeBMJOb9ctZm4BGS/Rnrz+5lfSXTVah4HQ="
+      "revision": "1a9ddeb45c5751b800331363703641b84d1f41f0",
+      "url": "https://github.com/oxalica/rust-overlay/archive/1a9ddeb45c5751b800331363703641b84d1f41f0.tar.gz",
+      "hash": "sha256-vXCTasEzzTTd0ZGEuyle20H2hjRom66JeNr7i2ktHD0="
     },
     "vscode-server": {
       "type": "Git",

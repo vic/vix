@@ -28,6 +28,7 @@
         emacs-nox
         helix
         (system' inputs.antigravity).packages.default
+        (system' inputs.neomacs).packages.default
       ];
     };
 }

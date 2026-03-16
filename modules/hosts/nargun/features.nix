@@ -10,7 +10,7 @@ let
     hostname
     macos-keys
     networking
-    vix.system'
+    (den.lib.perHost vix.system')
   ];
 in
 {
