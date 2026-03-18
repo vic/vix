@@ -7,6 +7,19 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "agent_servers": {
+    "github-copilot-cli": {
+      "type": "registry"
+    }
+  },
+  "agent": {
+    "always_allow_tool_actions": true,
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "grok-code-fast-1"
+    },
+    "model_parameters": []
+  },
   "edit_predictions": {
     "mode": "subtle"
   },
@@ -30,7 +43,7 @@
   "buffer_font_size": 16,
   "theme": {
     "mode": "system",
-    "light": "One Light",
+    "light": "One Dark",
     "dark": "One Dark"
   }
 }

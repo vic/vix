@@ -1,0 +1,16 @@
+name: deps-update
+on:
+  repository_dispatch:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 5 * * *"
+jobs:
+  createPullRequest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v30
+      - name: deps update
+        env:
+          GH_TOKEN: ${{ secrets.PAT }}
+        run: nix-shell --run gh-deps-update

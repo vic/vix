@@ -1,6 +1,4 @@
 {
-  lib,
-  inputs,
   ...
 }:
 {
@@ -32,15 +30,15 @@
   vix-shell.body = "nix shell --inputs-from $HOME/.nix-out/nixpkgs";
   vix-nixpkg-search.description = "Nix search on vix's nixpkgs input";
   vix-nixpkg-search.body = "nix search --inputs-from $HOME/.nix-out/vix nixpkgs $argv";
-  rg-vix-inputs.description = "Search on vix flake inputs";
-  rg-vix-inputs.body =
-    let
-      maybeFlakePaths = f: if builtins.hasAttr "inputs" f then flakePaths f else [ ];
-      flakePaths =
-        flake: [ flake.outPath ] ++ lib.flatten (lib.mapAttrsToList (_: maybeFlakePaths) flake.inputs);
-      paths = builtins.concatStringsSep " " (flakePaths inputs.self);
-    in
-    "rg $argv ${paths}";
+  # rg-vix-inputs.description = "Search on vix flake inputs";
+  #rg-vix-inputs.body =
+  #  let
+  #    maybeFlakePaths = f: if builtins.hasAttr "inputs" f then flakePaths f else [ ];
+  #    flakePaths =
+  #      flake: [ flake.outPath ] ++ lib.flatten (lib.mapAttrsToList (_: maybeFlakePaths) flake.inputs);
+  #    paths = builtins.concatStringsSep " " (flakePaths inputs.self);
+  #  in
+  #  "rg $argv ${paths}";
   rg-vix.description = "Search on current vix";
   rg-vix.body = "rg $argv $HOME/.nix-out/vix";
   rg-nixpkgs.description = "Search on current nixpkgs";

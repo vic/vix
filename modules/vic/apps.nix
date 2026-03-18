@@ -1,11 +1,5 @@
 { inputs, ... }:
 let
-  flake.modules.homeManager.vic.imports = [
-    nonBombadil
-    anywhere
-    linux
-  ];
-
   linux =
     { lib, pkgs, ... }:
     lib.mkIf (pkgs.stdenvNoCC.isLinux) {
@@ -17,7 +11,7 @@ let
         pkgs.qutebrowser
         pkgs.multimarkdown
         pkgs.gemini-cli-bin
-        # perSystem.self.copilot-language-server # tab tab tab
+        inputs.helium.packages.${pkgs.stdenvNoCC.hostPlatform.system}.default
       ];
     };
 
@@ -30,14 +24,11 @@ let
     }:
     lib.mkIf (pkgs.stdenvNoCC.isLinux && osConfig.networking.hostName != "bombadil") {
       home.packages = [
-        #perSystem.nox.default
-        #perSystem.self.devicon-lookup # for eee
-        #perSystem.self.leader
-        pkgs.yazi # file tui
-        pkgs.zoxide # cd
+        pkgs.yazi
+        pkgs.zoxide
         pkgs.nix-search-cli
-        pkgs.nixd # lsp
-        pkgs.nixfmt-rfc-style
+        pkgs.nixd
+        pkgs.nixfmt
         pkgs.ispell
         pkgs.gh
       ];
@@ -46,24 +37,19 @@ let
   anywhere =
     { pkgs, ... }:
     let
-      selfpkgs = inputs.self.packages.${pkgs.system};
+      selfpkgs = inputs.self.packages.${pkgs.stdenvNoCC.hostPlatform.system};
     in
     {
       programs.nh.enable = true;
       programs.home-manager.enable = true;
-
       home.packages = [
-        #inputs.nix-versions.packages.${pkgs.system}.default
-        # pkgs.tree
         pkgs.fzf
-        pkgs.ripgrep # grep
-        pkgs.bat # cat
+        pkgs.ripgrep
+        pkgs.bat
         pkgs.bottom
         pkgs.htop
-        pkgs.eza # ls
-        pkgs.fd # find
-        # pkgs.lazygit # no magit
-        # pkgs.tig # alucard
+        pkgs.eza
+        pkgs.fd
         pkgs.cachix
         pkgs.jq
         pkgs.home-manager
@@ -73,8 +59,13 @@ let
         selfpkgs.vic-sops-rotate
       ];
     };
-
 in
 {
-  inherit flake;
+  flake-file.inputs.helium.url = "github:vikingnope/helium-browser-nix-flake";
+
+  vic.apps.homeManager.imports = [
+    nonBombadil
+    anywhere
+    linux
+  ];
 }
