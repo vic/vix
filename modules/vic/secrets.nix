@@ -1,29 +1,19 @@
 { inputs, ... }:
-let
-
+{
   flake-file.inputs.sops-nix.url = "github:Mic92/sops-nix";
+  flake-file.inputs.sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-  flake.modules.homeManager.vic =
+  vic.secrets.homeManager =
+    { config, pkgs, ... }:
     {
-      config,
-      pkgs,
-      ...
-    }:
-    {
-
-      imports = [
-        inputs.sops-nix.homeManagerModules.sops
-      ];
-
+      imports = [ inputs.sops-nix.homeManagerModules.sops ];
       home.packages = [ pkgs.sops ];
-
       sops = {
         age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
         age.sshKeyPaths = [ ];
         age.generateKey = false;
         defaultSopsFile = ./secrets.yaml;
         validateSopsFiles = true;
-
         secrets = {
           "hello" = { };
           "groq_api_key" = { };
@@ -48,7 +38,6 @@ let
             sopsFile = ./secrets/localhost_run;
           };
         };
-
         templates = {
           "hello.toml".content = ''
             hello = "Wooo ${config.sops.placeholder.hello} Hoo";
@@ -62,10 +51,5 @@ let
           '';
         };
       };
-
     };
-in
-{
-  inherit flake-file;
-  inherit flake;
 }

@@ -4,7 +4,9 @@ on:
   pull_request:
   push:
     branches: [main]
-
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   find-systems:
     name: find-systems
@@ -16,13 +18,13 @@ jobs:
       darwin_intel: ${{ steps.finder.outputs.darwin_intel }}
     steps:
       - uses: cachix/install-nix-action@v31
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - id: finder
         run: |
-          nixos=$(nix eval --accept-flake-config --quiet .#.lib.hostsBySystem --apply 'f: f "x86_64-linux"' --json)
-          nixos_arm=$(nix eval --accept-flake-config --quiet .#.lib.hostsBySystem --apply 'f: f "aarch64-linux"' --json)
-          darwin_arm=$(nix eval --accept-flake-config --quiet .#.lib.hostsBySystem --apply 'f: f "aarch64-darwin"' --json)
-          darwin_intel=$(nix eval --accept-flake-config --quiet .#.lib.hostsBySystem --apply 'f: f "x86_64-darwin"' --json)
+          nixos=$(nix-instantiate --strict --json --eval -E '(import ./.).lib.hostsBySystem "x86_64-linux"')
+          nixos_arm=$(nix-instantiate --strict --json --eval -E '(import ./.).lib.hostsBySystem "aarch64-linux"')
+          darwin_arm=$(nix-instantiate --strict --json --eval -E '(import ./.).lib.hostsBySystem "aarch64-darwin"')
+          darwin_intel=$(nix-instantiate --strict --json --eval -E '(import ./.).lib.hostsBySystem "x86_64-darwin"')
 
           echo "nixos=$nixos"
           echo "nixos_arm=$nixos_arm"
@@ -43,12 +45,12 @@ jobs:
         host: ${{ fromJSON(needs.find-systems.outputs.nixos) }}
     steps:
       - uses: cachix/install-nix-action@v31
-      - uses: actions/checkout@v4
-      - uses: cachix/cachix-action@v16
+      - uses: actions/checkout@v6
+      - uses: cachix/cachix-action@v17
         with:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix build --accept-flake-config --print-out-paths .#.nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
+      - run: nix-shell --run 'nh os build -q --file . nixosConfigurations.${{matrix.host}}'
       - run: |
           echo "<code>$(readlink -f ./result)</code>" >> "$GITHUB_STEP_SUMMARY"
 
@@ -61,12 +63,12 @@ jobs:
         host: ${{ fromJSON(needs.find-systems.outputs.nixos_arm) }}
     steps:
       - uses: cachix/install-nix-action@v31
-      - uses: actions/checkout@v4
-      - uses: cachix/cachix-action@v16
+      - uses: actions/checkout@v6
+      - uses: cachix/cachix-action@v17
         with:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix build --accept-flake-config --print-out-paths .#.nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
+      - run: nix-shell --run 'nh os build -q --file . nixosConfigurations.${{matrix.host}}'
       - run: |
           echo "<code>$(readlink -f ./result)</code>" >> "$GITHUB_STEP_SUMMARY"
 
@@ -78,30 +80,30 @@ jobs:
       matrix:
         host: ${{ fromJSON(needs.find-systems.outputs.darwin_arm) }}
     steps:
-      - uses: cachix/install-nix-action@v31
-      - uses: actions/checkout@v4
-      - uses: cachix/cachix-action@v16
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: actions/checkout@v6
+      - uses: cachix/cachix-action@v17
         with:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix build --accept-flake-config  --print-out-paths .#.darwinConfigurations.${{ matrix.host }}.config.system.build.toplevel
+      - run: nix-shell --run 'nh os build -q --file . darwinConfigurations.${{matrix.host}}'
       - run: |
           echo "<code>$(readlink -f ./result)</code>" >> "$GITHUB_STEP_SUMMARY"
 
   x86_64-darwin:
     name: ${{ matrix.host }} x86_64-darwin
     needs: [find-systems]
-    runs-on: macos-13
+    runs-on: macos-15-intel
     strategy:
       matrix:
         host: ${{ fromJSON(needs.find-systems.outputs.darwin_intel) }}
     steps:
-      - uses: cachix/install-nix-action@v31
-      - uses: actions/checkout@v4
-      - uses: cachix/cachix-action@v16
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: actions/checkout@v6
+      - uses: cachix/cachix-action@v17
         with:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix build --accept-flake-config --print-out-paths .#.darwinConfigurations.${{ matrix.host }}.config.system.build.toplevel
+      - run: nix-shell --run 'nh os build -q --file . darwinConfigurations.${{matrix.host}}'
       - run: |
           echo "<code>$(readlink -f ./result)</code>" >> "$GITHUB_STEP_SUMMARY"
