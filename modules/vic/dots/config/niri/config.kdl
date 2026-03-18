@@ -74,7 +74,7 @@ input {
     // focus-follows-mouse max-scroll-amount="0%"
     focus-follows-mouse
     workspace-auto-back-and-forth
-    // mod-key "Alt"
+ // mod-key "Alt"
     // mod-key-nested "Super"
 }
 switch-events {
@@ -85,10 +85,10 @@ switch-events {
         spawn "notify-send" "The laptop lid is open!"
     }
 }
-
 // lenovo
 output "Chimei Innolux Corporation 0x140A Unknown" {
-  // scale 1.0
+ // scale 1.0
+
 }
 // You can configure outputs by their name, which you can find
 // by running `niri msg outputs` while inside a niri instance.
@@ -849,7 +849,7 @@ binds {
     Ctrl+Alt+Delete {
         quit
     }
-    // Powers off the monitors. To turn them back on, do any input like
+ // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
     // Mod+Alt+P {
     //     power-off-monitors

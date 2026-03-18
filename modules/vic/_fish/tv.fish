@@ -54,7 +54,6 @@ function __tv_complete -d 'fish completion widget with tv'
             case '*'
                 commandline -t -- $r
         end
-        commandline -i ' '
     end
     commandline -f repaint
 end

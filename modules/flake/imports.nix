@@ -1,12 +1,17 @@
 { inputs, ... }:
 {
   imports = [
-    inputs.devshell.flakeModule
-    inputs.home-manager.flakeModules.home-manager
+    inputs.treefmt-nix.flakeModule
   ];
 
   flake-file.inputs = {
-    devshell.url = "github:numtide/devshell";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
+    treefmt-nix.url = "github:numtide/treefmt-nix";
     home-manager.url = "github:nix-community/home-manager";
+
+    # for doom-emacs SPC
+    blueprint.url = "github:numtide/blueprint";
   };
 }

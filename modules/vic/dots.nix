@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.vic =
+  vic.dots.homeManager =
     { config, pkgs, ... }:
     let
       dotsLink =
@@ -14,12 +14,10 @@
           exit 1
         fi
       '';
-
       home.file.".ssh" = {
         recursive = true;
         source = ./dots/ssh;
       };
-
       home.file.".config/niri".source = dotsLink "config/niri";
       home.file.".config/nvim".source = dotsLink "config/nvim";
       home.file.".config/astrovim".source = dotsLink "config/astrovim";
@@ -29,18 +27,15 @@
       home.file.".config/zed".source = dotsLink "config/zed";
       home.file.".config/wezterm".source = dotsLink "config/wezterm";
       home.file.".config/ghostty".source = dotsLink "config/ghostty";
-
       home.file.".config/Code/User/settings.json".source = dotsLink "config/Code/User/settings.json";
       home.file.".config/Code/User/keybindings.json".source =
         dotsLink "config/Code/User/keybindings.json";
       home.file.".vscode/extensions/extensions.json".source =
         dotsLink "vscode/extensions/extensions-${pkgs.stdenv.hostPlatform.uname.system}.json";
-
       home.file.".config/Cursor/User/settings.json".source = dotsLink "config/Code/User/settings.json";
       home.file.".config/Cursor/User/keybindings.json".source =
         dotsLink "config/Code/User/keybindings.json";
       home.file.".cursor/extensions/extensions.json".source =
         dotsLink "cursor/extensions/extensions-${pkgs.stdenv.hostPlatform.uname.system}.json";
-
     };
 }
