@@ -1,13 +1,10 @@
-name: nix-fmt
-
+name: fmt
 on:
   pull_request:
   push:
-    branches: [main]
-
 jobs:
-  nix-fmt:
-    name: nix-fmt
+  fmt:
+    name: fmt
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,4 +13,4 @@ jobs:
         with:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix fmt -- --ci
+      - run: nix-shell --run 'fmtt --ci'

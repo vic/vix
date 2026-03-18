@@ -10,6 +10,6 @@
   vg = ''vim -c "lua Snacks.picker.grep()"'';
   vr = ''vim -c "lua Snacks.picker.recent()"'';
   vd = ''vim -c "DiffEditor $left $right $output"'';
-  av = ''astrovim'';
-  lv = ''lazyvim'';
+  av = "astrovim";
+  lv = "lazyvim";
 }

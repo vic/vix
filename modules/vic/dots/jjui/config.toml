@@ -1,0 +1,5 @@
+[ui.tracer]
+enabled = true
+
+# [ui]
+# theme = "base16-rebecca"

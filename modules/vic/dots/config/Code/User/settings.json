@@ -104,7 +104,6 @@
   "geminicodeassist.inlineSuggestions.enableAuto": false,
   "git.blame.statusBarItem.enabled": false,
   "git.confirmSync": false,
-  "git.enabled": false,
   "github.copilot.chat.agent.thinkingTool": true,
   "github.copilot.chat.codesearch.enabled": true,
   "github.copilot.chat.editor.temporalContext.enabled": true,
@@ -326,5 +325,12 @@
   "remote.SSH.configFile": "/home/vic/.ssh/config.local",
   "file-browser.labelIgnoredFiles": true,
   "file-browser.hideDotfiles": false,
-  "workbench.preferredLightColorTheme": "Palenight Italic"
+  "chat.emptyState.history.enabled": true,
+  "semanticdiff.defaultDiffViewer": true,
+  "semanticdiff.closeOriginalTab": true,
+  "workbench.preferredLightColorTheme": "Visual Studio Dark",
+  "workbench.colorTheme": "Monokai Pro Light (Filter Sun)",
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "chat.viewSessions.orientation": "stacked",
+  "typescript.suggest.completeFunctionCalls": true
 }
