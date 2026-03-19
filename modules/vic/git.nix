@@ -1,4 +1,6 @@
+{ vic, ... }:
 {
+  vic.everywhere.includes = [ vic.git ];
   vic.git.homeManager =
     { pkgs, ... }:
     {

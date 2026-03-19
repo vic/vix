@@ -13,3 +13,6 @@ build host=hostname *args:
 switch host=hostname *args:
   {{hostname}} switch {{args}}
   
+ci test="" *args:
+  nix-unit --expr "(import ./.).ci \"{{system}}\" \"{{test}}\"" {{args}}
+  

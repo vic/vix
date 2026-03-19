@@ -1,8 +1,8 @@
-{ inputs, ... }:
+{ vic, inputs, ... }:
 {
   flake-file.inputs.sops-nix.url = "github:Mic92/sops-nix";
-  flake-file.inputs.sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
+  vic.everywhere.includes = [ vic.secrets ];
   vic.secrets.homeManager =
     { config, pkgs, ... }:
     {

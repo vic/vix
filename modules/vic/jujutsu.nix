@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ vic, inputs, ... }:
 let
   jj-settings =
     { pkgs }:
@@ -156,6 +156,7 @@ in
 {
   flake-file.inputs.jjui.url = "github:idursun/jjui";
 
+  vic.everywhere.includes = [ vic.jujutsu ];
   vic.jujutsu.homeManager =
     { pkgs, ... }:
     let

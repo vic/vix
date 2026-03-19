@@ -1,5 +1,6 @@
-{ inputs, ... }:
+{ vic, inputs, ... }:
 {
+  vic.everywhere.includes = [ vic.fish ];
   vic.fish.homeManager =
     { pkgs, ... }:
     let

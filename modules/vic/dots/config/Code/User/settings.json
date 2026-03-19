@@ -332,5 +332,10 @@
   "workbench.colorTheme": "Monokai Pro Light (Filter Sun)",
   "workbench.secondarySideBar.defaultVisibility": "hidden",
   "chat.viewSessions.orientation": "stacked",
-  "typescript.suggest.completeFunctionCalls": true
+  "typescript.suggest.completeFunctionCalls": true,
+  "js/ts.updateImportsOnPaste.enabled": false,
+  "js/ts.updateImportsOnFileMove.enabled": "never",
+  "js/ts.suggest.includeCompletionsForImportStatements": false,
+  "js/ts.suggest.autoImports": false,
+  "js/ts.suggest.paths": false
 }

@@ -1,4 +1,6 @@
+{ vic, ... }:
 {
+  vic.everywhere.includes = [ vic.dots ];
   vic.dots.homeManager =
     { config, pkgs, ... }:
     let

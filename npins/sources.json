@@ -198,6 +198,19 @@
       "url": "https://github.com/nix-community/nix-index-database/archive/55b588747fa3d7fc351a11831c4b874dab992862.tar.gz",
       "hash": "sha256-gdYe9wTPl4ignDyXUl1LlICWj41+S0GB5lG1fKP17+A="
     },
+    "nix-unit": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "nix-unit"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "1c9ab50554eed0b768f9e5b6f646d63c9673f0f7",
+      "url": "https://github.com/nix-community/nix-unit/archive/1c9ab50554eed0b768f9e5b6f646d63c9673f0f7.tar.gz",
+      "hash": "sha256-hRADkHjNt41+JUHw2EiSkMaL4owL83g5ZppjYUdF/Dc="
+    },
     "nixos-wsl": {
       "type": "Git",
       "repository": {

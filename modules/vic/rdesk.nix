@@ -1,16 +1,24 @@
-{ inputs, ... }:
+{ vic, inputs, ... }:
 {
-  vic.rdesk.homeManager =
-    { pkgs, lib, ... }:
-    {
-      home.packages =
-        lib.optionals pkgs.stdenvNoCC.isLinux [
-          pkgs.kdePackages.krdc
-          pkgs.xpra
-        ]
-        ++ [
+  vic.everywhere.includes = [ vic.rdesk ];
+  vic.rdesk = {
+
+    homeManager =
+      { pkgs, ... }:
+      {
+        home.packages = [
           inputs.self.packages.${pkgs.stdenvNoCC.hostPlatform.system}.vic-edge
           pkgs.gsocket
         ];
-    };
+      };
+
+    hmLinux =
+      { pkgs, ... }:
+      {
+        home.packages = [
+          pkgs.kdePackages.krdc
+          pkgs.xpra
+        ];
+      };
+  };
 }

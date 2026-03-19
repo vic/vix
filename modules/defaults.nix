@@ -11,4 +11,6 @@
       den.provides.inputs'
     ];
   };
+
+  den.ctx.user.includes = [ den._.mutual-provider ];
 }
