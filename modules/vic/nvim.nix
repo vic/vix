@@ -20,9 +20,22 @@
           };
           text = ''exec nvim "$@"'';
         };
+
+      neovide_variant = 
+        name: nvim:
+        pkgs.writeShellApplication {
+          inherit name;
+          runtimeInputs = [ pkgs.neovide ];
+          text = ''exec neovide --neovim-bin ${lib.getExe nvim} "$@"'';
+        };
+
       astrovim = vim_variant "astrovim" [ ];
       lazyvim = vim_variant "lazyvim" [ ];
       vscode-vim = vim_variant "vscode-vim" [ ];
+
+      vim-gui = neovide_variant "vim-gui" pkgs.neovim;
+      lazyvim-gui = neovide_variant "lazyvim-gui" lazyvim;
+      astrovim-gui = neovide_variant "astrovim-gui" astrovim;
     in
     {
       home.packages = [
@@ -30,8 +43,12 @@
         vscode-vim
         astrovim
         pkgs.neovim-remote
+        pkgs.neovide
+        vim-gui
+        lazyvim-gui
+        astrovim-gui
       ];
-      home.sessionVariables.VISUAL = "vim";
+      home.sessionVariables.VISUAL = "vim-gui";
       home.sessionVariables.EDITOR = "vim";
       programs.neovim.enable = true;
       programs.neovim.viAlias = true;
