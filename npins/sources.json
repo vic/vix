@@ -48,9 +48,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "899fd3fbfe110150a13a43ac35b4f2e015cc467d",
-      "url": "https://github.com/vic/den/archive/899fd3fbfe110150a13a43ac35b4f2e015cc467d.tar.gz",
-      "hash": "sha256-bgCsOp3lsHuEVPFKrbJsdWhbaTvqr9jkGOi7sfnqZwI="
+      "revision": "35542c55f36f53203864f6449862d8d9e0bcda10",
+      "url": "https://github.com/vic/den/archive/35542c55f36f53203864f6449862d8d9e0bcda10.tar.gz",
+      "hash": "sha256-1mgL8P5XYVQeYMwZ7QRn2vFQYu7iNGTLaYAgllZaef8="
     },
     "doom-emacs": {
       "type": "Git",
