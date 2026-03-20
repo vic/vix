@@ -48,9 +48,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "35542c55f36f53203864f6449862d8d9e0bcda10",
-      "url": "https://github.com/vic/den/archive/35542c55f36f53203864f6449862d8d9e0bcda10.tar.gz",
-      "hash": "sha256-1mgL8P5XYVQeYMwZ7QRn2vFQYu7iNGTLaYAgllZaef8="
+      "revision": "cfa2d158dc33d585264086691becccfdaccce184",
+      "url": "https://github.com/vic/den/archive/cfa2d158dc33d585264086691becccfdaccce184.tar.gz",
+      "hash": "sha256-VVTTAHsnP2BHWzfYNdJ9ptj6Zcbl14kWsA+RrsGeg5g="
     },
     "doom-emacs": {
       "type": "Git",
@@ -61,9 +61,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "8b475fcb2574286d7f4413c22cc7902d80d21ced",
-      "url": "https://github.com/doomemacs/doomemacs/archive/8b475fcb2574286d7f4413c22cc7902d80d21ced.tar.gz",
-      "hash": "sha256-gB8MjuySf5aTxLv+NgvmL/5IKFk3EjFe+cvum1mE8DM="
+      "revision": "a629b154cc713b4ef7f77fca5a172e436111f72a",
+      "url": "https://github.com/doomemacs/doomemacs/archive/a629b154cc713b4ef7f77fca5a172e436111f72a.tar.gz",
+      "hash": "sha256-r4vyXaVreYRAL9R4qTPSG9Lecpfgew1o4THtkMf+7jM="
     },
     "edgevpn": {
       "type": "Git",
@@ -155,9 +155,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "ecf019baf47df009937b5f8c4604cee10f410a76",
-      "url": "https://github.com/nix-community/home-manager/archive/ecf019baf47df009937b5f8c4604cee10f410a76.tar.gz",
-      "hash": "sha256-PqeDgmyI/Df3/Mv0B81FP/ZC4KuO88YRQF5ZfeFyA4k="
+      "revision": "9d3c1d636e7b8ab10f357cd9bee653cd400437de",
+      "url": "https://github.com/nix-community/home-manager/archive/9d3c1d636e7b8ab10f357cd9bee653cd400437de.tar.gz",
+      "hash": "sha256-nf9pgktDE4E2TCavUT1vh3Nd/tfKixL1BK6P32Zp3hI="
     },
     "import-tree": {
       "type": "Git",
@@ -181,9 +181,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "2d1d51af2aee71bb42ae8d18927b6267120664ba",
-      "url": "https://github.com/idursun/jjui/archive/2d1d51af2aee71bb42ae8d18927b6267120664ba.tar.gz",
-      "hash": "sha256-phudVZXovYnBglCYu+TFbNWuOeP+3AOk6vL8BbnugxY="
+      "revision": "e7be3e02aa52f2aae5dee31ea3b1ab87e9c4737c",
+      "url": "https://github.com/idursun/jjui/archive/e7be3e02aa52f2aae5dee31ea3b1ab87e9c4737c.tar.gz",
+      "hash": "sha256-66Il8ZG43KOFzGuQYAJV1n2koYghRXFGUA59RQYocH0="
     },
     "nix-index-database": {
       "type": "Git",
