@@ -2,15 +2,20 @@
 {
   vic.everywhere.includes = [ vic.terminals ];
   vic.terminals = {
-
-    homeManager =
+    hm =
       { pkgs, ... }:
       {
         home.packages = [
-          pkgs.ghostty
           pkgs.wezterm
         ];
       };
+
+    hmLinux =
+      { pkgs, ... }:
+      {
+        home.packages = [ pkgs.ghostty ];
+      };
+
 
     hmDarwin =
       { pkgs, ... }:
