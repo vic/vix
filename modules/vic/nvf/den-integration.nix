@@ -5,8 +5,6 @@
   ...
 }:
 {
-  flake-file.inputs.nvf.url = "github:notashelf/nvf";
-
   den.lib.nvf.package =
     pkgs: vimAspect: ctx:
     (inputs.nvf.lib.neovimConfiguration {
@@ -17,6 +15,7 @@
   den.lib.nvf.module =
     vimAspect: ctx:
     let
+      # a custom `vim` class that forwards to `nvf.vim`
       vimClass =
         { aspect-chain }:
         den._.forward {
@@ -28,10 +27,10 @@
           adaptArgs = lib.id;
         };
 
+      # workaround NVF `options` option
+      # see: https://github.com/NotAShelf/nvf/issues/1469
       vimOpts.nvf = _: {
-        imports = [
-          (lib.mkAliasOptionModule [ "vim" "opts" ] [ "vim" "options" ])
-        ];
+        imports = [ (lib.mkAliasOptionModule [ "vim" "opts" ] [ "vim" "options" ]) ];
       };
 
       aspect = den.lib.parametric.fixedTo ctx {

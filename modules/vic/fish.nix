@@ -5,6 +5,8 @@
   ...
 }:
 {
+  perSystem.treefmt.programs.fish_indent.enable = true;
+
   vic.everywhere.includes = [ vic.fish ];
 
   vic.fish.includes = [ (den.provides.user-shell "fish") ];

@@ -185,6 +185,19 @@
       "url": "https://github.com/idursun/jjui/archive/97958887d26c1425b4d9469c526acb7c5039306f.tar.gz",
       "hash": "sha256-Uw2O2UPAk5ISE8yR29UUN9ALHV3ArydHxgbxr0dmWfA="
     },
+    "mnw": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Gerg-L",
+        "repo": "mnw"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "6bd6ab9968c2432c78db4a91c9b1e84dd84fe6b3",
+      "url": "https://github.com/Gerg-L/mnw/archive/6bd6ab9968c2432c78db4a91c9b1e84dd84fe6b3.tar.gz",
+      "hash": "sha256-mR8GDvGPu1QcI5Ft5lV2CIIh5Og7zRylts+XY3fa/K4="
+    },
     "nix-index-database": {
       "type": "Git",
       "repository": {
@@ -275,6 +288,19 @@
       "revision": "71b125cd05fbfd78cab3e070b73544abe24c5016",
       "url": "https://github.com/numtide/treefmt-nix/archive/71b125cd05fbfd78cab3e070b73544abe24c5016.tar.gz",
       "hash": "sha256-6E/yhXP7Oy/NbXtf1ktzmU8SdVqJQ09HC/48ebEGBpk="
+    },
+    "trix": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "aanderse",
+        "repo": "trix"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "10ef25c2370b69b51158629dfe79d9306ad60dc9",
+      "url": "https://github.com/aanderse/trix/archive/10ef25c2370b69b51158629dfe79d9306ad60dc9.tar.gz",
+      "hash": "sha256-kpYv1uA0j87T397TS8xZe+FLN5GMuTF3rkzsZJ1ofAI="
     },
     "vscode-server": {
       "type": "Git",
