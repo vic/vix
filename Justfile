@@ -12,6 +12,13 @@ build host=hostname *args:
 
 switch host=hostname *args:
   {{hostname}} switch {{args}}
+
+boot host=hostname *args:
+  {{hostname}} boot {{args}}
+
+reboot host=hostname *args:
+  just boot {{host}} {{args}}
+  reboot
   
 ci test="" *args:
   nix-unit --expr "(import ./.).ci \"{{system}}\" \"{{test}}\"" {{args}}
