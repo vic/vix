@@ -1,7 +1,6 @@
 {
   vic,
   den,
-  inputs,
   ...
 }:
 {
@@ -13,10 +12,10 @@
     ];
 
     homeManager =
-      { pkgs, ... }:
+      { pkgs, self', ... }:
       {
         home.packages = [
-          inputs.self.packages.${pkgs.stdenvNoCC.hostPlatform.system}.vic-edge
+          self'.packages.vic-edge
           pkgs.gsocket
         ];
       };

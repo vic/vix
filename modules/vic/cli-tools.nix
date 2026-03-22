@@ -1,11 +1,8 @@
-{ vic, inputs, ... }:
+{ vic, ... }:
 {
   vic.everywhere.includes = [ vic.cli-tools ];
   vic.cli-tools.homeManager =
-    { pkgs, ... }:
-    let
-      selfpkgs = inputs.self.packages.${pkgs.stdenvNoCC.hostPlatform.system};
-    in
+    { pkgs, self', ... }:
     {
       programs.nh.enable = true;
       home.packages = [
@@ -31,8 +28,8 @@
         pkgs.ouch
         pkgs.difftastic
         pkgs.zellij
-        selfpkgs.vic-sops-get
-        selfpkgs.vic-sops-rotate
+        self'.packages.vic-sops-get
+        self'.packages.vic-sops-rotate
       ];
     };
 }

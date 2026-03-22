@@ -8,7 +8,12 @@
 
   vic.everywhere.includes = [ vic.doom ];
   vic.doom.homeManager =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      lib,
+      inputs',
+      ...
+    }:
     let
       emacsPkg = pkgs.emacs30;
       doom-install = pkgs.writeShellApplication {
@@ -45,7 +50,7 @@
           )
         '';
       };
-      SPC = inputs.SPC.packages.${pkgs.stdenvNoCC.hostPlatform.system}.SPC.override {
+      SPC = inputs'.SPC.packages.SPC.override {
         emacs = emacsPkg;
       };
     in

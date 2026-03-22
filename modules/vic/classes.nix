@@ -28,7 +28,15 @@
         {
           osConfig = config;
         };
-      guard = { pkgs, ... }: platform: lib.mkIf pkgs.stdenv."is${platform}";
+      guard =
+        # deadnix: skip
+        {
+          pkgs,
+          inputs',
+          self',
+          ...
+        }:
+        platform: lib.mkIf pkgs.stdenv."is${platform}";
     };
 
   vic.hm =
@@ -45,6 +53,14 @@
         {
           osConfig = config;
         };
-      guard = { pkgs, ... }: _: lib.mkIf (pkgs.stdenv.isDarwin || (pkgs.stdenv.isLinux && !host.iso));
+      guard =
+        # deadnix: skip
+        {
+          pkgs,
+          inputs',
+          self',
+          ...
+        }:
+        _: lib.mkIf (pkgs.stdenv.isDarwin || (pkgs.stdenv.isLinux && !host.iso));
     };
 }

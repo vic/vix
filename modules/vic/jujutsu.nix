@@ -1,4 +1,4 @@
-{ vic, inputs, ... }:
+{ vic, ... }:
 let
   jj-settings =
     { pkgs }:
@@ -158,9 +158,9 @@ in
 
   vic.everywhere.includes = [ vic.jujutsu ];
   vic.jujutsu.homeManager =
-    { pkgs, ... }:
+    { pkgs, inputs', ... }:
     let
-      jjui = inputs.jjui.packages.${pkgs.stdenvNoCC.hostPlatform.system}.jjui;
+      jjui = inputs'.jjui.packages.jjui;
       jjui-wrapped = pkgs.writeShellApplication {
         name = "jjui";
         text = ''
