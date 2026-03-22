@@ -17,7 +17,7 @@
     let
       # a custom `vim` class that forwards to `nvf.vim`
       vimClass =
-        { aspect-chain }:
+        { aspect-chain, ... }:
         den._.forward {
           each = lib.singleton true;
           fromClass = _: "vim";

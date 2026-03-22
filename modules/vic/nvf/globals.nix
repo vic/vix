@@ -10,6 +10,7 @@
         pkgs.fzf
         pkgs.python3
         pkgs.nodejs
+        pkgs.sqlite3
       ];
 
       vim.opts = {
