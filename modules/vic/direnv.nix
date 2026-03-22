@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ vic, inputs, ... }:
 let
   use_nix_installables = ''
     use_nix_installables() {
@@ -20,6 +20,7 @@ let
   '';
 in
 {
+  vic.everywhere.includes = [ vic.direnv ];
   vic.direnv.homeManager = {
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;

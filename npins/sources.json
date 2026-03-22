@@ -48,9 +48,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "907fdc486a5429b20cddbab2fe3c2ded51386b88",
-      "url": "https://github.com/vic/den/archive/907fdc486a5429b20cddbab2fe3c2ded51386b88.tar.gz",
-      "hash": "sha256-cSLx4AFv+CehXgg4F32OQs1trvvbW0pjJp92ZzGbWLw="
+      "revision": "3516c7760d0fc6cb04b37d02b84c0df5f64eed5f",
+      "url": "https://github.com/vic/den/archive/3516c7760d0fc6cb04b37d02b84c0df5f64eed5f.tar.gz",
+      "hash": "sha256-HsGKrMUu+pf+z5xPYHUKpYe8ND/5mwk3cekHyyhDvEs="
     },
     "doom-emacs": {
       "type": "Git",
@@ -198,6 +198,19 @@
       "url": "https://github.com/nix-community/nix-index-database/archive/55b588747fa3d7fc351a11831c4b874dab992862.tar.gz",
       "hash": "sha256-gdYe9wTPl4ignDyXUl1LlICWj41+S0GB5lG1fKP17+A="
     },
+    "nix-unit": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "nix-unit"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "1c9ab50554eed0b768f9e5b6f646d63c9673f0f7",
+      "url": "https://github.com/nix-community/nix-unit/archive/1c9ab50554eed0b768f9e5b6f646d63c9673f0f7.tar.gz",
+      "hash": "sha256-hRADkHjNt41+JUHw2EiSkMaL4owL83g5ZppjYUdF/Dc="
+    },
     "nixos-wsl": {
       "type": "Git",
       "repository": {
@@ -223,6 +236,19 @@
       "revision": "9cf7092bdd603554bd8b63c216e8943cf9b12512",
       "url": "https://github.com/nixos/nixpkgs/archive/9cf7092bdd603554bd8b63c216e8943cf9b12512.tar.gz",
       "hash": "sha256-9tpvMGFteZnd3gRQZFlRCohVpqooygFuy9yjuyRL2C0="
+    },
+    "nvf": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "notashelf",
+        "repo": "nvf"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "a3ea20fcebdbd0ed35d4929f2aad579704869c95",
+      "url": "https://github.com/notashelf/nvf/archive/a3ea20fcebdbd0ed35d4929f2aad579704869c95.tar.gz",
+      "hash": "sha256-J4WAfJkyPVvWka3VhrGSxSnCPKn8vU1IA1Drd1C4Ekw="
     },
     "sops-nix": {
       "type": "Git",

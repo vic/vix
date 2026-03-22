@@ -59,6 +59,7 @@
             pkgs.just
             pkgs.npins
             pkgs.cachix
+            pkgs.nix-unit
           ];
         };
     };

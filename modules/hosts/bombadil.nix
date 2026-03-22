@@ -22,6 +22,8 @@
           "${toString modulesPath}/installer/cd-dvd/installation-cd-base.nix"
         ];
 
+        system.stateVersion = "26.05";
+
         lib.isoFileSystems."/home/vic" = {
           device = "/dev/disk/by-label/vic";
           fsType = "ext4";

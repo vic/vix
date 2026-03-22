@@ -287,6 +287,7 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "ghostty"
 spawn-at-startup "neovide"
+spawn-at-startup "helium"
 spawn-at-startup "xfce4-panel"
 spawn-at-startup "xfce4-power-manager"
 spawn-at-startup "blueman-applet"

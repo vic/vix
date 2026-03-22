@@ -1,25 +1,21 @@
 {
-  vix.rdesk = {
-    homeManager =
-      { pkgs, lib, ... }:
-      {
-        home.packages = lib.optionals pkgs.stdenvNoCC.isLinux [
-          pkgs.anydesk
+  vix.rdesk.nixos =
+    { pkgs, ... }:
+    {
+      environment.systemPackages = [ pkgs.anydesk ];
+
+      networking.firewall = {
+        enable = true;
+        allowedTCPPorts = [
+          24800
+          6568
+          50001
+        ];
+        allowedUDPPorts = [
+          24800
+          6568
+          50001
         ];
       };
-
-    nixos.networking.firewall = {
-      enable = true;
-      allowedTCPPorts = [
-        24800
-        6568
-        50001
-      ];
-      allowedUDPPorts = [
-        24800
-        6568
-        50001
-      ];
     };
-  };
 }

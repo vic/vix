@@ -20,8 +20,10 @@
   vu = "vim-gui";
   au = "astrovim-gui";
   lu = "lazyvim-gui";
+  vuf = "vu --fork";
   vul = "vu0";
   vu0 = ''vu -c "'0"'';
   vu1 = ''vu -c "'1"'';
   vu2 = ''vu -c "'2"'';
+  v = "vu --fork -- -c \"'0\"";
 }

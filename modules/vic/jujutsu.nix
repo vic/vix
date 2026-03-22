@@ -1,4 +1,5 @@
-{ inputs, ... }:
+# See https://github.com/jj-vcs/jj/discussions/5812
+{ vic, ... }:
 let
   jj-settings =
     { pkgs }:
@@ -156,13 +157,22 @@ in
 {
   flake-file.inputs.jjui.url = "github:idursun/jjui";
 
+  vic.everywhere.includes = [ vic.jujutsu ];
   vic.jujutsu.homeManager =
-    { pkgs, ... }:
+    { pkgs, inputs', ... }:
     let
-      jjui = inputs.jjui.packages.${pkgs.stdenvNoCC.hostPlatform.system}.jjui;
+      jjui = inputs'.jjui.packages.jjui;
+      jjui-wrapped = pkgs.writeShellApplication {
+        name = "jjui";
+        text = ''
+          # ask for password if key is not loaded, before jjui
+          ssh-add -l || ssh-add
+          ${pkgs.lib.getExe jjui} "$@"
+        '';
+      };
     in
     {
-      home.packages = [ jjui ];
+      home.packages = [ jjui-wrapped ];
       programs.jujutsu = {
         enable = true;
         settings = jj-settings { inherit pkgs; };

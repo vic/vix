@@ -1,7 +1,23 @@
 inputs: {
-  # den = import ../den;
 
   nixpkgs-lib.follows = "nixpkgs";
+  helium.inputs.utils.follows = "flake-utils";
+
+  den =
+    if builtins.pathExists ../den then
+      {
+        outPath = ../den;
+      }
+    else
+      { };
+
+  flake-aspects =
+    if builtins.pathExists ../flake-aspects then
+      {
+        outPath = ../flake-aspects;
+      }
+    else
+      { };
 
   doom-emacs =
     source:
@@ -10,7 +26,6 @@ inputs: {
       rev = source.revision;
       flake = false;
     };
-  helium.inputs.utils.follows = "flake-utils";
 
   # Shim nix-systems/default
   systems = inputs.nixpkgs.lib.systems.flakeExposed;
