@@ -6,21 +6,10 @@
     { pkgs, ... }:
     {
       home.packages = [
-        pkgs.yazi
-        pkgs.zoxide
-        pkgs.ispell
         pkgs.gh
-        pkgs.multimarkdown
-      ];
-    };
-
-  vic.dev-tools.hmLinux =
-    { pkgs, ... }:
-    {
-      home.packages = [
-        pkgs.nix-search-cli
-        pkgs.nixd
-        pkgs.nixfmt
+        pkgs.hyperfine
+        pkgs.jq
+        pkgs.difftastic
       ];
     };
 

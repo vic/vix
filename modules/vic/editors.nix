@@ -20,6 +20,7 @@
       { pkgs, ... }:
       {
         home.packages = [
+          pkgs.helix
           pkgs.code-cursor
           pkgs.zed-editor
           pkgs.vscode

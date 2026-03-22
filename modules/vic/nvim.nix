@@ -1,9 +1,16 @@
-{ vic, ... }:
+{ vic, den, ... }:
 {
-  perSystem.treefmt.programs = {
-    stylua.enable = true;
-    fish_indent.enable = true;
-  };
+
+  perSystem =
+    { pkgs, ... }:
+    {
+      treefmt.programs = {
+        stylua.enable = true;
+        fish_indent.enable = true;
+      };
+
+      packages.vi = den.lib.nvf.package pkgs { } { };
+    };
 
   vic.everywhere.includes = [ vic.nvim ];
   vic.nvim = {

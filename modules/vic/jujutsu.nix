@@ -1,3 +1,4 @@
+# See https://github.com/jj-vcs/jj/discussions/5812
 { vic, ... }:
 let
   jj-settings =

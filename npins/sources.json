@@ -237,6 +237,19 @@
       "url": "https://github.com/nixos/nixpkgs/archive/9cf7092bdd603554bd8b63c216e8943cf9b12512.tar.gz",
       "hash": "sha256-9tpvMGFteZnd3gRQZFlRCohVpqooygFuy9yjuyRL2C0="
     },
+    "nvf": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "notashelf",
+        "repo": "nvf"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "a3ea20fcebdbd0ed35d4929f2aad579704869c95",
+      "url": "https://github.com/notashelf/nvf/archive/a3ea20fcebdbd0ed35d4929f2aad579704869c95.tar.gz",
+      "hash": "sha256-J4WAfJkyPVvWka3VhrGSxSnCPKn8vU1IA1Drd1C4Ekw="
+    },
     "sops-nix": {
       "type": "Git",
       "repository": {
