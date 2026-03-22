@@ -14,9 +14,9 @@ jobs:
     name: ci
     runs-on: ubuntu-latest
     steps:
+      - uses: wimpysworld/nothing-but-nix@v10
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@v13
-      - uses: wimpysworld/nothing-but-nix@v10
       - uses: actions/checkout@v6
       - uses: cachix/cachix-action@v17
         with:
@@ -33,9 +33,9 @@ jobs:
       darwin_arm: ${{ steps.finder.outputs.darwin_arm }}
       darwin_intel: ${{ steps.finder.outputs.darwin_intel }}
     steps:
+      - uses: wimpysworld/nothing-but-nix@v10
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@v13
-      - uses: wimpysworld/nothing-but-nix@v10
       - uses: actions/checkout@v6
       - id: finder
         run: |
@@ -62,9 +62,9 @@ jobs:
       matrix:
         host: ${{ fromJSON(needs.find-systems.outputs.nixos) }}
     steps:
+      - uses: wimpysworld/nothing-but-nix@v10
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@v13
-      - uses: wimpysworld/nothing-but-nix@v10
       - uses: actions/checkout@v6
       - uses: cachix/cachix-action@v17
         with:
