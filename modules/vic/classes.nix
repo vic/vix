@@ -29,10 +29,11 @@
           osConfig = config;
         };
       guard =
-        # deadnix: skip
         {
           pkgs,
+          # deadnix: skip
           inputs',
+          # deadnix: skip
           self',
           ...
         }:
@@ -54,10 +55,11 @@
           osConfig = config;
         };
       guard =
-        # deadnix: skip
         {
           pkgs,
+          # deadnix: skip
           inputs',
+          # deadnix: skip
           self',
           ...
         }:
