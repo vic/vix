@@ -1,7 +1,16 @@
-{ vic, inputs, ... }:
+{
+  vic,
+  den,
+  inputs,
+  ...
+}:
 {
   vic.everywhere.includes = [ vic.rdesk ];
   vic.rdesk = {
+
+    includes = [
+      (den.provides.unfree [ "anydesk" ])
+    ];
 
     homeManager =
       { pkgs, ... }:

@@ -6,15 +6,13 @@
 
   vix.vscode-server = {
 
-    homeManager = {
-      imports = [
-        "${inputs.vscode-server}/modules/vscode-server/home.nix"
-      ];
-    };
-
-    hmLinux =
+    homeManager =
       { pkgs, ... }:
       {
+        imports = [
+          "${inputs.vscode-server}/modules/vscode-server/home.nix"
+        ];
+
         services.vscode-server = {
           enable = true;
           nodejsPackage = pkgs.nodejs_latest;

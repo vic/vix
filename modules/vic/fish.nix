@@ -1,6 +1,14 @@
-{ vic, inputs, ... }:
+{
+  vic,
+  den,
+  inputs,
+  ...
+}:
 {
   vic.everywhere.includes = [ vic.fish ];
+
+  vic.fish.includes = [ (den.provides.user-shell "fish") ];
+
   vic.fish.homeManager =
     { pkgs, ... }:
     let

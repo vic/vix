@@ -16,7 +16,6 @@
         home.packages = [ pkgs.ghostty ];
       };
 
-
     hmDarwin =
       { pkgs, ... }:
       {

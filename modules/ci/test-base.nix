@@ -20,14 +20,21 @@ let
   sort = lib.sort (a: b: a < b);
   show = items: builtins.trace (lib.concatStringsSep " / " (lib.flatten [ items ]));
 
-  hasPkg = name: list: lib.any (i: name == lib.getName i) list;
+  pkgNamed =
+    name: list:
+    let
+      filter = p: name == lib.getName p;
+      filtered = lib.filter filter list;
+      isEmpty = lib.length filtered == 0;
+    in
+    if isEmpty then null else lib.head filtered;
 
   _module.args.ci = hosts // {
     inherit
       show
       sort
       vicHm
-      hasPkg
+      pkgNamed
       ;
   };
 in

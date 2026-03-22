@@ -8,7 +8,6 @@
     in
     {
       programs.nh.enable = true;
-      programs.home-manager.enable = true;
       home.packages = [
         pkgs.fzf
         pkgs.ripgrep
@@ -19,7 +18,6 @@
         pkgs.fd
         pkgs.cachix
         pkgs.jq
-        pkgs.home-manager
         pkgs.helix
         pkgs.television
         pkgs.dust

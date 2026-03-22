@@ -1,12 +1,13 @@
 { ci, ... }:
 let
-  inherit (ci) yavanna hasPkg;
-  vic = ci.vicHm yavanna;
+  inherit (ci) yavanna vicHm pkgNamed;
+  vic = vicHm yavanna;
+  hasPkg = name: pkgNamed name vic.home.packages != null;
 in
 {
   flake.tests.yavanna = {
     test-has-iterm2 = {
-      expr = hasPkg "iterm2" vic.home.packages;
+      expr = hasPkg "iterm2";
       expected = true;
     };
   };

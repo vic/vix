@@ -1,8 +1,22 @@
-{ vic, ... }:
+{
+  vic,
+  den,
+  vix,
+  ...
+}:
 {
   vic.everywhere.includes = [ vic.editors ];
   vic.editors = {
-    homeManager =
+
+    includes = [
+      vix.vscode-server
+      (den.provides.unfree [
+        "cursor"
+        "vscode"
+      ])
+    ];
+
+    hm =
       { pkgs, ... }:
       {
         home.packages = [
