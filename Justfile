@@ -23,7 +23,7 @@ boot host=hostname *args:
 reboot host=hostname *args:
   just boot {{host}} --ask {{args}}
   reboot
-  
+
 ci test="" *args:
   nix-unit --expr "(import ./.).ci \"{{system}}\" \"{{test}}\"" {{args}}
-  
+

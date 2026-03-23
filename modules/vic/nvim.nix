@@ -11,6 +11,9 @@
         ...
       }:
       let
+        vi = pkgs.writeShellApplication { name = "vi"; text = ''exec nvim "$@"'';};
+        vim = pkgs.writeShellApplication { name = "vim"; text = ''exec nvim "$@"'';};
+
         vim_variant =
           name: runtimeInputs:
           pkgs.writeShellApplication {
@@ -29,23 +32,31 @@
             text = ''exec neovide --neovim-bin ${pkgs.lib.getExe nvim} "$@"'';
           };
 
-        astrovim = vim_variant "astrovim" [ pkgs.neovim ];
-        lazyvim = vim_variant "lazyvim" [ pkgs.neovim ];
-        vscode-vim = vim_variant "vscode-vim" [ pkgs.neovim ];
+        neovim = vim_variant "neovim" [self'.packages.neovim];
+        neovim-gui = neovide_variant "neovim-gui" neovim;
 
-        vim-gui = neovide_variant "vim-gui" self'.packages.neovim;
-        lazyvim-gui = neovide_variant "lazyvim-gui" lazyvim;
+        astrovim = vim_variant "astrovim" [ pkgs.neovim ];
         astrovim-gui = neovide_variant "astrovim-gui" astrovim;
+
+        lazyvim = vim_variant "lazyvim" [ pkgs.neovim ];
+        lazyvim-gui = neovide_variant "lazyvim-gui" lazyvim;
+
+        vim-gui = neovide_variant "vim-gui" pkgs.neovim;
+        vscode-vim = vim_variant "vscode-vim" [ pkgs.neovim ];
       in
       {
         home.packages = [
+          vi
+          vim
+          pkgs.neovim
+          neovim
+          neovim-gui
           astrovim
           astrovim-gui
           lazyvim
           lazyvim-gui
           pkgs.neovide
           pkgs.neovim-remote
-          self'.packages.neovim
           vim-gui
           vscode-vim
         ];

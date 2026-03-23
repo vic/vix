@@ -15,16 +15,14 @@
     };
 
   vic.nvf._.neovim =
-    { mine }:
-    {
+    { mine }@ctx:
+    den.lib.parametric.fixedTo ctx {
       includes = [ vic.nvf ];
-      vim =
-        { ... }:
-        {
-          theme.enable = true;
-          theme.name = "catppuccin";
-          theme.style = if mine then "frappe" else "latte";
-        };
+      vim = {
+        theme.enable = true;
+        theme.name = "catppuccin";
+        theme.style = if mine then "frappe" else "latte";
+      };
     };
 
 }

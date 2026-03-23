@@ -21,6 +21,7 @@
         source = ./dots/ssh;
       };
       home.file.".config/niri".source = dotsLink "config/niri";
+      home.file.".config/jjui".source = dotsLink "config/jjui";
       home.file.".config/nvim".source = dotsLink "config/nvim";
       home.file.".config/astrovim".source = dotsLink "config/astrovim";
       home.file.".config/lazyvim".source = dotsLink "config/lazyvim";
