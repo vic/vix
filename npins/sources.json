@@ -48,9 +48,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "3516c7760d0fc6cb04b37d02b84c0df5f64eed5f",
-      "url": "https://github.com/vic/den/archive/3516c7760d0fc6cb04b37d02b84c0df5f64eed5f.tar.gz",
-      "hash": "sha256-HsGKrMUu+pf+z5xPYHUKpYe8ND/5mwk3cekHyyhDvEs="
+      "revision": "5728cf32f2f2a3c4b0e34ecfb211ce8c0131a3a7",
+      "url": "https://github.com/vic/den/archive/5728cf32f2f2a3c4b0e34ecfb211ce8c0131a3a7.tar.gz",
+      "hash": "sha256-aPfuEzOcd1Jaj+XkELOgDSX8DpM8YQCX1z8KKpKGJtY="
     },
     "doom-emacs": {
       "type": "Git",
@@ -155,9 +155,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "856b01ebd1de3f53c3929ce8082d9d67d799d816",
-      "url": "https://github.com/nix-community/home-manager/archive/856b01ebd1de3f53c3929ce8082d9d67d799d816.tar.gz",
-      "hash": "sha256-TVeIGOxnfSPM6JvkRkXHpJECnj1OG2dXkWMSA4elzzQ="
+      "revision": "c6fe2944ad9f2444b2d767c4a5edee7c166e8a95",
+      "url": "https://github.com/nix-community/home-manager/archive/c6fe2944ad9f2444b2d767c4a5edee7c166e8a95.tar.gz",
+      "hash": "sha256-yeiWCY9aAUUJ3ebMVjs0UZXRnT5x90MCtpbpOWiXrvM="
     },
     "import-tree": {
       "type": "Git",
@@ -181,9 +181,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "97958887d26c1425b4d9469c526acb7c5039306f",
-      "url": "https://github.com/idursun/jjui/archive/97958887d26c1425b4d9469c526acb7c5039306f.tar.gz",
-      "hash": "sha256-Uw2O2UPAk5ISE8yR29UUN9ALHV3ArydHxgbxr0dmWfA="
+      "revision": "24737015838c36df67765fc1527ee1b4587b548e",
+      "url": "https://github.com/idursun/jjui/archive/24737015838c36df67765fc1527ee1b4587b548e.tar.gz",
+      "hash": "sha256-E/i8xK51PMP0JwcBzaRy8Nzi4wG5PKqCsxmCB3bpnV4="
     },
     "mnw": {
       "type": "Git",
@@ -259,9 +259,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "a3ea20fcebdbd0ed35d4929f2aad579704869c95",
-      "url": "https://github.com/notashelf/nvf/archive/a3ea20fcebdbd0ed35d4929f2aad579704869c95.tar.gz",
-      "hash": "sha256-J4WAfJkyPVvWka3VhrGSxSnCPKn8vU1IA1Drd1C4Ekw="
+      "revision": "edfb73fa4ced576f587d259a70a513b4152f8cea",
+      "url": "https://github.com/notashelf/nvf/archive/edfb73fa4ced576f587d259a70a513b4152f8cea.tar.gz",
+      "hash": "sha256-g45WZAZHNc7wJBkK4IdB5dq0Bh0JE7G0gcY2H5DFi44="
     },
     "sops-nix": {
       "type": "Git",
