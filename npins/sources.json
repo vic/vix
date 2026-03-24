@@ -48,9 +48,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "5728cf32f2f2a3c4b0e34ecfb211ce8c0131a3a7",
-      "url": "https://github.com/vic/den/archive/5728cf32f2f2a3c4b0e34ecfb211ce8c0131a3a7.tar.gz",
-      "hash": "sha256-aPfuEzOcd1Jaj+XkELOgDSX8DpM8YQCX1z8KKpKGJtY="
+      "revision": "ece9f9ec1647e82c96e4c21bb9c7060678e21d43",
+      "url": "https://github.com/vic/den/archive/ece9f9ec1647e82c96e4c21bb9c7060678e21d43.tar.gz",
+      "hash": "sha256-uv/Mzsh80XNtvZWaDDbo33w6M18CPLLPp+3bF1tn9Cc="
     },
     "doom-emacs": {
       "type": "Git",
@@ -61,9 +61,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "d8d75443d39d95f3c5256504eb838e0acc62ef44",
-      "url": "https://github.com/doomemacs/doomemacs/archive/d8d75443d39d95f3c5256504eb838e0acc62ef44.tar.gz",
-      "hash": "sha256-FYbalilgDFjIVwK+D6DjDos1IMmMGA20lRf8k6Ykm1Y="
+      "revision": "84f1eef8b0192674271fad33e86b71f256d4a580",
+      "url": "https://github.com/doomemacs/doomemacs/archive/84f1eef8b0192674271fad33e86b71f256d4a580.tar.gz",
+      "hash": "sha256-d3kjGSzroEU4i20EVBGv3iPKdiot61LDb1jtoSFad40="
     },
     "edgevpn": {
       "type": "Git",
@@ -155,9 +155,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "c6fe2944ad9f2444b2d767c4a5edee7c166e8a95",
-      "url": "https://github.com/nix-community/home-manager/archive/c6fe2944ad9f2444b2d767c4a5edee7c166e8a95.tar.gz",
-      "hash": "sha256-yeiWCY9aAUUJ3ebMVjs0UZXRnT5x90MCtpbpOWiXrvM="
+      "revision": "bc357c75e3142a31b849ba49c5299fb52c61cf59",
+      "url": "https://github.com/nix-community/home-manager/archive/bc357c75e3142a31b849ba49c5299fb52c61cf59.tar.gz",
+      "hash": "sha256-OEBV+Y5I4Ldu98k0KvGXRfJYh+jjE8ocCSL/dxTGs1s="
     },
     "import-tree": {
       "type": "Git",
@@ -246,9 +246,9 @@
       },
       "branch": "nixpkgs-unstable",
       "submodules": false,
-      "revision": "9cf7092bdd603554bd8b63c216e8943cf9b12512",
-      "url": "https://github.com/nixos/nixpkgs/archive/9cf7092bdd603554bd8b63c216e8943cf9b12512.tar.gz",
-      "hash": "sha256-9tpvMGFteZnd3gRQZFlRCohVpqooygFuy9yjuyRL2C0="
+      "revision": "fdc7b8f7b30fdbedec91b71ed82f36e1637483ed",
+      "url": "https://github.com/nixos/nixpkgs/archive/fdc7b8f7b30fdbedec91b71ed82f36e1637483ed.tar.gz",
+      "hash": "sha256-a++tZ1RQsDb1I0NHrFwdGuRlR5TORvCEUksM459wKUA="
     },
     "nvf": {
       "type": "Git",
@@ -259,9 +259,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "edfb73fa4ced576f587d259a70a513b4152f8cea",
-      "url": "https://github.com/notashelf/nvf/archive/edfb73fa4ced576f587d259a70a513b4152f8cea.tar.gz",
-      "hash": "sha256-g45WZAZHNc7wJBkK4IdB5dq0Bh0JE7G0gcY2H5DFi44="
+      "revision": "84fbbc801ff1a7a9747bff71688ad376b83b2f7b",
+      "url": "https://github.com/notashelf/nvf/archive/84fbbc801ff1a7a9747bff71688ad376b83b2f7b.tar.gz",
+      "hash": "sha256-uGe/9XdfviGQbidgmk6Uu0vu2Ly5nqmtYzUqGU5ejDc="
     },
     "sops-nix": {
       "type": "Git",
@@ -272,9 +272,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "3e0d543e6ba6c0c48117a81614e90c6d8c425170",
-      "url": "https://github.com/Mic92/sops-nix/archive/3e0d543e6ba6c0c48117a81614e90c6d8c425170.tar.gz",
-      "hash": "sha256-zsTuloDSdKf+PrI1MsWx5z/cyGEJ8P3eERtAfdP8Bmg="
+      "revision": "614e256310e0a4f8a9ccae3fa80c11844fba7042",
+      "url": "https://github.com/Mic92/sops-nix/archive/614e256310e0a4f8a9ccae3fa80c11844fba7042.tar.gz",
+      "hash": "sha256-fhG4JAcLgjKwt+XHbjs8brpWnyKUfU4LikLm3s0Q/ic="
     },
     "treefmt-nix": {
       "type": "Git",
