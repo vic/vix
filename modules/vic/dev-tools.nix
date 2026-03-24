@@ -6,6 +6,7 @@
     { pkgs, ... }:
     {
       home.packages = [
+        pkgs.diffnav
         pkgs.gh
         pkgs.hyperfine
         pkgs.jq

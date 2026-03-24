@@ -91,5 +91,5 @@ function setup(config)
 		{ desc = "diff file", scope = "revisions.details", key = "d" }
 	)
 
-	config.action("expand revset", expand_revset, { desc = "expand revset", scope = "revisions", key = "+" })
+	config.action("expand revset", expand_revset, { desc = "expand revset", scope = "revisions", key = "]" })
 end

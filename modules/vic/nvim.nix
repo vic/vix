@@ -11,8 +11,14 @@
         ...
       }:
       let
-        vi = pkgs.writeShellApplication { name = "vi"; text = ''exec nvim "$@"'';};
-        vim = pkgs.writeShellApplication { name = "vim"; text = ''exec nvim "$@"'';};
+        vi = pkgs.writeShellApplication {
+          name = "vi";
+          text = ''exec nvim "$@"'';
+        };
+        vim = pkgs.writeShellApplication {
+          name = "vim";
+          text = ''exec nvim "$@"'';
+        };
 
         vim_variant =
           name: runtimeInputs:
@@ -32,7 +38,7 @@
             text = ''exec neovide --neovim-bin ${pkgs.lib.getExe nvim} "$@"'';
           };
 
-        neovim = vim_variant "neovim" [self'.packages.neovim];
+        neovim = vim_variant "neovim" [ self'.packages.neovim ];
         neovim-gui = neovide_variant "neovim-gui" neovim;
 
         astrovim = vim_variant "astrovim" [ pkgs.neovim ];
