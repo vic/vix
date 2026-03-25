@@ -56,9 +56,9 @@ Other useful commands defined at [Justfile](Justfile)
 Historical points of this repo:
 
 - [Den without flakes](https://github.com/vic/vix/tree/unflake) **current**
-- [Den with flakes + flake-parts](https://github.com/vic/vix/tree/historic%2Fden-flake-parts)
-- [Dendritic flake-parts only](https://github.com/vic/vix/tree/historic%2Fdendritic-flake-parts)
-- [blueprint](https://github.com/vic/vix/tree/historic%2Fblueprint)
-- [flake-parts](https://github.com/vic/vix/tree/historic%2Fflake-parts)
-- [olf m1 flake](https://github.com/vic/vix/tree/historic%2Fmk-darwin-system) with [mk-darwin-system](https://github.com/vic/mk-darwin-system)
+- [Den with flakes + flake-parts](https://github.com/vic/vix/tree/historic/den-flake-parts)
+- [Dendritic flake-parts only](https://github.com/vic/vix/tree/historic/dendritic-flake-parts)
+- [blueprint](https://github.com/vic/vix/tree/historic/blueprint)
+- [flake-parts](https://github.com/vic/vix/tree/historic/flake-parts)
+- [olf m1 flake](https://github.com/vic/vix/tree/historic/mk-darwin-system) with [mk-darwin-system](https://github.com/vic/mk-darwin-system)
 - other with snowfall-lib lost
