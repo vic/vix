@@ -48,9 +48,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "508a5fa0b99da48fb837be5b5087e531b9cbb996",
-      "url": "https://github.com/vic/den/archive/508a5fa0b99da48fb837be5b5087e531b9cbb996.tar.gz",
-      "hash": "sha256-hL6AYBk4F4yFvW57Ds9oqAJS0oAgVYDcEJYhqPG1tXc="
+      "revision": "4db9eea2e6f08d91ead6959053d1eb6613438ec9",
+      "url": "https://github.com/vic/den/archive/4db9eea2e6f08d91ead6959053d1eb6613438ec9.tar.gz",
+      "hash": "sha256-G6HmJU6SUbSgDTru85xAFeOU8+q8CFoPCIOn3qQJYbA="
     },
     "doom-emacs": {
       "type": "Git",
@@ -61,9 +61,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "ba511fcbfb53d8922ede1600cf49076284a28e99",
-      "url": "https://github.com/doomemacs/doomemacs/archive/ba511fcbfb53d8922ede1600cf49076284a28e99.tar.gz",
-      "hash": "sha256-XwRbmOH03mYlF0UA7HmKvuRPOSuWOL2E40Y8WZd4o/w="
+      "revision": "43912efdcbc9d63f84becfd6cfde86dec04c168d",
+      "url": "https://github.com/doomemacs/doomemacs/archive/43912efdcbc9d63f84becfd6cfde86dec04c168d.tar.gz",
+      "hash": "sha256-j0WGkNnL3QhEUA1y770myqePFM4EnIHOLsi5+5+1BXg="
     },
     "edgevpn": {
       "type": "Git",
