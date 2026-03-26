@@ -48,9 +48,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "508a5fa0b99da48fb837be5b5087e531b9cbb996",
-      "url": "https://github.com/vic/den/archive/508a5fa0b99da48fb837be5b5087e531b9cbb996.tar.gz",
-      "hash": "sha256-hL6AYBk4F4yFvW57Ds9oqAJS0oAgVYDcEJYhqPG1tXc="
+      "revision": "eb92bbfdefd22b76fa5781e8adbeff42c4fe429e",
+      "url": "https://github.com/vic/den/archive/eb92bbfdefd22b76fa5781e8adbeff42c4fe429e.tar.gz",
+      "hash": "sha256-THw/ly8KvXGQ0EI+Nhu/Eo9w8w7wtgHhAeWpteNiz/Q="
     },
     "doom-emacs": {
       "type": "Git",
@@ -61,9 +61,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "ba511fcbfb53d8922ede1600cf49076284a28e99",
-      "url": "https://github.com/doomemacs/doomemacs/archive/ba511fcbfb53d8922ede1600cf49076284a28e99.tar.gz",
-      "hash": "sha256-XwRbmOH03mYlF0UA7HmKvuRPOSuWOL2E40Y8WZd4o/w="
+      "revision": "69fc1014a903b73c1c577e057602b06c6dea8cd0",
+      "url": "https://github.com/doomemacs/doomemacs/archive/69fc1014a903b73c1c577e057602b06c6dea8cd0.tar.gz",
+      "hash": "sha256-xOLAmk7LCuJjLRJKhNIVIIJU+/Cvm5udiINtTr+M7/4="
     },
     "edgevpn": {
       "type": "Git",
@@ -142,9 +142,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "67aa32deed6927e75a6e3fe70004bb3ad82d650c",
-      "url": "https://github.com/vikingnope/helium-browser-nix-flake/archive/67aa32deed6927e75a6e3fe70004bb3ad82d650c.tar.gz",
-      "hash": "sha256-6tDR417MA6RPFN90kTI+YZOanjeb01di8bVp3ME6JJw="
+      "revision": "5339187341b31049c3116c8a52b2fc80362c83f3",
+      "url": "https://github.com/vikingnope/helium-browser-nix-flake/archive/5339187341b31049c3116c8a52b2fc80362c83f3.tar.gz",
+      "hash": "sha256-KYfvrXdr4U+J9evCJ1AkWhv1/QFy5Telmc1KHor3xgA="
     },
     "home-manager": {
       "type": "Git",
@@ -246,9 +246,9 @@
       },
       "branch": "nixpkgs-unstable",
       "submodules": false,
-      "revision": "9cf7092bdd603554bd8b63c216e8943cf9b12512",
-      "url": "https://github.com/nixos/nixpkgs/archive/9cf7092bdd603554bd8b63c216e8943cf9b12512.tar.gz",
-      "hash": "sha256-9tpvMGFteZnd3gRQZFlRCohVpqooygFuy9yjuyRL2C0="
+      "revision": "fdc7b8f7b30fdbedec91b71ed82f36e1637483ed",
+      "url": "https://github.com/nixos/nixpkgs/archive/fdc7b8f7b30fdbedec91b71ed82f36e1637483ed.tar.gz",
+      "hash": "sha256-a++tZ1RQsDb1I0NHrFwdGuRlR5TORvCEUksM459wKUA="
     },
     "nvf": {
       "type": "Git",
