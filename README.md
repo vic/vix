@@ -1,6 +1,6 @@
 # vix - Vic's Nix Environment
 
-My infra [multi-host](https://github.com/vic/vix/actions/workflows/build-systems.yaml) using my [Dendritic libs](https://dendritic.oeiuwq.com).
+My infra built using my [Dendritic libs](https://dendritic.oeiuwq.com).
 
 Inputs are extracted from modules option [`flake-file.inputs`](https://github.com/vic/flake-file) and pinned via [npins](https://github.com/andir/npins), then loaded using [with-inputs](https://github.com/vic/with-inputs).
 
