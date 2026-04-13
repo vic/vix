@@ -4,9 +4,9 @@ inputs: {
   helium.inputs.utils.follows = "flake-utils";
 
   den =
-    if builtins.pathExists ../den then
+    if builtins.pathExists ../den.sini then
       {
-        outPath = ../den;
+        outPath = ../den.sini;
       }
     else
       { };
