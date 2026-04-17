@@ -48,9 +48,9 @@
       },
       "branch": "feat/fx-resolution",
       "submodules": false,
-      "revision": "c160af184853b87cbfa1ec384cb72b53170f2f9f",
-      "url": "https://github.com/sini/den/archive/c160af184853b87cbfa1ec384cb72b53170f2f9f.tar.gz",
-      "hash": "sha256-tFldZ+PKpU/2tuU4KuYC/Uq4JE5kc4yGCLuawTAshZw="
+      "revision": "803963f28510c8ae5eea74bd5f342f4109e2def8",
+      "url": "https://github.com/sini/den/archive/803963f28510c8ae5eea74bd5f342f4109e2def8.tar.gz",
+      "hash": "sha256-4MfbOlztqRA19pf2ldLrEzfG95lrR4m9PHSFOa56/mw="
     },
     "doom-emacs": {
       "type": "Git",
@@ -61,9 +61,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "5eb006f455f0558c97210ba7579880aacb045b67",
-      "url": "https://github.com/doomemacs/doomemacs/archive/5eb006f455f0558c97210ba7579880aacb045b67.tar.gz",
-      "hash": "sha256-6nuelk+8qSRsh5Ryj9EpWOWXeeh/g3lI5mZsBfiFZQI="
+      "revision": "860a91aaac235701f30b70fdc74259d438818968",
+      "url": "https://github.com/doomemacs/doomemacs/archive/860a91aaac235701f30b70fdc74259d438818968.tar.gz",
+      "hash": "sha256-RuQB1PxazI4DOw3O+rEVU2FPT0vP0Xb+Gp/M6Yqer20="
     },
     "edgevpn": {
       "type": "Git",
