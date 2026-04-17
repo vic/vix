@@ -48,9 +48,9 @@
       },
       "branch": "feat/fx-resolution",
       "submodules": false,
-      "revision": "b078250e0a2b489681adc0ed78c33c1ecf91f33a",
-      "url": "https://github.com/sini/den/archive/b078250e0a2b489681adc0ed78c33c1ecf91f33a.tar.gz",
-      "hash": "sha256-n/rVrtxmTZjQPD9r6eW9yi0YBPPNL+cPLGrK3S42p7I="
+      "revision": "c160af184853b87cbfa1ec384cb72b53170f2f9f",
+      "url": "https://github.com/sini/den/archive/c160af184853b87cbfa1ec384cb72b53170f2f9f.tar.gz",
+      "hash": "sha256-tFldZ+PKpU/2tuU4KuYC/Uq4JE5kc4yGCLuawTAshZw="
     },
     "doom-emacs": {
       "type": "Git",

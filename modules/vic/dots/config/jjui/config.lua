@@ -12,10 +12,12 @@ function first_hunk_new_lineno(git_diff)
 	return nil
 end
 
-function edit_from_details()
-	local diff = jj("diff", "--git", "-r", context.change_id(), context.file())
-	local line_number = first_hunk_new_lineno(diff)
-	exec_shell(string.format("nvim +%q %q", line_number, context.file()))
+function edit_from_details(editor)
+  return function()
+    local diff = jj("diff", "--git", "-r", context.change_id(), context.file())
+    local line_number = first_hunk_new_lineno(diff)
+    exec_shell(string.format("%q +%q %q", editor, line_number, context.file()))
+  end
 end
 
 function diffpipe(tool)
@@ -83,7 +85,8 @@ function setup(config)
 		{ desc = "delta diff", key = "d", scope = "revisions" }
 	)
 
-	config.action("edit file", edit_from_details, { desc = "edit file", scope = "revisions.details", key = "e" })
+	config.action("edit file", edit_from_details("vim"), { desc = "edit file", scope = "revisions.details", key = "e" })
+	config.action("visual file", edit_from_details("vim-gui"), { desc = "visual file", scope = "revisions.details", key = "v" })
 
 	config.action(
 		"diff file",
