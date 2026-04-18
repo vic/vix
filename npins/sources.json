@@ -48,9 +48,9 @@
       },
       "branch": "feat/fx-resolution",
       "submodules": false,
-      "revision": "c160af184853b87cbfa1ec384cb72b53170f2f9f",
-      "url": "https://github.com/sini/den/archive/c160af184853b87cbfa1ec384cb72b53170f2f9f.tar.gz",
-      "hash": "sha256-tFldZ+PKpU/2tuU4KuYC/Uq4JE5kc4yGCLuawTAshZw="
+      "revision": "72ac20af13abea80065db4c9247f9837a6e60e1d",
+      "url": "https://github.com/sini/den/archive/72ac20af13abea80065db4c9247f9837a6e60e1d.tar.gz",
+      "hash": "sha256-pgN5sWAJCWMqurI6pG7zgfFSYGy5xElQzpoGZCREies="
     },
     "doom-emacs": {
       "type": "Git",
@@ -61,9 +61,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "5eb006f455f0558c97210ba7579880aacb045b67",
-      "url": "https://github.com/doomemacs/doomemacs/archive/5eb006f455f0558c97210ba7579880aacb045b67.tar.gz",
-      "hash": "sha256-6nuelk+8qSRsh5Ryj9EpWOWXeeh/g3lI5mZsBfiFZQI="
+      "revision": "860a91aaac235701f30b70fdc74259d438818968",
+      "url": "https://github.com/doomemacs/doomemacs/archive/860a91aaac235701f30b70fdc74259d438818968.tar.gz",
+      "hash": "sha256-RuQB1PxazI4DOw3O+rEVU2FPT0vP0Xb+Gp/M6Yqer20="
     },
     "edgevpn": {
       "type": "Git",
@@ -155,9 +155,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "d401492e2acd4fea42f7705a3c266cea739c9c36",
-      "url": "https://github.com/nix-community/home-manager/archive/d401492e2acd4fea42f7705a3c266cea739c9c36.tar.gz",
-      "hash": "sha256-iAJIzHngGZeLIkjzuuWI6VBsYJ1n89a/Esq0m8R1vjs="
+      "revision": "565e5349208fe7d0831ef959103c9bafbeac0681",
+      "url": "https://github.com/nix-community/home-manager/archive/565e5349208fe7d0831ef959103c9bafbeac0681.tar.gz",
+      "hash": "sha256-7zSUFWsU0+jlD7WB3YAxQ84Z/iJurA5hKPm8EfEyGJk="
     },
     "import-tree": {
       "type": "Git",
@@ -181,9 +181,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "f8ae88c4ed82177cd5cfbecb1ed56b6919aca7fa",
-      "url": "https://github.com/idursun/jjui/archive/f8ae88c4ed82177cd5cfbecb1ed56b6919aca7fa.tar.gz",
-      "hash": "sha256-bvYeFLkt4ly0WrKUvE1QQdM3/RULSuI61DSKrTfG6+Q="
+      "revision": "3e0aab4447a78faf451336d92b46b6799617f508",
+      "url": "https://github.com/idursun/jjui/archive/3e0aab4447a78faf451336d92b46b6799617f508.tar.gz",
+      "hash": "sha256-8ckAZb6wNCkocQl2v0VCIii64W5B7VG8LFlnwhQIAT4="
     },
     "mnw": {
       "type": "Git",
@@ -259,9 +259,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "029ca6d34ad8d830afb56a9963e4baed53848da6",
-      "url": "https://github.com/notashelf/nvf/archive/029ca6d34ad8d830afb56a9963e4baed53848da6.tar.gz",
-      "hash": "sha256-N/I4lxWjes7E8n4NEOYaNxxvJ9db+RKHJSH8oDdqR8o="
+      "revision": "a2708696b1c3805bbde5b6292c214f56d3b2996d",
+      "url": "https://github.com/notashelf/nvf/archive/a2708696b1c3805bbde5b6292c214f56d3b2996d.tar.gz",
+      "hash": "sha256-0GPSO7piciOuKYnTAvCFChlRM51HIYS8j1metFSHkAg="
     },
     "sops-nix": {
       "type": "Git",
