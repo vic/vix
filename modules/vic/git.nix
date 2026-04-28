@@ -54,6 +54,11 @@
           "CRUSH.md"
           "GEMINI.md"
           "CLAUDE.md"
+          ".workspaces"
+          ".agents"
+          ".claude"
+          "AGENT*"
+          "docs/superpowers"
         ];
         includes = [ ];
         lfs.enable = true;

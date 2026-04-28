@@ -295,7 +295,7 @@
   "workbench.list.smoothScrolling": true,
   "workbench.panel.defaultLocation": "top",
   "workbench.panel.showLabels": false,
-  "workbench.preferredDarkColorTheme": "Default Light+",
+  "workbench.preferredDarkColorTheme": "Solarized Dark",
   "workbench.preferredHighContrastColorTheme": "Visual Studio Light",
   "workbench.view.showQuietly": {
     "workbench.panel.output": false
@@ -328,14 +328,25 @@
   "chat.emptyState.history.enabled": true,
   "semanticdiff.defaultDiffViewer": true,
   "semanticdiff.closeOriginalTab": true,
-  "workbench.preferredLightColorTheme": "Visual Studio Dark",
+  "workbench.preferredLightColorTheme": "Dracula Theme",
   "workbench.colorTheme": "Monokai Pro Light (Filter Sun)",
   "workbench.secondarySideBar.defaultVisibility": "hidden",
-  "chat.viewSessions.orientation": "stacked",
   "typescript.suggest.completeFunctionCalls": true,
   "js/ts.updateImportsOnPaste.enabled": false,
   "js/ts.updateImportsOnFileMove.enabled": "never",
   "js/ts.suggest.includeCompletionsForImportStatements": false,
   "js/ts.suggest.autoImports": false,
-  "js/ts.suggest.paths": false
+  "js/ts.suggest.paths": false,
+  "errorLens.excludeBySource": [
+    "ts(7024)"
+  ],
+  "chat.plugins.marketplaces": [
+    "github/copilot-plugins",
+    "github/awesome-copilot",
+    "https://github.com/obra/superpowers.git",
+    "https://github.com/JuliusBrussee/caveman.git"
+  ],
+  "chat.viewSessions.orientation": "stacked",
+  "claudeCode.preferredLocation": "panel",
+  "claudeCode.useTerminal": true
 }

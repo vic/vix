@@ -3,7 +3,7 @@ inputs: {
   nixpkgs-lib.follows = "nixpkgs";
   helium.inputs.utils.follows = "flake-utils";
 
-  # den.outPath = ../den.sini;
+  den = if builtins.pathExists ./vic/den then { outPath = ./vic/den; } else { };
 
   doom-emacs =
     source:

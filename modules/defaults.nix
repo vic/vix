@@ -1,6 +1,6 @@
 { den, lib, ... }:
 {
-  den.ctx.user.includes = [ den._.mutual-provider ];
+  den.schema.user.includes = [ den._.mutual-provider ];
 
   den.default = {
     nixos.system.stateVersion = lib.mkDefault "25.05";

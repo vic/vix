@@ -482,5 +482,10 @@
     "key": "ctrl+x ;",
     "command": "workbench.action.maximizeEditorHideSidebar",
     "when": "auxiliaryBarVisible || sideBarVisible || editorPartMultipleEditorGroups && !editorPartMaximizedEditorGroup"
+  },
+  {
+    "key": "ctrl+alt+s",
+    "command": "workbench.action.toggleUnifiedSidebarFromKeyboard",
+    "when": "!isAuxiliaryWindowFocusedContext"
   }
 ]

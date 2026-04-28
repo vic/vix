@@ -9,6 +9,7 @@ return {
     ensure_installed = {
       "lua",
       "vim",
+      "moonbit",
       -- add more arguments for adding more treesitter parsers
     },
   },

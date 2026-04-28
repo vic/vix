@@ -6,6 +6,7 @@
   vic.nvim = {
     homeManager =
       {
+        config,
         pkgs,
         self',
         ...
@@ -54,7 +55,7 @@
         home.packages = [
           vi
           vim
-          pkgs.neovim
+          config.programs.neovim.package
           neovim
           neovim-gui
           astrovim
@@ -69,6 +70,10 @@
 
         home.sessionVariables.VISUAL = "vim-gui";
         home.sessionVariables.EDITOR = "vim";
+
+       programs.neovim.plugins = [
+         pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+       ];
       };
   };
 }
