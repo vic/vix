@@ -77,7 +77,6 @@ in
         mkGallery
         mkWriteScript
         entriesToPackages
-        entriesToFiles
         ;
 
       graphClasses = entity: lib.unique (lib.concatMap (n: n.classes or [ ]) entity.nodes);
@@ -163,7 +162,6 @@ in
 
       everyEntry = hostEntries ++ userEntries ++ homeEntries ++ fleetEntriesList;
       allPackages = entriesToPackages everyEntry;
-      allFiles = entriesToFiles everyEntry;
 
       # --- Galleries ---
 

@@ -71,9 +71,9 @@
         home.sessionVariables.VISUAL = "vim-gui";
         home.sessionVariables.EDITOR = "vim";
 
-       programs.neovim.plugins = [
-         pkgs.vimPlugins.nvim-treesitter.withAllGrammars
-       ];
+        programs.neovim.plugins = [
+          pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+        ];
       };
   };
 }

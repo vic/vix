@@ -183,7 +183,10 @@ in
       };
     in
     {
-      home.packages = [ jjui-wrapped majjit-wrapped ];
+      home.packages = [
+        jjui-wrapped
+        majjit-wrapped
+      ];
       programs.jujutsu = {
         enable = true;
         settings = jj-settings { inherit pkgs; };

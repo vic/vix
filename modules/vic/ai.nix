@@ -7,13 +7,19 @@
 
   flake-file.nixConfig = {
     extra-substituters = [ "https://ryoppippi.cachix.org" ];
-    extra-trusted-public-keys = [ "ryoppippi.cachix.org-1:b2LbtWNvJeL/qb1B6TYOMK+apaCps4SCbzlPRfSQIms=" ];
+    extra-trusted-public-keys = [
+      "ryoppippi.cachix.org-1:b2LbtWNvJeL/qb1B6TYOMK+apaCps4SCbzlPRfSQIms="
+    ];
   };
 
   vic.everywhere.includes = [ vic.ai ];
 
   vic.ai.includes = [
-    (den.provides.unfree [ "copilot-language-server" "claude" "github-copilot-cli" ])
+    (den.provides.unfree [
+      "copilot-language-server"
+      "claude"
+      "github-copilot-cli"
+    ])
   ];
 
   vic.ai.hmLinux =
