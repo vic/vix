@@ -1,0 +1,12 @@
+# theme = 3024 Night
+#theme = 3024 Day
+theme = Rebecca
+# theme = Aura
+# theme = Catpuccin Macchiato
+# theme = TokyoNight Moon
+# ~/.config/ghostty/config
+
+window-decoration = false
+background-opacity = 1.0
+# background=#1a1c1c
+

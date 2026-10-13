@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# vic-telemetry add <agent> <model> <tier> <secs> <tokens> <outcome> [note] | report | recent [n]
+# Per-project burn ledger → routing-policy feedback (/dispatch = living table). GLOBAL.
+k=$(printf '%s' "${CLAUDE_PROJECT_DIR:-$PWD}" | sed 's|/|-|g')
+d="$HOME/.cache/claude-ledger/$k"; f="$d/telemetry.tsv"; mkdir -p "$d"
+case "${1:-}" in
+  add) shift
+    printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$(date -Is)" \
+      "${1:?agent}" "${2:?model}" "${3:?tier}" "${4:?secs}" "${5:?tokens}" "${6:?outcome}" "${7:-}" >> "$f" ;;
+  report) [ -f "$f" ] || { echo "no telemetry yet ($k)"; exit 0; }
+    printf '%-16s %5s %12s %10s %8s %6s\n' agent runs tokens tok/run secs fails
+    awk -F'\t' '{n[$2]++; tok[$2]+=$6; sec[$2]+=$5; if($7!~/^(ok|accept)/) bad[$2]++}
+      END{for(a in n) printf "%-16s %5d %12d %10d %8d %6d\n",a,n[a],tok[a],tok[a]/n[a],sec[a],bad[a]+0}' "$f" \
+      | sort -k3,3 -rn
+    echo "── tok/run high + ok on easy class = downgrade tier (/dispatch). fails high = tighten spec FIRST." ;;
+  recent) tail -n "${2:-15}" "$f" 2>/dev/null | column -t -s$'\t' ;;
+  *) sed -n '2,4p' "$0" ;;
+esac

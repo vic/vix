@@ -4,7 +4,7 @@
   ...
 }:
 {
-  vic.everywhere.includes = [ vic.rdesk ];
+  # disabled for now: vic.everywhere.includes = [ vic.rdesk ];
   vic.rdesk = {
 
     includes = [

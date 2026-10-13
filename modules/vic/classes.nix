@@ -1,9 +1,37 @@
+# Custom homeManager classes (den.batteries.forward):
+#   hm       -> homeManager on Darwin and non-iso Linux hosts
+#   hmLinux  -> homeManager on Linux hosts
+#   hmDarwin -> homeManager on Darwin hosts
 {
   den,
   vic,
   lib,
   ...
 }:
+let
+  # forward `hm${suffix}` for each suffix into homeManager while `enabled stdenv suffix`.
+  # guard requests inputs'/self' so forwarded hm modules can take them as args.
+  forward =
+    each: enabled:
+    { aspect-chain, ... }:
+    den.batteries.forward {
+      inherit each;
+      fromClass = suffix: "hm${suffix}";
+      intoClass = _: "homeManager";
+      intoPath = _: [ ];
+      fromAspect = _: lib.head aspect-chain;
+      adaptArgs =
+        { config, ... }:
+        {
+          osConfig = config;
+        };
+      guard = lib.setFunctionArgs (args: suffix: lib.mkIf (enabled args.pkgs.stdenv suffix)) {
+        pkgs = false;
+        "inputs'" = false;
+        "self'" = false;
+      };
+    };
+in
 {
   vic.everywhere.includes = [ vic.classes ];
 
@@ -12,57 +40,8 @@
     vic.hm
   ];
 
-  vic.hmPlatforms =
-    { aspect-chain, ... }:
-    den._.forward {
-      each = [
-        "Linux"
-        "Darwin"
-      ];
-      fromClass = platform: "hm${platform}";
-      intoClass = _: "homeManager";
-      intoPath = _: [ ];
-      fromAspect = _: lib.head aspect-chain;
-      adaptArgs =
-        { config, ... }:
-        {
-          osConfig = config;
-        };
-      guard =
-        {
-          pkgs,
-          # deadnix: skip
-          inputs',
-          # deadnix: skip
-          self',
-          ...
-        }:
-        platform: lib.mkIf pkgs.stdenv."is${platform}";
-    };
+  vic.hmPlatforms = forward [ "Linux" "Darwin" ] (stdenv: platform: stdenv.hostPlatform."is${platform}");
 
   vic.hm =
-    { host, ... }:
-    { aspect-chain, ... }:
-    den._.forward {
-      each = lib.singleton true;
-      fromClass = _: "hm";
-      intoClass = _: "homeManager";
-      intoPath = _: [ ];
-      fromAspect = _: lib.head aspect-chain;
-      adaptArgs =
-        { config, ... }:
-        {
-          osConfig = config;
-        };
-      guard =
-        {
-          pkgs,
-          # deadnix: skip
-          inputs',
-          # deadnix: skip
-          self',
-          ...
-        }:
-        _: lib.mkIf (pkgs.stdenv.isDarwin || (pkgs.stdenv.isLinux && !host.iso));
-    };
+    { host, ... }: forward [ "" ] (stdenv: _: stdenv.isDarwin || (stdenv.isLinux && !host.iso));
 }

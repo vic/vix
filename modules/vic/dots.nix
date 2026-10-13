@@ -1,6 +1,5 @@
-{ vic, ... }:
+{ ... }:
 {
-  vic.everywhere.includes = [ vic.dots ];
   vic.dots.homeManager =
     { config, pkgs, ... }:
     let
@@ -30,6 +29,14 @@
       home.file.".config/zed".source = dotsLink "config/zed";
       home.file.".config/wezterm".source = dotsLink "config/wezterm";
       home.file.".config/ghostty".source = dotsLink "config/ghostty";
+      home.file.".config/noctalia".source = dotsLink "config/noctalia";
+      home.file.".config/btop".source = dotsLink "config/btop";
+      home.file.".config/bottom".source = dotsLink "config/bottom";
+      home.file.".config/rtk".source = dotsLink "config/rtk";
+      home.file.".config/fontconfig".source = dotsLink "config/fontconfig";
+      home.file.".config/gh/config.yml".source = dotsLink "config/gh/config.yml";
+      home.file.".config/autostart/lxqt-config-touchpad-autostart.desktop".source =
+        dotsLink "config/autostart/lxqt-config-touchpad-autostart.desktop";
       home.file.".config/Code/User/settings.json".source = dotsLink "config/Code/User/settings.json";
       home.file.".config/Code/User/keybindings.json".source =
         dotsLink "config/Code/User/keybindings.json";

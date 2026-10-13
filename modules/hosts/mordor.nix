@@ -2,11 +2,9 @@
 {
   den.aspects.mordor = {
     includes = [
-      vix.bootable
-      vix.nix-settings
+      vix.workstation
       vix.kvm-amd
       vix.nvidia
-      vix.xfce-desktop
       (den.provides.unfree [
         "nvidia-x11"
         "nvidia-settings"

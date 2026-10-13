@@ -2,12 +2,8 @@
 {
   den.aspects.smaug = {
     includes = [
-      vix.bootable
-      vix.nix-settings
-      vix.xfce-desktop
-      vix.macos-keys
-      vix.kvm-intel
-      vix.wl-broadcom
+      vix.workstation
+      vix.macbook
       vix.nvidia
       vix.all-firmware
     ];

@@ -14,6 +14,8 @@
 
   den.hosts.x86_64-linux.nienna.users.vic = { };
 
+  den.hosts.x86_64-linux.frodo.users.vic = { };
+
   den.hosts.x86_64-linux.tom = { };
 
   den.hosts.x86_64-linux.bombadil = {
@@ -23,7 +25,11 @@
 
   den.hosts.aarch64-linux.bill = { };
 
-  den.hosts.x86_64-darwin.yavanna.users.vic = { };
+  # x86_64-darwin left lib.systems.flakeExposed: den needs the flat form + system
+  den.hosts.yavanna = {
+    system = "x86_64-darwin";
+    users.vic = { };
+  };
 
   den.hosts.aarch64-darwin.varda.users.vic = { };
   den.hosts.aarch64-darwin.bert = { };

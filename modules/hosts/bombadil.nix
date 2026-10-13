@@ -6,13 +6,9 @@
 {
   den.aspects.bombadil = {
     includes = [
-      vix.bootable
-      vix.nix-settings
-      vix.macos-keys
-      vix.kvm-intel
-      vix.wl-broadcom
+      vix.workstation
+      vix.macbook
       vix.all-firmware
-      vix.xfce-desktop
     ];
 
     nixos =

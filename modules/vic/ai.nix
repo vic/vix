@@ -23,10 +23,11 @@
   ];
 
   vic.ai.hmLinux =
-    { pkgs, inputs', ... }:
+    { pkgs, ... }:
     {
+      # `claude` comes from programs.claude-code.package (llm-agents, claude.nix);
+      # nix-claude-code's package also ships bin/claude and would collide.
       home.packages = [
-        inputs'.nix-claude-code.packages.default
         pkgs.github-copilot-cli
         pkgs.copilot-language-server
         pkgs.aider-chat
