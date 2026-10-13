@@ -6,25 +6,16 @@
 }:
 {
   perSystem =
-    { pkgs, ... }:
+    { pkgs, system, ... }:
     {
-      devShells.default =
+      devshells.default =
         let
-          system = pkgs.stdenvNoCC.targetPlatform.system;
           apps = inputs.self.packages.${system};
 
           denApps = den.lib.nh.denApps {
             outPrefix = [ ];
             fromFlake = false;
           } pkgs;
-
-          formatter = inputs.self.formatter.${system};
-          fmtt = pkgs.writeShellApplication {
-            name = "fmtt";
-            text = ''
-              ${lib.getExe formatter} "$@"
-            '';
-          };
 
           nix_conf = {
             inherit (inputs.self.nixosConfigurations.nargun.config.nix.settings)
@@ -41,25 +32,69 @@
             );
           };
 
-          shellHook = ''
-            export NIX_USER_CONF_FILES="${nix_conf_file}"
-          '';
+          # first arg is the host, defaults to this machine
+          hostCmd = name: action: {
+            inherit name;
+            category = "hosts";
+            help = "${action} host (default: this machine)";
+            command = ''
+              host="''${1:-$(hostname -s)}"
+              shift || true
+              "$host" ${action} "$@"
+            '';
+          };
 
+          tool = category: package: { inherit category package; };
         in
-        pkgs.mkShell {
-          shellHook = shellHook;
-          buildInputs = denApps ++ [
-            fmtt
-            apps.vic-sops-rotate
-            apps.vic-sops-get
-            # apps.edgevpn
-            apps.gh-deps-update
-            pkgs.nh
-            pkgs.sops
-            pkgs.just
-            pkgs.npins
-            pkgs.cachix
-            pkgs.nix-unit
+        {
+          env = [
+            {
+              name = "NIX_USER_CONF_FILES";
+              value = "${nix_conf_file}";
+            }
+          ];
+          packages = denApps;
+          commands = [
+            {
+              name = "fmt";
+              category = "dev";
+              help = "format the repo";
+              command = ''${lib.getExe inputs.self.formatter.${system}} "$@"'';
+            }
+            {
+              name = "ci";
+              category = "dev";
+              help = "run nix-unit ci [test]";
+              command = ''
+                test="''${1:-}"
+                shift || true
+                nix-unit --expr "(import $PRJ_ROOT).ci \"${system}\" \"$test\"" "$@"
+              '';
+            }
+            {
+              name = "hm";
+              category = "hosts";
+              help = "switch home of $USER@this machine";
+              command = ''"$(whoami)@$(hostname -s)" switch --ask "$@"'';
+            }
+            (hostCmd "build" "build")
+            (hostCmd "switch" "switch --ask")
+            (hostCmd "boot" "boot --ask")
+            {
+              name = "reboot";
+              category = "hosts";
+              help = "boot host then reboot";
+              command = ''boot "$@" && systemctl reboot'';
+            }
+            (tool "dev" apps.write-npins)
+            (tool "dev" pkgs.npins)
+            (tool "dev" pkgs.nix-unit)
+            (tool "dev" pkgs.nh)
+            (tool "dev" pkgs.cachix)
+            (tool "dev" apps.gh-deps-update)
+            (tool "secrets" pkgs.sops)
+            (tool "secrets" apps.vic-sops-rotate)
+            (tool "secrets" apps.vic-sops-get)
           ];
         };
     };

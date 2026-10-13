@@ -129,6 +129,7 @@
       programs.git.ignores = [
         ".serena"
         ".cbmignore"
+        ".quipu"
       ];
     };
 }

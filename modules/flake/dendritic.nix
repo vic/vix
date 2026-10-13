@@ -3,6 +3,7 @@
 
   imports = [
     inputs.flake-file.flakeModules.default
+    inputs.flake-file.flakeModules.npins
     inputs.den.flakeModule
   ];
 

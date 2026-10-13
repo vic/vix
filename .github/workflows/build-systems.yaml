@@ -22,7 +22,7 @@ jobs:
         with:
           name: vix
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix-shell --run 'just ci'
+      - run: nix-shell --run ci
   find-systems:
     needs: [ci]
     name: find-systems

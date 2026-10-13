@@ -11,8 +11,8 @@ My [`den`](modules/den.nix) configuration has two namespaces, `vix` (public) for
 ## Everyday Usage
 
 ```console
-just build
-just switch
+build
+switch
 ```
 
 ---
@@ -55,7 +55,7 @@ Currently only [`vic`](modules/vic) which is applied at all hosts.
    `sudo nixos-facter -o modules/hosts/<h>/_nixos/facter.json`
    Then set `hardware.facter.reportPath` to that file. See [`frodo.nix`](modules/hosts/frodo.nix).
 4. If you use disko, point the disk to `/dev/disk/by-id/...`. Do not use `/dev/nvme0n1`. Those names can change between boots.
-5. Run `just build` for the new host before you switch.
+5. Run `build` for the new host before you switch.
 
 ## Hardware facts go stale
 

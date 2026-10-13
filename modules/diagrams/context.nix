@@ -10,6 +10,7 @@ let
   diagram = inputs.den-diagram.lib;
 in
 {
+  flake-file.inputs.den-diagram.url = "github:denful/den-diagram";
   perSystem =
     { pkgs, mermaidCli, ... }:
     let

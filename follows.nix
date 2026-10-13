@@ -5,7 +5,7 @@ inputs: {
   # bun2nix (llm-agents) does `import inputs.systems`; the shim below is a list
   bun2nix.inputs.systems.follows = "nix-systems";
 
-  den = if builtins.pathExists ./vic/den then { outPath = ./vic/den; } else { };
+  # den = if builtins.pathExists ./vic/den then { outPath = ./vic/den; } else { };
 
   doom-emacs =
     source:

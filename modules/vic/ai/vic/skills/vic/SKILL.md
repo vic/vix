@@ -40,6 +40,7 @@ Use the type-system to ensure invalid-data is not able to be represented. **THIS
 - `/vic` = mandatory rules (THIS)
 - `/ste-writing` = mandatory standard technical english (ALL PROSE and COMMUNICATION WITH USER)
 - `/caveman ultra` = save tokens
+- **TECH WRITING = STE ALWAYS** (docs, READMEs, PR bodies, commit msgs, comments, error msgs, specs, subagent prompts). Follow ASD-STE100 via `/ste-writing`: one meaning per word, short active sentences, no ambiguity. Voice = Vic human voice: direct, plain, no AI slop. Exempt: code, quoted errors, caveman chat replies.
 - `/elt` = load ./vic docs
 - `/<project>` = proj skill if exists
 - `/supervisor` = subagent work
@@ -147,6 +148,15 @@ Shell = fish. Heredocs DON'T WORK. NEVER `cat`, NEVER python, NEVER `git`.
 - MEMS = cvmn spk ONLY
 - CORRECTIONS → auto compress 2 mem
 - ⚠️ NO fancy mems. ONLY CVMN.
+
+### QUIPU MCP = CONTEXT STORE (ALWAYS)
+`mcp__plugin_hm_quipu__*`. Single store 4 save + retrieve ctx. Web UI: http://127.0.0.1:8088
+
+- **RETRIEVE b4 work/derive/re-read:** `quipu_context` / `quipu_search_nodes` / `quipu_search_facts` on task entities. Use what recorded. NO re-derive.
+- **SAVE after verified result** (root cause, decision, measured fact, dead end, vic correction): `quipu_resolve_entity` 1st, then `quipu_knot` / `quipu_episode` w/ evidence.
+- Verified facts ONLY. NO guesses. NO dup — search 1st.
+- Subagents SAME rule. Report 2 vic what read/wrote.
+- CVMN spk in saved text.
 
 ---
 

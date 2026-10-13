@@ -1,5 +1,6 @@
 { vix, inputs, ... }:
 {
+  flake-file.inputs.disko.url = "github:nix-community/disko";
   den.aspects.frodo = {
     includes = [
       vix.macos-keys

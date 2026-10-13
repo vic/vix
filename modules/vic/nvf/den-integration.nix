@@ -5,6 +5,7 @@
   ...
 }:
 {
+  flake-file.inputs.nvf.url = "github:notashelf/nvf";
   den.lib.nvf.package =
     pkgs: vimAspect: ctx:
     (inputs.nvf.lib.neovimConfiguration {

@@ -46,7 +46,9 @@ in
     vic.hm
   ];
 
-  vic.hmPlatforms = forward [ "Linux" "Darwin" ] (stdenv: platform: stdenv.hostPlatform."is${platform}");
+  vic.hmPlatforms = forward [ "Linux" "Darwin" ] (
+    stdenv: platform: stdenv.hostPlatform."is${platform}"
+  );
 
   vic.hm =
     { host, ... }: forward [ "" ] (stdenv: _: stdenv.isDarwin || (stdenv.isLinux && !host.iso));

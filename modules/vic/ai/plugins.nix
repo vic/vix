@@ -10,8 +10,7 @@ let
     diagram-design = "github:cathrynlavery/diagram-design";
     ui-ux-pro-max-skill = "github:nextlevelbuilder/ui-ux-pro-max-skill";
     claude-plugins-official = "github:anthropics/claude-plugins-official";
-    # vic: pinned to the commit installed on frodo
-    caveman = "github:JuliusBrussee/caveman/ef6050c5e1848b6880ff47c32ade1a608a64f85e";
+    caveman = "github:JuliusBrussee/caveman";
   };
 in
 {
@@ -24,17 +23,7 @@ in
   vic.ai._.plugins.homeManager =
     { lib, pkgs, ... }:
     let
-      # vic: caveman with vic's ultra-mode line (was a hand edit on frodo)
-      srcOf =
-        name:
-        if name == "caveman" then
-          pkgs.applyPatches {
-            name = "caveman";
-            src = inputs.caveman;
-            patches = [ ./vic/caveman-ultra.patch ];
-          }
-        else
-          inputs.${name};
+      srcOf = name: inputs.${name};
     in
     {
       programs.claude-code.settings.enabledPlugins = {
