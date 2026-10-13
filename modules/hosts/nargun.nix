@@ -2,11 +2,9 @@
 {
   den.aspects.nargun = {
     includes = [
-      vix.bootable
-      vix.nix-settings
+      vix.workstation
       vix.kde-desktop
       vix.niri-desktop
-      vix.xfce-desktop
       vix.macos-keys
       vix.kvm-amd
       vix.enthium

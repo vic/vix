@@ -2,12 +2,8 @@
 {
   den.aspects.nienna = {
     includes = [
-      vix.bootable
-      vix.nix-settings
-      vix.xfce-desktop
-      vix.macos-keys
-      vix.kvm-intel
-      vix.wl-broadcom
+      vix.workstation
+      vix.macbook
       (den.provides.unfree [ "broadcom-sta" ])
     ];
 
