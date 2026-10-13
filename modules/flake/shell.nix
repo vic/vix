@@ -77,14 +77,14 @@
               help = "switch home of $USER@this machine";
               command = ''"$(whoami)@$(hostname -s)" switch --ask "$@"'';
             }
-            (hostCmd "build" "build")
-            (hostCmd "switch" "switch --ask")
-            (hostCmd "boot" "boot --ask")
+            (hostCmd "-build" "build")
+            (hostCmd "-switch" "switch --ask")
+            (hostCmd "-boot" "boot --ask")
             {
-              name = "reboot";
+              name = "-reboot";
               category = "hosts";
               help = "boot host then reboot";
-              command = ''boot "$@" && systemctl reboot'';
+              command = ''-boot "$@" && systemctl reboot'';
             }
             (tool "dev" apps.write-npins)
             (tool "dev" pkgs.npins)
