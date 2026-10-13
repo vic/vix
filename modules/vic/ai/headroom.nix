@@ -5,8 +5,10 @@
 #
 # The upstream plugin is deliberately NOT installed: its hook writes an absolute
 # store path into settings.local.json that goes stale on every rebuild.
+{ vic, ... }:
 {
-  vic.ai.homeManager =
+  vic.ai.includes = [ vic.ai._.headroom ];
+  vic.ai._.headroom.homeManager =
     { lib, pkgs, ... }:
     let
       headroom = pkgs.callPackage ./_pkgs/headroom-ai.nix { };

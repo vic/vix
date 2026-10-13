@@ -1,6 +1,6 @@
 # Plain (non-plugin) Claude Code skills: the local ones under ./skills, plus
 # gstack and task-observer from upstream.
-{ inputs, ... }:
+{ inputs, vic, ... }:
 {
   flake-file.inputs = {
     gstack = {
@@ -13,16 +13,17 @@
     };
   };
 
-  vic.ai.homeManager =
+  vic.ai.includes = [ vic.ai._.skills ];
+  vic.ai._.skills.homeManager =
     { lib, pkgs, ... }:
     let
       # every subdirectory holding a SKILL.md, by name
       skillDirs =
         dir:
         lib.mapAttrs (name: _: "${dir}/${name}") (
-          lib.filterAttrs (
-            name: type: type == "directory" && builtins.pathExists "${dir}/${name}/SKILL.md"
-          ) (builtins.readDir dir)
+          lib.filterAttrs (name: type: type == "directory" && builtins.pathExists "${dir}/${name}/SKILL.md") (
+            builtins.readDir dir
+          )
         );
     in
     {

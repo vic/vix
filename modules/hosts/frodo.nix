@@ -4,6 +4,7 @@
     includes = [
       vix.macos-keys
       vix.laptop
+      vix.niri-desktop
     ];
 
     nixos = {

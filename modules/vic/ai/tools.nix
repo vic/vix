@@ -1,6 +1,8 @@
 # Agent CLIs from numtide/llm-agents.nix, with their Claude Code wiring.
+{ vic, ... }:
 {
-  vic.ai.homeManager =
+  vic.ai.includes = [ vic.ai._.tools ];
+  vic.ai._.tools.homeManager =
     {
       inputs',
       lib,

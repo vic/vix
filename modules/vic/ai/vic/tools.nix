@@ -4,13 +4,15 @@
 #   at ~/.claude/omni.db, never in the store)
 # - deepwiki MCP + REPL (./dw, vendored from github:vic/dw incl. unpushed repl.js)
 # - notebooklm MCP (npx, unpinned as on frodo) + notebooklm-pack
+{ vic, ... }:
 {
   flake-file.inputs.notebooklm-pack = {
     url = "github:meta-introspector/notebooklm-pack";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  vic.ai.homeManager =
+  vic.ai.includes = [ vic.ai._.vic-tools ];
+  vic.ai._.vic-tools.homeManager =
     {
       config,
       inputs',

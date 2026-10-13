@@ -3,7 +3,6 @@
     { pkgs, ... }:
     {
       programs.direnv.enable = true;
-      programs.fish.enable = true;
 
       programs.neovim = {
         enable = true;
@@ -24,12 +23,8 @@
         foot
         fzf
 
-        gnome-keyring
-        brightnessctl
-        swaybg
         niri
         fuzzel
-        swaybg
         xwayland-satellite
         grim
         slurp

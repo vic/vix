@@ -8,8 +8,10 @@
 # serena editors, so a reviewer cannot quietly repair what it judges. MCP tools
 # are listed by name, never `mcp__<server>__*`, so nobody gets the destructive
 # ones. Tools of a server not installed here (hindsight) are simply absent.
+{ vic, ... }:
 {
-  vic.ai.homeManager =
+  vic.ai.includes = [ vic.ai._.gen-agents ];
+  vic.ai._.gen-agents.homeManager =
     { lib, pkgs, ... }:
     let
       d = ./agents;
@@ -64,18 +66,7 @@
           "list_memories"
           "read_memory"
         ]
-        ++ mcp "graphify" [
-          "graph_stats"
-          "god_nodes"
-          "get_node"
-          "get_neighbors"
-          "get_community"
-          "shortest_path"
-          "query_graph"
-          "list_prs"
-          "get_pr_impact"
-          "triage_prs"
-        ]
+        ++ (import ./_quipu.nix).tools
         ++ mcp "codegraph" [ "codegraph_explore" ]
         ++ mcp "headroom" [
           "headroom_compress"

@@ -1,34 +1,23 @@
 # Local stdio MCP servers for code discovery, spawned per session by Claude Code.
 # (codegraph lives in tools.nix beside its CLI; headroom in headroom.nix.)
-{ inputs, ... }:
+{ vic, ... }:
 {
-  flake-file.inputs.graphify = {
-    url = "github:Graphify-Labs/graphify";
-    flake = false;
-  };
-
-  vic.ai.homeManager =
-    { lib, pkgs, ... }:
+  vic.ai.includes = [ vic.ai._.mcp ];
+  vic.ai._.mcp.homeManager =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
       cbm = pkgs.codebase-memory-mcp;
       serena = pkgs.callPackage ./_pkgs/serena-agent.nix { };
-      graphify = pkgs.python3Packages.buildPythonApplication {
-        pname = "graphifyy";
-        version = "0.9.49";
-        src = inputs.graphify;
-        format = "pyproject";
-        nativeBuildInputs = [ pkgs.python3Packages.setuptools ];
-        propagatedBuildInputs = with pkgs.python3Packages; [
-          networkx
-          numpy
-          rapidfuzz
-          tree-sitter
-          mcp
-          starlette
-        ];
-        dontCheckRuntimeDeps = true;
-        doCheck = false;
-      };
+      quipu = pkgs.callPackage ./_pkgs/quipu.nix { };
+      # One global graph, like the global codegraph. The signing key defaults to
+      # .quipu/ in the cwd, which would drop a private key into every repo.
+      kb = import ./_quipu.nix;
+      quipuDir = "${config.xdg.dataHome}/quipu";
 
       hookOf = command: [
         {
@@ -58,7 +47,7 @@
       home.packages = [
         cbm
         serena
-        graphify
+        quipu
       ];
 
       # auto_index defaults to false, leaving the graph empty until an agent
@@ -85,22 +74,23 @@
               "False"
             ];
           };
-          graphify = {
+          quipu = {
             type = "stdio";
-            command = "${graphify}/bin/graphify-mcp";
+            command = lib.getExe quipu;
+            args = [
+              "mcp"
+              "--db"
+              "${quipuDir}/quipu.db"
+            ];
+            env.QUIPU_SIGNING_KEY = "${quipuDir}/verifier.pk8";
           };
-        };
-
-        skills = {
-          graphify = "${inputs.graphify}/graphify";
         };
 
         settings = {
           permissions.allow = [
             "Bash(serena *)"
-            "Bash(graphify *)"
-            "Bash(graphify-mcp *)"
-          ];
+          ]
+          ++ kb.tools;
 
           hooks = {
             PreToolUse = [
@@ -116,7 +106,7 @@
             ];
             SessionStart = hookOf "${pkgs.writeShellScript "cbm-session-reminder" ''
               cat <<'EOF'
-              ${discovery}
+              ${discovery + kb.instructions}
               EOF
             ''}";
             # SubagentStart delivers only `additionalContext`, never plain stdout.
@@ -126,7 +116,7 @@
                   builtins.toJSON {
                     hookSpecificOutput = {
                       hookEventName = "SubagentStart";
-                      additionalContext = discovery;
+                      additionalContext = discovery + kb.instructions;
                     };
                   }
                 )
@@ -139,8 +129,6 @@
       programs.git.ignores = [
         ".serena"
         ".cbmignore"
-        "/graphify-out/"
-        ".graphifyignore"
       ];
     };
 }

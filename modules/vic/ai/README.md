@@ -121,7 +121,6 @@ build commands.
 | `codebase-memory` | Indexed call/definition graph: `search_graph`, `trace_path`, `get_code_snippet`, Cypher `query_graph` |
 | `serena`          | LSP-backed symbol navigation and symbol-level edits                                                  |
 | `codegraph`       | `codegraph_explore`: source of the relevant symbols plus the call paths between them, in one call   |
-| `graphify`        | Turns any folder (code, docs, papers) into a queryable knowledge graph                               |
 | `headroom`        | Compression and retrieval tools (see §5)                                                             |
 | `nil` (LSP)       | Nix outline, hover, file-local definitions                                                           |
 
@@ -312,15 +311,17 @@ modules/users/vic/
 ├── includes.nix             den.aspects.vic includes vic.ai
 └── ai/
     ├── claude.nix       Claude Code settings, permissions, budget/subagent/direnv hooks
+    ├── _scripts/        budget/subagent-stop/load-direnv (claude.nix), mcp-log/mcp-status (statusline.nix)
     ├── agents.nix       gen-scout / gen-gate / gen-spec / gen-build
     ├── agents/          prompt fragments the agents are composed from
-    ├── mcp.nix          codebase-memory, serena, graphify (+ discovery hooks)
+    ├── mcp.nix          codebase-memory, serena (+ discovery hooks)
     ├── headroom.nix     compression proxy + MCP
     ├── tools.nix        rtk, hunk, beads, codegraph, openspec, calldiff, other agent CLIs
+    ├── herdr.nix        herdr agent multiplexer + skill + SessionStart session-report hook
     ├── plugins.nix      store-pinned plugin marketplaces (+ patched caveman)
     ├── skills.nix       local skills + gstack + task-observer
     ├── skills/          local SKILL.md directories
-    ├── statusline.nix   ccstatusline
+    ├── statusline.nix   ccstatusline: 1 line (model, ctx, $, $/h, tokens, 5h/7d quota, last skill, last MCP tool)
     ├── _pkgs/           serena-agent, headroom-ai derivations
     └── vic/             vic's tooling (§10)
         ├── agents.nix   vic-* agents, vic skills, CLAUDE.md + RTK.md

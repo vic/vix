@@ -1,7 +1,9 @@
 # vic's frodo settings.json preferences. Where sini's claude.nix sets the
 # same key it uses lib.mkDefault, so these win.
+{ vic, ... }:
 {
-  vic.ai.homeManager = {
+  vic.ai.includes = [ vic.ai._.vic-settings ];
+  vic.ai._.vic-settings.homeManager = {
     programs.claude-code.settings = {
       model = "opus";
       effortLevel = "high";

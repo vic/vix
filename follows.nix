@@ -22,7 +22,6 @@ inputs: {
   # vic.ai: skills and plugin marketplaces, read as plain sources
   gstack = source: source // { flake = false; };
   one-skill-to-rule-them-all = source: source // { flake = false; };
-  graphify = source: source // { flake = false; };
   deepwiki-skill = source: source // { flake = false; };
   vercel-skills = source: source // { flake = false; };
   lightjj = source: source // { flake = false; };

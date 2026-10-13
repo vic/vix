@@ -1,6 +1,6 @@
 # Claude Code plugin marketplaces, store-pinned: CC resolves plugins from these
 # nix-store paths instead of cloning from GitHub at runtime.
-{ inputs, ... }:
+{ inputs, vic, ... }:
 let
   # marketplace name -> flake input (and its input url)
   marketplaces = {
@@ -20,7 +20,8 @@ in
     flake = false;
   }) marketplaces;
 
-  vic.ai.homeManager =
+  vic.ai.includes = [ vic.ai._.plugins ];
+  vic.ai._.plugins.homeManager =
     { lib, pkgs, ... }:
     let
       # vic: caveman with vic's ultra-mode line (was a hand edit on frodo)

@@ -21,7 +21,7 @@ let
 in
 {
   # keep devshell closures alive across GC (sini direnv.nix:4-7)
-  vic.direnv.os = {
+  vic.direnv.provides.to-hosts.os = {
     nix.settings.keep-outputs = true;
     nix.settings.keep-derivations = true;
   };

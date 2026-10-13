@@ -224,19 +224,6 @@
       "url": "https://github.com/hercules-ci/flake-parts/archive/024633cd702b10285db5cb19b40ad48d2399ba60.tar.gz",
       "hash": "sha256-zTwuwezD0w3hpga6a6P8emidzAZFyWqlNeRBlpWOOl8="
     },
-    "graphify": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "Graphify-Labs",
-        "repo": "graphify"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "91f4d120b630ee35c79bf3c75ccd186870a808f9",
-      "url": "https://github.com/Graphify-Labs/graphify/archive/91f4d120b630ee35c79bf3c75ccd186870a808f9.tar.gz",
-      "hash": "sha256-Oprs8hyxd/T1D/8itwxlS2BsNd3dj/n69lZ9jl/LkAE="
-    },
     "gstack": {
       "type": "Git",
       "repository": {
@@ -340,9 +327,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "e9b8c5022e89624c801ca7aee49c0e9fb4966475",
-      "url": "https://github.com/numtide/llm-agents.nix/archive/e9b8c5022e89624c801ca7aee49c0e9fb4966475.tar.gz",
-      "hash": "sha256-Zb7XrgNXPEg3KBWHbL5qyFUcYM3NKNX7Pm1WDFjKVQc="
+      "revision": "174d851a8a4923e274aa49c44d2ba7853acb87f3",
+      "url": "https://github.com/numtide/llm-agents.nix/archive/174d851a8a4923e274aa49c44d2ba7853acb87f3.tar.gz",
+      "hash": "sha256-XxGPHDTwN57LtQTFldjmJ8Riq3jE0tl3tdI0G1tQlL0="
     },
     "mattpocock": {
       "type": "Git",

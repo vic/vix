@@ -1,16 +1,23 @@
 # vic's own Claude Code tooling, ported verbatim from frodo ~/.claude:
 # vic-* subagents (tiered haiku/sonnet/opus), vic skills, global CLAUDE.md.
 # Copies live beside this file; edit them here, never in ~/.claude.
+{ vic, ... }:
 {
-  vic.ai.homeManager =
+  vic.ai.includes = [ vic.ai._.vic-agents ];
+  vic.ai._.vic-agents.homeManager =
     { lib, ... }:
     let
       byName = dir: f: lib.mapAttrs' f (builtins.readDir dir);
+      # `tools:` is a closed allowlist; quipu is mandatory, so every agent gets it.
+      quipuTools = lib.concatStringsSep ", " (import ../_quipu.nix).tools;
+      withQuipu =
+        file:
+        builtins.replaceStrings [ "\ntools: " ] [ "\ntools: ${quipuTools}, " ] (builtins.readFile file);
     in
     {
       programs.claude-code = {
         agents = byName ./agents (
-          file: _: lib.nameValuePair (lib.removeSuffix ".md" file) ./agents/${file}
+          file: _: lib.nameValuePair (lib.removeSuffix ".md" file) (withQuipu ./agents/${file})
         );
         skills = byName ./skills (name: _: lib.nameValuePair name ./skills/${name});
         context = ./memory/CLAUDE.md;

@@ -3,8 +3,10 @@
 # cmd-ledger (every Bash cmd + full output -> ~/.cache/claude-ledger, read by
 # vic-recall), stop-gate (ctx >=70% + stale HANDOFF blocks stop once),
 # omni-ingest (detached, flock-guarded omni graph refresh).
+{ vic, ... }:
 {
-  vic.ai.homeManager =
+  vic.ai.includes = [ vic.ai._.vic-hooks ];
+  vic.ai._.vic-hooks.homeManager =
     { config, ... }:
     let
       hookOf = script: {

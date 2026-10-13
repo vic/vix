@@ -1,7 +1,10 @@
 # ccstatusline: the Claude Code status line. The config is a read-only store
 # symlink; browse widgets in its TUI, but change the layout here.
+# One line: model, burn (ctx, $, $/h, tokens), quotas, last skill, last MCP tool.
+{ vic, ... }:
 {
-  vic.ai = {
+  vic.ai.includes = [ vic.ai._.statusline ];
+  vic.ai._.statusline = {
     homeManager =
       {
         lib,
@@ -10,17 +13,41 @@
         ...
       }:
       let
+        ccstatusline = lib.getExe inputs'.llm-agents.packages.ccstatusline;
+
+        script =
+          name:
+          lib.getExe (
+            pkgs.writeShellApplication {
+              inherit name;
+              runtimeInputs = [ pkgs.jq ];
+              text = builtins.readFile ./_scripts/${name}.sh;
+            }
+          );
+
         # `id` is required on every widget by ccstatusline's schema and carries no
-        # meaning for a generated config, so it is derived from position rather than
-        # hand-maintained. The TUI mints UUIDs; nothing reads them across saves that
-        # we do not regenerate anyway.
-        withIds = lib.imap0 (i: line: lib.imap0 (j: w: w // { id = "l${toString i}-${toString j}"; }) line);
+        # meaning for a generated config, so it is derived from position.
+        withIds = lib.imap0 (i: w: w // { id = "w${toString i}"; });
 
         sep = {
           type = "separator";
-          character = " · ";
+          character = "·"; # widget padding already spaces it
           color = "brightBlack";
         };
+
+        # rawValue drops ccstatusline's long labels; `label` puts a short one back.
+        raw = color: type: {
+          inherit type color;
+          rawValue = true;
+        };
+        label = text: {
+          type = "custom-text";
+          customText = text;
+          color = "brightBlack";
+          merge = "no-padding";
+        };
+        # metadata is record(string,string): hide states are a string, not a list.
+        hideNoData = w: w // { metadata.hide = "no-data"; };
 
         settings = {
           # Must equal the binary's CURRENT_VERSION. On a lower number ccstatusline
@@ -31,103 +58,47 @@
           # below together whenever the ccstatusline input moves.
           version = 4;
 
-          lines = withIds [
-            # Line 1 — WHERE YOU ARE and WHAT IS UNLANDED. Every widget here is one
-            # the close protocol asks about: which worktree holds the writer, what
-            # is uncommitted, what is committed but unpushed.
-            [
-              {
-                type = "current-working-dir";
-                color = "cyan";
-                # Drops the "cwd: " label; a path does not need naming.
-                rawValue = true;
-                # metadata is record(string,string) in the schema — booleans are
-                # compared against the STRING "true", so `true` would read as unset.
-                metadata.abbreviateHome = "true";
-              }
+          lines = [
+            (withIds [
+              (raw "cyan" "model")
+              (raw "brightBlack" "thinking-effort")
               sep
-              {
-                type = "git-branch";
-                color = "magenta";
-                metadata.hide = "no-git";
-              }
-              {
-                type = "git-changes";
-                color = "yellow";
-                metadata.hide = "no-git";
-              }
-              {
-                # ↑n↓m against upstream: the "unpushed commits" half of the close
-                # protocol, and the one a clean `git status` hides completely.
-                # `hide` is deliberately NOT set here, unlike its neighbours:
-                # in sync the widget returns null on its own, so the flag only ever
-                # gates "(no git)" and "(no upstream)" — and a branch with no
-                # upstream is the exact shape a fresh .worktrees/<task> takes, which
-                # is where unpushed work strands.
-                type = "git-ahead-behind";
-                color = "brightRed";
-              }
-              {
-                # Renders nothing outside a worktree, so it is a positive signal:
-                # visible ⇒ you are in .worktrees/<task> and are its single writer.
-                type = "worktree-name";
-                color = "yellow";
-              }
-            ]
-
-            # Line 2 — WHAT IT COSTS. The agent cap is quota-driven and model-tiered,
-            # so the weekly Opus figure is a scheduling input, not trivia.
-            [
-              {
-                type = "model";
-                color = "cyan";
-                rawValue = true;
-              }
-              {
-                type = "thinking-effort";
-                color = "brightBlack";
-              }
+              (label "ctx ")
+              (raw "green" "context-percentage")
               sep
-              {
-                type = "context-percentage";
-                color = "green";
-              }
+              (raw "brightYellow" "session-cost")
+              (raw "yellow" "session-cost-rate")
+              (raw "brightBlue" "tokens-total")
               sep
+              (label "5h ")
+              (hideNoData (raw "brightBlue" "session-usage"))
+              (raw "brightBlack" "reset-timer")
+              # ★ `weekly-usage`, NOT `weekly-opus-usage`: measured 2026-08-28, the
+              # per-model Opus/Sonnet widgets read a permanent 0% (no such cap on this
+              # account) while Fable has a real, tighter weekly cap.
+              (label "7d ")
+              (hideNoData (raw "brightMagenta" "weekly-usage"))
+              # labelled natively: renders only when the account reports a Fable cap
               {
-                type = "session-cost";
-                color = "brightYellow";
-              }
-              {
-                type = "session-usage";
-                color = "brightBlue";
-              }
-              {
-                # ★ `weekly-usage`, NOT `weekly-opus-usage`. Measured 2026-08-28 against
-                # the live account: weekly-usage 70.0%, weekly-opus-usage 0.0%,
-                # weekly-sonnet-usage 0.0%. There is no per-model weekly cap for this
-                # account, so both per-model widgets report a limit that does not exist
-                # and read a permanent, plausible-looking zero. The original choice was
-                # reasoning from OUR agent cap being model-tiered — but that is a quota
-                # policy we invented, not a limit the API reports.
-                type = "weekly-usage";
-                color = "brightMagenta";
-                # `slider` is the only display mode that earns its width: a 10-block bar
-                # AND the number. Measured — `progress` is 46 chars, `slider-only` drops
-                # the number, and full-data/icon-* are no-ops that render exactly like the
-                # default. Two sliders side by side make the BINDING constraint legible
-                # without reading either figure.
-                metadata.display = "slider";
-              }
-              {
-                # ★ Fable has a REAL per-model weekly cap where Opus and Sonnet do not,
-                # and on 2026-08-28 it was the tighter one: Fable 88.0% against overall
-                # 70.0%. Showing only the overall figure hides the limit that actually
-                # binds first.
                 type = "fable-weekly-usage";
                 color = "brightRed";
-                metadata.display = "slider";
               }
-            ]
+              sep
+              # "Skill: <last>"; fed by the `--hook` entries below
+              {
+                type = "skills";
+                color = "magenta";
+                metadata = {
+                  mode = "current";
+                  hide = "empty";
+                };
+              }
+              {
+                type = "custom-command";
+                commandPath = script "mcp-status";
+                color = "cyan";
+              }
+            ])
           ];
 
           flexMode = "full-minus-40";
@@ -136,7 +107,6 @@
           defaultPadding = " ";
           inheritSeparatorColors = false;
           globalBold = false;
-          gitCacheTtlSeconds = 5;
           minimalistMode = false;
 
           # Off on purpose: powerline separators are private-use codepoints that
@@ -151,6 +121,20 @@
             continueThemeAcrossLines = false;
           };
         };
+
+        hook = command: matcher: [
+          (
+            {
+              hooks = [
+                {
+                  type = "command";
+                  inherit command;
+                }
+              ];
+            }
+            // lib.optionalAttrs (matcher != null) { inherit matcher; }
+          )
+        ];
       in
       {
         home.packages = [ inputs'.llm-agents.packages.ccstatusline ];
@@ -161,10 +145,17 @@
           (pkgs.formats.json { }).generate "ccstatusline-settings.json"
             settings;
 
-        programs.claude-code.settings.statusLine = {
-          type = "command";
-          command = lib.getExe inputs'.llm-agents.packages.ccstatusline;
-          padding = 0;
+        programs.claude-code.settings = {
+          statusLine = {
+            type = "command";
+            command = ccstatusline;
+            padding = 0;
+          };
+          hooks = {
+            PreToolUse = hook "${ccstatusline} --hook" "Skill";
+            UserPromptSubmit = hook "${ccstatusline} --hook" null;
+            PostToolUse = hook (script "mcp-log") "mcp__.*";
+          };
         };
       };
   };

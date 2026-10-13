@@ -33,6 +33,12 @@ let
     };
 in
 {
+  den.classes = {
+    hm.description = "homeManager on Darwin and non-iso Linux hosts";
+    hmLinux.description = "homeManager on Linux hosts";
+    hmDarwin.description = "homeManager on Darwin hosts";
+  };
+
   vic.everywhere.includes = [ vic.classes ];
 
   vic.classes.includes = [

@@ -2,7 +2,7 @@
 # skills from seflless/deepwiki, vercel-labs/skills and chronologos/lightjj,
 # the lightjj release binary, and npm CLIs run via npx at the versions that were
 # installed in ~/node_modules (same pattern as calldiff in ../tools.nix).
-{ inputs, ... }:
+{ inputs, vic, ... }:
 let
   lightjjVersion = "1.27.0";
 in
@@ -22,7 +22,8 @@ in
     };
   };
 
-  vic.ai.homeManager =
+  vic.ai.includes = [ vic.ai._.vic-upstream ];
+  vic.ai._.vic-upstream.homeManager =
     { lib, pkgs, ... }:
     let
       lightjj = pkgs.runCommandLocal "lightjj-${lightjjVersion}" { } ''

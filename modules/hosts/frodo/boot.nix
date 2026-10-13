@@ -3,7 +3,6 @@
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
 
-    networking.hostName = "frodo";
     networking.networkmanager.enable = true;
 
     time.timeZone = "America/Mexico_City";

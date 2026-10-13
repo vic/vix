@@ -1,14 +1,9 @@
 {
   den.aspects.frodo.nixos =
-    { lib, pkgs, ... }:
+    { pkgs, ... }:
     {
       users.users.vic = {
-        isNormalUser = true;
-        description = lib.mkForce "vic"; # vix fonts.nix sets "oeiuwq"
-        extraGroups = [
-          "networkmanager"
-          "wheel"
-        ];
+        description = "vic";
         packages = [
           pkgs.chromium
           pkgs.flow-control
