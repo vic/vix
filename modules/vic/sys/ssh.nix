@@ -31,6 +31,18 @@
               host = "edge";
               hostname = "192.168.192.168";
             };
+            "vini" = {
+              hostname = "bitstream.ts.json64.dev";
+              user = "vic";
+              proxyJump = "vic@vpn.json64.dev";
+              forwardAgent = true;
+            };
+            "sini" = {
+              hostname = "bitstream.ts.json64.dev";
+              user = "sini";
+              proxyJump = "vic@vpn.json64.dev";
+              forwardAgent = true;
+            };
             "uptermd.upterm.dev" = {
               forwardAgent = true;
               serverAliveInterval = 10;
