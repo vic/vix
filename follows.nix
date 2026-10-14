@@ -32,6 +32,7 @@ inputs: {
   ui-ux-pro-max-skill = source: source // { flake = false; };
   claude-plugins-official = source: source // { flake = false; };
   caveman = source: source // { flake = false; };
+  genie-agent = source: source // { flake = false; };
 
   # Shim nix-systems/default
   systems = inputs.nixpkgs.lib.systems.flakeExposed;

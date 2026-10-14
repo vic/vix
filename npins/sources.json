@@ -285,6 +285,19 @@
       "url": "https://api.github.com/repos/numtide/flake-utils/tarball/refs/tags/v1.0.0",
       "hash": "sha256-gzTw/v1vj4dOVbpBSJX4J0DwUR6LIyXo7/SuuTJp1kM="
     },
+    "genie-agent": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "sini",
+        "repo": "genie-agent"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "3b8b1023b5dbcfb4e0773ba1658f47daf915a9a7",
+      "url": "https://github.com/sini/genie-agent/archive/3b8b1023b5dbcfb4e0773ba1658f47daf915a9a7.tar.gz",
+      "hash": "sha256-WZgdp72KHEopuQbQRmQTE2mMhlVeQVdM61hrChr/rqE="
+    },
     "gstack": {
       "type": "Git",
       "repository": {

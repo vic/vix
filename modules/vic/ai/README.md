@@ -59,11 +59,13 @@ Things worth noticing in how the agents are built:
   found. They can still `Write` reports, and that is on purpose: writing you can
   see is better than heredoc writing you can't.
 - **The prompts are composed from parts, not stored whole.** Each agent is
-  assembled as `_<role>-head.md + _shared-measurement.md + _<role>-body.md +
-  _shared-protocol.md` (`modules/users/vic/ai/agents/`). The two shared files used to be
-  copied into all four agents (57% of the lines were identical), and the copies
-  drifted apart. Change the shared files carefully, because an edit there
-  reaches all four agents.
+  assembled as `agents/_<role>-head.md` (frontmatter and tools) +
+  `_local-deltas.md` + the upstream role text from `github:sini/genie-agent`
+  (`operating-memory/workflow/roles/common-protocol.md`, then `<role>.md`).
+  The role text is pinned with npins, so an upstream fix arrives on
+  `npins update genie-agent`. `_local-deltas.md` holds what differs on this
+  machine (fish, jj, quipu); it reaches all four agents and the
+  `operating-memory` skill.
 - **Escalation has three fixed names:** `NEEDS_CONTEXT`, `BLOCKED` and
   `STOP-AND-PROMOTE` (a design question the agent must not decide). Returning
   one of these early counts as a good outcome. Improvising past a gap does not.
@@ -76,7 +78,7 @@ Once you write your own role bodies, rename the agents.
 
 ### 2. Measurement discipline
 
-`_shared-measurement.md` is the heart of the workflow. Its rules come from false
+`common-protocol.md` (upstream) is the heart of the workflow. Its rules come from false
 findings that actually happened:
 
 - **Every claim carries the command that produced it.** Every *absence* also

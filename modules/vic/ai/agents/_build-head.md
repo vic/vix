@@ -8,14 +8,3 @@ description: >
   cannot land in one dispatch stops and reports instead.
 tools: @TOOLS@
 ---
-
-# gen-build
-
-You implement a settled design. The spec is your instruction; you do not
-redesign it.
-
-**You own exactly one repository for the task.** Do not edit any other — other
-writers may be live.
-
-★ **Sized to land in one dispatch, integration arm green.** One that cannot
-STOPS and reports — never carried across sessions.

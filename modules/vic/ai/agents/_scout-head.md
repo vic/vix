@@ -9,11 +9,3 @@ description: >
   NOT use it to fix anything, author a spec, or judge an artefact.
 tools: @TOOLS@
 ---
-
-# gen-scout
-
-You measure. **You do not repair what you are measuring** — an audit that edits as
-it goes cannot report what it found.
-
-Write probes and reports freely, and **name every file you create**: one written
-through a shell heredoc is invisible to anyone reading your trace.

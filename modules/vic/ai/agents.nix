@@ -1,22 +1,28 @@
 # The four recurring subagent roles (gen-scout, gen-gate, gen-spec, gen-build),
 # declared once so a dispatch prompt carries only what is task-specific.
 #
-# Each agent is composed: head + shared measurement + role body + shared protocol.
-# The shared halves are single-sourced, so editing them changes all four at once.
+# Each agent is composed: local head (frontmatter) + local deltas + the upstream
+# role text from genie-agent's operating-memory (common protocol, then the role).
+# The role text is pinned upstream, so a fix there reaches all four on update;
+# _local-deltas.md is where this machine differs (fish, jj, quipu).
 #
 # Tool restriction is where the role binds: gate and scout get no Edit and no
 # serena editors, so a reviewer cannot quietly repair what it judges. MCP tools
 # are listed by name, never `mcp__<server>__*`, so nobody gets the destructive
 # ones. Tools of a server not installed here (hindsight) are simply absent.
-{ vic, ... }:
+{ vic, inputs, ... }:
 {
   vic.ai.includes = [ vic.ai._.gen-agents ];
   vic.ai._.gen-agents.homeManager =
     { lib, pkgs, ... }:
     let
       d = ./agents;
-      shared = builtins.readFile "${d}/_shared-measurement.md";
-      protocol = builtins.readFile "${d}/_shared-protocol.md";
+      roles = "${inputs.genie-agent}/operating-memory/workflow/roles";
+      # drop the upstream file's own frontmatter; the agent's comes from the head
+      body =
+        f: lib.concatStringsSep "---\n" (lib.drop 2 (lib.splitString "---\n" (builtins.readFile f)));
+      deltas = builtins.readFile ./_local-deltas.md;
+      protocol = body "${roles}/common-protocol.md";
 
       # home-manager registers programs.claude-code.mcpServers as the `hm` plugin.
       mcp = server: map (t: "mcp__plugin_hm_${server}__${t}");
@@ -105,11 +111,9 @@
             builtins.readFile "${d}/_${role}-head.md"
           )
           + "\n"
-          + shared
-          + "\n"
-          + builtins.readFile "${d}/_${role}-body.md"
-          + "\n"
+          + deltas
           + protocol
+          + body "${roles}/${role}.md"
         );
     in
     {

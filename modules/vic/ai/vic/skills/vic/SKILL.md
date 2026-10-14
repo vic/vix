@@ -158,6 +158,43 @@ Shell = fish. Heredocs DON'T WORK. NEVER `cat`, NEVER python, NEVER `git`.
 - Subagents SAME rule. Report 2 vic what read/wrote.
 - CVMN spk in saved text.
 
+### 🧭 OPERATING MEMORY = QUERY ON DEMAND (ALL projects, ALL agents)
+genie `operating-memory/` (215 files: practices · traps · workflow · lessons · gen) lives in quipu as `om-load:` episodes, pinned @ upstream rev. Rules backed by measured incidents. QUERY IT, DON'T REMEMBER IT.
+
+- **TRIGGER = MUST QUERY b4:** dispatch brief · owner/vic question · review/gate verdict · ANY absence/zero/count/"green" claim · landing/push · tracker (br) write · trap-prone tool (br/nix/git/shell/harness/codegraph) · agent liveness/kill/resume · rule conflict.
+- **HOW (verified 2026-10-15):** `quipu_query` SPARQL. Swap `<word>` 4 the situation (e.g. census, zero, landing, brief, owner, liveness, pgrep):
+  `SELECT ?p ?c WHERE { ?n <http://aegis.gastown.local/ontology/path> ?p ; <http://www.w3.org/2000/01/rdf-schema#comment> ?c . FILTER(CONTAINS(LCASE(STR(?c)),"<word>") || CONTAINS(STR(?p),"<word>")) } LIMIT 10`
+  → `?p` = file path. Read FULL rule @ `~/.claude/skills/operating-memory/<?p minus operating-memory/>`. Apply its How-to-apply.
+- 🚫 NOT `quipu_search_nodes` (returns 0 even 4 known terms = broken instrument). NOT `quipu_context` (78KB dump).
+- 🪤 ZERO HITS ≠ NO RULE (armed-controls law). Retry 2-3 synonyms, then scan `~/.claude/skills/operating-memory/MEMORY.md` index. Control: word `census` MUST hit `practices/armed-controls.md`.
+- ⚖️ Conflict w/ vic rules ⟹ VIC WINS (operating-memory SKILL.md local deltas). Name conflict 1 line.
+- 🕰️ quipu copy = pinned rev; file on disk newer ⟹ disk wins. Upstream merge changed files ⟹ reload those episodes.
+- Subagent briefs: include the query recipe + the 1-3 matching file paths (dispatch-brief premise tags MEASURED/RELAYED/ASSUMED).
+
+### 📒 LEDGER = EVERY DONE THING IS A QUIPU FACT (ALL projects)
+BEADS + HANDOFF + STATE r disk/tracker only ⟹ invisible cross-repo. MIRROR EACH WRITE 2 quipu, SAME TURN. Unmirrored = not done.
+
+- **WHEN (mandatory):** `br create/close/update --status` · HANDOFF.md overwrite · state.md prepend · gist/PR/commit landed · vic ruling.
+- **WRITE:** `quipu_episode` w/ `group_id: "ledger"`, `source: "<proj> <file|br id> <date> (<model>)"`, `episode_body` = CVMN fact (what, outcome, URLs/ids, open items), node `{name:"<proj>", type:"Project"}`. Names:
+  - bead: `ledger:<proj>/bead/<id>` + `replace_snapshot: true` (status changes REPLACE, not pile up). body: title · status · close reason · evidence.
+  - handoff: `ledger:<proj>/handoff/<YYYY-MM-DD>` (same day ⟹ `replace_snapshot: true`).
+  - state block: `ledger:<proj>/state/<YYYY-MM-DD>-<n>`.
+  - landing: `ledger:<proj>/landed/<PR#|gist-id|change-id>`.
+- **READ (verified 2026-10-15, tx 409):** `quipu_query`:
+  `SELECT ?l ?c WHERE { ?e <http://www.w3.org/2000/01/rdf-schema#label> ?l ; <http://www.w3.org/2000/01/rdf-schema#comment> ?c . FILTER(STRSTARTS(STR(?l),"ledger:<proj>/")) } LIMIT 20` (drop `<proj>/` = all projects; swap 4 `CONTAINS(LCASE(?c),"<word>")` = topic).
+- **SESSION START:** ledger query 4 proj ALONG W/ HANDOFF.md. Disagree ⟹ disk+tracker win, fix ledger.
+- **VERIFY every write:** read-back query MUST return the row. No row = not mirrored. Facts ONLY (evidence-b4-claim) — no plans as facts.
+- Backfill: proj w/ `.beads/` or `vic/HANDOFF.md` not yet mirrored ⟹ mirror on first touch.
+
+### ⚖️ PRESUMED CULPABLE (ALL agents, ALL claims)
+U HAVE BEEN MAKING MISTAKES. Assume it. Every claim of urs / ur agents' = GUILTY (wrong) til evidence acquits. Acquittal ONLY by evidence RECORDED in memory. Unrecorded evidence = no evidence.
+
+- **DEFAULT VERDICT = WRONG.** "done / written / green / absent / fixed / conflict found" = suspect til proven. Hunt ur own error 1st: what would make this false? Check THAT.
+- **ACQUIT = 3 parts:** (1) cmd/query run THIS session + verbatim output, (2) armed control (positive that fires / negative that fails — unarmed zero/green = no acquittal), (3) RECORDED: `quipu_episode` `group_id:"ledger"` name `ledger:<proj>/evidence/<claim-slug>` body = claim · cmd · output · control · verdict. Read-back MUST return it.
+- **NO RECORD ⟹ NOT ACQUITTED ⟹ do not relay, land, or tell vic it's true.** Say "UNVERIFIED" plain.
+- **Found own mistake ⟹ record it too** (`ledger:<proj>/mistake/<slug>`: what · how caught · fix). Mistakes r facts. Hiding = TERMINAT.
+- Precedents (2026-10-15 genie-agent, all caught only bc presumed guilty): agent said "written" — file absent; leak scan "CLEAN" w/ control=0 (unarmed); review claimed 3 rule conflicts — gate proved 2 r none; `rg` w/o `-L` "NOT-FOUND" on symlinked skills.
+
 ---
 
 ## 🚫 RED FLAGS — STOP IMMEDTLY

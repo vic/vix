@@ -11,6 +11,10 @@
       url = "github:rebelytics/one-skill-to-rule-them-all";
       flake = false;
     };
+    genie-agent = {
+      url = "github:sini/genie-agent";
+      flake = false;
+    };
   };
 
   vic.ai.includes = [ vic.ai._.skills ];
@@ -41,6 +45,18 @@
           // {
             gstack = "${inputs.gstack}";
             task-observer = "${inputs.one-skill-to-rule-them-all}";
+            # upstream has no SKILL.md: frontmatter + local deltas + upstream index become one
+            operating-memory = pkgs.runCommand "operating-memory-skill" { } ''
+              cp -r ${inputs.genie-agent}/operating-memory $out
+              chmod u+w $out
+              cat ${pkgs.writeText "frontmatter" ''
+                ---
+                name: operating-memory
+                description: Multi-agent operating memory (sini/genie-agent) - how to orchestrate, dispatch, gate, verify, land, and put decisions to the owner, with the measured traps behind each rule. Use when you orchestrate agents, write a dispatch brief, tier a decision, put a question to vic, record a ruling, review an artefact, or claim an absence or a count. Open only the files whose index line matches.
+                ---
+
+              ''} ${./_local-deltas.md} $out/MEMORY.md > $out/SKILL.md
+            '';
           };
 
         settings.permissions.allow = [
