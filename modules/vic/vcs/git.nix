@@ -8,8 +8,8 @@
         enable = true;
         signing.format = "ssh";
         settings = {
-          user.name = user.identity.displayName;
-          user.email = user.identity.email;
+          user.name = user.identity.displayName or "vic";
+          user.email = user.identity.email or "vborja@apache.org";
           init.defaultBranch = "main";
           pull.rebase = true;
           pager.difftool = true;

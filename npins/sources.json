@@ -132,9 +132,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "dd59a4c7aa7e2d6d2743814da6bf68ead985e793",
-      "url": "https://github.com/denful/den/archive/dd59a4c7aa7e2d6d2743814da6bf68ead985e793.tar.gz",
-      "hash": "sha256-a7E9QoEt5WcYoUGQyRWHm8QVUrKxTcSyNND3LLCs/KI="
+      "revision": "f1d16b177de42088ede5ad911a39c7f068877a7f",
+      "url": "https://github.com/denful/den/archive/f1d16b177de42088ede5ad911a39c7f068877a7f.tar.gz",
+      "hash": "sha256-ScbsWxyVLpB5oYjVsDNmoxnLWMZdVPSFjYZS6A7SiEY="
     },
     "den-diagram": {
       "type": "Git",

@@ -1,5 +1,6 @@
 {
   den.homes.x86_64-linux."vic@nargun" = { };
+  den.homes.x86_64-linux."vic@bitstream" = { };
 
   den.hosts.x86_64-linux.annatar = {
     wsl.enable = true;

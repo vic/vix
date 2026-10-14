@@ -51,5 +51,5 @@ in
   );
 
   vic.hm =
-    { host, ... }: forward [ "" ] (stdenv: _: stdenv.isDarwin || (stdenv.isLinux && !host.iso));
+    { host, ... }: forward [ "" ] (stdenv: _: stdenv.isDarwin || (stdenv.isLinux && !(host?iso && host.iso)));
 }
