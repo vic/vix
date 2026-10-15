@@ -1,5 +1,5 @@
 {
-  den.aspects.frodo.nixos = {
+  den.aspects.frodo.desktop.nixos = {
     services.xserver.enable = true;
     services.xserver.desktopManager.lxqt.enable = true;
     services.xserver.xkb = {

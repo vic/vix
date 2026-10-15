@@ -1,26 +1,23 @@
-{ vix, inputs, ... }:
+{ den, vix, ... }:
+let
+  # Three axes: what the machine is, what it is for, how it looks.
+  machine = [
+    den.aspects.frodo.hardware
+    vix.macos-keys
+    vix.laptop
+  ];
+  role = [
+    den.aspects.frodo.base
+    den.aspects.frodo.audio
+    den.aspects.frodo.users
+    den.aspects.frodo.packages
+  ];
+  desktop = [
+    vix.niri-desktop
+    den.aspects.frodo.desktop
+  ];
+in
 {
-  flake-file.inputs.disko.url = "github:nix-community/disko";
-  den.aspects.frodo = {
-    includes = [
-      vix.macos-keys
-      vix.laptop
-      vix.niri-desktop
-    ];
-
-    nixos = {
-      imports = [
-        ./frodo/_nixos/hardware-configuration.nix
-        ./frodo/_nixos/disko.nix
-        "${inputs.disko}/module.nix"
-      ];
-
-      hardware.facter.reportPath = ./frodo/_nixos/facter.json;
-
-      nix.settings.experimental-features = [
-        "flakes"
-        "nix-command"
-      ];
-    };
-  };
+  # Reads as a sentence: frodo is this machine, this role, this desktop.
+  den.aspects.frodo.includes = machine ++ role ++ desktop;
 }

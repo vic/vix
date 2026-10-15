@@ -3,8 +3,8 @@
 # cannot edit the home-manager owned settings.json.
 { vic, ... }:
 {
-  vic.ai.includes = [ vic.ai._.herdr ];
-  vic.ai._.herdr.homeManager =
+  vic.ai.includes = [ vic.ai.herdr ];
+  vic.ai.herdr.homeManager =
     {
       inputs',
       lib,

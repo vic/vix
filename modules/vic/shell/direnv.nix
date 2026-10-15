@@ -10,14 +10,6 @@ let
       use nix_installables ${inputs.nixpkgs}#go ${inputs.nixpkgs}#gopls
     }
   '';
-  use_vix_llm = ''
-    use_vix_llm() {
-      source $HOME/.config/sops-nix/secrets/rendered/llm_apis.env
-    }
-  '';
-  home_envrc = ''
-    use vix_llm
-  '';
 in
 {
   # keep devshell closures alive across GC (sini direnv.nix:4-7)
@@ -31,7 +23,5 @@ in
     programs.direnv.nix-direnv.enable = true;
     home.file.".config/direnv/lib/use_nix_installables.sh".text = use_nix_installables;
     home.file.".config/direnv/lib/use_vix_go.sh".text = use_vix_go;
-    home.file.".config/direnv/lib/use_vix_llm.sh".text = use_vix_llm;
-    home.file.".envrc".text = home_envrc;
   };
 }

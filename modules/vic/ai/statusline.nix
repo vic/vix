@@ -3,8 +3,8 @@
 # One line: model, burn (ctx, $, $/h, tokens), quotas, last skill, last MCP tool.
 { vic, ... }:
 {
-  vic.ai.includes = [ vic.ai._.statusline ];
-  vic.ai._.statusline = {
+  vic.ai.includes = [ vic.ai.statusline ];
+  vic.ai.statusline = {
     homeManager =
       {
         lib,

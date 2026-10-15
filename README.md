@@ -47,9 +47,29 @@ Currently only [`vic`](modules/vic) which is applied at all hosts.
 - [`modules/hosts/`](modules/hosts): one file per host, plus a folder for bigger hosts.
 - [`modules/diagrams/`](modules/diagrams): generates the diagrams.
 
+## How it composes
+
+Every level is an include list. Only the leaves hold configuration.
+
+```
+den.aspects.frodo                       hosts/frodo.nix      (includes only)
+├── vix.laptop, vix.niri-desktop         community/vix/       (reusable features)
+├── frodo._.hardware                     hosts/frodo/hardware.nix
+├── frodo._.base                         hosts/frodo/base.nix
+└── frodo._.users                        hosts/frodo/users.nix
+
+vic.everywhere                          vic/everywhere.nix   (includes only)
+└── vic.shell, vic.edit, vic.dev, vic.sys, vic.vcs   (each: vic/<group>/default.nix)
+```
+
+- A **host** names its features. Reading the host file tells you what it is.
+- A **feature** is one concern across Nix classes (`nixos`, `homeManager`).
+- A **sub-aspect** (`_.<name>`) is a named part of a host or feature, such as `frodo._.hardware`.
+- A **group** (`vic.shell`, `vic.edit`) only lists its members.
+
 ## Add a new host
 
-1. Create `modules/hosts/<h>.nix` with the host `den.aspects`. Copy [`nargun.nix`](modules/hosts/nargun.nix) as a start.
+1. Create `modules/hosts/<h>.nix` as an include list. Keep machine facts (disks, kernel modules) in `den.aspects.<h>._.hardware`. Copy [`nargun.nix`](modules/hosts/nargun.nix) as a start.
 2. Add an entry in [`modules/hosts.nix`](modules/hosts.nix), for example `den.hosts.x86_64-linux.<h>.users.vic = { };`.
 3. Boot the target machine. Generate the hardware facts there:
    `sudo nixos-facter -o modules/hosts/<h>/_nixos/facter.json`

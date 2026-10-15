@@ -66,6 +66,11 @@
         (pkgs.writeShellScriptBin "doomscript" ''exec $HOME/.config/emacs/bin/doomscript "$@"'')
         (pkgs.writeShellScriptBin "d" ''exec emacsclient -nw -a "doom run -nw --"  "$@"'')
       ];
+      programs.fish.functions = {
+        mg.body = "spc u SPC gg -r \"$PWD\" RET";
+        spc.body = "SPC $argv -- -nw";
+        vspc.body = "SPC $argv -- -c";
+      };
       home.activation.doom-install = {
         after = [ "link-ssh-id" ];
         before = [ ];

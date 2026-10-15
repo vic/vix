@@ -86,6 +86,20 @@
               help = "boot host then reboot";
               command = ''-boot "$@" && systemctl reboot'';
             }
+            {
+              name = "vini-hm";
+              category = "hosts";
+              help = "vini-hm activate: eval vic@bitstream here, push drvs, build + activate on vini";
+              # drvs, not outputs: vini rejects our unsigned paths but accepts derivations.
+              command = ''
+                set -euo pipefail
+                test "''${1:-}" = activate || { echo "usage: vini-hm activate" >&2; exit 1; }
+                drv=$(nix eval --raw "path:$PRJ_ROOT#homeConfigurations.\"vic@bitstream\".activationPackage.drvPath")
+                nix build --no-link "$drv^out"
+                NIX_SSHOPTS="-o BatchMode=yes" nix copy --derivation --to ssh-ng://vini "$drv"
+                ssh vini "set -e; out=\$(nix build --no-link --print-out-paths --option fallback true --option connect-timeout 5 '$drv^out'); \$out/activate"
+              '';
+            }
             (tool "dev" apps.write-npins)
             (tool "dev" pkgs.npins)
             (tool "dev" pkgs.nix-unit)

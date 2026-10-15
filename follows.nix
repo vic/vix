@@ -24,7 +24,7 @@ inputs: {
   one-skill-to-rule-them-all = source: source // { flake = false; };
   deepwiki-skill = source: source // { flake = false; };
   vercel-skills = source: source // { flake = false; };
-  lightjj = source: source // { flake = false; };
+  lightjj.inputs.nixpkgs.follows = "nixpkgs";
   superpowers-extended-cc-marketplace = source: source // { flake = false; };
   ponytail = source: source // { flake = false; };
   mattpocock = source: source // { flake = false; };

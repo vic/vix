@@ -19,8 +19,8 @@ in
     flake = false;
   }) marketplaces;
 
-  vic.ai.includes = [ vic.ai._.plugins ];
-  vic.ai._.plugins.homeManager =
+  vic.ai.includes = [ vic.ai.plugins ];
+  vic.ai.plugins.homeManager =
     { lib, pkgs, ... }:
     let
       srcOf = name: inputs.${name};

@@ -12,15 +12,14 @@
 # ones. Tools of a server not installed here (hindsight) are simply absent.
 { vic, inputs, ... }:
 {
-  vic.ai.includes = [ vic.ai._.gen-agents ];
-  vic.ai._.gen-agents.homeManager =
+  vic.ai.includes = [ vic.ai.gen-agents ];
+  vic.ai.gen-agents.homeManager =
     { lib, pkgs, ... }:
     let
       d = ./agents;
       roles = "${inputs.genie-agent}/operating-memory/workflow/roles";
       # drop the upstream file's own frontmatter; the agent's comes from the head
-      body =
-        f: lib.concatStringsSep "---\n" (lib.drop 2 (lib.splitString "---\n" (builtins.readFile f)));
+      body = f: lib.concatStringsSep "---\n" (lib.drop 2 (lib.splitString "---\n" (builtins.readFile f)));
       deltas = builtins.readFile ./_local-deltas.md;
       protocol = body "${roles}/common-protocol.md";
 

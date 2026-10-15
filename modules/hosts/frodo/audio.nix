@@ -1,5 +1,5 @@
 {
-  den.aspects.frodo.nixos = {
+  den.aspects.frodo.audio.nixos = {
     hardware.bluetooth.enable = true;
     services.blueman.enable = true;
 

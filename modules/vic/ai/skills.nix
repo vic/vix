@@ -17,8 +17,8 @@
     };
   };
 
-  vic.ai.includes = [ vic.ai._.skills ];
-  vic.ai._.skills.homeManager =
+  vic.ai.includes = [ vic.ai.skills ];
+  vic.ai.skills.homeManager =
     { lib, pkgs, ... }:
     let
       # every subdirectory holding a SKILL.md, by name
@@ -33,7 +33,6 @@
     {
       home.packages = [
         pkgs.bun # gstack runtime
-        pkgs.mermaid-cli # diagram-mermaid-render
         pkgs.ast-grep # search-code-routing
         pkgs.ripgrep
       ];

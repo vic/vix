@@ -23,7 +23,11 @@
             "neovide",
             "lapce",
             "screengrab",
-            "pcmanfm-qt"
+            "pcmanfm-qt",
+            "chrome-ejhkdoiecgkmdpomoahkdihbcldkgjci-Default",
+            "code",
+            "chromium-browser",
+            "librewolf"
         ],
         "position": "center",
         "screenshotAnnotationTool": "",
@@ -113,7 +117,7 @@
                     "textStream": false,
                     "wheelDownExec": "",
                     "wheelDownUpdateText": false,
-                    "wheelExec": "",
+                    "wheelExec": "sed 's#.* -- ##;s# #%20#;s#^#https://biblemenus.com/search.php?q=#' /tmp/verse | xargs helium",
                     "wheelMode": "unified",
                     "wheelUpExec": "",
                     "wheelUpUpdateText": false,
@@ -290,7 +294,7 @@
         ]
     },
     "colorSchemes": {
-        "darkMode": true,
+        "darkMode": false,
         "generationMethod": "muted",
         "manualSunrise": "06:30",
         "manualSunset": "18:30",

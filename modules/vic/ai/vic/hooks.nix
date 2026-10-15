@@ -5,8 +5,8 @@
 # omni-ingest (detached, flock-guarded omni graph refresh).
 { vic, ... }:
 {
-  vic.ai.includes = [ vic.ai._.vic-hooks ];
-  vic.ai._.vic-hooks.homeManager =
+  vic.ai.includes = [ vic.ai.vic-hooks ];
+  vic.ai.vic-hooks.homeManager =
     { config, ... }:
     let
       hookOf = script: {

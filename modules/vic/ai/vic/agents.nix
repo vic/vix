@@ -3,8 +3,8 @@
 # Copies live beside this file; edit them here, never in ~/.claude.
 { vic, ... }:
 {
-  vic.ai.includes = [ vic.ai._.vic-agents ];
-  vic.ai._.vic-agents.homeManager =
+  vic.ai.includes = [ vic.ai.vic-agents ];
+  vic.ai.vic-agents.homeManager =
     { lib, ... }:
     let
       byName = dir: f: lib.mapAttrs' f (builtins.readDir dir);

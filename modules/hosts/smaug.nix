@@ -1,37 +1,37 @@
-{ vix, ... }:
+{ vix, den, ... }:
 {
-  den.aspects.smaug = {
-    includes = [
-      vix.workstation
-      vix.macbook
-      vix.nvidia
-      vix.all-firmware
-    ];
+  den.aspects.smaug.includes = [
+    vix.workstation
+    vix.macbook
+    vix.nvidia
+    vix.all-firmware
 
-    nixos = {
-      boot.initrd.availableKernelModules = [
-        "xhci_pci"
-        "ehci_pci"
-        "usb_storage"
-        "sd_mod"
-      ];
-      fileSystems."/" = {
-        device = "/dev/disk/by-label/nixos";
-        fsType = "ext4";
-      };
-      fileSystems."/boot" = {
-        device = "/dev/disk/by-label/boot";
-        fsType = "vfat";
-        options = [
-          "fmask=0077"
-          "dmask=0077"
-        ];
-      };
-      fileSystems."/home" = {
-        device = "/dev/disk/by-label/home";
-        fsType = "ext4";
-      };
-      swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
+    den.aspects.smaug.hardware
+  ];
+
+  den.aspects.smaug.hardware.nixos = {
+    boot.initrd.availableKernelModules = [
+      "xhci_pci"
+      "ehci_pci"
+      "usb_storage"
+      "sd_mod"
+    ];
+    fileSystems."/" = {
+      device = "/dev/disk/by-label/nixos";
+      fsType = "ext4";
     };
+    fileSystems."/boot" = {
+      device = "/dev/disk/by-label/boot";
+      fsType = "vfat";
+      options = [
+        "fmask=0077"
+        "dmask=0077"
+      ];
+    };
+    fileSystems."/home" = {
+      device = "/dev/disk/by-label/home";
+      fsType = "ext4";
+    };
+    swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
   };
 }

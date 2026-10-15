@@ -1,8 +1,8 @@
 # Agent CLIs from numtide/llm-agents.nix, with their Claude Code wiring.
 { vic, ... }:
 {
-  vic.ai.includes = [ vic.ai._.tools ];
-  vic.ai._.tools.homeManager =
+  vic.ai.includes = [ vic.ai.tools ];
+  vic.ai.tools.homeManager =
     {
       inputs',
       lib,
@@ -44,8 +44,6 @@
         llm.beads-viewer
         llm.codegraph
         llm.openspec
-        llm.openspecui
-        pkgs.playwright-mcp
         calldiff
 
         # Other agent harnesses sini runs beside Claude Code (installed, not configured).

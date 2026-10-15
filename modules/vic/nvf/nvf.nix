@@ -8,13 +8,13 @@
   perSystem =
     { pkgs, ... }:
     let
-      nvf = den.lib.nvf.package pkgs vic.nvf._.neovim;
+      nvf = den.lib.nvf.package pkgs vic.nvf.neovim;
     in
     {
       packages.neovim = nvf { mine = true; };
     };
 
-  vic.nvf._.neovim =
+  vic.nvf.neovim =
     { mine }@ctx:
     den.lib.parametric.fixedTo ctx {
       includes = [ vic.nvf ];

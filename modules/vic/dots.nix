@@ -1,40 +1,71 @@
-{ ... }:
+{ vic, ... }:
+let
+  # live: out-of-store link into ~/.flake (edit in place); otherwise a store copy.
+  dotsLinker =
+    config: path:
+    if config.vic.liveDots then
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.flake/modules/vic/dots/${path}"
+    else
+      builtins.path {
+        path = ./dots + "/${path}";
+        name = "dots-" + builtins.replaceStrings [ "/" ] [ "-" ] path;
+      };
+in
 {
   vic.dots.homeManager =
-    { config, pkgs, ... }:
+    { config, lib, ... }:
     let
-      dotsLink =
-        path:
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.flake/modules/vic/dots/${path}";
+      dotsLink = dotsLinker config;
     in
     {
-      home.activation.link-flake = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-        echo Checking that "$HOME/.flake" exists.
-        if ! test -L "$HOME/.flake"; then
-          echo "Missing $HOME/.flake link"
-          exit 1
-        fi
-      '';
+      imports = [
+        {
+          options.vic.liveDots = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+            description = "Link dots into ~/.flake for live editing; false copies them into the store.";
+          };
+        }
+      ];
+      home.activation.link-flake = lib.mkIf config.vic.liveDots (
+        config.lib.dag.entryAfter [ "writeBoundary" ] ''
+          echo Checking that "$HOME/.flake" exists.
+          if ! test -L "$HOME/.flake"; then
+            echo "Missing $HOME/.flake link"
+            exit 1
+          fi
+        ''
+      );
       home.file.".ssh" = {
         recursive = true;
         source = ./dots/ssh;
       };
-      home.file.".config/niri".source = dotsLink "config/niri";
       home.file.".config/jjui".source = dotsLink "config/jjui";
       home.file.".config/nvim".source = dotsLink "config/nvim";
       home.file.".config/astrovim".source = dotsLink "config/astrovim";
       home.file.".config/lazyvim".source = dotsLink "config/lazyvim";
+      home.file.".config/btop".source = dotsLink "config/btop";
+      home.file.".config/bottom".source = dotsLink "config/bottom";
+      home.file.".config/rtk".source = dotsLink "config/rtk";
+      home.file.".config/gh/config.yml".source = dotsLink "config/gh/config.yml";
+    };
+
+  vic.dots.includes = [ vic.gui-dots ];
+
+  vic.gui-dots.homeManager =
+    { config, pkgs, ... }:
+    let
+      dotsLink = dotsLinker config;
+    in
+    {
+      home.file.".config/niri".source = dotsLink "config/niri";
       home.file.".config/vscode-vim".source = dotsLink "config/vscode-vim";
       home.file.".config/doom".source = dotsLink "config/doom";
       home.file.".config/zed".source = dotsLink "config/zed";
       home.file.".config/wezterm".source = dotsLink "config/wezterm";
       home.file.".config/ghostty".source = dotsLink "config/ghostty";
       home.file.".config/noctalia".source = dotsLink "config/noctalia";
-      home.file.".config/btop".source = dotsLink "config/btop";
-      home.file.".config/bottom".source = dotsLink "config/bottom";
-      home.file.".config/rtk".source = dotsLink "config/rtk";
       home.file.".config/fontconfig".source = dotsLink "config/fontconfig";
-      home.file.".config/gh/config.yml".source = dotsLink "config/gh/config.yml";
       home.file.".config/autostart/lxqt-config-touchpad-autostart.desktop".source =
         dotsLink "config/autostart/lxqt-config-touchpad-autostart.desktop";
       home.file.".config/Code/User/settings.json".source = dotsLink "config/Code/User/settings.json";

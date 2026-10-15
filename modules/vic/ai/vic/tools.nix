@@ -11,8 +11,8 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  vic.ai.includes = [ vic.ai._.vic-tools ];
-  vic.ai._.vic-tools.homeManager =
+  vic.ai.includes = [ vic.ai.vic-tools ];
+  vic.ai.vic-tools.homeManager =
     {
       config,
       inputs',
@@ -57,11 +57,6 @@
           type = "stdio";
           command = node;
           args = [ "${./dw}/mcp.js" ];
-        };
-        notebooklm = {
-          type = "stdio";
-          command = lib.getExe' pkgs.nodejs_24 "npx";
-          args = [ "notebooklm-mcp@latest" ];
         };
       };
     };

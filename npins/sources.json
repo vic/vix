@@ -132,9 +132,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "f1d16b177de42088ede5ad911a39c7f068877a7f",
-      "url": "https://github.com/denful/den/archive/f1d16b177de42088ede5ad911a39c7f068877a7f.tar.gz",
-      "hash": "sha256-ScbsWxyVLpB5oYjVsDNmoxnLWMZdVPSFjYZS6A7SiEY="
+      "revision": "f9dc99a0b330df5c5730517f6d937794b0e6d843",
+      "url": "https://github.com/denful/den/archive/f9dc99a0b330df5c5730517f6d937794b0e6d843.tar.gz",
+      "hash": "sha256-XHUGRTBjEnE+LCOfE4CBSrM4Y0FcIk1Tn6NF53lAnRU="
     },
     "den-diagram": {
       "type": "Git",
@@ -294,9 +294,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "3b8b1023b5dbcfb4e0773ba1658f47daf915a9a7",
-      "url": "https://github.com/sini/genie-agent/archive/3b8b1023b5dbcfb4e0773ba1658f47daf915a9a7.tar.gz",
-      "hash": "sha256-WZgdp72KHEopuQbQRmQTE2mMhlVeQVdM61hrChr/rqE="
+      "revision": "4c1ade83da5b80d080ee2051e5bf8f70dd5ad7f7",
+      "url": "https://github.com/sini/genie-agent/archive/4c1ade83da5b80d080ee2051e5bf8f70dd5ad7f7.tar.gz",
+      "hash": "sha256-G3IpjACTvyTmJpUSQRHNZgYhZzgvuioh0HdPHA2bU+U="
     },
     "gstack": {
       "type": "Git",

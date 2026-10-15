@@ -2,8 +2,8 @@
 # same key it uses lib.mkDefault, so these win.
 { vic, ... }:
 {
-  vic.ai.includes = [ vic.ai._.vic-settings ];
-  vic.ai._.vic-settings.homeManager = {
+  vic.ai.includes = [ vic.ai.vic-settings ];
+  vic.ai.vic-settings.homeManager = {
     programs.claude-code.settings = {
       model = "opus";
       effortLevel = "high";

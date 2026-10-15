@@ -1,7 +1,7 @@
 { vic, ... }:
 {
-  vic.nvf.includes = [ vic.nvf._.globals ];
-  vic.nvf._.globals =
+  vic.nvf.includes = [ vic.nvf.globals ];
+  vic.nvf.globals =
     { pkgs, ... }:
     {
       vim.extraPackages = [

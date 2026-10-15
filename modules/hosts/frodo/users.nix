@@ -1,5 +1,5 @@
 {
-  den.aspects.frodo.nixos =
+  den.aspects.frodo.users.nixos =
     { pkgs, ... }:
     {
       users.users.vic = {

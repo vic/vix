@@ -1,7 +1,7 @@
 { vic, lib, ... }:
 {
-  vic.nvf.includes = [ vic.nvf._.snacks ];
-  vic.nvf._.snacks =
+  vic.nvf.includes = [ vic.nvf.snacks ];
+  vic.nvf.snacks =
     { mine }:
     {
       vim.utility.snacks-nvim = {

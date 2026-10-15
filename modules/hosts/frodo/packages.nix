@@ -1,6 +1,8 @@
+{ den, ... }:
 {
-  den.aspects.frodo.nixos =
-    { pkgs, ... }:
+  # Developer CLIs, the niri session tools and the terminals frodo uses.
+  den.aspects.frodo.packages.nixos =
+    { lib, pkgs, ... }:
     {
       programs.direnv.enable = true;
 
@@ -11,29 +13,25 @@
         vimAlias = true;
       };
 
-      environment.systemPackages = with pkgs; [
-        neovim
-        jujutsu
-        git
-        nh
-        just
-        direnv
-        ghostty
-        wezterm
-        foot
-        fzf
+      environment.systemPackages = lib.attrVals [
+        "neovim"
+        "jujutsu"
+        "git"
+        "nh"
+        "just"
+        "direnv"
+        "ghostty"
+        "niri"
+        "wezterm"
+        "foot"
+        "fzf"
 
-        niri
-        fuzzel
-        xwayland-satellite
-        grim
-        slurp
-        ripgrep
-        fish
-        fd
-        jq
+        "ripgrep"
+        "fish"
+        "fd"
+        "jq"
 
-        noctalia-shell
-      ];
+        "noctalia-shell"
+      ] pkgs;
     };
 }

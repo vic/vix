@@ -1,8 +1,8 @@
 { vic, ... }:
 {
-  vic.nvf.includes = [ vic.nvf._.which-key ];
+  vic.nvf.includes = [ vic.nvf.which-key ];
 
-  vic.nvf._.which-key.vim.binds.whichKey = {
+  vic.nvf.which-key.vim.binds.whichKey = {
     enable = true;
     setupOpts = {
       delay = 550;

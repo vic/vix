@@ -1,4 +1,4 @@
-{ vix, ... }:
+{ vix, den, ... }:
 {
   flake-file.inputs.nixos-wsl = {
     url = "github:nix-community/nixos-wsl";
@@ -6,12 +6,15 @@
     inputs.flake-compat.follows = "";
   };
 
-  den.aspects.annatar = {
-    includes = [ vix.nix-settings ];
-    nixos = {
-      fileSystems."/".device = "/dev/noroot";
-      fileSystems."/".fsType = "auto";
-      boot.loader.grub.enable = false;
-    };
+  den.aspects.annatar.includes = [
+    vix.nix-settings
+
+    den.aspects.annatar.distro
+  ];
+
+  den.aspects.annatar.distro.nixos = {
+    fileSystems."/".device = "/dev/noroot";
+    fileSystems."/".fsType = "auto";
+    boot.loader.grub.enable = false;
   };
 }

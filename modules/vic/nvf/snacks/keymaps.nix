@@ -1,7 +1,7 @@
 { vic, ... }:
 {
-  vic.nvf.includes = [ vic.nvf._.keys ];
-  vic.nvf._.keys.vim.keymaps = [
+  vic.nvf.includes = [ vic.nvf.keys ];
+  vic.nvf.keys.vim.keymaps = [
     {
       key = "<leader><leader>";
       mode = [ "n" ];

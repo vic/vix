@@ -1,10 +1,10 @@
 { vic, lib, ... }:
 {
-  vic.nvf.includes = [ vic.nvf._.mini ];
+  vic.nvf.includes = [ vic.nvf.mini ];
 
-  # TODO:vic.nvf._.mini.vim.keymaps = [ ];
+  # TODO:vic.nvf.mini.vim.keymaps = [ ];
 
-  vic.nvf._.mini.vim.mini =
+  vic.nvf.mini.vim.mini =
     let
       mini = {
         ai = { };

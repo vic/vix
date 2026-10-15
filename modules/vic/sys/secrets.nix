@@ -3,10 +3,36 @@
   flake-file.inputs.sops-nix.url = "github:Mic92/sops-nix";
 
   vic.secrets.homeManager =
-    { config, pkgs, ... }:
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
     {
       imports = [ inputs.sops-nix.homeManagerModules.sops ];
       home.packages = [ pkgs.sops ];
+      home.activation.link-ssh-id =
+        lib.hm.dag.entryAfter
+          [
+            "link-flake"
+            "sops-nix"
+            "reloadSystemd"
+          ]
+          ''
+            run ln -sf "${config.sops.secrets."ssh/id_ed25519".path}" \
+              $HOME/.ssh/id_ed25519
+            run ln -sf "${config.sops.secrets."ssh/localhost_run".path}" \
+              $HOME/.ssh/id_localhost_run
+          '';
+      home.file.".config/direnv/lib/use_vix_llm.sh".text = ''
+        use_vix_llm() {
+          source $HOME/.config/sops-nix/secrets/rendered/llm_apis.env
+        }
+      '';
+      home.file.".envrc".text = ''
+        use vix_llm
+      '';
       sops = {
         age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
         age.sshKeyPaths = [ ];

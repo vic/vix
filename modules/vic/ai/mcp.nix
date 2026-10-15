@@ -2,8 +2,8 @@
 # (codegraph lives in tools.nix beside its CLI; headroom in headroom.nix.)
 { vic, ... }:
 {
-  vic.ai.includes = [ vic.ai._.mcp ];
-  vic.ai._.mcp.homeManager =
+  vic.ai.includes = [ vic.ai.mcp ];
+  vic.ai.mcp.homeManager =
     {
       config,
       lib,

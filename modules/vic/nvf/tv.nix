@@ -1,7 +1,7 @@
 { vic, ... }:
 {
-  vic.nvf.includes = [ vic.nvf._.tv ];
-  vic.nvf._.tv.vim =
+  vic.nvf.includes = [ vic.nvf.tv ];
+  vic.nvf.tv.vim =
     { pkgs, ... }:
     {
       lazy.plugins."tv.nvim" = {

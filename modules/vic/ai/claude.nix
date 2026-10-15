@@ -4,8 +4,8 @@
 {
   flake-file.inputs.llm-agents.url = "github:numtide/llm-agents.nix";
 
-  vic.ai.includes = [ vic.ai._.claude ];
-  vic.ai._.claude.homeManager =
+  vic.ai.includes = [ vic.ai.claude ];
+  vic.ai.claude.homeManager =
     {
       config,
       inputs',

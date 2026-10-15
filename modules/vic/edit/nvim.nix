@@ -1,8 +1,29 @@
-{ ... }:
+{ vic, ... }:
+let
+  vim_variant =
+    pkgs: name: runtimeInputs:
+    pkgs.writeShellApplication {
+      inherit name runtimeInputs;
+      runtimeEnv = {
+        NVIM_APPNAME = name;
+      };
+      text = ''exec nvim "$@"'';
+    };
+
+  neovide_variant =
+    pkgs: name: nvim:
+    pkgs.writeShellApplication {
+      inherit name;
+      runtimeInputs = [ pkgs.neovide ];
+      text = ''exec neovide --neovim-bin ${pkgs.lib.getExe nvim} "$@"'';
+    };
+in
 {
   perSystem.treefmt.programs.stylua.enable = true;
 
   vic.nvim = {
+    includes = [ vic.nvim-gui ];
+
     homeManager =
       {
         config,
@@ -19,55 +40,18 @@
           name = "vim";
           text = ''exec nvim "$@"'';
         };
-
-        vim_variant =
-          name: runtimeInputs:
-          pkgs.writeShellApplication {
-            inherit name runtimeInputs;
-            runtimeEnv = {
-              NVIM_APPNAME = name;
-            };
-            text = ''exec nvim "$@"'';
-          };
-
-        neovide_variant =
-          name: nvim:
-          pkgs.writeShellApplication {
-            inherit name;
-            runtimeInputs = [ pkgs.neovide ];
-            text = ''exec neovide --neovim-bin ${pkgs.lib.getExe nvim} "$@"'';
-          };
-
-        neovim = vim_variant "neovim" [ self'.packages.neovim ];
-        neovim-gui = neovide_variant "neovim-gui" neovim;
-
-        astrovim = vim_variant "astrovim" [ pkgs.neovim ];
-        astrovim-gui = neovide_variant "astrovim-gui" astrovim;
-
-        lazyvim = vim_variant "lazyvim" [ pkgs.neovim ];
-        lazyvim-gui = neovide_variant "lazyvim-gui" lazyvim;
-
-        vim-gui = neovide_variant "vim-gui" pkgs.neovim;
-        vscode-vim = vim_variant "vscode-vim" [ pkgs.neovim ];
       in
       {
         home.packages = [
           vi
           vim
           config.programs.neovim.package
-          neovim
-          neovim-gui
-          astrovim
-          astrovim-gui
-          lazyvim
-          lazyvim-gui
-          pkgs.neovide
+          (vim_variant pkgs "neovim" [ self'.packages.neovim ])
+          (vim_variant pkgs "astrovim" [ pkgs.neovim ])
+          (vim_variant pkgs "lazyvim" [ pkgs.neovim ])
           pkgs.neovim-remote
-          vim-gui
-          vscode-vim
         ];
 
-        home.sessionVariables.VISUAL = "vim-gui";
         home.sessionVariables.EDITOR = "vim";
 
         programs.neovim.plugins = [
@@ -75,4 +59,24 @@
         ];
       };
   };
+
+  vic.nvim-gui.homeManager =
+    { pkgs, self', ... }:
+    let
+      neovim = vim_variant pkgs "neovim" [ self'.packages.neovim ];
+      astrovim = vim_variant pkgs "astrovim" [ pkgs.neovim ];
+      lazyvim = vim_variant pkgs "lazyvim" [ pkgs.neovim ];
+    in
+    {
+      home.packages = [
+        (neovide_variant pkgs "neovim-gui" neovim)
+        (neovide_variant pkgs "astrovim-gui" astrovim)
+        (neovide_variant pkgs "lazyvim-gui" lazyvim)
+        pkgs.neovide
+        (neovide_variant pkgs "vim-gui" pkgs.neovim)
+        (vim_variant pkgs "vscode-vim" [ pkgs.neovim ])
+      ];
+
+      home.sessionVariables.VISUAL = "vim-gui";
+    };
 }

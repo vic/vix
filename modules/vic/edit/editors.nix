@@ -25,6 +25,11 @@
           pkgs.zed-editor
           pkgs.vscode
         ];
+        home.file.".config/fish/conf.d/vscode-vim.fish".text = ''
+          if test "$VSCODE_INJECTION" = "1"
+            set -x VISUAL code
+          end
+        '';
       };
   };
 }
