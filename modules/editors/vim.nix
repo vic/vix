@@ -28,6 +28,7 @@ in
       (ren.lib.when (s: builtins.elem f s.vim.features))
     ];
 
+  ren.kinds.system.below = [ ren.kinds.vim ]; # one profile scope per system (merges with topology/fleet.nix, v33)
   ren.kinds.vim = {
     features = opt (lib.types.listOf (lib.types.enum features)) [ ];
     theme = maybe lib.types.str; # a colorscheme name

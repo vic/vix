@@ -13,6 +13,10 @@ let
   tap = g: "vm-${g.name}";
 in
 {
+  # hosts run guests (merges with the host kind in platforms/nixos.nix, v33)
+  ren.kinds.host.below = [ ren.kinds.guest ];
+  ren.kinds.host.spawns.guest = s: guestsOf s.host;
+
   ren.kinds.guest = {
     is = ren.kinds.host; # declares its own `below`: no guest in a guest
     below = [ ren.kinds.user ];

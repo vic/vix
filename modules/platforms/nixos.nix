@@ -13,13 +13,31 @@ let
   ]; # physical nixos hosts
   guestsOf = h: lib.filterAttrs (_: g: ren.lib.same g.on h) ren.guest; # h: a host instance
   callable = m: builtins.isFunction m || (builtins.isAttrs m && m ? __functor);
+  # users.users is a shorthand submodule (config only): resolve content fns and `imports` here.
+  resolve =
+    a: m:
+    if callable m then
+      resolve a (m a)
+    else if builtins.isAttrs m && m ? imports then
+      a.lib.mkMerge (
+        [
+          (removeAttrs m [
+            "imports"
+            "_file"
+            "key"
+          ])
+        ]
+        ++ map (resolve a) m.imports
+      )
+    else
+      m;
   # shortcut: account content sees the OS module args (pkgs), not the users.users submodule config.
   asUser =
     user: ms:
     # deadnix: skip -- pkgs is unused here but must be declared so the module system passes it into `a`
     { lib, pkgs, ... }@a:
     {
-      users.users.${user.name} = lib.mkMerge (map (m: if callable m then m a else m) ms); # shorthand submodule: no imports
+      users.users.${user.name} = lib.mkMerge (map (resolve a) ms);
     };
 in
 {
@@ -29,12 +47,8 @@ in
 
   ren.kinds.host = {
     is = ren.kinds.machine;
-    below = [
-      ren.kinds.user
-      ren.kinds.guest
-    ];
+    below = [ ren.kinds.user ];
     spawns.user = s: usersOf s.host;
-    spawns.guest = s: guestsOf s.host;
   };
 
   ren.classes.nixos = [

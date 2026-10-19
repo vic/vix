@@ -27,7 +27,6 @@ let
   };
 in
 {
-  _module.args.dataOf = kind: builtins.intersectAttrs kind.module.options; # the declared fields of an instance
 
   ren.kinds.ssh-host = {
     host = maybe t.str;

@@ -1,7 +1,6 @@
 # ssh: ssh client config from the ssh-host instances, ssh-agent and the persistent vini master (linux).
 {
   ren,
-  dataOf,
   vicAt,
   mod,
   ...
@@ -33,9 +32,7 @@
               addKeysToAgent = "yes";
             };
           }
-          // lib.mapAttrs (
-            _: h: lib.filterAttrs (_: v: v != null) (dataOf ren.kinds.ssh-host h)
-          ) ren.ssh-host;
+          // lib.mapAttrs (_: h: lib.filterAttrs (_: v: v != null) (ren.lib.data h)) ren.ssh-host;
         };
       }
     );

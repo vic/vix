@@ -1,11 +1,11 @@
 # nvim: vic's vim profiles (editors/vim.nix, vic/nvf) on PATH; neovide `<name>-gui` wrappers on the desktop.
 {
   vicAt,
-  config,
+  ren,
   ...
 }:
 let
-  profiles = builtins.attrNames config.ren.vim;
+  profiles = builtins.attrNames ren.vim;
 in
 {
   ren.aspects.vic-nvim = {

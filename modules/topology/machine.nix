@@ -32,7 +32,6 @@ in
     system = ren.kinds.system;
     channel = opt ren.kinds.channel ren.channel.unstable;
     users = opt (t.listOf ren.kinds.user) [ ];
-    envs = opt (t.listOf ren.kinds.env) [ ]; # dev environments its users get (envs/env.nix)
     cpu = maybe (
       t.enum [
         "amd"

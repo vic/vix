@@ -1,7 +1,6 @@
 # secrets: sops-nix home secrets (the emitted ones), templates and the ssh identity links.
 {
   ren,
-  dataOf,
   vicAt,
   inputs,
   mod,
@@ -69,7 +68,7 @@
             secrets = lib.listToAttrs (
               map (s: {
                 name = s.sopsKey;
-                value = lib.filterAttrs (_: v: v != null) (removeAttrs (dataOf ren.kinds.secret s) [ "sopsKey" ]);
+                value = lib.filterAttrs (_: v: v != null) (removeAttrs (ren.lib.data s) [ "sopsKey" ]);
               }) (lib.concatLists secrets)
             );
             templates = {

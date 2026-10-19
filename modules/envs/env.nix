@@ -3,10 +3,15 @@
   ren,
   lib,
   pkgsFor,
+  opt,
   place,
   ...
 }:
 {
+  # machines and homes list the envs their users get (merges with the kind owners, v33)
+  ren.kinds.machine.envs = opt (lib.types.listOf ren.kinds.env) [ ];
+  ren.kinds.home.envs = opt (lib.types.listOf ren.kinds.env) [ ];
+  ren.kinds.system.below = [ ren.kinds.env ]; # one env scope per system
   ren.kinds.env.langs = lib.types.listOf (
     lib.types.enum [
       "nix"
