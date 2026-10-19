@@ -1,23 +1,25 @@
 # vic: identity, login shell, admin everywhere. Feature tiers vic/* gate on (module arg `vicAt`).
-{ ren, ... }:
+{ ren, inRole, ... }:
 let
   inherit (ren.lib) and not within;
-  core = ren.user.vic;
+  headless = ren.user.vic;
+  gui = and [
+    headless
+    (inRole ren.aspects.graphical)
+  ];
 in
 {
   _module.args.vicAt = {
-    inherit core; # everywhere vic lives
+    inherit headless gui; # headless: everywhere vic lives; gui: graphical machines only
+    core = headless; # alias: base.nix, community/niri-desktop.nix, vic/edit/nvim.nix and vic/** still say core/desktop
+    desktop = gui;
     full = and [
-      core
+      headless
       (not (within ren.aspects.installer))
     ]; # not on iso images
-    desktop = and [
-      core
-      (within ren.aspects.graphical)
-    ];
     secrets = and [
-      core
-      (within ren.aspects.trusted)
+      headless
+      (inRole ren.aspects.trusted)
     ];
   };
 

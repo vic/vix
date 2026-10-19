@@ -1,7 +1,17 @@
-# NixOS: the host kind, the nixos class, `os` (either OS) and `account` (a user's users.users entry).
-{ ren, usersOf, ... }:
+# NixOS: the host kind, the nixos class (metal hosts build; guests forward into their host), `os` and `account` (users.users entry).
+{
+  ren,
+  lib,
+  usersOf,
+  ...
+}:
 let
-  inherit (ren.lib) and within;
+  inherit (ren.lib) and within not;
+  metal = and [
+    ren.kinds.host
+    (not ren.kinds.guest)
+  ]; # physical nixos hosts
+  guestsOf = h: lib.filterAttrs (_: g: ren.lib.same g.on h) ren.guest; # h: a host instance
   callable = m: builtins.isFunction m || (builtins.isAttrs m && m ? __functor);
   # shortcut: account content sees the OS module args (pkgs), not the users.users submodule config.
   asUser =
@@ -13,21 +23,41 @@ let
     };
 in
 {
-  ren.kinds.host = {
-    is = ren.kinds.machine;
-    below = [ ren.kinds.user ];
-    spawns.user = s: usersOf s.host;
+  _module.args = {
+    inherit metal guestsOf;
   };
 
-  ren.classes.nixos = {
-    at = ren.kinds.host;
-    into = { host, ... }: ms: {
-      nixosConfigurations.${host.name} = host.channel.nixpkgs.lib.nixosSystem {
-        system = host.system.name;
-        modules = ms;
-      };
-    };
+  ren.kinds.host = {
+    is = ren.kinds.machine;
+    below = [
+      ren.kinds.user
+      ren.kinds.guest
+    ];
+    spawns.user = s: usersOf s.host;
+    spawns.guest = s: guestsOf s.host;
   };
+
+  ren.classes.nixos = [
+    {
+      at = metal;
+      into = { host, ... }: ms: {
+        nixosConfigurations.${host.name} = host.channel.nixpkgs.lib.nixosSystem {
+          system = host.system.name;
+          modules = ms;
+        };
+      };
+    }
+    {
+      at = ren.kinds.guest; # forwards into its host's microvm.vms
+      into = { guest, ... }: ms: {
+        nixos.microvm.vms.${guest.name} = {
+          pkgs = null; # microvm instantiates nixpkgs from the guest config, so unfree.nix applies
+          nixpkgs = guest.channel.nixpkgs; # shortcut: built for the host system; set guest system when one differs
+          config.imports = ms;
+        };
+      };
+    }
+  ];
 
   ren.classes.os = [
     {
