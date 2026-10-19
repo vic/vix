@@ -2,7 +2,7 @@
 { vicAt, ... }:
 {
   ren.aspects.jujutsu-aliases = {
-    at = vicAt.core;
+    at = vicAt.headless;
     homeManager = { ... }: {
       programs.jujutsu.settings.aliases = {
         tug = [

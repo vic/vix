@@ -6,7 +6,7 @@
       ".config/btop" = "config/btop";
       ".config/bottom" = "config/bottom";
     };
-    at = vicAt.core;
+    at = vicAt.headless;
     homeManager =
       { pkgs, ... }:
       {

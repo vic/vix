@@ -8,7 +8,7 @@
 }:
 {
   ren.aspects.ai-herdr = {
-    at = vicAt.core;
+    at = vicAt.headless;
     claude-allow = { ... }: [ "Bash(herdr *)" ];
     homeManager = mod (
       {

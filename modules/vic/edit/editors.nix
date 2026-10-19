@@ -10,7 +10,7 @@
 let
   at = ren.lib.and [
     vicAt.full
-    vicAt.desktop
+    vicAt.gui
   ];
 in
 {

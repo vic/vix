@@ -3,7 +3,7 @@
 {
   ren.aspects.vic-fonts = {
     at = ren.lib.and [
-      vicAt.core
+      vicAt.headless
       (ren.lib.within ren.kinds.machine) # account lands on nixos and darwin users
     ];
     account =

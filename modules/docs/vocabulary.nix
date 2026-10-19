@@ -14,6 +14,8 @@
       env = "a dev environment: langs become a devshell and user packages";
       emacs = "an emacs distribution (data only, no scopes)";
       vim = "a neovim profile: a feature list built per system into one nvf package (+ a gui wrapper)";
+      guest = "a microvm on a host (is host): its own nixos and users, built inside the host";
+      workspace = "a project an isolated claude guest works on (data): repo path; one guest each";
       ssh-host = "one ssh client matchBlock";
       secret = "a sops secret a feature asks for";
     };
@@ -37,9 +39,9 @@
         "each system (treefmt)"
         "flake `formatter.<sys>` (`nix fmt`)"
       ];
-      fmt-checks = [
-        "each system (treefmt)"
-        "flake `checks.<sys>.fmt`"
+      checks = [
+        "formatter (fmt), files (README), no-gui (headless homes and guests)"
+        "flake `checks.<sys>.<name>`"
       ];
       packages = [
         "aspects at a system"
@@ -83,9 +85,9 @@
       ];
     };
     tiers = {
-      core = "everywhere vic lives";
+      headless = "everywhere vic lives: terminal tools only (homes, guests, servers)";
       full = "not on iso images (not within `installer`)";
-      desktop = "within `graphical`";
+      gui = "within `graphical`: every gui program lives here";
       secrets = "within `trusted`";
     };
     roles = {

@@ -1,5 +1,5 @@
 # Workspaces: one per purpose; each becomes an isolated claude guest on frodo (frodo-guests.nix).
-{ ren, lib, ... }:
+{ lib, ... }:
 {
   ren.kinds.workspace.repo = lib.types.str; # data kind: host path, shared into its guest at the same path
 

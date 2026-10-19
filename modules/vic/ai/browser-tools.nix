@@ -6,7 +6,7 @@
 }:
 {
   ren.aspects.ai-browser-tools = {
-    at = vicAt.desktop;
+    at = vicAt.gui;
     homeManager = mod (
       {
         inputs',

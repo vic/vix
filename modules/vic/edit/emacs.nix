@@ -15,7 +15,7 @@ in
     dots = nl.mapAttrs' (n: e: nl.nameValuePair ".config/${n}" e.configDots) (
       nl.filterAttrs (_: e: e.configDots != null) ren.emacs
     );
-    at = vicAt.desktop;
+    at = vicAt.gui;
     homeManager = mod (
       {
         pkgs,

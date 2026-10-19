@@ -8,7 +8,7 @@
     to = e: e;
   };
   ren.aspects.fish = {
-    at = vicAt.core;
+    at = vicAt.headless;
     fish-functions = { ... }: import ./_fish/functions.nix { };
     homeManager =
       { pkgs, fish-functions, ... }:

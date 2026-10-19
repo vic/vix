@@ -18,7 +18,7 @@
 }:
 {
   ren.aspects.ai-agents = {
-    at = vicAt.core;
+    at = vicAt.headless;
     homeManager = mod (
       { lib, pkgs, ... }:
       let

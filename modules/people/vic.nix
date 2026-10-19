@@ -11,8 +11,6 @@ in
 {
   _module.args.vicAt = {
     inherit headless gui; # headless: everywhere vic lives; gui: graphical machines only
-    core = headless; # alias: base.nix, community/niri-desktop.nix, vic/edit/nvim.nix and vic/** still say core/desktop
-    desktop = gui;
     full = and [
       headless
       (not (within ren.aspects.installer))

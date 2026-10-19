@@ -1,5 +1,4 @@
 {
-  ren,
   vicAt,
   mod,
   hostWhen,
@@ -29,7 +28,7 @@
 
   # vic's niri and noctalia configs: on every desktop he uses (old vix linked them everywhere).
   ren.aspects.vic-niri = {
-    at = vicAt.desktop;
+    at = vicAt.gui;
     dots = {
       ".config/niri" = "config/niri";
       ".config/noctalia" = "config/noctalia";

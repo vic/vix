@@ -12,7 +12,7 @@
 }:
 {
   ren.aspects.ai-headroom = {
-    at = vicAt.core;
+    at = vicAt.headless;
     claude-allow = { ... }: [ "Bash(headroom *)" ];
     homeManager = mod (
       { lib, pkgs, ... }:

@@ -2,7 +2,7 @@
 { vicAt, ... }:
 {
   ren.aspects.jujutsu-ui = {
-    at = vicAt.core;
+    at = vicAt.headless;
     homeManager =
       { pkgs, ... }:
       let

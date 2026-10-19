@@ -46,14 +46,10 @@ in
     fold = ren.lib.fold.attrs;
     into = { system, ... }: f: { formatter.${system.name} = f.treefmt; };
   };
-  ren.channels.fmt-checks = perSystem // {
-    fold = ren.lib.fold.attrs;
-    into = { system, ... }: c: { checks.${system.name} = c; };
-  };
 
   ren.aspects.formatter = {
     at = ren.kinds.system;
     formatter = { system, ... }: { treefmt = (treefmt system).config.build.wrapper; };
-    fmt-checks = { system, ... }: { fmt = (treefmt system).config.build.check inputs.self; };
+    checks = { system, ... }: { ${system.name}.fmt = (treefmt system).config.build.check inputs.self; };
   };
 }

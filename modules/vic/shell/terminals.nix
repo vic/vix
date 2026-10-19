@@ -8,7 +8,7 @@
     };
     at = ren.lib.and [
       vicAt.full
-      vicAt.desktop
+      vicAt.gui
     ];
     homeManager =
       { pkgs, ... }:

@@ -19,7 +19,7 @@ let
 in
 {
   ren.aspects.direnv = {
-    at = vicAt.core;
+    at = vicAt.headless;
     homeManager = {
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true;

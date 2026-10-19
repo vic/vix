@@ -6,7 +6,7 @@
 }:
 {
   ren.aspects.ai-vic-settings = {
-    at = vicAt.core;
+    at = vicAt.headless;
     # home-manager serves its mcpServers as the `hm` plugin, hence the prefix.
     claude-allow =
       { ... }:

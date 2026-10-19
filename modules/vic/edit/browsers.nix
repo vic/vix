@@ -4,7 +4,7 @@
   ren.aspects.vic-browsers = {
     at = ren.lib.and [
       vicAt.full
-      vicAt.desktop
+      vicAt.gui
     ];
     fish-functions = { ... }: {
       nixos-opt.description = "Open a browser on search.nixos.org for options";

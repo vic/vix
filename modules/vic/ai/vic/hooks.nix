@@ -10,7 +10,7 @@
 }:
 {
   ren.aspects.ai-vic-hooks = {
-    at = vicAt.core;
+    at = vicAt.headless;
     homeManager = mod (
       { config, ... }:
       let

@@ -11,7 +11,7 @@
 {
 
   ren.aspects.ai-vic-upstream = {
-    at = vicAt.core;
+    at = vicAt.headless;
     homeManager = mod (
       { lib, pkgs, ... }:
       let

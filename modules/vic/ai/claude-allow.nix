@@ -2,7 +2,7 @@
 { vicAt, ... }:
 {
   ren.aspects.ai-claude-allow = {
-    at = vicAt.core;
+    at = vicAt.headless;
     claude-allow = { ... }: [
       # Edit(**) covers Write/MultiEdit/NotebookEdit; Read(**) covers Grep/Glob
       "Read(**)"

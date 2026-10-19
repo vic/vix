@@ -11,7 +11,7 @@
 }:
 {
   ren.aspects.ai-vic-tools = {
-    at = vicAt.core;
+    at = vicAt.headless;
     homeManager = mod (
       {
         config,

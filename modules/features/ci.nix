@@ -1,5 +1,5 @@
 # CI: every buildable config (host, mac, standalone home, devShell) emits one job record; flake output `ci.matrix` feeds the GitHub matrix.
-{ ren, ... }:
+{ ren, metal, ... }:
 let
   inherit (ren.lib) anyOf;
   runners = {
@@ -36,9 +36,8 @@ in
     into = { ... }: jobs: { ci.matrix = builtins.attrValues jobs; };
   };
 
-  # shortcut: a guest's toplevel is inside its host's build; no guests exist yet, so every host gets a job.
   ren.aspects.ci-host = {
-    at = ren.kinds.host;
+    at = metal; # guests build inside their host
     ci-jobs =
       { host, ... }:
       one host.name (

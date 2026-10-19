@@ -25,7 +25,7 @@ in
   };
 
   ren.aspects.vic-dots = {
-    at = vicAt.core;
+    at = vicAt.headless;
     # rtk is owned by the ai modules, which this pass may not touch.
     dots.".config/rtk" = "config/rtk";
     homeManager =

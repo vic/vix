@@ -9,7 +9,7 @@
 {
 
   ren.aspects.ai-skills = {
-    at = vicAt.core;
+    at = vicAt.headless;
     git-ignores = { ... }: [ ".gstack/" ];
     claude-allow = { ... }: [
       "Bash(bun run *)"

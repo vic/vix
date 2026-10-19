@@ -27,7 +27,7 @@ let
     ```nix
     ren.host.frodo = { system = ren.system.x86_64-linux; users = [ ren.user.vic ]; form = "laptop"; };
     ren.aspects.direnv = {
-      at = vicAt.core; # every scope where user vic lives
+      at = vicAt.headless; # every scope where user vic lives
       homeManager.programs.direnv.enable = true;
     };
     ```

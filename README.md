@@ -18,7 +18,7 @@ Generated from the live configuration: edit `modules/docs/`, then `nix run .#wri
 ```nix
 ren.host.frodo = { system = ren.system.x86_64-linux; users = [ ren.user.vic ]; form = "laptop"; };
 ren.aspects.direnv = {
-  at = vicAt.core; # every scope where user vic lives
+  at = vicAt.headless; # every scope where user vic lives
   homeManager.programs.direnv.enable = true;
 };
 ```
@@ -33,6 +33,7 @@ ren.aspects.direnv = {
 | `emacs` | an emacs distribution (data only, no scopes) | doom, spc |
 | `env` | a dev environment: langs become a devshell and user packages | fullenv, goenv, nixenv, nodeenv, pyenv, rustenv |
 | `fleet` | root scope; everything lives below it | vix |
+| `guest` | a microvm on a host (is host): its own nixos and users, built inside the host | dnx, gen |
 | `home` | a standalone home-manager home of one user | bitstream, nargun |
 | `host` | a NixOS machine (is machine) | annatar, bill, bombadil, frodo, mordor, nargun, nienna, smaug, tom |
 | `mac` | a nix-darwin machine (is machine) | bert, varda, yavanna |
@@ -42,6 +43,7 @@ ren.aspects.direnv = {
 | `system` | a nix system; machines, homes and envs are built for one | aarch64-darwin, aarch64-linux, x86_64-darwin, x86_64-linux |
 | `user` | a person: full name, email, login shell, admin | vic |
 | `vim` | a neovim profile: a feature list built per system into one nvf package (+ a gui wrapper) | astrovim, lazyvim, neovim, nvim, vscode-vim |
+| `workspace` | a project an isolated claude guest works on (data): repo path; one guest each | dnx, gen |
 
 ### Classes: module systems an aspect key names
 
@@ -61,13 +63,13 @@ ren.aspects.direnv = {
 
 | channel | emitted by | received by |
 | --- | --- | --- |
+| `checks` | formatter (fmt), files (README), no-gui (headless homes and guests) | flake `checks.<sys>.<name>` |
 | `ci-jobs` | every buildable host, mac, home and linux devshell | flake `ci.matrix`: one GitHub build job each |
 | `claude-allow` | user features | `ai-claude` settings.json permissions |
 | `devshells` | the `devshell` aspect, per env | flake `devShells.<sys>` |
 | `dots` | user features: `{ "<home path>" = "<dots path>"; }` | `vic-dots`: links into $HOME |
 | `env-packages` | `env-<lang>` aspects | the env's devshell, and users whose machine lists the env |
 | `fish-functions` | user features | `fish` writes them once |
-| `fmt-checks` | each system (treefmt) | flake `checks.<sys>.fmt` |
 | `formatter` | each system (treefmt) | flake `formatter.<sys>` (`nix fmt`) |
 | `git-ignores` | user features | `git` global ignores |
 | `login-shells` | users with a shell | their machine enables `programs.<shell>` |
@@ -79,16 +81,16 @@ ren.aspects.direnv = {
 
 | name | active |
 | --- | --- |
-| `vicAt.core` | everywhere vic lives |
-| `vicAt.desktop` | within `graphical` |
 | `vicAt.full` | not on iso images (not within `installer`) |
+| `vicAt.gui` | within `graphical`: every gui program lives here |
+| `vicAt.headless` | everywhere vic lives: terminal tools only (homes, guests, servers) |
 | `vicAt.secrets` | within `trusted` |
 | role `graphical` | hosts with desktops or wsl, workstation macs (from facts) |
 | role `installer` | iso hosts (from facts) |
 | role `live-dots` | included by a machine: dotfiles link live into ~/.flake |
 | role `trusted` | included by a machine: holds vic's secrets |
 
-175 aspects live under `modules/`; `ren.aspects.<name>` each.
+181 aspects live under `modules/`; `ren.aspects.<name>` each.
 
 ## Recipes
 

@@ -7,7 +7,7 @@
 }:
 {
   ren.aspects.ai-mcp = {
-    at = vicAt.core;
+    at = vicAt.headless;
     claude-allow = { ... }: [ "Bash(serena *)" ] ++ (import ./_quipu.nix).tools;
     git-ignores = { ... }: [
       ".serena"

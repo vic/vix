@@ -2,7 +2,7 @@
 { vicAt, ... }:
 {
   ren.aspects.nix-tools = {
-    at = vicAt.core;
+    at = vicAt.headless;
     homeManager =
       { pkgs, inputs', ... }:
       {

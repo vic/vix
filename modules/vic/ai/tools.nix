@@ -6,7 +6,7 @@
 }:
 {
   ren.aspects.ai-tools = {
-    at = vicAt.core;
+    at = vicAt.headless;
     claude-allow = { ... }: [
       "Bash(br *)"
       "Bash(codegraph *)"

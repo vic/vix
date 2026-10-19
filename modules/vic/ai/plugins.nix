@@ -21,7 +21,7 @@ in
 {
 
   ren.aspects.ai-plugins = {
-    at = vicAt.core;
+    at = vicAt.headless;
     homeManager = mod (
       { lib, pkgs, ... }:
       let

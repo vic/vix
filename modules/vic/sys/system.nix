@@ -2,7 +2,7 @@
 { vicAt, ... }:
 {
   ren.aspects.vic-system = {
-    at = vicAt.core;
+    at = vicAt.headless;
     homeLinux =
       { pkgs, ... }:
       {
@@ -20,7 +20,7 @@
       ".config/autostart/lxqt-config-touchpad-autostart.desktop" =
         "config/autostart/lxqt-config-touchpad-autostart.desktop";
     };
-    at = vicAt.desktop;
+    at = vicAt.gui;
     homeLinux =
       { pkgs, ... }:
       {

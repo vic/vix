@@ -6,7 +6,7 @@
 }:
 {
   ren.aspects.ai-ai = {
-    at = vicAt.core;
+    at = vicAt.headless;
     unfree = allowUnfree [
       "copilot-language-server"
       "claude"

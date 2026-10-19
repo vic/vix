@@ -29,12 +29,6 @@ let
   self = inputs.self; # shortcut: reads home paths back from flake outputs; no class exposes hm config to a channel
 in
 {
-  ren.channels.checks = {
-    fold = ren.lib.fold.attrs;
-    to = _: ren.kinds.fleet;
-    into = { ... }: checks: { inherit checks; };
-  };
-
   ren.aspects.no-gui-home = {
     at = headless ren.kinds.home;
     checks =

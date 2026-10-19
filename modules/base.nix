@@ -7,7 +7,7 @@
 }:
 {
   ren.aspects.vic-nix-index = {
-    at = vicAt.core;
+    at = vicAt.headless;
     homeManager = {
       imports = [ inputs.nix-index-database.homeModules.nix-index ];
       programs.nix-index.enable = true;
@@ -16,7 +16,7 @@
     };
   };
   ren.aspects.vic-nix-registry = {
-    at = vicAt.core;
+    at = vicAt.headless;
     homeManager.nix.registry = { };
   };
   ren.aspects.vic-hm-backup = {

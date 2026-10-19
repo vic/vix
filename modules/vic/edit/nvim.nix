@@ -9,7 +9,7 @@ let
 in
 {
   ren.aspects.vic-nvim = {
-    at = vicAt.core;
+    at = vicAt.headless;
     homeManager =
       { pkgs, self', ... }:
       {
@@ -19,7 +19,7 @@ in
   };
 
   ren.aspects.vic-nvim-gui = {
-    at = vicAt.desktop;
+    at = vicAt.gui;
     homeManager =
       { pkgs, self', ... }:
       {

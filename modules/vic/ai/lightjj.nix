@@ -8,7 +8,7 @@
 {
 
   ren.aspects.ai-lightjj = {
-    at = vicAt.core;
+    at = vicAt.headless;
     homeManager = mod (
       { inputs', ... }:
       {

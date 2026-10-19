@@ -8,7 +8,7 @@
 }:
 {
   ren.aspects.ai-statusline = {
-    at = vicAt.core;
+    at = vicAt.headless;
     homeManager = mod (
       {
         lib,

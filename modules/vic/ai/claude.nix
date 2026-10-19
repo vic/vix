@@ -15,7 +15,7 @@
     to = e: e;
   };
   ren.aspects.ai-claude = {
-    at = vicAt.core;
+    at = vicAt.headless;
     git-ignores = { ... }: [ ".claude" ];
     homeManager =
       { claude-allow, ... }:

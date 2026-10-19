@@ -9,7 +9,7 @@
   };
   ren.aspects.git = {
     dots.".config/gh/config.yml" = "config/gh/config.yml";
-    at = vicAt.core;
+    at = vicAt.headless;
     git-ignores = { ... }: [
       ".DS_Store"
       "*.swp"
