@@ -1,9 +1,14 @@
 # nienna: Intel macbook workstation.
-{ ren, allowUnfree, ... }:
+{ ren, ... }:
 {
   ren.host.nienna = {
     system = ren.system.x86_64-linux;
     users = [ ren.user.vic ];
+    workstation = true;
+    cpu = "intel";
+    wifi = "broadcom";
+    keyboard = "macos";
+    desktops = [ "xfce" ];
   };
 
   ren.aspects.nienna-hardware.nixos = {
@@ -34,13 +39,9 @@
 
   ren.aspects.nienna = {
     at = ren.host.nienna;
-    unfree = allowUnfree [ "broadcom-sta" ];
     includes = [
-      ren.aspects.graphical
       ren.aspects.trusted
       ren.aspects.live-dots
-      ren.aspects.workstation
-      ren.aspects.macbook
       ren.aspects.nienna-hardware
     ];
   };

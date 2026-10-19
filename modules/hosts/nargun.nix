@@ -4,6 +4,15 @@
   ren.host.nargun = {
     system = ren.system.x86_64-linux;
     users = [ ren.user.vic ];
+    workstation = true;
+    cpu = "amd";
+    keyboard = "macos";
+    desktops = [
+      "xfce"
+      "kde"
+      "niri"
+    ];
+    layouts = [ "enthium" ];
   };
 
   ren.aspects.nargun-hardware.nixos = {
@@ -34,15 +43,8 @@
   ren.aspects.nargun = {
     at = ren.host.nargun;
     includes = [
-      ren.aspects.graphical
       ren.aspects.trusted
       ren.aspects.live-dots
-      ren.aspects.workstation
-      ren.aspects.kde-desktop
-      ren.aspects.niri-desktop
-      ren.aspects.macos-keys
-      ren.aspects.kvm-amd
-      ren.aspects.enthium
       ren.aspects.nargun-hardware
     ];
   };

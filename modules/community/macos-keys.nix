@@ -1,6 +1,8 @@
-{ mod, ... }:
+# macos-keys: keyd remap to macOS-style keys, on hosts with keyboard = macos.
+{ mod, hostWhen, ... }:
 {
   ren.aspects.macos-keys = {
+    at = hostWhen (h: h.keyboard == "macos");
     nixos = mod (
       {
         lib,

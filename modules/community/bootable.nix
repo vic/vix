@@ -1,6 +1,7 @@
-# bootable: systemd-boot, networkmanager, locale, bluetooth and pipewire for physical machines.
-{ mod, ... }:
+# bootable: systemd-boot, networkmanager, locale, bluetooth and pipewire, on workstation hosts.
+{ mod, hostWhen, ... }:
 {
+  ren.aspects.bootable.at = hostWhen (h: h.workstation);
   ren.aspects.bootable.nixos = mod (
     { lib, modulesPath, ... }:
     {

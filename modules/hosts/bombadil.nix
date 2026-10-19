@@ -4,19 +4,20 @@
   ren.host.bombadil = {
     system = ren.system.x86_64-linux;
     users = [ ren.user.vic ];
+    form = "iso";
+    workstation = true;
+    cpu = "intel";
+    wifi = "broadcom";
+    keyboard = "macos";
+    firmware = "all";
+    desktops = [ "xfce" ];
   };
 
   ren.aspects.bombadil = {
     at = ren.host.bombadil;
     includes = [
-      ren.aspects.graphical
       ren.aspects.trusted
       ren.aspects.live-dots
-      ren.aspects.installer
-      ren.aspects.installer-base
-      ren.aspects.workstation
-      ren.aspects.macbook
-      ren.aspects.all-firmware
     ];
   };
 }

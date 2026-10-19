@@ -4,6 +4,7 @@
   ren.host.annatar = {
     system = ren.system.x86_64-linux;
     users = [ ren.user.vic ];
+    form = "wsl";
   };
 
   ren.aspects.annatar-distro.nixos = {
@@ -15,11 +16,8 @@
   ren.aspects.annatar = {
     at = ren.host.annatar;
     includes = [
-      ren.aspects.graphical
       ren.aspects.trusted
       ren.aspects.live-dots
-      ren.aspects.wsl
-      ren.aspects.nix-settings
       ren.aspects.annatar-distro
     ];
   };

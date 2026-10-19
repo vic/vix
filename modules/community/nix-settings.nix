@@ -1,6 +1,16 @@
-# nix-settings: cachix substitutes, flakes, trusted users, weekly gc (nixos and darwin).
-{ mod, ... }:
+# nix-settings: cachix substitutes, flakes, trusted users, weekly gc, on workstations and wsl (nixos and darwin).
 {
+  ren,
+  mod,
+  hostWhen,
+  macWhen,
+  ...
+}:
+{
+  ren.aspects.nix-settings.at = ren.lib.anyOf [
+    (hostWhen (h: h.workstation || h.form == "wsl"))
+    (macWhen (m: m.workstation))
+  ];
   ren.aspects.nix-settings.os = mod (
     { pkgs, config, ... }:
     {

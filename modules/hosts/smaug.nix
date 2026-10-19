@@ -4,6 +4,13 @@
   ren.host.smaug = {
     system = ren.system.x86_64-linux;
     users = [ ren.user.vic ];
+    workstation = true;
+    cpu = "intel";
+    gpu = "nvidia";
+    wifi = "broadcom";
+    keyboard = "macos";
+    firmware = "all";
+    desktops = [ "xfce" ];
   };
 
   ren.aspects.smaug-hardware.nixos = {
@@ -35,13 +42,8 @@
   ren.aspects.smaug = {
     at = ren.host.smaug;
     includes = [
-      ren.aspects.graphical
       ren.aspects.trusted
       ren.aspects.live-dots
-      ren.aspects.workstation
-      ren.aspects.macbook
-      ren.aspects.nvidia
-      ren.aspects.all-firmware
       ren.aspects.smaug-hardware
     ];
   };

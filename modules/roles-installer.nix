@@ -1,6 +1,7 @@
-# installer-base: the iso image base (installer cd) plus live-session users; hosts with role installer include it (roles.nix owns `installer`).
-{ mod, ... }:
+# installer-base: the iso image base (installer cd) plus live-session users, on iso hosts.
+{ mod, hostWhen, ... }:
 {
+  ren.aspects.installer-base.at = hostWhen (h: h.form == "iso");
   ren.aspects.installer-base.nixos = mod (
     {
       lib,

@@ -1,9 +1,13 @@
 # mordor: workstation with an nvidia card.
-{ ren, allowUnfree, ... }:
+{ ren, ... }:
 {
   ren.host.mordor = {
     system = ren.system.x86_64-linux;
     users = [ ren.user.vic ];
+    workstation = true;
+    cpu = "amd";
+    gpu = "nvidia";
+    desktops = [ "xfce" ];
   };
 
   ren.aspects.mordor-hardware.nixos = {
@@ -37,17 +41,9 @@
 
   ren.aspects.mordor = {
     at = ren.host.mordor;
-    unfree = allowUnfree [
-      "nvidia-x11"
-      "nvidia-settings"
-    ];
     includes = [
-      ren.aspects.graphical
       ren.aspects.trusted
       ren.aspects.live-dots
-      ren.aspects.workstation
-      ren.aspects.kvm-amd
-      ren.aspects.nvidia
       ren.aspects.mordor-hardware
     ];
   };

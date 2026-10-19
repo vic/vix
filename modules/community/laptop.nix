@@ -1,6 +1,7 @@
-{ mod, ... }:
+{ mod, hostWhen, ... }:
 {
   # Laptop baseline. Ideas from sini core/{systemd,perf,nix,system,network}.
+  ren.aspects.laptop.at = hostWhen (h: h.form == "laptop");
   ren.aspects.laptop.nixos = mod (
     {
       config,

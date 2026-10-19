@@ -1,6 +1,7 @@
-# darwin-base: trackpad and keyboard defaults, nix-darwin tools.
-{ inputs, ... }:
+# darwin-base: trackpad and keyboard defaults, nix-darwin tools, on workstation macs.
+{ inputs, macWhen, ... }:
 {
+  ren.aspects.darwin-base.at = macWhen (m: m.workstation);
   ren.aspects.darwin-base.darwin =
     { pkgs, ... }:
     {

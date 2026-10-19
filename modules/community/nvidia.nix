@@ -1,6 +1,16 @@
-# nvidia: proprietary driver, nouveau blacklisted.
-{ mod, ... }:
+# nvidia: proprietary driver, nouveau blacklisted, on nvidia hosts.
 {
+  mod,
+  hostWhen,
+  allowUnfree,
+  ...
+}:
+{
+  ren.aspects.nvidia.at = hostWhen (h: h.gpu == "nvidia");
+  ren.aspects.nvidia.unfree = allowUnfree [
+    "nvidia-x11"
+    "nvidia-settings"
+  ];
   ren.aspects.nvidia.nixos = mod (
     { config, ... }:
     {

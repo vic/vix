@@ -2,11 +2,13 @@
   ren,
   vicAt,
   mod,
+  hostWhen,
   ...
 }:
 {
   # Niri session: the compositor, its helpers, and the keyring it expects.
   ren.aspects.niri-desktop = {
+    at = hostWhen (h: builtins.elem "niri" h.desktops);
     nixos = mod (
       { lib, pkgs, ... }:
       {

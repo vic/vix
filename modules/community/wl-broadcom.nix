@@ -1,12 +1,21 @@
-# wl-broadcom: Broadcom STA wifi driver.
-{ mod, ... }:
+# wl-broadcom: Broadcom STA wifi driver, on hosts with broadcom wifi.
 {
-  ren.aspects.wl-broadcom.nixos = mod (
-    { lib, config, ... }:
-    {
-      boot.kernelModules = [ "wl" ];
-      boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
-      nixpkgs.config.allowInsecurePredicate = pkg: builtins.elem (lib.getName pkg) [ "broadcom-sta" ];
-    }
-  );
+  mod,
+  hostWhen,
+  allowUnfree,
+  ...
+}:
+{
+  ren.aspects.wl-broadcom = {
+    at = hostWhen (h: h.wifi == "broadcom");
+    unfree = allowUnfree [ "broadcom-sta" ];
+    nixos = mod (
+      { lib, config, ... }:
+      {
+        boot.kernelModules = [ "wl" ];
+        boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+        nixpkgs.config.allowInsecurePredicate = pkg: builtins.elem (lib.getName pkg) [ "broadcom-sta" ];
+      }
+    );
+  };
 }
