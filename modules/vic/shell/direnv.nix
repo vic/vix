@@ -1,0 +1,42 @@
+# direnv: nix-direnv with vix lib helpers; hosts keep devshell closures alive across GC.
+{
+  ren,
+  inputs,
+  vicAt,
+  ...
+}:
+let
+  use_nix_installables = ''
+    use_nix_installables() {
+      direnv_load nix shell "''${@}" -c $direnv dump
+    }
+  '';
+  use_vix_go = ''
+    use_vix_go() {
+      use nix_installables ${inputs.nixpkgs}#go ${inputs.nixpkgs}#gopls
+    }
+  '';
+in
+{
+  ren.aspects.direnv = {
+    at = vicAt.core;
+    homeManager = {
+      programs.direnv.enable = true;
+      programs.direnv.nix-direnv.enable = true;
+      home.file.".config/direnv/lib/use_nix_installables.sh".text = use_nix_installables;
+      home.file.".config/direnv/lib/use_vix_go.sh".text = use_vix_go;
+    };
+  };
+
+  # keep devshell closures alive across GC (sini direnv.nix:4-7); no macs exist yet, so hosts only
+  ren.aspects.direnv-host = {
+    at = ren.lib.and [
+      ren.kinds.host
+      (ren.lib.has ren.user.vic)
+    ];
+    os = {
+      nix.settings.keep-outputs = true;
+      nix.settings.keep-derivations = true;
+    };
+  };
+}
