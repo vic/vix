@@ -1,4 +1,9 @@
-{ mod, ... }:
+{
+  ren,
+  vicAt,
+  mod,
+  ...
+}:
 {
   # Niri session: the compositor, its helpers, and the keyring it expects.
   ren.aspects.niri-desktop = {
@@ -18,5 +23,17 @@
         ] pkgs;
       }
     );
+  };
+
+  # vic's niri and noctalia configs, on his desktop users of niri machines.
+  ren.aspects.vic-niri = {
+    at = ren.lib.and [
+      vicAt.desktop
+      (ren.lib.within ren.aspects.niri-desktop)
+    ];
+    dots = {
+      ".config/niri" = "config/niri";
+      ".config/noctalia" = "config/noctalia";
+    };
   };
 }

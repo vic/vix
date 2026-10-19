@@ -2,6 +2,10 @@
 { vicAt, ... }:
 {
   ren.aspects.cli-tools = {
+    dots = {
+      ".config/btop" = "config/btop";
+      ".config/bottom" = "config/bottom";
+    };
     at = vicAt.core;
     homeManager =
       { pkgs, ... }:

@@ -8,6 +8,7 @@
     to = e: e;
   };
   ren.aspects.git = {
+    dots.".config/gh/config.yml" = "config/gh/config.yml";
     at = vicAt.core;
     git-ignores = { ... }: [
       ".DS_Store"

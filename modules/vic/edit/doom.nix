@@ -8,6 +8,7 @@
 }:
 {
   ren.aspects.vic-doom = {
+    dots.".config/doom" = "config/doom";
     at = vicAt.desktop;
     homeManager = mod (
       {

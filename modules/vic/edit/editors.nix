@@ -4,6 +4,7 @@
   vicAt,
   inputs,
   allowUnfree,
+  place,
   ...
 }:
 let
@@ -31,6 +32,21 @@ in
   ren.aspects.vic-editors = {
     inherit at;
     includes = [ ren.aspects.vic-vscode-server ];
+    dots =
+      { parent, ... }:
+      let
+        ext = if (place parent).system.darwin then "Darwin" else "Linux";
+      in
+      {
+        ".config/zed" = "config/zed";
+        ".config/vscode-vim" = "config/vscode-vim";
+        ".config/Code/User/settings.json" = "config/Code/User/settings.json";
+        ".config/Code/User/keybindings.json" = "config/Code/User/keybindings.json";
+        ".config/Cursor/User/settings.json" = "config/Code/User/settings.json";
+        ".config/Cursor/User/keybindings.json" = "config/Code/User/keybindings.json";
+        ".vscode/extensions/extensions.json" = "vscode/extensions/extensions-${ext}.json";
+        ".cursor/extensions/extensions.json" = "cursor/extensions/extensions-${ext}.json";
+      };
     unfree = allowUnfree [
       "cursor"
       "vscode"

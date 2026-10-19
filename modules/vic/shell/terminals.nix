@@ -2,6 +2,10 @@
 { ren, vicAt, ... }:
 {
   ren.aspects.terminals = {
+    dots = {
+      ".config/wezterm" = "config/wezterm";
+      ".config/ghostty" = "config/ghostty";
+    };
     at = ren.lib.and [
       vicAt.full
       vicAt.desktop

@@ -3,6 +3,7 @@
 {
 
   ren.aspects.jujutsu = {
+    dots.".config/jjui" = "config/jjui";
     at = vicAt.core;
     homeManager =
       {

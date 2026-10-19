@@ -15,6 +15,11 @@
   };
 
   ren.aspects.vic-desktop-tools = {
+    dots = {
+      ".config/fontconfig" = "config/fontconfig";
+      ".config/autostart/lxqt-config-touchpad-autostart.desktop" =
+        "config/autostart/lxqt-config-touchpad-autostart.desktop";
+    };
     at = vicAt.desktop;
     homeLinux =
       { pkgs, ... }:

@@ -26,6 +26,11 @@ let
 in
 {
   ren.aspects.vic-nvim = {
+    dots = {
+      ".config/nvim" = "config/nvim";
+      ".config/astrovim" = "config/astrovim";
+      ".config/lazyvim" = "config/lazyvim";
+    };
     at = vicAt.core;
     homeManager = mod (
       {
