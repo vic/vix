@@ -1,0 +1,8 @@
+{
+  "name": "omni",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "description": "cross-project knowledge graph + live web UI + MCP (zero-dep node)",
+  "bin": { "omni": "./omni.js" }
+}

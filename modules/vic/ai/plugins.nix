@@ -1,0 +1,73 @@
+# Claude Code plugin marketplaces, store-pinned: CC resolves plugins from these
+# nix-store paths instead of cloning from GitHub at runtime.
+{
+  ren,
+  inputs,
+  vicAt,
+  mod,
+  ...
+}:
+let
+  # marketplace name -> flake input (and its input url)
+  marketplaces = {
+    superpowers-extended-cc-marketplace = "github:pcvelz/superpowers";
+    ponytail = "github:dietrichgebert/ponytail";
+    mattpocock = "github:mattpocock/skills";
+    diagram-design = "github:cathrynlavery/diagram-design";
+    ui-ux-pro-max-skill = "github:nextlevelbuilder/ui-ux-pro-max-skill";
+    claude-plugins-official = "github:anthropics/claude-plugins-official";
+    caveman = "github:JuliusBrussee/caveman";
+  };
+in
+{
+
+  ren.aspects.ai-plugins = {
+    at = vicAt.core;
+    homeManager = mod (
+      { lib, pkgs, ... }:
+      let
+        srcOf = name: inputs.${name};
+      in
+      {
+        programs.claude-code.settings.enabledPlugins = {
+          "superpowers-extended-cc@superpowers-extended-cc-marketplace" = true;
+          "ponytail@ponytail" = true;
+          "mattpocock-skills@mattpocock" = true;
+          "diagram-design@diagram-design" = true;
+          "ui-ux-pro-max@ui-ux-pro-max-skill" = true;
+          "commit-commands@claude-plugins-official" = true;
+          "skill-creator@claude-plugins-official" = true;
+          "code-simplifier@claude-plugins-official" = true;
+          "rust-analyzer-lsp@claude-plugins-official" = true;
+          "caveman@caveman" = true;
+        };
+
+        # Written whole instead of via programs.claude-code.marketplaces: that option
+        # can only express `directory` sources, but CC reserves the name
+        # claude-plugins-official for a github source and otherwise appends it itself,
+        # replacing HM's symlink and breaking the next activation. autoUpdate = false
+        # stops CC's startup refresh from rewriting the file.
+        home.file.".claude/plugins/known_marketplaces.json".source =
+          (pkgs.formats.json { }).generate "claude-code-known-marketplaces.json"
+            (
+              lib.mapAttrs (name: url: {
+                source =
+                  if name == "claude-plugins-official" then
+                    {
+                      source = "github";
+                      repo = lib.removePrefix "github:" url;
+                    }
+                  else
+                    {
+                      source = "directory";
+                      path = "${srcOf name}";
+                    };
+                installLocation = "${srcOf name}";
+                lastUpdated = "1970-01-01T00:00:00Z";
+                autoUpdate = false;
+              }) marketplaces
+            );
+      }
+    );
+  };
+}

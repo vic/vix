@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# vic-law <ANCHOR> [ctx-lines] [file] — print anchored LAW block from project law doc.
+# Default law doc: <proj>/vic/main.md (anchors like [L1071]). Cite check b4 any claim. GLOBAL.
+a=${1:?usage: vic-law <ANCHOR> [ctx-lines] [law-file]}
+n=${2:-6}
+f=${3:-"${CLAUDE_PROJECT_DIR:-$PWD}/vic/main.md"}
+[ -f "$f" ] || { echo "no law doc at $f"; exit 1; }
+rg -n -A"$n" "\[$a\]" "$f" && exit 0
+echo "NO ANCHOR $a in $f — check settled docs or verdict=UNDERSPEC"
+exit 1
