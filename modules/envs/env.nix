@@ -35,7 +35,7 @@
             in
             m != null
             && m.system.name == e.system.name
-            && builtins.elem e.env.name (map (x: x.name) (m.envs or [ ]))
+            && builtins.elem e.env.name (map (x: x.name) m.envs)
           ))
         ])
       ];

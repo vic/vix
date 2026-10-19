@@ -21,6 +21,7 @@ in
     user = user;
     system = ren.kinds.system;
     channel = opt ren.kinds.channel ren.channel.unstable;
+    envs = opt (lib.types.listOf ren.kinds.env) [ ]; # dev environments its user gets (envs/env.nix)
   };
 
   ren.classes.homeManager = [
