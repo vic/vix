@@ -14,6 +14,7 @@ let
         nixfmt.enable = true;
         nixfmt.excludes = [ ".direnv" ];
         deadnix.enable = true;
+        deadnix.no-lambda-pattern-names = true; # module args are selected by name: never drop a declared one
         fish_indent.enable = true;
         kdlfmt.enable = true;
         stylua.enable = true;
