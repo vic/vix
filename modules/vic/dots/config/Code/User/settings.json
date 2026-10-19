@@ -1,0 +1,352 @@
+{
+  "chat.agent.maxRequests": 500,
+  "chat.editing.confirmEditRequestRetry": false,
+  "chat.tools.autoApprove": true,
+  "cursor.cmdk.useThemedDiffBackground": true,
+  "cursor.composer.shouldChimeAfterChatFinishes": true,
+  "cursor.cpp.disabledLanguages": ["plaintext", "markdown", "scminput", "rust"],
+  "debug.closeReadonlyTabsOnEnd": true,
+  "debug.gutterMiddleClickAction": "none",
+  "debug.openExplorerOnEnd": true,
+  "diffEditor.codeLens": true,
+  "direnv.restart.automatic": true,
+  "editor.autoIndentOnPaste": true,
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "editor.codeLensFontSize": 12,
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.fontFamily": "'Victor Mono'",
+  "editor.fontSize": 16,
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "editor.inlineSuggest.edits.showCollapsed": true,
+  "editor.minimap.autohide": "scroll",
+  "editor.minimap.enabled": false,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.renderLineHighlight": "gutter",
+  "editor.renderLineHighlightOnlyWhenFocus": true,
+  "editor.smoothScrolling": true,
+  "errorLens.messageBackgroundMode": "message",
+  "errorLens.padding": "2px 1ch",
+  "errorLens.messageTemplate": "$severity $message",
+  "workbench.colorCustomizations": {
+    "editorError.foreground": "#fff0",
+    "editorWarning.foreground": "#fff0",
+    "editorInfo.foreground": "#fff0",
+    "editorHint.foreground": "#fff0"
+  },
+  "errorLens.problemRangeDecorationEnabled": true,
+  "errorLens.decorations": {
+    "errorRange": {
+      "border": "1px dashed red"
+    },
+    "warningRange": {
+      "border": "2px dotted #fa9121"
+    },
+    "infoRange": {
+      "textDecoration": ";background:linear-gradient(45deg,#ff8400,#00d9ff);background-clip:text;color:transparent;border-bottom:2px solid #00d9ff",
+      "backgroundColor": "#fff0"
+    },
+    "hintRange": {
+      "textDecoration": ";box-shadow:0 0 5px 3px #2faf6470;border-radius:0.25em"
+    }
+  },
+  "errorLens.severityText": ["▣", "◈", "◉", "⛆"],
+  "errorLens.border": [
+    "1px solid",
+    "1px dotted",
+    "1px dashed",
+    "1px solid #00000040"
+  ],
+  "errorLens.codeLensEnabled": false,
+  "errorLens.editorHoverPartsEnabled": {
+    "buttonsEnabled": true,
+    "messageEnabled": true,
+    "sourceCodeEnabled": true
+  },
+  "errorLens.enabled": true,
+  "errorLens.enabledDiagnosticLevels": ["warning", "info", "error"],
+  "errorLens.fontSize": "-3px",
+  "errorLens.removeLinebreaks": false,
+  "errorLens.respectUpstreamEnabled": {
+    "statusBar": true
+  },
+  "errorLens.gutterIconsEnabled": true,
+  "errorLens.gutterIconSet": "defaultOutline",
+  "errorLens.scrollbarHackEnabled": true,
+  "errorLens.statusBarColorsEnabled": true,
+  "errorLens.statusBarIconsEnabled": true,
+  "errorLens.statusBarMessageEnabled": false,
+  "explorer.excludeGitIgnore": true,
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1,
+    "vscodevim.vim": 1
+  },
+  "vscode-neovim.compositeKeys": {
+    "jj": {
+      "command": "vscode-neovim.escape"
+    }
+  },
+  "files.exclude": {
+    "**/.direnv": true,
+    "**/.jj": true
+  },
+  "files.watcherExclude": {
+    "**/.bloop": true,
+    "**/.metals": true
+  },
+  "find-it-faster.advanced.disableStartupChecks": true,
+  "find-it-faster.findFiles.previewWindowConfig": "right,50%,border-left,+{2}+3/3,~3",
+  "find-it-faster.findWithinFiles.fuzzRipgrepQuery": true,
+  "find-it-faster.findWithinFiles.previewWindowConfig": "right,50%,border-left,+{2}+3/3,~3",
+  "find-it-faster.general.killTerminalAfterUse": true,
+  "find-it-faster.general.openFileInPreviewEditor": true,
+  "find-it-faster.general.useTerminalInEditor": true,
+  "geminicodeassist.inlineSuggestions.enableAuto": false,
+  "git.blame.statusBarItem.enabled": false,
+  "git.confirmSync": false,
+  "github.copilot.chat.agent.thinkingTool": true,
+  "github.copilot.chat.codesearch.enabled": true,
+  "github.copilot.chat.editor.temporalContext.enabled": true,
+  "github.copilot.chat.edits.temporalContext.enabled": true,
+  "github.copilot.chat.generateTests.codeLens": true,
+  "github.copilot.chat.scopeSelection": true,
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false,
+    "rust": false
+  },
+  "github.copilot.nextEditSuggestions.enabled": false,
+  "jjk.enableAnnotations": false,
+  "opensource-explorer.defaultClonePath": "~/hk",
+  "opensource-explorer.defaultView": "recent",
+  "problems.defaultViewMode": "table",
+  "problems.showCurrentInStatus": true,
+  "scm.diffDecorationsGutterPattern": {
+    "added": true
+  },
+  "scm.diffDecorationsGutterVisibility": "hover",
+  "search.showLineNumbers": true,
+  "search.useGlobalIgnoreFiles": true,
+  "terminal.integrated.commandsToSkipShell": [
+    "workbench.files.action.focusFilesExplorer",
+    "-workbench.action.quickOpen"
+  ],
+  "terminal.integrated.copyOnSelection": true,
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.sendKeybindingsToShell": true,
+  "terminal.integrated.smoothScrolling": true,
+  "vim.camelCaseMotion.enable": true,
+  "vim.cursorStylePerMode.insert": "line-thin",
+  "vim.cursorStylePerMode.normal": "block",
+  "vim.cursorStylePerMode.replace": "underline",
+  "vim.cursorStylePerMode.visual": "block",
+  "vim.cursorStylePerMode.visualblock": "block",
+  "vim.cursorStylePerMode.visualline": "line",
+  "vim.easymotion": true,
+  "vim.foldfix": true,
+  "vim.handleKeys": {
+    "<C-f>": false
+  },
+  "vim.highlightedyank.enable": true,
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["<C-h>"],
+      "commands": ["github.copilot.generate"]
+    }
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<space>"],
+      "commands": ["vspacecode.space"]
+    },
+    {
+      "before": [","],
+      "commands": [
+        "vspacecode.space",
+        {
+          "args": "m",
+          "command": "whichkey.triggerKey"
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "b"],
+      "commands": ["bookmarks.list"]
+    },
+    {
+      "before": ["<C-a>"],
+      "commands": ["cursorHome"]
+    },
+    {
+      "before": ["<C-e>"],
+      "commands": ["cursorEnd"]
+    },
+    {
+      "before": ["0"],
+      "commands": ["cursorHome"]
+    }
+  ],
+  "vim.showMarksInGutter": true,
+  "vim.sneak": true,
+  "vim.sneakReplacesF": true,
+  "vim.useSystemClipboard": true,
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<space>"],
+      "commands": ["vspacecode.space"]
+    },
+    {
+      "before": [","],
+      "commands": [
+        "vspacecode.space",
+        {
+          "args": "m",
+          "command": "whichkey.triggerKey"
+        }
+      ]
+    },
+    {
+      "before": [">"],
+      "commands": ["editor.action.indentLines"]
+    },
+    {
+      "before": ["<"],
+      "commands": ["editor.action.outdentLines"]
+    }
+  ],
+  "vim.visualstar": true,
+  "vspacecode.bindingOverrides": [
+    {
+      "command": "file-browser.open",
+      "keys": "f.b",
+      "name": "FileBrowser Open",
+      "type": "command"
+    },
+    {
+      "command": "vscodeyazi.openYazi",
+      "keys": "p.e",
+      "name": "Yazi",
+      "type": "command"
+    },
+    {
+      "args": {
+        "commands": [
+          "workbench.action.terminal.focus",
+          {
+            "args": {
+              "text": "nix fmt\n"
+            },
+            "command": "workbench.action.terminal.sendSequence"
+          }
+        ]
+      },
+      "command": "runCommands",
+      "keys": "p.F",
+      "name": "nix fmt",
+      "type": "command"
+    },
+    {
+      "command": "lazygit.openLazygit",
+      "keys": "g.g",
+      "name": "LazyGit",
+      "type": "command"
+    },
+    {
+      "command": "find-it-faster.findFiles",
+      "keys": "f.f",
+      "name": "Fuzzy find file in project",
+      "type": "command"
+    },
+    {
+      "command": "find-it-faster.findFiles",
+      "keys": "f.p",
+      "name": "Fuzzy find file in project",
+      "type": "command"
+    },
+    {
+      "command": "find-it-faster.findWithinFiles",
+      "keys": "s.p",
+      "name": "Fuzzy search in project",
+      "type": "command"
+    },
+    {
+      "command": "find-it-faster.findWithinFilesWithType",
+      "keys": "s.f",
+      "name": "Fuzzy search same file type in project",
+      "type": "command"
+    }
+  ],
+  "window.autoDetectColorScheme": true,
+  "window.customTitleBarVisibility": "windowed",
+  "window.density.editorTabHeight": "compact",
+  "workbench.editor.centeredLayoutFixedWidth": true,
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.editor.limit.enabled": false,
+  "workbench.editor.limit.excludeDirty": true,
+  "workbench.editor.limit.perEditorGroup": true,
+  "workbench.editor.limit.value": 1,
+  "workbench.editor.pinnedTabSizing": "shrink",
+  "workbench.editor.pinnedTabsOnSeparateRow": true,
+  "workbench.editor.tabSizing": "shrink",
+  "workbench.editor.wrapTabs": true,
+  "workbench.externalBrowser": "librewolf",
+  "workbench.list.smoothScrolling": true,
+  "workbench.panel.defaultLocation": "top",
+  "workbench.panel.showLabels": false,
+  "workbench.preferredDarkColorTheme": "Solarized Dark",
+  "workbench.preferredHighContrastColorTheme": "Visual Studio Light",
+  "workbench.view.showQuietly": {
+    "workbench.panel.output": false
+  },
+  "zenMode.showTabs": "none",
+  "zig.path": "zig",
+  "zig.zls.enabled": "on",
+  "geminicodeassist.contextExclusionFile": ".aiexclude,old",
+  "geminicodeassist.enableTelemetry": false,
+  "workbench.activityBar.location": "top",
+  "chat.tools.terminal.autoApprove": {
+    "cargo build": true,
+    "timeout": true,
+    "mkdir": true,
+    "touch": true,
+    "cargo clippy": true,
+    "jn": true,
+    "printf": true,
+    "Cargo.toml": true,
+    "cd /home/vic/hk/roke/crates/delta-lambda && printf '[package]\\nname = \"delta-lambda\"\\nversion = \"0.1.0\"\\nedition = \"2021\"\\n\\n[lib]\\nname = \"delta_lambda\"\\npath = \"src/lib.rs\"\\n\\n[dependencies]\\ndelta-types = { path = \"../delta-types\" }\\nnom = \"8.0.0\"\\n' > Cargo.toml": {
+      "approve": true,
+      "matchCommandLine": true
+    }
+  },
+  "chat.tools.global.autoApprove": true,
+  "terminal.integrated.stickyScroll.enabled": false,
+  "remote.SSH.configFile": "/home/vic/.ssh/config.local",
+  "file-browser.labelIgnoredFiles": true,
+  "file-browser.hideDotfiles": false,
+  "chat.emptyState.history.enabled": true,
+  "semanticdiff.defaultDiffViewer": true,
+  "semanticdiff.closeOriginalTab": true,
+  "workbench.preferredLightColorTheme": "Dark 2026",
+  "workbench.colorTheme": "Monokai Pro Light (Filter Sun)",
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "typescript.suggest.completeFunctionCalls": true,
+  "js/ts.updateImportsOnPaste.enabled": false,
+  "js/ts.updateImportsOnFileMove.enabled": "never",
+  "js/ts.suggest.includeCompletionsForImportStatements": false,
+  "js/ts.suggest.autoImports": false,
+  "js/ts.suggest.paths": false,
+  "errorLens.excludeBySource": [
+    "ts(7024)"
+  ],
+  "chat.plugins.marketplaces": [
+    "github/copilot-plugins",
+    "github/awesome-copilot",
+    "https://github.com/obra/superpowers.git",
+    "https://github.com/JuliusBrussee/caveman.git"
+  ],
+  "chat.viewSessions.orientation": "stacked",
+  "claudeCode.preferredLocation": "panel",
+  "claudeCode.useTerminal": true
+}

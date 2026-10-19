@@ -1,0 +1,34 @@
+{
+  "name": "vic-extensions",
+  "displayName": "vic-extensions",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.98.0"
+  },
+  "categories": [
+    "Extension Packs"
+  ],
+  "extensionPack": [
+    "bodil.file-browser",
+    "chaitanyashahare.lazygit",
+    "cybersamurai.midnight-purple-2077",
+    "github.copilot",
+    "github.copilot-chat",
+    "github.vscode-github-actions",
+    "golang.go",
+    "jacobdufault.fuzzy-search",
+    "jnoortheen.nix-ide",
+    "kahole.magit",
+    "mkhl.direnv",
+    "ms-vscode-remote.remote-containers",
+    "rust-lang.rust-analyzer",
+    "tomrijndorp.find-it-faster",
+    "usernamehw.errorlens",
+    "vitchu.vscode-autohide-vim",
+    "vscodevim.vim",
+    "vspacecode.vspacecode",
+    "vspacecode.whichkey",
+    "xiaodong.vscodeyazi"
+  ]
+}

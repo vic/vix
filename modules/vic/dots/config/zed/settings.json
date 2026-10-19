@@ -1,0 +1,49 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "agent_servers": {
+    "github-copilot-cli": {
+      "type": "registry"
+    }
+  },
+  "agent": {
+    "always_allow_tool_actions": true,
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "grok-code-fast-1"
+    },
+    "model_parameters": []
+  },
+  "edit_predictions": {
+    "mode": "subtle"
+  },
+  "buffer_font_family": "JetBrainsMono Nerd Font Mono",
+  "ui_font_features": {
+    "calt": 1
+  },
+  "show_edit_predictions": false,
+  "git": {
+    "inline_blame": {
+      "enabled": false
+    }
+  },
+  "outline_panel": {
+    "dock": "right"
+  },
+  "current_line_highlight": "gutter",
+  "load_direnv": "direct",
+  "vim_mode": true,
+  "ui_font_size": 16,
+  "buffer_font_size": 16,
+  "theme": {
+    "mode": "system",
+    "light": "One Dark",
+    "dark": "One Dark"
+  }
+}
