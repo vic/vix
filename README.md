@@ -109,7 +109,7 @@ A class turns the collected modules into a flake output.
 | role `live-dots` | included by a machine: dotfiles link live into ~/.flake |
 | role `trusted` | included by a machine: holds vic's secrets |
 
-181 aspects live under `modules/`; `ren.aspects.<name>` each.
+183 aspects live under `modules/`; `ren.aspects.<name>` each.
 
 ## Directory structure
 

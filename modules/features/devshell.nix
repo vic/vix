@@ -6,27 +6,14 @@
   ...
 }:
 {
-  # own channel: the shared `devshells` channel only accepts env scopes (shortcut: merge into it when env.nix may change)
-  ren.channels.maint-shell = {
-    fold = ren.lib.fold.attrs;
-    at = ren.kinds.system;
-    to =
-      e:
-      ren.lib.and [
-        ren.kinds.system
-        e
-      ];
-    into = { system, ... }: s: { devShells.${system.name} = s; };
-  };
-
   ren.aspects.maintainer-shell = {
     at = ren.kinds.system;
-    maint-shell =
+    devshells =
       { system, ... }:
       let
         pkgs = pkgsFor system;
         apps = inputs.self.packages.${system.name};
-        s = inputs.self.nixosConfigurations.frodo.config.nix.settings;
+        s = inputs.self.nixosConfigurations.nargun.config.nix.settings; # a workstation: carries the vix cachix (as old vix)
         nixConf = pkgs.writeText "nix.conf" (
           pkgs.lib.concatStringsSep "\n" (
             map (n: "extra-${n} = ${pkgs.lib.concatStringsSep " " s.${n}}") [

@@ -41,7 +41,10 @@
 
   ren.channels.devshells = {
     fold = ren.lib.fold.attrs;
-    at = ren.kinds.env;
+    at = ren.lib.anyOf [
+      ren.kinds.env
+      ren.kinds.system
+    ]; # env shells, and the maintainer shell (features/devshell.nix)
     to =
       e:
       ren.lib.and [
