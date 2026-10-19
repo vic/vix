@@ -200,10 +200,7 @@ nix build .#nixosConfigurations.frodo.config.system.build.toplevel
 nix build '.#homeConfigurations."vic@bitstream".activationPackage'
 nix run .#write-files                 # regenerate this README
 nix flake check                       # includes checks.x86_64-linux."files/README.md"
-# CI matrix: every nixos host, evaluated
-for h in $(nix eval --raw .#nixosConfigurations --apply 'c: toString (builtins.attrNames c)'); do
-  nix eval --raw ".#nixosConfigurations.$h.config.system.build.toplevel.drvPath"
-done
+nix eval --json .#ci.matrix              # every CI build job: host, mac, home, devshell
 ```
 
 ## History
