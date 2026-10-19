@@ -1,0 +1,59 @@
+# Formatter: treefmt per system as `formatter.<sys>` and the `checks.<sys>.fmt` check.
+{
+  ren,
+  inputs,
+  pkgsFor,
+  ...
+}:
+let
+  treefmt =
+    system:
+    inputs.treefmt-nix.lib.evalModule (pkgsFor system) {
+      projectRootFile = "flake.nix";
+      programs = {
+        nixfmt.enable = true;
+        nixfmt.excludes = [ ".direnv" ];
+        deadnix.enable = true;
+        fish_indent.enable = true;
+        kdlfmt.enable = true;
+        stylua.enable = true;
+      };
+      settings.global.excludes = [
+        "flake.lock"
+        ".envrc"
+        ".leaderrc"
+        "*.el" # TODO contribute an emacs treefmt
+        "**/.gitignore"
+        "*/config/ghostty/*"
+        "*/config/wezterm/*"
+        "*/dots/vscode/*"
+        "*/dots/ssh/*"
+        "*/secrets/*"
+      ];
+    };
+  perSystem = {
+    at = ren.kinds.system;
+    to =
+      e:
+      ren.lib.and [
+        ren.kinds.system
+        e
+      ];
+  };
+in
+{
+  ren.channels.formatter = perSystem // {
+    fold = ren.lib.fold.attrs;
+    into = { system, ... }: f: { formatter.${system.name} = f.treefmt; };
+  };
+  ren.channels.fmt-checks = perSystem // {
+    fold = ren.lib.fold.attrs;
+    into = { system, ... }: c: { checks.${system.name} = c; };
+  };
+
+  ren.aspects.formatter = {
+    at = ren.kinds.system;
+    formatter = { system, ... }: { treefmt = (treefmt system).config.build.wrapper; };
+    fmt-checks = { system, ... }: { fmt = (treefmt system).config.build.check inputs.self; };
+  };
+}

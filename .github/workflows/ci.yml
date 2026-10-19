@@ -1,0 +1,59 @@
+name: ci
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.m.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - uses: DeterminateSystems/magic-nix-cache-action@v13
+      - id: m
+        run: |
+          nix eval --json .#ci.matrix | jq -c '{include: .}' > matrix.json
+          echo "matrix=$(cat matrix.json)" >> "$GITHUB_OUTPUT"
+          jq -r '.include[] | "\(.runner)\t\(.name)"' matrix.json
+      - name: eval every non-allowFailure job
+        run: |
+          nix eval --raw .#ci.matrix --apply 'ms: builtins.deepSeq (map (j: j.name) (builtins.filter (j: !j.allowFailure) ms)) "ok"'
+  build:
+    needs: [eval]
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.runner }}
+    continue-on-error: ${{ matrix.allowFailure }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.eval.outputs.matrix) }}
+    steps:
+      - uses: wimpysworld/nothing-but-nix@v10
+        if: startsWith(matrix.runner, 'ubuntu') && !endsWith(matrix.runner, 'arm')
+      - uses: actions/checkout@v6
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - uses: DeterminateSystems/magic-nix-cache-action@v13
+      - uses: cachix/cachix-action@v17
+        with:
+          name: vix
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - run: nix build --print-build-logs --out-link result '.#${{ matrix.attr }}'
+      - run: echo "<code>$(readlink -f result)</code>" >> "$GITHUB_STEP_SUMMARY"
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - uses: DeterminateSystems/magic-nix-cache-action@v13
+      - uses: cachix/cachix-action@v17
+        with:
+          name: vix
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - run: nix build --print-build-logs .#checks.x86_64-linux.fmt

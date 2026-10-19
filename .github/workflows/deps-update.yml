@@ -1,0 +1,22 @@
+name: deps-update
+on:
+  repository_dispatch:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 5 * * *"
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - uses: DeterminateSystems/update-flake-lock@v28
+        with:
+          token: ${{ secrets.PAT }}
+          pr-title: "Updating inputs"
+          pr-labels: deps-update
+          pr-reviewers: vic
+          pr-assignees: vic

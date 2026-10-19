@@ -1,0 +1,23 @@
+name: upterm-bert
+on:
+  workflow_dispatch:
+jobs:
+  upterm:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - uses: cachix/cachix-action@v17
+        with:
+          name: vix
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - name: upterm
+        env:
+          GH_TOKEN: ${{ secrets.PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NIXPKGS_ALLOW_UNFREE: 1
+          HOMER: runner@bert
+        run: |
+          mkdir -p ~/.config/nixpkgs
+          echo '{ allowUnfree = true; }' > ~/.config/nixpkgs/config.nix
+          nix develop --accept-flake-config --impure .#upterm --command gh-action
