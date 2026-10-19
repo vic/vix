@@ -299,6 +299,22 @@
         "type": "github"
       }
     },
+    "files": {
+      "locked": {
+        "lastModified": 1780084175,
+        "narHash": "sha256-hmXRqcp+rWLW8GEYgrBDFHPGziP1R59oQbG+Imji2kE=",
+        "owner": "sini",
+        "repo": "files",
+        "rev": "b79ab01ba5394ddf3c1d0fadafbcc1ccb9536c5f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sini",
+        "repo": "files",
+        "rev": "b79ab01ba5394ddf3c1d0fadafbcc1ccb9536c5f",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -1639,6 +1655,7 @@
         "doom-emacs": "doom-emacs",
         "edgevpn": "edgevpn",
         "enthium": "enthium",
+        "files": "files",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "genie-agent": "genie-agent",

@@ -6,6 +6,7 @@
   };
   inputs = {
     ren.url = "github:vic/ren";
+    files.url = "github:sini/files/b79ab01ba5394ddf3c1d0fadafbcc1ccb9536c5f";
     microvm.url = "github:microvm-nix/microvm.nix";
     microvm.inputs.nixpkgs.follows = "nixpkgs";
     SPC.url = "github:vic/SPC/7217d72e2b2a6053fbb7e3ea3f5bdaac65d69327";
