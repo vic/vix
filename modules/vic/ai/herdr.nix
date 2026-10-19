@@ -10,6 +10,7 @@
 {
   ren.aspects.ai-herdr = {
     at = vicAt.core;
+    claude-allow = { ... }: [ "Bash(herdr *)" ];
     homeManager = mod (
       {
         inputs',
@@ -44,7 +45,6 @@
                 ];
               }
             ];
-            permissions.allow = [ "Bash(herdr *)" ];
           };
         };
       }

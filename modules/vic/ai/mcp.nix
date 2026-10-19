@@ -9,6 +9,7 @@
 {
   ren.aspects.ai-mcp = {
     at = vicAt.core;
+    claude-allow = { ... }: [ "Bash(serena *)" ] ++ (import ./_quipu.nix).tools;
     git-ignores = { ... }: [
       ".serena"
       ".cbmignore"
@@ -98,11 +99,6 @@
           };
 
           settings = {
-            permissions.allow = [
-              "Bash(serena *)"
-            ]
-            ++ kb.tools;
-
             hooks = {
               PreToolUse = [
                 {

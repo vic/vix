@@ -12,6 +12,11 @@
   ren.aspects.ai-skills = {
     at = vicAt.core;
     git-ignores = { ... }: [ ".gstack/" ];
+    claude-allow = { ... }: [
+      "Bash(bun run *)"
+      "Bash(bun *)"
+      "Bash(~/.claude/skills/*)"
+    ];
     homeManager = mod (
       { lib, pkgs, ... }:
       let
@@ -51,12 +56,6 @@
                 ''} ${./_local-deltas.md} $out/MEMORY.md > $out/SKILL.md
               '';
             };
-
-          settings.permissions.allow = [
-            "Bash(bun run *)"
-            "Bash(bun *)"
-            "Bash(~/.claude/skills/*)"
-          ];
         };
 
       }

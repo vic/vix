@@ -8,6 +8,12 @@
 {
   ren.aspects.ai-tools = {
     at = vicAt.core;
+    claude-allow = { ... }: [
+      "Bash(br *)"
+      "Bash(codegraph *)"
+      "Bash(openspec *)"
+      "Bash(openspecui *)"
+    ];
     git-ignores = { ... }: [
       ".codegraph"
       "/AGENTS.md"
@@ -82,12 +88,6 @@
           settings = {
             # br resolves its workspace from cwd unless pinned; point this at your tracker:
             # env.BEADS_DIR = "/path/to/tracker-repo/.beads";
-            permissions.allow = [
-              "Bash(br *)"
-              "Bash(codegraph *)"
-              "Bash(openspec *)"
-              "Bash(openspecui *)"
-            ];
 
             # Rewrites eligible Bash commands to `rtk <cmd>`, compressing their
             # output before it reaches the model (what `rtk init -g --hook-only` installs).

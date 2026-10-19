@@ -14,6 +14,7 @@
 {
   ren.aspects.ai-headroom = {
     at = vicAt.core;
+    claude-allow = { ... }: [ "Bash(headroom *)" ];
     homeManager = mod (
       { lib, pkgs, ... }:
       let
@@ -57,7 +58,6 @@
               ANTHROPIC_BASE_URL = "http://127.0.0.1:8787";
               HEADROOM_1M = "1";
             };
-            permissions.allow = [ "Bash(headroom *)" ];
           };
         };
 
