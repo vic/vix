@@ -4,7 +4,7 @@
   _module.args.readmeRecipes = ''
     ## Recipes
 
-    Every `.nix` under `modules/` is a module (import-tree); paths with `/_` are skipped.
+    Every `.nix` under `modules/` is a module.
 
     **Add a host**: facts only; community aspects key on them (`modules/hosts/<name>.nix`).
     ```nix

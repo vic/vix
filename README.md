@@ -1,27 +1,46 @@
 # vix
 
-Vic's machines and homes as one Nix flake: NixOS hosts, nix-darwin macs and
-standalone home-manager homes, all built from the same features.
-Generated from the live configuration: edit `modules/docs/`, then `nix run .#write-files`.
+Vic's machines, homes and dev envs, written in [Ren](https://github.com/vic/ren) (built on Gen).
+This file is generated. Edit `modules/docs/`, then run `nix run .#write-files`.
 
-## How Ren evaluates vix
+## A tour
 
-`outputs = inputs: inputs.ren.lib.mkFlake inputs (inputs.import-tree ./modules);`
+Ren holds typed data in **kinds**. Kinds with `below` form a **scope tree**.
+Each step below goes one level down. Names are real.
 
-1. **Kinds** declare typed data; `ren.<kind>.<name>` are instances.
-2. Kinds with `below` form a scope tree: the fleet holds systems, hosts, macs and homes;
-   systems hold envs; machines and homes hold their users.
-3. **Aspects** activate where their `at` predicate holds (`and anyOf not when within has`).
-4. Each aspect key names a **class** (module config) or a **channel** (data emission).
-5. Classes turn collected modules into flake outputs; channels fold emissions to receivers.
+**The fleet.** `ren.fleet.vix` is the root. Everything lives below it.
 
+**Systems.** `x86_64-linux`, `aarch64-darwin` and two more. Each machine, home and env is built for one.
+
+**Machines.** A machine is abstract: it holds typed facts. There are three kinds of it:
+`host` (NixOS), `mac` (nix-darwin) and `guest` (a microvm on a host).
+Community aspects key on the facts. Say `cpu = "amd"` and the kvm-amd module comes in.
 ```nix
-ren.host.frodo = { system = ren.system.x86_64-linux; users = [ ren.user.vic ]; form = "laptop"; };
-ren.aspects.direnv = {
-  at = vicAt.headless; # every scope where user vic lives
-  homeManager.programs.direnv.enable = true;
-};
+ren.host.frodo = { system = ren.system.x86_64-linux; users = [ ren.user.vic ]; form = "laptop"; desktops = [ "niri" ]; };
 ```
+
+**Users.** `ren.user.vic` is a person: name, email, shell. A machine lists its users.
+Each listed user becomes a scope below that machine.
+
+**Homes and guests.** `bitstream` and `nargun` are standalone homes of vic: no OS, only home-manager.
+`gen` and `dnx` are guests of frodo: one claude microvm for each `ren.workspace`.
+
+**Profiles and envs.** Below each system live the vim profiles (`nvim`, `lazyvim`, ...) and the dev envs (`rustenv`, `goenv`, ...).
+A profile builds one neovim. An env builds a devshell. Machines list the envs their users get.
+
+**Aspects.** An aspect is a bundle of config. Its `at` says where it is active.
+`vicAt.headless` means every scope where vic lives. `vicAt.gui` means graphical machines only.
+```nix
+ren.aspects.direnv = { at = vicAt.headless; homeManager.programs.direnv.enable = true; };
+```
+
+**Channels.** A feature emits data. One consumer writes it.
+A feature says `git-ignores = _: [ ".claude" ];` and `git` writes the global ignores.
+Dots, secrets, unfree names and env-packages work the same way.
+
+**Classes.** Every other aspect key names a module system:
+`nixos`, `darwin`, `homeManager`, `homeLinux`, `homeDarwin`, `account`, `os`, `vim`, `files`.
+A class turns the collected modules into a flake output.
 
 ## Vix vocabulary
 
@@ -92,9 +111,45 @@ ren.aspects.direnv = {
 
 181 aspects live under `modules/`; `ren.aspects.<name>` each.
 
+## Directory structure
+
+import-tree loads every `.nix` file under `modules/`. Paths with `/_` are skipped.
+Dir names are for humans only. Ren does not read them.
+
+| dir | purpose |
+| --- | --- |
+| `modules/community/` | shared hardware and desktop aspects; they key on machine facts |
+| `modules/docs/` | this README: generators, vocabulary, recipes |
+| `modules/editors/` | vim profiles (nvf) and emacs distributions |
+| `modules/envs/` | dev environments and one aspect per language |
+| `modules/features/` | flake plumbing: ci, checks, formatter, packages, unfree, accounts |
+| `modules/homes/` | standalone home-manager homes |
+| `modules/hosts/` | NixOS and darwin machines, and frodo's guests |
+| `modules/net/` | ssh hosts and remote desktop |
+| `modules/packages/` | own packages and scripts |
+| `modules/people/` | users, and the vicAt feature tiers |
+| `modules/platforms/` | channels (nixpkgs pins) and how machines are built |
+| `modules/security/` | secrets declared as data |
+| `modules/topology/` | kinds and the scope tree: fleet, machines, users |
+| `modules/vic/` | vic's own features, by area (below) |
+
+Inside `modules/vic/`:
+
+| dir | purpose |
+| --- | --- |
+| `modules/vic/ai/` | claude, agents, mcp servers, skills |
+| `modules/vic/dev/` | dev tools and security ops |
+| `modules/vic/dots/` | dotfiles linked into $HOME |
+| `modules/vic/edit/` | browsers, editors and terminals |
+| `modules/vic/nvf/` | neovim features, one file each |
+| `modules/vic/secrets/` | sops setup for vic's secrets |
+| `modules/vic/shell/` | fish and shell tools |
+| `modules/vic/sys/` | fonts, ssh and system bits |
+| `modules/vic/vcs/` | git and jujutsu |
+
 ## Recipes
 
-Every `.nix` under `modules/` is a module (import-tree); paths with `/_` are skipped.
+Every `.nix` under `modules/` is a module.
 
 **Add a host**: facts only; community aspects key on them (`modules/hosts/<name>.nix`).
 ```nix
@@ -150,3 +205,14 @@ for h in $(nix eval --raw .#nixosConfigurations --apply 'c: toString (builtins.a
   nix eval --raw ".#nixosConfigurations.$h.config.system.build.toplevel.drvPath"
 done
 ```
+
+## History
+
+- Ren (current): this tree, branch `ren` — https://github.com/vic/vix/tree/ren
+- [Den without flakes (last Den commit)](https://github.com/vic/vix/tree/historic/den)
+- [Den with flakes + flake-parts](https://github.com/vic/vix/tree/historic/den-flake-parts)
+- [Dendritic flake-parts only](https://github.com/vic/vix/tree/historic/dendritic-flake-parts)
+- [blueprint](https://github.com/vic/vix/tree/historic/blueprint)
+- [flake-parts](https://github.com/vic/vix/tree/historic/flake-parts)
+- [old m1 flake](https://github.com/vic/vix/tree/historic/mk-darwin-system) with [mk-darwin-system](https://github.com/vic/mk-darwin-system)
+- other with snowfall-lib lost
