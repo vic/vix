@@ -47,10 +47,15 @@
             pkgs.nix-unit
             pkgs.cachix
             pkgs.sops
+            pkgs.age
+            pkgs.ssh-to-age # vic-sops-get --setup derives the age key from the ssh key
             pkgs.just
             apps.vic-sops-get
             apps.vic-sops-rotate
             apps.gh-deps-update
+            apps.write-files # regenerate README.md (docs/)
+            apps.write-flake # regenerate flake.nix from flake-inputs
+            apps.write-lock
             inputs.self.formatter.${system.name}
             (cmd "fmt" ''nix fmt "$@"'')
             (cmd "ci" ''
