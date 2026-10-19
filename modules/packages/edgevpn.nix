@@ -21,6 +21,14 @@ in
 
   ren.aspects.edgevpn = {
     at = ren.kinds.system;
+    flake-inputs =
+      { ... }:
+      {
+        edgevpn = {
+          url = "github:mudler/edgevpn/fa89190c1c0c0ab20a82a7de5159e08effbd359a";
+          flake = false;
+        };
+      };
     packages = { system, ... }: { edgevpn = edgevpnFor (pkgsFor system); };
   };
 }

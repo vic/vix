@@ -10,6 +10,22 @@
 
   ren.aspects.ai-skills = {
     at = vicAt.headless;
+    flake-inputs =
+      { ... }:
+      {
+        genie-agent = {
+          url = "github:sini/genie-agent/4c1ade83da5b80d080ee2051e5bf8f70dd5ad7f7";
+          flake = false;
+        };
+        gstack = {
+          url = "github:garrytan/gstack/953a62a72412ba2ec430972226b7b3a999839df5";
+          flake = false;
+        };
+        one-skill-to-rule-them-all = {
+          url = "github:rebelytics/one-skill-to-rule-them-all/56e890712273ce231b478adc56ee2eb81101c3d6";
+          flake = false;
+        };
+      };
     git-ignores = { ... }: [ ".gstack/" ];
     claude-allow = { ... }: [
       "Bash(bun run *)"

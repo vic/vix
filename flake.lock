@@ -331,6 +331,22 @@
         "url": "https://git.lix.systems/lix-project/flake-compat.git"
       }
     },
+    "flake-file": {
+      "locked": {
+        "lastModified": 1791840448,
+        "narHash": "sha256-u10FOsDRA1GMRcn1+hYf2eD1K+LP/F9/+AeErkKraPg=",
+        "owner": "vic",
+        "repo": "flake-file",
+        "rev": "d3600508b0b031221459f7358ab88c438a81ac83",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "flake-file",
+        "rev": "d3600508b0b031221459f7358ab88c438a81ac83",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -1656,6 +1672,7 @@
         "edgevpn": "edgevpn",
         "enthium": "enthium",
         "files": "files",
+        "flake-file": "flake-file",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "genie-agent": "genie-agent",

@@ -24,6 +24,12 @@ in
 
   ren.aspects.vm = {
     at = ren.kinds.guest;
+    flake-inputs =
+      { ... }:
+      {
+        microvm.url = "github:microvm-nix/microvm.nix";
+        microvm.inputs.nixpkgs.follows = "nixpkgs";
+      };
     nixos =
       { guest, ... }:
       {

@@ -5,6 +5,20 @@
   ren.aspects.jujutsu = {
     dots.".config/jjui" = "config/jjui";
     at = vicAt.headless;
+    flake-inputs =
+      { ... }:
+      {
+        jjui = {
+          url = "github:idursun/jjui/151c7c51bf5b2cf49ea9ccdcde8ef98538f59787";
+          inputs.flake-parts.follows = "flake-parts";
+          inputs.nixpkgs.follows = "nixpkgs";
+        };
+        flake-parts = {
+          url = "github:hercules-ci/flake-parts/024633cd702b10285db5cb19b40ad48d2399ba60";
+          inputs.nixpkgs-lib.follows = "nixpkgs-lib";
+        };
+        nixpkgs-lib.follows = "nixpkgs";
+      };
     homeManager =
       {
         pkgs,

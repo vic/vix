@@ -12,6 +12,23 @@
 {
   ren.aspects.ai-vic-tools = {
     at = vicAt.headless;
+    flake-inputs =
+      { ... }:
+      {
+        notebooklm-pack = {
+          url = "github:meta-introspector/notebooklm-pack/a6cda4392ad06b409147f5d4083afcbe6ae36bc8";
+          inputs = {
+            flake-utils.follows = "flake-utils";
+            nixpkgs.follows = "nixpkgs";
+            rust-overlay.follows = "rust-overlay";
+          };
+        };
+        flake-utils.url = "github:numtide/flake-utils/04c1b180862888302ddfb2e3ad9eaa63afc60cf8";
+        rust-overlay = {
+          url = "github:oxalica/rust-overlay/3100cf6ff140fb298f09192de610f4037d3bab0f";
+          inputs.nixpkgs.follows = "nixpkgs";
+        };
+      };
     homeManager = mod (
       {
         config,

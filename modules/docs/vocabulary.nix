@@ -29,8 +29,13 @@
       homeLinux = "homeManager on linux only";
       homeDarwin = "homeManager on darwin only";
       files = "repo files (this README): `packages.write-files` + `checks`";
+      flake-file = "this flake.nix from `flake-inputs`: `packages.write-flake` + `checks.<sys>.flake-file`";
     };
     channels = {
+      flake-inputs = [
+        "any aspect: the inputs it uses"
+        "flake `flake-inputs`, read by the `flake-file` class"
+      ];
       ci-jobs = [
         "every buildable host, mac, home and linux devshell"
         "flake `ci.matrix`: one GitHub build job each"
@@ -40,7 +45,7 @@
         "flake `formatter.<sys>` (`nix fmt`)"
       ];
       checks = [
-        "formatter (fmt), files (README), no-gui (headless homes and guests)"
+        "formatter (fmt), files (README), flake-file (flake.nix), no-gui (headless homes and guests)"
         "flake `checks.<sys>.<name>`"
       ];
       packages = [

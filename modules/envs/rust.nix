@@ -11,6 +11,14 @@
       ren.kinds.env
       (ren.lib.when (s: builtins.elem "rust" s.env.langs))
     ];
+    flake-inputs =
+      { ... }:
+      {
+        rust-overlay = {
+          url = "github:oxalica/rust-overlay/3100cf6ff140fb298f09192de610f4037d3bab0f";
+          inputs.nixpkgs.follows = "nixpkgs";
+        };
+      };
     env-packages =
       { system, ... }:
       let

@@ -10,6 +10,14 @@
 {
   ren.aspects.vic-secrets = {
     at = vicAt.secrets;
+    flake-inputs =
+      { ... }:
+      {
+        sops-nix = {
+          url = "github:Mic92/sops-nix/ee48786c6f9160d2c1a084aac841f68195b8420c";
+          inputs.nixpkgs.follows = "nixpkgs";
+        };
+      };
     secrets = { ... }: [
       ren.secret.hello
       ren.secret.groq-api-key

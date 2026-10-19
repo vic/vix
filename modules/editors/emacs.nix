@@ -1,5 +1,6 @@
 # emacs: kind describing an emacs distribution (data only, no scopes) and its instances.
 {
+  ren,
   lib,
   opt,
   maybe,
@@ -63,5 +64,17 @@ in
         bin/doom sync -e --force
       )
     '';
+  };
+
+  ren.aspects.emacs-inputs = {
+    at = ren.fleet.vix;
+    flake-inputs =
+      { ... }:
+      {
+        doom-emacs = {
+          url = "github:doomemacs/doomemacs/59cdaa32ae933469bb6a1fb3cadee8a988c15968";
+          flake = false;
+        };
+      };
   };
 }

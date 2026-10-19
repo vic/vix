@@ -71,6 +71,7 @@ A class turns the collected modules into a flake output.
 | `account` | `users.users.<user>` on the user's machine |
 | `darwin` | `darwinConfigurations.<mac>` |
 | `files` | repo files (this README): `packages.write-files` + `checks` |
+| `flake-file` | this flake.nix from `flake-inputs`: `packages.write-flake` + `checks.<sys>.flake-file` |
 | `homeDarwin` | homeManager on darwin only |
 | `homeLinux` | homeManager on linux only |
 | `homeManager` | a user's home: on a host, on a mac, or `homeConfigurations.<user>@<home>` |
@@ -82,13 +83,14 @@ A class turns the collected modules into a flake output.
 
 | channel | emitted by | received by |
 | --- | --- | --- |
-| `checks` | formatter (fmt), files (README), no-gui (headless homes and guests) | flake `checks.<sys>.<name>` |
+| `checks` | formatter (fmt), files (README), flake-file (flake.nix), no-gui (headless homes and guests) | flake `checks.<sys>.<name>` |
 | `ci-jobs` | every buildable host, mac, home and linux devshell | flake `ci.matrix`: one GitHub build job each |
 | `claude-allow` | user features | `ai-claude` settings.json permissions |
 | `devshells` | the `devshell` aspect, per env | flake `devShells.<sys>` |
 | `dots` | user features: `{ "<home path>" = "<dots path>"; }` | `vic-dots`: links into $HOME |
 | `env-packages` | `env-<lang>` aspects | the env's devshell, and users whose machine lists the env |
 | `fish-functions` | user features | `fish` writes them once |
+| `flake-inputs` | any aspect: the inputs it uses | flake `flake-inputs`, read by the `flake-file` class |
 | `formatter` | each system (treefmt) | flake `formatter.<sys>` (`nix fmt`) |
 | `git-ignores` | user features | `git` global ignores |
 | `login-shells` | users with a shell | their machine enables `programs.<shell>` |
@@ -109,7 +111,7 @@ A class turns the collected modules into a flake output.
 | role `live-dots` | included by a machine: dotfiles link live into ~/.flake |
 | role `trusted` | included by a machine: holds vic's secrets |
 
-183 aspects live under `modules/`; `ren.aspects.<name>` each.
+188 aspects live under `modules/`; `ren.aspects.<name>` each.
 
 ## Directory structure
 

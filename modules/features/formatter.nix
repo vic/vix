@@ -50,6 +50,14 @@ in
 
   ren.aspects.formatter = {
     at = ren.kinds.system;
+    flake-inputs =
+      { ... }:
+      {
+        treefmt-nix = {
+          url = "github:numtide/treefmt-nix/0d6d739a833ba9a9c93034862e4a7b061a062a1c";
+          inputs.nixpkgs.follows = "nixpkgs";
+        };
+      };
     formatter = { system, ... }: { treefmt = (treefmt system).config.build.wrapper; };
     checks = { system, ... }: { ${system.name}.fmt = (treefmt system).config.build.check inputs.self; };
   };

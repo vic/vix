@@ -9,6 +9,14 @@
 
   ren.aspects.ai-lightjj = {
     at = vicAt.headless;
+    flake-inputs =
+      { ... }:
+      {
+        lightjj = {
+          url = "github:chronologos/lightjj/42427a1093fc70c73d5d0010a8d59909fd48a722";
+          inputs.nixpkgs.follows = "nixpkgs";
+        };
+      };
     homeManager = mod (
       { inputs', ... }:
       {

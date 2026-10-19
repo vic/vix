@@ -36,6 +36,14 @@
 
   ren.aspects.frodo = {
     at = ren.host.frodo;
+    flake-inputs =
+      { ... }:
+      {
+        disko = {
+          url = "github:nix-community/disko/725ea35e410ad83be4931d1bff7e090eacaf3563";
+          flake = false;
+        };
+      };
     includes = [
       ren.aspects.trusted
       ren.aspects.live-dots
