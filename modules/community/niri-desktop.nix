@@ -27,12 +27,9 @@
     );
   };
 
-  # vic's niri and noctalia configs, on his desktop users of niri machines.
+  # vic's niri and noctalia configs: on every desktop he uses (old vix linked them everywhere).
   ren.aspects.vic-niri = {
-    at = ren.lib.and [
-      vicAt.desktop
-      (ren.lib.within ren.aspects.niri-desktop)
-    ];
+    at = vicAt.desktop;
     dots = {
       ".config/niri" = "config/niri";
       ".config/noctalia" = "config/noctalia";

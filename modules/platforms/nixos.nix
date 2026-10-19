@@ -6,6 +6,7 @@ let
   # shortcut: account content sees the OS module args (pkgs), not the users.users submodule config.
   asUser =
     user: ms:
+    # deadnix: skip -- pkgs is unused here but must be declared so the module system passes it into `a`
     { lib, pkgs, ... }@a:
     {
       users.users.${user.name} = lib.mkMerge (map (m: if callable m then m a else m) ms); # shorthand submodule: no imports

@@ -29,6 +29,18 @@
       files = "repo files (this README): `packages.write-files` + `checks`";
     };
     channels = {
+      ci-jobs = [
+        "every buildable host, mac, home and linux devshell"
+        "flake `ci.matrix`: one GitHub build job each"
+      ];
+      formatter = [
+        "each system (treefmt)"
+        "flake `formatter.<sys>` (`nix fmt`)"
+      ];
+      fmt-checks = [
+        "each system (treefmt)"
+        "flake `checks.<sys>.fmt`"
+      ];
       packages = [
         "aspects at a system"
         "flake `packages.<sys>`, read back as `self'.packages`"

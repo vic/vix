@@ -11,7 +11,6 @@
 # are listed by name, never `mcp__<server>__*`, so nobody gets the destructive
 # ones. Tools of a server not installed here (hindsight) are simply absent.
 {
-  ren,
   inputs,
   vicAt,
   mod,

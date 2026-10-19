@@ -1,6 +1,5 @@
 # ssh-host: kind of ssh client hosts; each instance becomes one programs.ssh matchBlock.
 {
-  ren,
   lib,
   opt,
   maybe,

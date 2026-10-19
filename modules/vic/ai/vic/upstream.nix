@@ -3,7 +3,6 @@
 # at the versions that were installed in ~/node_modules (same pattern as calldiff
 # in ../tools.nix). lightjj: ../lightjj.nix; notebooklm-mcp: ../browser-tools.nix.
 {
-  ren,
   inputs,
   vicAt,
   mod,

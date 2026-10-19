@@ -69,7 +69,10 @@ in
   };
 
   ren.aspects.ci-env = {
-    at = ren.kinds.env;
+    at = ren.lib.and [
+      ren.kinds.env
+      (ren.lib.within ren.system.x86_64-linux)
+    ]; # devshells are cheap to rebuild elsewhere; CI builds them on linux only
     ci-jobs =
       { env, system, ... }:
       let

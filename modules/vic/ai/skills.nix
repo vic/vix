@@ -1,7 +1,6 @@
 # Plain (non-plugin) Claude Code skills: the local ones under ./skills, plus
 # gstack and task-observer from upstream.
 {
-  ren,
   inputs,
   vicAt,
   mod,

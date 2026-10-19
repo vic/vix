@@ -1,7 +1,6 @@
 # Claude Code plugin marketplaces, store-pinned: CC resolves plugins from these
 # nix-store paths instead of cloning from GitHub at runtime.
 {
-  ren,
   inputs,
   vicAt,
   mod,

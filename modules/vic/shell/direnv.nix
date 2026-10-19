@@ -28,10 +28,10 @@ in
     };
   };
 
-  # keep devshell closures alive across GC (sini direnv.nix:4-7); no macs exist yet, so hosts only
+  # keep devshell closures alive across GC (sini direnv.nix:4-7), on every machine vic uses
   ren.aspects.direnv-host = {
     at = ren.lib.and [
-      ren.kinds.host
+      ren.kinds.machine
       (ren.lib.has ren.user.vic)
     ];
     os = {

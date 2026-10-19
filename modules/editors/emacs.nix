@@ -1,6 +1,5 @@
 # emacs: kind describing an emacs distribution (data only, no scopes) and its instances.
 {
-  ren,
   lib,
   opt,
   maybe,

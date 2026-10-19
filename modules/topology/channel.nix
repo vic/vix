@@ -1,6 +1,5 @@
 # Package channels: which nixpkgs, home-manager and nix-darwin a machine builds with.
 {
-  ren,
   lib,
   inputs,
   ...

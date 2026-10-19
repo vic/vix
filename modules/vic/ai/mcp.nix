@@ -1,7 +1,6 @@
 # Local stdio MCP servers for code discovery, spawned per session by Claude Code.
 # (codegraph lives in tools.nix beside its CLI; headroom in headroom.nix.)
 {
-  ren,
   vicAt,
   mod,
   ...

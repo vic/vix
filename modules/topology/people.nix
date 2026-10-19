@@ -1,6 +1,5 @@
 # People: the user kind (identity, login shell, admin) and how a machine spawns its users.
 {
-  ren,
   lib,
   opt,
   maybe,

@@ -61,11 +61,14 @@ ren.aspects.direnv = {
 
 | channel | emitted by | received by |
 | --- | --- | --- |
+| `ci-jobs` | every buildable host, mac, home and linux devshell | flake `ci.matrix`: one GitHub build job each |
 | `claude-allow` | user features | `ai-claude` settings.json permissions |
 | `devshells` | the `devshell` aspect, per env | flake `devShells.<sys>` |
 | `dots` | user features: `{ "<home path>" = "<dots path>"; }` | `vic-dots`: links into $HOME |
 | `env-packages` | `env-<lang>` aspects | the env's devshell, and users whose machine lists the env |
 | `fish-functions` | user features | `fish` writes them once |
+| `fmt-checks` | each system (treefmt) | flake `checks.<sys>.fmt` |
+| `formatter` | each system (treefmt) | flake `formatter.<sys>` (`nix fmt`) |
 | `git-ignores` | user features | `git` global ignores |
 | `login-shells` | users with a shell | their machine enables `programs.<shell>` |
 | `packages` | aspects at a system | flake `packages.<sys>`, read back as `self'.packages` |
@@ -85,7 +88,7 @@ ren.aspects.direnv = {
 | role `live-dots` | included by a machine: dotfiles link live into ~/.flake |
 | role `trusted` | included by a machine: holds vic's secrets |
 
-170 aspects live under `modules/`; `ren.aspects.<name>` each.
+175 aspects live under `modules/`; `ren.aspects.<name>` each.
 
 ## Recipes
 

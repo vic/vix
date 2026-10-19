@@ -1,7 +1,6 @@
 # vic's frodo settings.json preferences. Where sini's claude.nix sets the
 # same key it uses lib.mkDefault, so these win.
 {
-  ren,
   vicAt,
   ...
 }:

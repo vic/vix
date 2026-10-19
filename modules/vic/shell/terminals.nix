@@ -20,6 +20,11 @@
       {
         home.packages = [ pkgs.ghostty ];
       };
-    # homeDarwin (iterm2, ghostty-bin) omitted: a key landing in no scope is an eval error and no macs exist yet.
+    homeDarwin = { pkgs, ... }: {
+      home.packages = [
+        pkgs.iterm2
+        pkgs.ghostty-bin
+      ];
+    };
   };
 }

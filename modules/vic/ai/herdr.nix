@@ -2,7 +2,6 @@
 # Declarative equivalent of `herdr integration install claude` (v10), which
 # cannot edit the home-manager owned settings.json.
 {
-  ren,
   vicAt,
   mod,
   ...

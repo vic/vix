@@ -1,6 +1,5 @@
 # Agent CLIs from numtide/llm-agents.nix, with their Claude Code wiring.
 {
-  ren,
   vicAt,
   mod,
   ...

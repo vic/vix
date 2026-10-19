@@ -2,7 +2,6 @@
 # symlink; browse widgets in its TUI, but change the layout here.
 # One line: model, burn (ctx, $, $/h, tokens), quotas, last skill, last MCP tool.
 {
-  ren,
   vicAt,
   mod,
   ...

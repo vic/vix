@@ -1,5 +1,5 @@
 # vim editing: editor options/tools, keymap help, motions, search-replace, sessions, todos.
-{ ren, vimFeature, ... }:
+{ vimFeature, ... }:
 {
   ren.aspects.vim-globals = {
     at = vimFeature "globals";

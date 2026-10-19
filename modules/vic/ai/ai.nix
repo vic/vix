@@ -1,8 +1,6 @@
 # AI: unfree agent CLIs and the extra agent packages on linux homes.
 {
-  ren,
   vicAt,
-  mod,
   allowUnfree,
   ...
 }:

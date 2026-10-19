@@ -6,7 +6,6 @@
 # The upstream plugin is deliberately NOT installed: its hook writes an absolute
 # store path into settings.local.json that goes stale on every rebuild.
 {
-  ren,
   vicAt,
   mod,
   ...

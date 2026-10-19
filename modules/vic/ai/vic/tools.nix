@@ -5,7 +5,6 @@
 # - deepwiki MCP + REPL (./dw, vendored from github:vic/dw incl. unpushed repl.js)
 # - notebooklm MCP (npx, unpinned as on frodo) + notebooklm-pack
 {
-  ren,
   vicAt,
   mod,
   ...

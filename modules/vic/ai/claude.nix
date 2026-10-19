@@ -2,7 +2,6 @@
 # runtime; change config here, not in the TUI.
 {
   ren,
-  inputs,
   vicAt,
   mod,
   ...

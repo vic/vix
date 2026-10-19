@@ -1,6 +1,5 @@
 # lightjj: browser UI for jj, served from wherever the repo lives (also headless vini).
 {
-  ren,
   inputs,
   vicAt,
   mod,

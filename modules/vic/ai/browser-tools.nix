@@ -1,6 +1,5 @@
 # Agent tools that drive or render through a browser.
 {
-  ren,
   vicAt,
   mod,
   ...

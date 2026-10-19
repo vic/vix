@@ -4,7 +4,6 @@
 # vic-recall), stop-gate (ctx >=70% + stale HANDOFF blocks stop once),
 # omni-ingest (detached, flock-guarded omni graph refresh).
 {
-  ren,
   vicAt,
   mod,
   ...

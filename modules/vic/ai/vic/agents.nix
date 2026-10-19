@@ -2,7 +2,6 @@
 # vic-* subagents (tiered haiku/sonnet/opus), vic skills, global CLAUDE.md.
 # Copies live beside this file; edit them here, never in ~/.claude.
 {
-  ren,
   vicAt,
   mod,
   ...

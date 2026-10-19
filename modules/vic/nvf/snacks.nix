@@ -1,6 +1,5 @@
 # vim snacks: snacks.nvim, vic's header, picker keymaps, and the nvim profile's dashboard + toggles.
 {
-  ren,
   vimFeature,
   mod,
   ...

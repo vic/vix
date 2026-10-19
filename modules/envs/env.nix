@@ -33,9 +33,7 @@
             let
               m = place r;
             in
-            m != null
-            && m.system.name == e.system.name
-            && builtins.elem e.env.name (map (x: x.name) m.envs)
+            m != null && m.system.name == e.system.name && builtins.elem e.env.name (map (x: x.name) m.envs)
           ))
         ])
       ];
