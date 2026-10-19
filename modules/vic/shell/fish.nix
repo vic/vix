@@ -1,10 +1,17 @@
 # fish: functions, aliases, abbreviations, television and fzf integration.
-{ vicAt, ... }:
+{ ren, vicAt, ... }:
 {
+  # any feature emits fish functions; fish writes them once.
+  ren.channels.fish-functions = {
+    fold = ren.lib.fold.attrs;
+    at = ren.kinds.user;
+    to = e: e;
+  };
   ren.aspects.fish = {
     at = vicAt.core;
+    fish-functions = { ... }: import ./_fish/functions.nix { };
     homeManager =
-      { pkgs, ... }:
+      { pkgs, fish-functions, ... }:
       {
         home.file.".config/fish/conf.d/tv.fish".text = ''
           ${pkgs.television}/bin/tv init fish | source
@@ -13,7 +20,7 @@
         programs.fzf.enable = true;
         programs.fish = {
           enable = true;
-          functions = import ./_fish/functions.nix { };
+          functions = fish-functions;
           shellAliases = import ./_fish/aliases.nix;
           shellAbbrs = import ./_fish/abbrs.nix;
           plugins = [ ];
