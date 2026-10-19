@@ -8,77 +8,18 @@
   ...
 }:
 {
-  # features emit permission rules (and MCP servers that need no module args);
+  # features emit permission rules;
   # ai-claude writes them once.
   ren.channels.claude-allow = {
     fold = ren.lib.fold.list;
     at = ren.kinds.user;
     to = e: e;
   };
-  ren.channels.mcp-servers = {
-    fold = ren.lib.fold.attrs;
-    at = ren.kinds.user;
-    to = e: e;
-  };
   ren.aspects.ai-claude = {
     at = vicAt.core;
     git-ignores = { ... }: [ ".claude" ];
-    claude-allow = { ... }: [
-      # Edit(**) covers Write/MultiEdit/NotebookEdit; Read(**) covers Grep/Glob
-      "Read(**)"
-      "Edit(**)"
-      "Grep(**)"
-      "LS(**)"
-      "WebSearch"
-      "TodoRead(**)"
-      "TodoWrite(**)"
-      "Task(**)"
-
-      "Bash(git status *)"
-      "Bash(git diff *)"
-      "Bash(git log *)"
-      "Bash(git show *)"
-      "Bash(git blame *)"
-      "Bash(git rev-parse *)"
-      "Bash(git remote *)"
-      "Bash(git branch:*)"
-      # Literal form: a force-push or another ref still prompts.
-      "Bash(git push origin main)"
-      "Bash(git fetch *)"
-      "Bash(git add *)"
-      "Bash(git commit *)"
-      "Bash(git stash *)"
-
-      "Bash(treefmt *)"
-      "Bash(just *)"
-
-      "Bash(nix eval *)"
-      "Bash(nix flake *)"
-      "Bash(nix build *)"
-      "Bash(nix fmt)"
-      "Bash(nix develop *)"
-
-      "Bash(ls:*)"
-      "Bash(cat:*)"
-      "Bash(head:*)"
-      "Bash(tail:*)"
-      "Bash(grep:*)"
-      "Bash(rg:*)"
-      "Bash(fd:*)"
-      "Bash(find:*)"
-      "Bash(which:*)"
-      "Bash(pwd)"
-      "Bash(whoami)"
-      "Bash(uname:*)"
-      "Bash(wc *)"
-      "Bash(rg *)"
-      "Bash(jq *)"
-      "Bash(yq *)"
-      "Bash(sort *)"
-      "Bash(journalctl *)"
-    ];
     homeManager =
-      { claude-allow, mcp-servers, ... }:
+      { claude-allow, ... }:
       mod (
         {
           config,
@@ -102,7 +43,6 @@
             enable = true;
             package = inputs'.llm-agents.packages.claude-code;
             enableMcpIntegration = true;
-            mcpServers = mcp-servers;
 
             lspServers.nix = {
               command = lib.getExe pkgs.nil;
