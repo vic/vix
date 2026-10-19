@@ -12,7 +12,11 @@
     ren.kinds.mac
     ren.kinds.home
   ];
-  ren.kinds.system.below = [ ren.kinds.env ];
+  # scopes built per system: editor profiles (editors/vim.nix), dev environments (envs/env.nix)
+  ren.kinds.system.below = [
+    ren.kinds.vim
+    ren.kinds.env
+  ];
   ren.kinds.system.darwin = opt lib.types.bool false;
 
   ren.fleet.vix = { };

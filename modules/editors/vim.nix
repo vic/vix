@@ -1,0 +1,78 @@
+# vim: editor profiles below each system, each an nvf config built by the `vim` class into packages.<profile>.
+{
+  ren,
+  lib,
+  opt,
+  maybe,
+  inputs,
+  pkgsFor,
+  ...
+}:
+let
+  # every feature an aspect can gate on (`vimFeature`)
+  features = builtins.filter (w: builtins.isString w && w != "") (
+    builtins.split "[[:space:]]+" ''
+      avante blink bufferline codecompanion conform copilot copilot-chat dropbar flash globals
+      go grug-far haunt hunk jj lazy lsp lua lualine mini mini-essentials mini-files moonbit
+      neo-tree noice nvim-lint persistence rust scope smartcolumn snacks snacks-extras
+      snacks-header snacks-keys todo-comments toggleterm trouble tv tv-vim which-key
+    ''
+  );
+in
+{
+  # feature gate for aspects: `at = vimFeature "snacks";`
+  _module.args.vimFeature =
+    f:
+    ren.lib.and [
+      ren.kinds.vim
+      (ren.lib.when (s: builtins.elem f s.vim.features))
+    ];
+
+  ren.kinds.vim = {
+    features = opt (lib.types.listOf (lib.types.enum features)) [ ];
+    theme = maybe lib.types.str; # a colorscheme name
+    gui = opt lib.types.bool false; # also emit packages.<name>-gui (neovide)
+    aliases = opt (lib.types.listOf lib.types.str) [ ]; # extra binary names
+  };
+
+  ren.classes.vim = {
+    at = ren.kinds.vim;
+    into =
+      {
+        vim,
+        system,
+        unfree,
+        ...
+      }:
+      modules:
+      let
+        # a profile's aspects may allow unfree plugin deps (`unfree = allowUnfree [ .. ];`)
+        pkgs =
+          if unfree == { } then
+            pkgsFor system
+          else
+            import inputs.nixpkgs {
+              system = system.name;
+              config.allowUnfreePredicate = p: unfree ? ${inputs.nixpkgs.lib.getName p};
+            };
+        nvim = (inputs.nvf.lib.neovimConfiguration { inherit pkgs modules; }).neovim;
+        names = [ vim.name ] ++ vim.aliases;
+        bin = n: pkgs.writeShellScriptBin n ''exec ${nvim}/bin/nvim "$@"'';
+        gui =
+          n:
+          pkgs.writeShellScriptBin "${n}-gui" ''exec ${pkgs.neovide}/bin/neovide --neovim-bin ${nvim}/bin/nvim "$@"'';
+        join =
+          suffix: f:
+          pkgs.symlinkJoin {
+            name = vim.name + suffix;
+            paths = map f names;
+          };
+      in
+      {
+        packages = {
+          ${vim.name} = join "" bin;
+        }
+        // lib.optionalAttrs vim.gui { "${vim.name}-gui" = join "-gui" gui; };
+      };
+  };
+}
