@@ -41,6 +41,7 @@ ren.aspects.direnv = {
 | `ssh-host` | one ssh client matchBlock | edge, sini, uptermd.upterm.dev, vini, vini-tunnel |
 | `system` | a nix system; machines, homes and envs are built for one | aarch64-darwin, aarch64-linux, x86_64-darwin, x86_64-linux |
 | `user` | a person: full name, email, login shell, admin | vic |
+| `vim` | a neovim profile: a feature list built per system into one nvf package (+ a gui wrapper) | astrovim, lazyvim, neovim, nvim, vscode-vim |
 
 ### Classes: module systems an aspect key names
 
@@ -54,6 +55,7 @@ ren.aspects.direnv = {
 | `homeManager` | a user's home: on a host, on a mac, or `homeConfigurations.<user>@<home>` |
 | `nixos` | `nixosConfigurations.<host>` |
 | `os` | either OS: forwards to nixos or darwin |
+| `vim` | nvf: one neovim per vim profile, emitted as packages.<profile> |
 
 ### Channels: data an aspect key emits and a receiver folds
 
@@ -83,7 +85,7 @@ ren.aspects.direnv = {
 | role `live-dots` | included by a machine: dotfiles link live into ~/.flake |
 | role `trusted` | included by a machine: holds vic's secrets |
 
-130 aspects live under `modules/`; `ren.aspects.<name>` each.
+170 aspects live under `modules/`; `ren.aspects.<name>` each.
 
 ## Recipes
 

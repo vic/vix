@@ -13,10 +13,12 @@
       channel = "the nixpkgs, home-manager and nix-darwin pins a machine builds with";
       env = "a dev environment: langs become a devshell and user packages";
       emacs = "an emacs distribution (data only, no scopes)";
+      vim = "a neovim profile: a feature list built per system into one nvf package (+ a gui wrapper)";
       ssh-host = "one ssh client matchBlock";
       secret = "a sops secret a feature asks for";
     };
     classes = {
+      vim = "nvf: one neovim per vim profile, emitted as packages.<profile>";
       nixos = "`nixosConfigurations.<host>`";
       darwin = "`darwinConfigurations.<mac>`";
       os = "either OS: forwards to nixos or darwin";
