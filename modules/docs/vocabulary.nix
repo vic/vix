@@ -43,6 +43,10 @@
         "formatter (fmt), files (README), no-gui (headless homes and guests)"
         "flake `checks.<sys>.<name>`"
       ];
+      maint-shell = [
+        "the maintainer devshell (aspect at a system)"
+        "flake `devShells.<sys>.default`"
+      ];
       packages = [
         "aspects at a system"
         "flake `packages.<sys>`, read back as `self'.packages`"

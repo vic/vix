@@ -1,4 +1,4 @@
-# gh-deps-update: npins update, commit and open a PR.
+# gh-deps-update: nix flake update, commit and open a PR.
 { ren, pkgsFor, ... }:
 {
   ren.aspects.gh-deps-update = {
@@ -18,7 +18,7 @@
           runtimeInputs = [
             pkgs.bash
             pkgs.coreutils
-            pkgs.npins
+            pkgs.nix
           ];
           text = ''
             export GIT_AUTHOR_NAME="Victor Borja"
@@ -35,8 +35,8 @@
               echo "$title"
               echo -ne "\n\n\n\n"
               echo '```shell'
-              echo '$ npins update'
-              npins update 2>&1
+              echo '$ nix flake update'
+              nix flake update 2>&1
               echo '```'
               echo -ne "\n\n\n\n"
               echo 'request-checks: true'
