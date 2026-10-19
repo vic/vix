@@ -59,25 +59,6 @@
         ren.url = "github:vic/ren";
         import-tree.url = "github:vic/import-tree/eb1b52eaecc57f7c136d07ae8a93e724dfecac46";
         flake-file.url = "github:vic/flake-file/d3600508b0b031221459f7358ab88c438a81ac83";
-        # unused: candidate to drop
-        devshell = {
-          url = "github:numtide/devshell/9e29c63dde99a2d80c94b3d024c9768c01544558";
-          inputs.nixpkgs.follows = "nixpkgs";
-        };
-        # unused: candidate to drop
-        nix-unit = {
-          url = "github:nix-community/nix-unit/b3d16367c54621fd073aa8c1dd510042f771f624";
-          inputs.nix-github-actions.follows = "nix-github-actions";
-          inputs.nixpkgs.follows = "nixpkgs";
-          inputs.treefmt-nix.follows = "treefmt-nix";
-        };
-        # unused: candidate to drop (only nix-unit follows it)
-        nix-github-actions = {
-          url = "github:nix-community/nix-github-actions/f4158fa080ef4503c8f4c820967d946c2af31ec9";
-          inputs.nixpkgs.follows = "nixpkgs";
-        };
-        # unused: candidate to drop (no input follows `utils`)
-        utils.url = "github:numtide/flake-utils/04c1b180862888302ddfb2e3ad9eaa63afc60cf8";
       };
   };
 }

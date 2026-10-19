@@ -61,10 +61,6 @@
       url = "github:seflless/deepwiki/3ba91173780c14cd2079938475a13ccc8f5d05f6";
       flake = false;
     };
-    devshell = {
-      url = "github:numtide/devshell/9e29c63dde99a2d80c94b3d024c9768c01544558";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     diagram-design = {
       url = "github:cathrynlavery/diagram-design/657c71d199a5bc07c61bb2071f14175024986442";
       flake = false;
@@ -143,23 +139,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     mnw.url = "github:Gerg-L/mnw/a582dbedf7c8ec7effa6939ac5bdd23b27267d1b";
-    nix-github-actions = {
-      url = "github:nix-community/nix-github-actions/f4158fa080ef4503c8f4c820967d946c2af31ec9";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-index-database = {
       url = "github:nix-community/nix-index-database/9a2dd40780eeab8543aa97c59c26f11267025616";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-systems.url = "github:nix-systems/default/d36eeed142f88b5a636f2e3856a53c61654cf29b";
-    nix-unit = {
-      url = "github:nix-community/nix-unit/b3d16367c54621fd073aa8c1dd510042f771f624";
-      inputs = {
-        nix-github-actions.follows = "nix-github-actions";
-        nixpkgs.follows = "nixpkgs";
-        treefmt-nix.follows = "treefmt-nix";
-      };
-    };
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl/72c92b11bb8289e6651c7fef29cc0a885fd6a255";
       inputs = {
@@ -219,7 +203,6 @@
       url = "github:nextlevelbuilder/ui-ux-pro-max-skill/7246805992a42b7bba37d4cac83b01416f0c6c44";
       flake = false;
     };
-    utils.url = "github:numtide/flake-utils/04c1b180862888302ddfb2e3ad9eaa63afc60cf8";
     vercel-skills = {
       url = "github:vercel-labs/skills/13e4063a1cf913f5606d57d42ab83a86f5001e04";
       flake = false;

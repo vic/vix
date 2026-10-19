@@ -193,27 +193,6 @@
         "type": "github"
       }
     },
-    "devshell": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1791918082,
-        "narHash": "sha256-oN9JrhRfHa7MUTdUq+11dHn7u0Z4WfEA4mhzBq0/zoQ=",
-        "owner": "numtide",
-        "repo": "devshell",
-        "rev": "9e29c63dde99a2d80c94b3d024c9768c01544558",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "devshell",
-        "rev": "9e29c63dde99a2d80c94b3d024c9768c01544558",
-        "type": "github"
-      }
-    },
     "diagram-design": {
       "flake": false,
       "locked": {
@@ -1398,27 +1377,6 @@
         "type": "github"
       }
     },
-    "nix-github-actions": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1737420293,
-        "narHash": "sha256-F1G5ifvqTpJq7fdkT34e/Jy9VCyzd5XfJ9TO8fHhJWE=",
-        "owner": "nix-community",
-        "repo": "nix-github-actions",
-        "rev": "f4158fa080ef4503c8f4c820967d946c2af31ec9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nix-github-actions",
-        "rev": "f4158fa080ef4503c8f4c820967d946c2af31ec9",
-        "type": "github"
-      }
-    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -1453,33 +1411,6 @@
         "owner": "nix-systems",
         "repo": "default",
         "rev": "d36eeed142f88b5a636f2e3856a53c61654cf29b",
-        "type": "github"
-      }
-    },
-    "nix-unit": {
-      "inputs": {
-        "nix-github-actions": [
-          "nix-github-actions"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "treefmt-nix": [
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1784925540,
-        "narHash": "sha256-11IOL5tyJbB3vMQzzhIULuPtoHJpkLFz4BaKApm6t0Q=",
-        "owner": "nix-community",
-        "repo": "nix-unit",
-        "rev": "b3d16367c54621fd073aa8c1dd510042f771f624",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nix-unit",
-        "rev": "b3d16367c54621fd073aa8c1dd510042f771f624",
         "type": "github"
       }
     },
@@ -1665,7 +1596,6 @@
         "claude-plugins-official": "claude-plugins-official",
         "darwin": "darwin",
         "deepwiki-skill": "deepwiki-skill",
-        "devshell": "devshell",
         "diagram-design": "diagram-design",
         "disko": "disko",
         "doom-emacs": "doom-emacs",
@@ -1686,10 +1616,8 @@
         "mattpocock": "mattpocock",
         "microvm": "microvm",
         "mnw": "mnw",
-        "nix-github-actions": "nix-github-actions",
         "nix-index-database": "nix-index-database",
         "nix-systems": "nix-systems",
-        "nix-unit": "nix-unit",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
         "nixpkgs-darwin": "nixpkgs-darwin",
@@ -1708,7 +1636,6 @@
         "treefmt-nix": "treefmt-nix",
         "trix": "trix",
         "ui-ux-pro-max-skill": "ui-ux-pro-max-skill",
-        "utils": "utils",
         "vercel-skills": "vercel-skills",
         "vscode-server": "vscode-server"
       }
@@ -1860,22 +1787,6 @@
         "owner": "nextlevelbuilder",
         "repo": "ui-ux-pro-max-skill",
         "rev": "7246805992a42b7bba37d4cac83b01416f0c6c44",
-        "type": "github"
-      }
-    },
-    "utils": {
-      "locked": {
-        "lastModified": 1652776076,
-        "narHash": "sha256-gzTw/v1vj4dOVbpBSJX4J0DwUR6LIyXo7/SuuTJp1kM=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "04c1b180862888302ddfb2e3ad9eaa63afc60cf8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "04c1b180862888302ddfb2e3ad9eaa63afc60cf8",
         "type": "github"
       }
     },
