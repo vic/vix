@@ -1,0 +1,5 @@
+# issues live on GitHub, not in a local tracker
+.beads/
+result
+result-*
+.direnv/
