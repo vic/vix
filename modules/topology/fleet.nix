@@ -12,6 +12,7 @@
     ren.kinds.mac
     ren.kinds.home
   ];
+  ren.kinds.system.below = [ ren.kinds.env ];
   ren.kinds.system.darwin = opt lib.types.bool false;
 
   ren.fleet.vix = { };

@@ -22,6 +22,7 @@ in
     system = ren.kinds.system;
     channel = opt ren.kinds.channel ren.channel.unstable;
     users = opt (lib.types.listOf ren.kinds.user) [ ];
+    envs = opt (lib.types.listOf ren.kinds.env) [ ];
   };
 
   ren.aspects.hostname = {
