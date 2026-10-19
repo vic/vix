@@ -9,6 +9,11 @@
 {
   ren.aspects.ai-mcp = {
     at = vicAt.core;
+    git-ignores = { ... }: [
+      ".serena"
+      ".cbmignore"
+      ".quipu"
+    ];
     homeManager = mod (
       {
         config,
@@ -132,11 +137,6 @@
           };
         };
 
-        programs.git.ignores = [
-          ".serena"
-          ".cbmignore"
-          ".quipu"
-        ];
       }
     );
   };

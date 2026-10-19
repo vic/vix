@@ -11,6 +11,7 @@
 
   ren.aspects.ai-skills = {
     at = vicAt.core;
+    git-ignores = { ... }: [ ".gstack/" ];
     homeManager = mod (
       { lib, pkgs, ... }:
       let
@@ -58,7 +59,6 @@
           ];
         };
 
-        programs.git.ignores = [ ".gstack/" ];
       }
     );
   };

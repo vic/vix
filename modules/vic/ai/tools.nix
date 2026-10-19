@@ -8,6 +8,10 @@
 {
   ren.aspects.ai-tools = {
     at = vicAt.core;
+    git-ignores = { ... }: [
+      ".codegraph"
+      "/AGENTS.md"
+    ];
     homeManager = mod (
       {
         inputs',
@@ -101,10 +105,6 @@
           };
         };
 
-        programs.git.ignores = [
-          ".codegraph"
-          "/AGENTS.md"
-        ];
       }
     );
   };

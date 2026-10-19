@@ -7,7 +7,8 @@ let
     within
     when
     ;
-  homeOf = user: parent: if (place parent).system.darwin then "/Users/${user.name}" else "/home/${user.name}";
+  homeOf =
+    user: parent: if (place parent).system.darwin then "/Users/${user.name}" else "/home/${user.name}";
   withShell = and [
     ren.kinds.user
     (when (s: s.user.shell != null))
@@ -57,7 +58,15 @@ in
     ];
   };
   ren.aspects.primary-user = {
-    at = ren.kinds.mac;
+    at = ren.lib.and [
+      ren.kinds.mac
+      (ren.lib.has (
+        ren.lib.and [
+          ren.kinds.user
+          (ren.lib.when (s: s.user.admin))
+        ]
+      ))
+    ]; # macs with an admin user
     darwin = { mac, ... }: {
       system.primaryUser = (builtins.head (builtins.filter (u: u.admin) mac.users)).name;
     };

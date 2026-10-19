@@ -11,6 +11,7 @@
 
   ren.aspects.ai-claude = {
     at = vicAt.core;
+    git-ignores = { ... }: [ ".claude" ];
     homeManager = mod (
       {
         config,
@@ -29,8 +30,6 @@
           pkgs.socat
           pkgs.bubblewrap
         ];
-
-        programs.git.ignores = [ ".claude" ];
 
         programs.claude-code = {
           enable = true;

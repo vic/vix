@@ -1,10 +1,53 @@
 # git: identity from the user binding, ssh signing, difftastic, delta pager.
-{ vicAt, ... }:
+{ ren, vicAt, ... }:
 {
+  # any feature emits the paths it wants git to ignore; git writes them once.
+  ren.channels.git-ignores = {
+    fold = ren.lib.fold.list;
+    at = ren.kinds.user;
+    to = e: e;
+  };
   ren.aspects.git = {
     at = vicAt.core;
+    git-ignores = { ... }: [
+      ".DS_Store"
+      "*.swp"
+      ".direnv"
+      ".envrc"
+      ".envrc.local"
+      ".env"
+      ".env.local"
+      ".jj"
+      "devshell.toml"
+      ".tool-versions"
+      "/.github/chatmodes"
+      "/.github/instructions"
+      "/vic"
+      "*.key"
+      "target"
+      "result"
+      "out"
+      "old"
+      "*~"
+      ".aider*"
+      ".crush*"
+      "CRUSH.md"
+      "GEMINI.md"
+      "CLAUDE.md"
+      ".workspaces"
+      ".agents"
+      ".claude"
+      "AGENT*"
+      "docs/superpowers"
+    ];
     homeManager =
-      { pkgs, user, ... }:
+      {
+        lib,
+        pkgs,
+        user,
+        git-ignores,
+        ...
+      }:
       {
         home.packages = [ pkgs.difftastic ];
         programs.git = {
@@ -31,37 +74,7 @@
                 "for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'";
             };
           };
-          ignores = [
-            ".DS_Store"
-            "*.swp"
-            ".direnv"
-            ".envrc"
-            ".envrc.local"
-            ".env"
-            ".env.local"
-            ".jj"
-            "devshell.toml"
-            ".tool-versions"
-            "/.github/chatmodes"
-            "/.github/instructions"
-            "/vic"
-            "*.key"
-            "target"
-            "result"
-            "out"
-            "old"
-            "*~"
-            ".aider*"
-            ".crush*"
-            "CRUSH.md"
-            "GEMINI.md"
-            "CLAUDE.md"
-            ".workspaces"
-            ".agents"
-            ".claude"
-            "AGENT*"
-            "docs/superpowers"
-          ];
+          ignores = lib.unique (builtins.concatLists git-ignores);
           includes = [ ];
           lfs.enable = true;
         };
