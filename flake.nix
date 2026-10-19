@@ -6,6 +6,8 @@
   };
   inputs = {
     ren.url = "github:vic/ren";
+    microvm.url = "github:microvm-nix/microvm.nix";
+    microvm.inputs.nixpkgs.follows = "nixpkgs";
     SPC.url = "github:vic/SPC/7217d72e2b2a6053fbb7e3ea3f5bdaac65d69327";
     bats-assert.url = "github:bats-core/bats-assert/123860c029685bc0a4150ed57ee97fc7f7cc9d31";
     bats-assert.flake = false;
