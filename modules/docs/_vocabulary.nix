@@ -30,6 +30,10 @@
     flake-file = "this flake.nix from `flake-inputs`: `packages.write-flake` + `checks.<sys>.flake-file`";
   };
   channels = {
+    nix-features = [
+      "any scope (base: nix-command flakes on every machine)"
+      "each machine's `nix.settings.experimental-features`"
+    ];
     flake-inputs = [
       "any aspect: the inputs it uses"
       "flake `flake-inputs`, read by the `flake-file` class"

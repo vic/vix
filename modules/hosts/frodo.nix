@@ -20,10 +20,6 @@
     time.timeZone = "America/Mexico_City";
     i18n.defaultLocale = "en_US.UTF-8";
     nixpkgs.config.allowUnfree = true;
-    nix.settings.experimental-features = [
-      "flakes"
-      "nix-command"
-    ];
     system.stateVersion = "26.11";
   };
   ren.host.frodo = {

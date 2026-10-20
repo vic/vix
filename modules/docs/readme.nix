@@ -14,7 +14,7 @@ let
   intro = ''
     # vix
 
-    Vic's machines, homes and dev envs, written in [Ren](https://github.com/vic/ren) (built on Gen).
+    Vic's machines, homes and dev envs, written in [Ren](https://github.com/vic/ren) (built on [Gen](https://github.com/sini/gen)) - a re-interpretation of [Den](https://github.com/denful/den) capabilities.
     This file is generated. Edit `modules/docs/`, then run `nix run .#write-files`.
   '';
   commands = ''
@@ -31,8 +31,8 @@ let
   history = ''
     ## History
 
-    - Ren (current): this tree, branch `ren` — https://github.com/vic/vix/tree/ren
-    - [Den without flakes (last Den commit)](https://github.com/vic/vix/tree/historic/den)
+    - [Ren (current)](https://github.com/vic/vix/tree/ren)
+    - [Den without flakes](https://github.com/vic/vix/tree/historic/den)
     - [Den with flakes + flake-parts](https://github.com/vic/vix/tree/historic/den-flake-parts)
     - [Dendritic flake-parts only](https://github.com/vic/vix/tree/historic/dendritic-flake-parts)
     - [blueprint](https://github.com/vic/vix/tree/historic/blueprint)

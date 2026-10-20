@@ -81,7 +81,10 @@ in
       { host, ... }:
       {
         imports = [ inputs.microvm.nixosModules.host ];
-        systemd.network.enable = true;
+        systemd.network.enable = true; # only for the vm-* taps below
+        # keep the host DNS stack as it was (NetworkManager + resolvconf): networkd would switch it to resolved
+        services.resolved.enable = false;
+        networking.networkmanager.unmanaged = [ "interface-name:vm-*" ];
         systemd.network.networks = builtins.listToAttrs (
           map (g: {
             name = "30-${tap g}";

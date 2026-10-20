@@ -1,6 +1,6 @@
 # vix
 
-Vic's machines, homes and dev envs, written in [Ren](https://github.com/vic/ren) (built on Gen).
+Vic's machines, homes and dev envs, written in [Ren](https://github.com/vic/ren) (built on [Gen](https://github.com/sini/gen)) - a re-interpretation of [Den](https://github.com/denful/den) capabilities.
 This file is generated. Edit `modules/docs/`, then run `nix run .#write-files`.
 
 ## A tour
@@ -94,6 +94,7 @@ A class turns the collected modules into a flake output.
 | `formatter` | each system (treefmt) | flake `formatter.<sys>` (`nix fmt`) |
 | `git-ignores` | user features | `git` global ignores |
 | `login-shells` | users with a shell | their machine enables `programs.<shell>` |
+| `nix-features` | any scope (base: nix-command flakes on every machine) | each machine's `nix.settings.experimental-features` |
 | `packages` | aspects at a system | flake `packages.<sys>`, read back as `(vix.perSystem pkgs inputs.self).packages` |
 | `secrets` | user features: `[ ren.secret.x ]` | `vic-secrets`: sops-nix config |
 | `unfree` | any scope: `vix.allowUnfree [ … ]` | the machine or home's `allowUnfreePredicate` |
@@ -116,7 +117,7 @@ A class turns the collected modules into a flake output.
 | role `on-trusted` | a user within `trusted`, no untrusted guest between |
 | role `trusted` | included by a machine: holds vic's secrets |
 
-193 aspects live under `modules/`; `ren.aspects.<name>` each.
+195 aspects live under `modules/`; `ren.aspects.<name>` each.
 
 ## Directory structure
 
@@ -212,8 +213,8 @@ nix eval --json .#ci.matrix              # every CI build job: host, mac, home, 
 
 ## History
 
-- Ren (current): this tree, branch `ren` — https://github.com/vic/vix/tree/ren
-- [Den without flakes (last Den commit)](https://github.com/vic/vix/tree/historic/den)
+- [Ren (current)](https://github.com/vic/vix/tree/ren)
+- [Den without flakes](https://github.com/vic/vix/tree/historic/den)
 - [Den with flakes + flake-parts](https://github.com/vic/vix/tree/historic/den-flake-parts)
 - [Dendritic flake-parts only](https://github.com/vic/vix/tree/historic/dendritic-flake-parts)
 - [blueprint](https://github.com/vic/vix/tree/historic/blueprint)

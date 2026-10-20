@@ -39,6 +39,7 @@
       in
       {
         default = pkgs.mkShell {
+          inputsFrom = [ inputs.self.devShells.${system.name}.nixenv ]; # nix tools: nixd nixfmt statix deadnix npins nix-unit
           NIX_USER_CONF_FILES = "${nixConf}";
           packages = [
             pkgs.nix
@@ -56,6 +57,10 @@
             apps.write-flake # regenerate flake.nix from flake-inputs
             apps.write-lock
             inputs.self.formatter.${system.name}
+            (cmd "vix" ''
+              echo "vix commands: fmt ci hm -build -switch -boot -reboot vini-hm"
+              echo "vix tools:    vic-sops-get vic-sops-rotate gh-deps-update write-files write-flake write-lock sops age ssh-to-age nh cachix"
+            '')
             (cmd "fmt" ''nix fmt "$@"'')
             (cmd "ci" ''
               nix flake check --no-build "path:$prj" "$@"
