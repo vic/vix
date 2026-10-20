@@ -51,9 +51,7 @@ let
     ]) (described "roles" (live "roles") vocab.roles);
 in
 ''
-  ## Vix vocabulary
-
-  ### Kinds: typed data; a kind some `below` lists gets one scope per instance
+  ### Kinds: one scope per instance when some `below` lists the kind
 
   ${table [ "kind" "what it is" "instances (`ren.<kind>.<name>`)" ] (k: [
     (code k)
@@ -74,7 +72,7 @@ in
     described "channels" (attrNames ren.channels) vocab.channels
   )}
 
-  ### vic profiles: `at = ren.aspects.vic-<tier>` gates vic's features; roles are aspects machines include or derive
+  ### vic profiles: tiers gate features (`at = ren.aspects.vic-<tier>`); roles are included or derived
 
   ${table [ "name" "active" ] (p: p) profiles}
 

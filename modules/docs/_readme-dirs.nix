@@ -37,8 +37,6 @@ let
     );
 in
 ''
-  ## Directory structure
-
   import-tree loads every `.nix` file under `modules/`. Paths with `/_` are skipped.
   Dir names are for humans only. Ren does not read them.
 
