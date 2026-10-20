@@ -7,19 +7,19 @@ Generated file: edit `modules/docs/`, then run `nix run .#write-files`.
 
 | Ren | in vix |
 | --- | --- |
-| `ren.kinds.<k>` | typed data: `host`, `mac`, `home`, `user`, `env`, `vim`, `secret`, `ssh-host` |
-| `ren.<k>.<name>` | an instance: `ren.host.frodo`, `ren.user.vic`, `ren.env.rustenv` |
-| `below`, `spawns` | the scope tree: `fleet` → `host` → `guest`, `user`; `system` → `vim`, `env` |
-| `is` | subkinds: `host` and `mac` are a `machine`; `guest` is a `host` |
-| `ren.aspects.<a>` | one feature: `git`, `kvm-amd`, `vic-gui` |
-| `at` | where an aspect is on: `at = ren.aspects.vic-headless` |
-| `includes`, `excludes` | add or drop aspects below a scope: `frodo` includes its hardware; frodo's guests exclude it |
-| `ren.classes.<c>` | a module system an aspect key feeds: `nixos`, `darwin`, `homeManager`, `account`, `vim`, `files` |
-| `into` | how a class builds: `nixos` gives `nixosConfigurations.<host>` |
-| `ren.channels.<c>` | data a feature emits for a receiver: `git-ignores`, `dots`, `secrets`, `checks` |
-| `fold`, `to` | how a channel merges, and who reads it: `checks` folds `attrs` into the fleet |
-| `and`, `anyOf`, `not`, `within`, `has`, `when` | predicates for `at` and `to`: `and [ ren.kinds.host (when (s: s.host.cpu == "amd")) ]` |
-| `same` | identity: a guest runs on the host it names in `on` |
+| `ren.kinds.<k>` | typed data: [`host`](modules/platforms/nixos.nix#L44), [`home`](modules/platforms/home-manager.nix#L27), [`user`](modules/topology/people.nix#L11), [`env`](modules/envs/env.nix#L15) |
+| `ren.<k>.<name>` | an instance: [`ren.host.frodo`](modules/hosts/frodo.nix#L25), [`ren.user.vic`](modules/people/vic.nix#L21), [`ren.env.rustenv`](modules/envs/envs.nix#L5) |
+| `below`, `spawns` | the scope tree: [`host → user`](modules/platforms/nixos.nix#L46), [`host → guest`](modules/platforms/microvm.nix#L16), [`system → vim`](modules/editors/vim.nix#L21) |
+| `is` | subkinds: [`a host is a machine`](modules/platforms/nixos.nix#L45), [`a guest is a host`](modules/platforms/microvm.nix#L20) |
+| `ren.aspects.<a>` | one feature: [`git`](modules/vic/vcs/git.nix#L10), [`kvm-amd`](modules/community/kvm-amd.nix#L7), [`vic-gui`](modules/people/vic.nix#L8) |
+| `at` | where an aspect is on: [`at = ren.aspects.vic-headless`](modules/vic/shell/fish.nix#L11) |
+| `includes`, `excludes` | add or drop aspects below a scope: [`frodo includes its hardware`](modules/hosts/frodo.nix#L44), [`its guests exclude it`](modules/hosts/frodo-guests.nix#L38) |
+| `ren.classes.<c>` | a module system an aspect key feeds: [`nixos`](modules/platforms/nixos.nix#L50), [`vim`](modules/editors/vim.nix#L43) |
+| `into` | how a class builds: [`nixosConfigurations.<host>`](modules/platforms/nixos.nix#L54) |
+| `ren.channels.<c>` | data a feature emits for a receiver: [`git-ignores`](modules/vic/vcs/git.nix#L5), [`checks`](modules/features/checks.nix#L4) |
+| `fold`, `to` | how a channel merges, and who reads it: [`checks folds attrs into the fleet`](modules/features/checks.nix#L5) |
+| `and`, `anyOf`, `not`, `within`, `has`, `when` | predicates for `at` and `to`: [`when (s: s.host.cpu == "amd")`](modules/community/kvm-amd.nix#L10) |
+| `same` | identity: [`a guest runs on the host it names in on`](modules/platforms/microvm.nix#L12) |
 
 ## Commands
 
