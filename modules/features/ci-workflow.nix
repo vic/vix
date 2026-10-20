@@ -37,8 +37,17 @@ let
       };
     }
   ];
+  # the runner quota is small: PRs build only once approved or labeled `ci` (an author cannot approve their own PR)
+  gate = builtins.concatStringsSep " || " [
+    "github.event_name == 'push'"
+    "github.event_name == 'workflow_dispatch'"
+    "github.event.review.state == 'approved'"
+    "github.event.label.name == 'ci'"
+    "(github.event.action == 'synchronize' && contains(github.event.pull_request.labels.*.name, 'ci'))"
+  ];
   job = runner: {
     name = "build \${{ matrix.name }}";
+    "if" = gate;
     runs-on = runner;
     continue-on-error = "\${{ matrix.allowFailure }}";
     strategy = {
@@ -64,7 +73,11 @@ let
     name = "ci";
     on = {
       workflow_dispatch = { };
-      pull_request = { };
+      pull_request.types = [
+        "labeled"
+        "synchronize"
+      ];
+      pull_request_review.types = [ "submitted" ];
       push.branches = [ "ren" ];
     };
     concurrency = {
