@@ -3,6 +3,36 @@ concurrency:
   cancel-in-progress: true
   group: "${{ github.workflow }}-${{ github.ref }}"
 jobs:
+  build-files:
+    continue-on-error: "${{ matrix.allowFailure }}"
+    if: "true"
+    name: "build ${{ matrix.name }}"
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "wimpysworld/nothing-but-nix@v10"
+      - uses: "actions/checkout@v6"
+      - uses: "DeterminateSystems/determinate-nix-action@v3"
+      - uses: "DeterminateSystems/magic-nix-cache-action@v13"
+      - uses: "cachix/cachix-action@v17"
+        with:
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          name: "vix"
+      - run: "nix build --print-build-logs --out-link result '.#${{ matrix.attr }}'"
+      - run: "echo \"<code>$(readlink -f result)</code>\" >> \"$GITHUB_STEP_SUMMARY\""
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - allowFailure: false
+            attr: "checks.x86_64-linux.\"files/.github/workflows/ci.yml\""
+            name: "check-files/.github/workflows/ci.yml-x86_64-linux"
+            runner: "ubuntu-latest"
+            system: "x86_64-linux"
+          - allowFailure: false
+            attr: "checks.x86_64-linux.\"files/README.md\""
+            name: "check-files/README.md-x86_64-linux"
+            runner: "ubuntu-latest"
+            system: "x86_64-linux"
   build-macos-15-intel:
     continue-on-error: "${{ matrix.allowFailure }}"
     if: "github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event.review.state == 'approved' || github.event.label.name == 'ci' || (github.event.action == 'synchronize' && contains(github.event.pull_request.labels.*.name, 'ci'))"
@@ -221,16 +251,6 @@ jobs:
             runner: "ubuntu-latest"
             system: "x86_64-linux"
           - allowFailure: false
-            attr: "checks.x86_64-linux.\"files/.github/workflows/ci.yml\""
-            name: "check-files/.github/workflows/ci.yml-x86_64-linux"
-            runner: "ubuntu-latest"
-            system: "x86_64-linux"
-          - allowFailure: false
-            attr: "checks.x86_64-linux.\"files/README.md\""
-            name: "check-files/README.md-x86_64-linux"
-            runner: "ubuntu-latest"
-            system: "x86_64-linux"
-          - allowFailure: false
             attr: "checks.x86_64-linux.\"flake-file\""
             name: "check-flake-file-x86_64-linux"
             runner: "ubuntu-latest"
@@ -319,6 +339,8 @@ name: "ci"
 on:
   pull_request:
     types:
+      - "opened"
+      - "reopened"
       - "labeled"
       - "synchronize"
   pull_request_review:

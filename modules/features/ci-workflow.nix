@@ -18,7 +18,10 @@ let
       ) self.checks
     )
   );
-  all = self.ci.matrix ++ checks;
+  # generated files (README, ci.yml) are checked on every PR event, so they are never stale
+  isFiles = j: builtins.match "check-files/.*" j.name != null;
+  files = builtins.filter isFiles checks;
+  gated = self.ci.matrix ++ builtins.filter (j: !isFiles j) checks;
   setup = [
     {
       uses = "actions/checkout@v6";
@@ -45,14 +48,14 @@ let
     "github.event.label.name == 'ci'"
     "(github.event.action == 'synchronize' && contains(github.event.pull_request.labels.*.name, 'ci'))"
   ];
-  job = runner: {
+  job = cond: runner: include: {
     name = "build \${{ matrix.name }}";
-    "if" = gate;
+    "if" = cond;
     runs-on = runner;
     continue-on-error = "\${{ matrix.allowFailure }}";
     strategy = {
       fail-fast = false;
-      matrix.include = builtins.filter (j: j.runner == runner) all;
+      matrix.include = include;
     };
     steps =
       (
@@ -74,6 +77,8 @@ let
     on = {
       workflow_dispatch = { };
       pull_request.types = [
+        "opened"
+        "reopened"
         "labeled"
         "synchronize"
       ];
@@ -85,12 +90,18 @@ let
       cancel-in-progress = true;
     };
     permissions.contents = "read";
-    jobs = builtins.listToAttrs (
-      map (r: {
-        name = "build-${builtins.replaceStrings [ "." ] [ "_" ] r}";
-        value = job r;
-      }) (builtins.attrNames (builtins.groupBy (j: j.runner) all))
-    );
+    jobs =
+      builtins.listToAttrs (
+        builtins.attrValues (
+          builtins.mapAttrs (r: include: {
+            name = "build-${builtins.replaceStrings [ "." ] [ "_" ] r}";
+            value = job gate r include;
+          }) (builtins.groupBy (j: j.runner) gated)
+        )
+      )
+      // {
+        build-files = job "true" runners.x86_64-linux files;
+      };
   };
 in
 {
