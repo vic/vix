@@ -1,12 +1,11 @@
 # lightjj: browser UI for jj, served from wherever the repo lives (also headless vini).
 {
-  lib,
   inputs,
   ren,
   ...
 }:
 let
-  vix = import ../../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
 
@@ -20,12 +19,11 @@ in
           inputs.nixpkgs.follows = "nixpkgs";
         };
       };
-    homeManager = vix.mod (
+    homeManager =
       { pkgs, ... }:
       {
         home.packages = [ (vix.perSystem pkgs inputs.lightjj).packages.default ];
         programs.claude-code.skills.lightjj = "${inputs.lightjj}/cmd/lightjj/SKILL.md";
-      }
-    );
+      };
   };
 }

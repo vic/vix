@@ -1,11 +1,6 @@
 # vim snacks: snacks.nvim, vic's header, picker keymaps, and the nvim profile's dashboard + toggles.
-{
-  lib,
-  ren,
-  ...
-}:
+{ ren, ... }:
 let
-  vix = import ../../_lib.nix { inherit lib; };
   on = {
     enabled = true;
   };
@@ -46,7 +41,7 @@ in
 
   ren.aspects.vim-snacks-extras = {
     at = ren.lib.when (s: builtins.elem "snacks-extras" (s.vim.features or [ ]));
-    vim = vix.mod (
+    vim =
       { lib, ... }:
       {
         vim.utility.snacks-nvim.setupOpts.dashboard.sections = [
@@ -90,7 +85,6 @@ in
           Snacks.toggle.indent():map("<leader>ug")
           Snacks.toggle.dim():map("<leader>uD")
         '';
-      }
-    );
+      };
   };
 }

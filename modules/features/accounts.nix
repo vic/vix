@@ -1,7 +1,7 @@
 # Accounts: each user gets an account and a home on its machine; admins join wheel; the login shell is enabled.
 { lib, ren, ... }:
 let
-  inherit (import ../_lib.nix { inherit lib; }) place;
+  inherit (ren.helpers) place;
   inherit (ren.lib)
     and
     anyOf
@@ -84,12 +84,9 @@ in
       ren.kinds.mac
     ];
     os = { login-shells, ... }: {
-      programs = builtins.listToAttrs (
-        map (name: {
-          inherit name;
-          value.enable = true;
-        }) login-shells
-      );
+      programs = lib.genAttrs login-shells (_: {
+        enable = true;
+      });
     };
   };
   ren.aspects.darwin-shells = {

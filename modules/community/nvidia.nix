@@ -1,11 +1,10 @@
 # nvidia: proprietary driver, nouveau blacklisted, on nvidia hosts.
 {
-  lib,
   ren,
   ...
 }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
   ren.aspects.nvidia.at = ren.lib.and [
@@ -15,8 +14,9 @@ in
   ren.aspects.nvidia.unfree = vix.allowUnfree [
     "nvidia-x11"
     "nvidia-settings"
+    "nvidia-kernel-modules"
   ];
-  ren.aspects.nvidia.nixos = vix.mod (
+  ren.aspects.nvidia.nixos =
     { config, ... }:
     {
       boot.initrd.kernelModules = [ "nvidia" ];
@@ -40,6 +40,5 @@ in
           offload.enableOffloadCmd = prime.offload.enable;
         };
       };
-    }
-  );
+    };
 }

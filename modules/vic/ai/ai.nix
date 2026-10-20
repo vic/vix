@@ -1,11 +1,10 @@
 # AI: unfree agent CLIs and the extra agent packages on linux homes.
 {
-  lib,
   ren,
   ...
 }:
 let
-  vix = import ../../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
   ren.aspects.ai-ai = {

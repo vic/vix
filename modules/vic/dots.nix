@@ -5,7 +5,7 @@
   ...
 }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
   linker =
     checkout: config: path:
     if checkout != null then
@@ -33,29 +33,32 @@ in
     # rtk is owned by the ai modules, which this pass may not touch.
     dots.".config/rtk" = "config/rtk";
     homeManager =
-      { parent, dots, ... }:
-      vix.mod (
-        { config, lib, ... }:
-        let
-          checkout = (vix.place parent).checkout;
-        in
-        {
-          home.activation.check-checkout = lib.mkIf (checkout != null) (
-            config.lib.dag.entryAfter [ "writeBoundary" ] ''
-              if ! test -d "${checkout}/modules/vic/dots"; then
-                echo "Missing vix checkout: ${checkout}/modules/vic/dots (set checkout to where vix lives)"
-                exit 1
-              fi
-            ''
-          );
-          home.file = builtins.mapAttrs (_: path: { source = linker checkout config path; }) dots // {
-            # public keys, linked from the flake source on every home (vic-ssh only lands on trusted ones).
-            ".ssh" = {
-              recursive = true;
-              source = ./dots/ssh;
-            };
+      {
+        parent,
+        dots,
+        config,
+        lib,
+        ...
+      }:
+      let
+        checkout = (vix.place parent).checkout;
+      in
+      {
+        home.activation.check-checkout = lib.mkIf (checkout != null) (
+          config.lib.dag.entryAfter [ "writeBoundary" ] ''
+            if ! test -d "${checkout}/modules/vic/dots"; then
+              echo "Missing vix checkout: ${checkout}/modules/vic/dots (set checkout to where vix lives)"
+              exit 1
+            fi
+          ''
+        );
+        home.file = builtins.mapAttrs (_: path: { source = linker checkout config path; }) dots // {
+          # public keys, linked from the flake source on every home (vic-ssh only lands on trusted ones).
+          ".ssh" = {
+            recursive = true;
+            source = ./dots/ssh;
           };
-        }
-      );
+        };
+      };
   };
 }

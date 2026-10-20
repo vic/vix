@@ -1,12 +1,11 @@
 # nix: nix tooling packages.
 {
   inputs,
-  lib,
   ren,
   ...
 }:
 let
-  vix = import ../../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
   ren.aspects.nix-tools = {

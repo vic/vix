@@ -1,13 +1,9 @@
 # Local stdio MCP servers for code discovery, spawned per session by Claude Code.
 # (codegraph lives in tools.nix beside its CLI; headroom in headroom.nix.)
 {
-  lib,
   ren,
   ...
 }:
-let
-  vix = import ../../_lib.nix { inherit lib; };
-in
 {
   ren.aspects.ai-mcp = {
     at = ren.aspects.vic-headless;
@@ -17,7 +13,7 @@ in
       ".cbmignore"
       ".quipu"
     ];
-    homeManager = vix.mod (
+    homeManager =
       {
         config,
         lib,
@@ -27,6 +23,8 @@ in
       let
         cbm = pkgs.codebase-memory-mcp;
         serena = pkgs.callPackage ./_pkgs/serena-agent.nix { };
+        # serena imports pywebview when it loads, and nixpkgs marks pywebview broken on darwin
+        withSerena = pkgs.stdenv.hostPlatform.isLinux;
         quipu = pkgs.callPackage ./_pkgs/quipu.nix { };
         # One global graph, like the global codegraph. The signing key defaults to
         # .quipu/ in the cwd, which would drop a private key into every repo.
@@ -60,9 +58,9 @@ in
       {
         home.packages = [
           cbm
-          serena
           quipu
-        ];
+        ]
+        ++ lib.optional withSerena serena;
 
         # auto_index defaults to false, leaving the graph empty until an agent
         # volunteers to index. `|| true`: a live session pinning another build refuses.
@@ -76,7 +74,7 @@ in
               type = "stdio";
               command = lib.getExe cbm;
             };
-            serena = {
+            serena = lib.mkIf withSerena {
               type = "stdio";
               command = lib.getExe serena;
               args = [
@@ -135,7 +133,6 @@ in
           };
         };
 
-      }
-    );
+      };
   };
 }

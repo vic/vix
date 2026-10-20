@@ -6,7 +6,7 @@
   ...
 }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
   t = lib.types;
   doomRev = inputs.doom-emacs.rev;
 in

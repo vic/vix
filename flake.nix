@@ -177,7 +177,7 @@
       url = "github:dietrichgebert/ponytail/2961b52fc1fe6a5a87c7a959a79512e5c2f3ffe5";
       flake = false;
     };
-    ren.url = "github:vic/ren";
+    ren.url = "github:vic/ren/53034ebe18ad416fdcc35503d79b54f8cc1b5a33";
     rust-overlay = {
       url = "github:oxalica/rust-overlay/3100cf6ff140fb298f09192de610f4037d3bab0f";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -2,17 +2,13 @@
 # vic-* subagents (tiered haiku/sonnet/opus), vic skills, global CLAUDE.md.
 # Copies live beside this file; edit them here, never in ~/.claude.
 {
-  lib,
   ren,
   ...
 }:
-let
-  vix = import ../../../_lib.nix { inherit lib; };
-in
 {
   ren.aspects.ai-vic-agents = {
     at = ren.aspects.vic-headless;
-    homeManager = vix.mod (
+    homeManager =
       { lib, ... }:
       let
         byName = dir: f: lib.mapAttrs' f (builtins.readDir dir);
@@ -32,7 +28,6 @@ in
         };
         # CLAUDE.md imports it with `@RTK.md`.
         home.file.".claude/RTK.md".source = ./memory/RTK.md;
-      }
-    );
+      };
   };
 }

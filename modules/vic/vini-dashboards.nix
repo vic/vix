@@ -1,10 +1,10 @@
 # vini-dashboards: loopback web dashboards on vini, reached via the vini-tunnel forwards (sys/ssh.nix). DISABLED: no `at`.
-{ inputs, lib, ... }:
+{ inputs, ren, ... }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
-  ren.aspects.vic-vini-dashboards.homeManager = vix.mod (
+  ren.aspects.vic-vini-dashboards.homeManager =
     {
       config,
       pkgs,
@@ -38,6 +38,5 @@ in
             "${pkgs.sqlite-web}/bin/sqlite_web --host 127.0.0.1 --port 8001 --no-browser --read-only ${omniDb}"
             { ConditionPathExists = omniDb; };
       };
-    }
-  );
+    };
 }

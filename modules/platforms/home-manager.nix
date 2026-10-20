@@ -2,11 +2,10 @@
 # the standalone home kind, and the hm module on machines that have users.
 {
   ren,
-  lib,
   ...
 }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
   inherit (ren.lib)
     and
     within

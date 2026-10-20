@@ -7,18 +7,18 @@ Generated file: edit `modules/docs/`, then run `nix run .#write-files`.
 
 | Ren | in vix |
 | --- | --- |
-| `ren.kinds.<k>` | typed data: [`host`](modules/platforms/nixos.nix#L44), [`home`](modules/platforms/home-manager.nix#L27), [`user`](modules/topology/people.nix#L11), [`env`](modules/envs/env.nix#L15) |
+| `ren.kinds.<k>` | typed data: [`host`](modules/platforms/nixos.nix#L43), [`home`](modules/platforms/home-manager.nix#L26), [`user`](modules/topology/people.nix#L12), [`env`](modules/envs/env.nix#L15) |
 | `ren.<k>.<name>` | an instance: [`ren.host.frodo`](modules/hosts/frodo.nix#L25), [`ren.user.vic`](modules/people/vic.nix#L21), [`ren.env.rustenv`](modules/envs/envs.nix#L5) |
-| `below`, `spawns` | the scope tree: [`host → user`](modules/platforms/nixos.nix#L46), [`host → guest`](modules/platforms/microvm.nix#L16), [`system → vim`](modules/editors/vim.nix#L21) |
-| `is` | subkinds: [`a host is a machine`](modules/platforms/nixos.nix#L45), [`a guest is a host`](modules/platforms/microvm.nix#L20) |
-| `ren.aspects.<a>` | one feature: [`git`](modules/vic/vcs/git.nix#L10), [`kvm-amd`](modules/community/kvm-amd.nix#L7), [`vic-gui`](modules/people/vic.nix#L8) |
+| `below`, `spawns` | the scope tree: [`host → user`](modules/platforms/nixos.nix#L45), [`host → guest`](modules/platforms/microvm.nix#L16), [`system → vim`](modules/editors/vim.nix#L21) |
+| `is` | subkinds: [`a host is a machine`](modules/platforms/nixos.nix#L44), [`a guest is a host`](modules/platforms/microvm.nix#L20) |
+| `ren.aspects.<a>` | one feature: [`git`](modules/vic/vcs/git.nix#L10), [`kvm-amd`](modules/community/kvm-amd.nix#L4), [`vic-gui`](modules/people/vic.nix#L8) |
 | `at` | where an aspect is on: [`at = ren.aspects.vic-headless`](modules/vic/shell/fish.nix#L11) |
 | `includes`, `excludes` | add or drop aspects below a scope: [`frodo includes its hardware`](modules/hosts/frodo.nix#L44), [`its guests exclude it`](modules/hosts/frodo-guests.nix#L38) |
-| `ren.classes.<c>` | a module system an aspect key feeds: [`nixos`](modules/platforms/nixos.nix#L50), [`vim`](modules/editors/vim.nix#L43) |
-| `into` | how a class builds: [`nixosConfigurations.<host>`](modules/platforms/nixos.nix#L54) |
+| `ren.classes.<c>` | a module system an aspect key feeds: [`nixos`](modules/platforms/nixos.nix#L49), [`vim`](modules/editors/vim.nix#L43) |
+| `into` | how a class builds: [`nixosConfigurations.<host>`](modules/platforms/nixos.nix#L53) |
 | `ren.channels.<c>` | data a feature emits for a receiver: [`git-ignores`](modules/vic/vcs/git.nix#L5), [`checks`](modules/features/checks.nix#L4) |
 | `fold`, `to` | how a channel merges, and who reads it: [`checks folds attrs into the fleet`](modules/features/checks.nix#L5) |
-| `and`, `anyOf`, `not`, `within`, `has`, `when` | predicates for `at` and `to`: [`when (s: s.host.cpu == "amd")`](modules/community/kvm-amd.nix#L10) |
+| `and`, `anyOf`, `not`, `within`, `has`, `when` | predicates for `at` and `to`: [`when (s: s.host.cpu == "amd")`](modules/community/kvm-amd.nix#L7) |
 | `same` | identity: [`a guest runs on the host it names in on`](modules/platforms/microvm.nix#L12) |
 
 ## Commands
@@ -47,9 +47,6 @@ flowchart LR
   subgraph system_aarch64_linux ["aarch64-linux"]
     host_bill["bill"]
   end
-  subgraph system_x86_64_darwin ["x86_64-darwin"]
-    mac_yavanna("yavanna")
-  end
   subgraph system_x86_64_linux ["x86_64-linux"]
     host_annatar["annatar"]
     host_bombadil["bombadil"]
@@ -67,7 +64,6 @@ flowchart LR
   user_vic(("vic"))
   fleet_vix --> system_aarch64_darwin
   fleet_vix --> system_aarch64_linux
-  fleet_vix --> system_x86_64_darwin
   fleet_vix --> system_x86_64_linux
   host_frodo -->|"guest"| guest_dnx
   host_frodo -->|"guest"| guest_gen
@@ -79,7 +75,6 @@ flowchart LR
   host_nienna --> user_vic
   host_smaug --> user_vic
   mac_varda --> user_vic
-  mac_yavanna --> user_vic
   guest_dnx --> user_vic
   guest_gen --> user_vic
   home_bitstream --> user_vic
@@ -150,7 +145,7 @@ flowchart LR
   homeLinux -.->|"on linux"| homeManager
   homeDarwin -.->|"on darwin"| homeManager
   homeManager -->|"annatar, bombadil, frodo, mordor, nargun, nienna, smaug"| nixos
-  homeManager -->|"varda, yavanna"| darwin
+  homeManager -->|"varda"| darwin
   homeManager -->|"vic@bitstream, vic@nargun"| homeConfigurations
   os -.-> nixos
   os -.-> darwin
@@ -158,7 +153,7 @@ flowchart LR
   account -.->|"users.users"| darwin
   nixos -->|"dnx, gen in frodo"| microvm_vms
   nixos -->|"annatar, bill, bombadil, frodo, mordor, nargun, nienna, smaug, tom"| nixosConfigurations
-  darwin -->|"bert, varda, yavanna"| darwinConfigurations
+  darwin -->|"bert, varda"| darwinConfigurations
   vim -->|"astrovim, lazyvim, neovim, nvim, vscode-vim"| packages
   files -.->|"write-files"| packages
   files -.->|"files/README.md"| checks
@@ -181,11 +176,11 @@ flowchart LR
 | `guest` | a microvm on a host (is host): its own nixos and users, built inside the host | dnx, gen |
 | `home` | a standalone home-manager home of one user | bitstream, nargun |
 | `host` | a NixOS machine (is machine) | annatar, bill, bombadil, frodo, mordor, nargun, nienna, smaug, tom |
-| `mac` | a nix-darwin machine (is machine) | bert, varda, yavanna |
+| `mac` | a nix-darwin machine (is machine) | bert, varda |
 | `machine` | abstract: typed facts (cpu, form, desktops, users, envs) hosts and macs share | - (abstract) |
 | `secret` | a sops secret a feature asks for | anthropic-api-key, copilot-api-key, edge-token, gemini-eco-key, groq-api-key, hello, openrouter-api-key, ssh-conf, ssh-id-ed25519, ssh-localhost-run |
 | `ssh-host` | one ssh client matchBlock | edge, sini, uptermd.upterm.dev, vini, vini-tunnel |
-| `system` | a nix system; machines, homes and envs are built for one | aarch64-darwin, aarch64-linux, x86_64-darwin, x86_64-linux |
+| `system` | a nix system; machines, homes and envs are built for one | aarch64-darwin, aarch64-linux, x86_64-linux |
 | `user` | a person: full name, email, login shell, admin | vic |
 | `vim` | a neovim profile: a feature list built per system into one nvf package (+ a gui wrapper) | astrovim, lazyvim, neovim, nvim, vscode-vim |
 | `workspace` | a project an isolated claude guest works on (data): repo path; one guest each | dnx, gen |
@@ -216,7 +211,7 @@ flowchart LR
 | `dots` | user features: `{ "<home path>" = "<dots path>"; }` | `vic-dots`: links into $HOME |
 | `env-packages` | `env-<lang>` aspects | the env's devshell, and users whose machine lists the env |
 | `fish-functions` | user features | `fish` writes them once |
-| `flake-inputs` | any aspect: the inputs it uses | flake `flake-inputs`, read by the `flake-file` class |
+| `flake-inputs` | any aspect: the inputs it uses | forwarded into the `flake-file` class (x86_64-linux) |
 | `formatter` | each system (treefmt) | flake `formatter.<sys>` (`nix fmt`) |
 | `git-ignores` | user features | `git` global ignores |
 | `login-shells` | users with a shell | their machine enables `programs.<shell>` |
@@ -242,7 +237,7 @@ flowchart LR
 | role `on-trusted` | a user within `trusted`, no untrusted guest between |
 | role `trusted` | included by a machine: holds vic's secrets |
 
-206 aspects live under `modules/`; `ren.aspects.<name>` each.
+205 aspects live under `modules/`; `ren.aspects.<name>` each.
 
 </details>
 
@@ -310,7 +305,7 @@ ren.aspects.dev-tools = {
 ren.env.goenv.langs = [ "go" ];
 ren.aspects.env-go = {
   at = ren.lib.and [ ren.kinds.env (ren.lib.when (s: builtins.elem "go" s.env.langs)) ];
-  env-packages = { system, ... }: [ system.pkgs.go ];
+  env-packages = { system, ... }: [ system.legacyPackages.go ];
 };
 ```
 

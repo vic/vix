@@ -1,7 +1,7 @@
 # rdesk: remote desktop tools. DISABLED (as in the old tree): no `at`, included nowhere.
-{ inputs, lib, ... }:
+{ inputs, ren, ... }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
   ren.aspects.vic-rdesk = {

@@ -1,12 +1,11 @@
 # jujutsu: identity, ssh signing, jjui wrappers.
 {
   inputs,
-  lib,
   ren,
   ...
 }:
 let
-  vix = import ../../../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
 

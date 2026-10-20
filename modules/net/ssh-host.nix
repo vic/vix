@@ -1,10 +1,11 @@
 # ssh-host: kind of ssh client hosts; each instance becomes one programs.ssh matchBlock.
 {
   lib,
+  ren,
   ...
 }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
   t = lib.types;
   fwd = t.submodule {
     options = {

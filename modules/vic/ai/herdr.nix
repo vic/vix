@@ -3,12 +3,11 @@
 # cannot edit the home-manager owned settings.json.
 {
   inputs,
-  lib,
   ren,
   ...
 }:
 let
-  vix = import ../../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
   ren.aspects.ai-herdr = {
@@ -44,7 +43,7 @@ in
         systems.url = "github:nix-systems/default/d36eeed142f88b5a636f2e3856a53c61654cf29b";
       };
     claude-allow = { ... }: [ "Bash(herdr *)" ];
-    homeManager = vix.mod (
+    homeManager =
       {
         lib,
         pkgs,
@@ -79,7 +78,6 @@ in
             ];
           };
         };
-      }
-    );
+      };
   };
 }

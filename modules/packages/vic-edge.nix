@@ -10,7 +10,7 @@
     packages =
       { system, ... }:
       let
-        pkgs = system.pkgs;
+        pkgs = system.legacyPackages;
       in
       {
         vic-edge = pkgs.writeShellApplication {

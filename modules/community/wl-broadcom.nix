@@ -1,11 +1,10 @@
 # wl-broadcom: Broadcom STA wifi driver, on hosts with broadcom wifi.
 {
-  lib,
   ren,
   ...
 }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
   ren.aspects.wl-broadcom = {
@@ -14,13 +13,12 @@ in
       (ren.lib.when (s: s.host.wifi == "broadcom"))
     ];
     unfree = vix.allowUnfree [ "broadcom-sta" ];
-    nixos = vix.mod (
+    nixos =
       { lib, config, ... }:
       {
         boot.kernelModules = [ "wl" ];
         boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
         nixpkgs.config.allowInsecurePredicate = pkg: builtins.elem (lib.getName pkg) [ "broadcom-sta" ];
-      }
-    );
+      };
   };
 }

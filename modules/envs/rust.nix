@@ -21,7 +21,7 @@
     env-packages =
       { system, ... }:
       let
-        p = system.pkgs.extend (import inputs.rust-overlay);
+        p = system.legacyPackages.extend (import inputs.rust-overlay);
       in
       [
         (p.rust-bin.stable.latest.default.override {

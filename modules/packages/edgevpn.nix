@@ -27,6 +27,6 @@ in
           flake = false;
         };
       };
-    packages = { system, ... }: { edgevpn = edgevpnFor system.pkgs; };
+    packages = { system, ... }: { edgevpn = edgevpnFor system.legacyPackages; };
   };
 }

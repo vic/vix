@@ -1,12 +1,11 @@
 # Agent CLIs from numtide/llm-agents.nix, with their Claude Code wiring.
 {
   inputs,
-  lib,
   ren,
   ...
 }:
 let
-  vix = import ../../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
   ren.aspects.ai-tools = {
@@ -21,7 +20,7 @@ in
       ".codegraph"
       "/AGENTS.md"
     ];
-    homeManager = vix.mod (
+    homeManager =
       {
         lib,
         pkgs,
@@ -107,7 +106,6 @@ in
           };
         };
 
-      }
-    );
+      };
   };
 }

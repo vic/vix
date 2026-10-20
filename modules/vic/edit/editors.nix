@@ -1,12 +1,11 @@
 # editors: gui editors, vscode vim hook, vscode-server and the unfree editors.
 {
-  lib,
   ren,
   inputs,
   ...
 }:
 let
-  vix = import ../../_lib.nix { inherit lib; };
+  vix = ren.helpers;
   at = ren.lib.and [
     ren.aspects.vic-full
     ren.aspects.vic-gui
