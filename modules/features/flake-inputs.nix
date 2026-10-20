@@ -50,7 +50,7 @@
     flake-inputs =
       { ... }:
       {
-        ren.url = "github:vic/ren/53034ebe18ad416fdcc35503d79b54f8cc1b5a33";
+        ren.url = "github:vic/ren/22076e78117e7f080074dd2a3abae7bcdd4dcca6";
         import-tree.url = "github:vic/import-tree/eb1b52eaecc57f7c136d07ae8a93e724dfecac46";
         flake-file.url = "github:vic/flake-file/d3600508b0b031221459f7358ab88c438a81ac83";
       };
