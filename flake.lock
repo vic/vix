@@ -1572,17 +1572,17 @@
         "gen": "gen"
       },
       "locked": {
-        "lastModified": 1792460733,
-        "narHash": "sha256-7agWsb2PAj0z+Kgo6E6OK0GJc/dXtcAJTnjuKcfFET4=",
+        "lastModified": 1792464952,
+        "narHash": "sha256-UzGGyGoQd9W1HfZUx3ZoH03bbV517c1rlp7hhHJaKWc=",
         "owner": "vic",
         "repo": "ren",
-        "rev": "53034ebe18ad416fdcc35503d79b54f8cc1b5a33",
+        "rev": "22076e78117e7f080074dd2a3abae7bcdd4dcca6",
         "type": "github"
       },
       "original": {
         "owner": "vic",
         "repo": "ren",
-        "rev": "53034ebe18ad416fdcc35503d79b54f8cc1b5a33",
+        "rev": "22076e78117e7f080074dd2a3abae7bcdd4dcca6",
         "type": "github"
       }
     },
