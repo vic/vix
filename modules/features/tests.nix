@@ -7,29 +7,22 @@
 let
   inherit (inputs.nixpkgs) lib;
   self = inputs.self; # shortcut: reads configs back from flake outputs, lazily
-  skipped = import ./_known-broken.nix;
-  skipPkgs.bombadil = [ "zfs" ];
   vicHome = c: lib.attrByPath [ "home-manager" "users" "vic" ] { home.packages = [ ]; } c.config;
   hasPkg = name: ps: builtins.any (p: lib.getName p == name) ps;
+  # every host is checked, known-broken ones too: only packages available on the host platform are allowed
   mismatch =
-    host: system: ps:
-    map (p: "${lib.getName p} not in system: ${system}") (
-      builtins.filter (
-        p:
-        !(
-          builtins.elem (lib.getName p) (skipPkgs.${host} or [ ])
-          || builtins.elem system (p.meta.platforms or [ system ])
-        )
-      ) ps
+    platform: ps:
+    map (p: "${lib.getName p} not available on ${platform.system}") (
+      builtins.filter (p: !lib.meta.availableOn platform p) ps
     );
-  platforms =
-    configs: sys:
-    lib.mapAttrs' (
-      host: c:
-      lib.nameValuePair "platform-packages-${host}" (
-        mismatch host (sys c) (c.config.environment.systemPackages ++ (vicHome c).home.packages or [ ])
+  platforms = lib.mapAttrs' (
+    host: c:
+    lib.nameValuePair "platform-packages-${host}" (
+      mismatch c.pkgs.stdenv.hostPlatform (
+        c.config.environment.systemPackages ++ (vicHome c).home.packages or [ ]
       )
-    ) (lib.filterAttrs (n: _: !builtins.elem n skipped) configs);
+    )
+  );
   nargun = vicHome self.nixosConfigurations.nargun;
   varda = vicHome self.darwinConfigurations.varda;
   problems = {
@@ -40,8 +33,8 @@ let
       ++ lib.optional (nargun.home.sessionVariables.NH_FILE == null) "NH_FILE unset";
     darwin-iterm2 = lib.optional (!hasPkg "iterm2" varda.home.packages) "iterm2 missing";
   }
-  // platforms self.nixosConfigurations (c: c.pkgs.stdenv.hostPlatform.system)
-  // platforms self.darwinConfigurations (c: c.pkgs.stdenv.hostPlatform.system);
+  // platforms self.nixosConfigurations
+  // platforms self.darwinConfigurations;
 in
 {
   ren.aspects.config-tests = {
