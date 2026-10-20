@@ -117,7 +117,7 @@ A class turns the collected modules into a flake output.
 | role `on-trusted` | a user within `trusted`, no untrusted guest between |
 | role `trusted` | included by a machine: holds vic's secrets |
 
-196 aspects live under `modules/`; `ren.aspects.<name>` each.
+202 aspects live under `modules/`; `ren.aspects.<name>` each.
 
 ## Directory structure
 

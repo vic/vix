@@ -237,6 +237,11 @@ jobs:
             runner: "ubuntu-latest"
             system: "x86_64-linux"
           - allowFailure: false
+            attr: "checks.x86_64-linux.\"gitleaks\""
+            name: "check-gitleaks-x86_64-linux"
+            runner: "ubuntu-latest"
+            system: "x86_64-linux"
+          - allowFailure: false
             attr: "checks.x86_64-linux.\"math-works\""
             name: "check-math-works-x86_64-linux"
             runner: "ubuntu-latest"
