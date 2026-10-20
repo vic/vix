@@ -2,12 +2,7 @@
 { ren, ... }:
 let
   inherit (ren.lib) anyOf;
-  runners = {
-    x86_64-linux = "ubuntu-latest";
-    aarch64-linux = "ubuntu-24.04-arm";
-    aarch64-darwin = "macos-latest";
-    x86_64-darwin = "macos-15-intel";
-  };
+  runners = import ./_runners.nix;
   # jobs allowed to fail (continue-on-error), one reason each
   knownBroken = [
     "mordor" # unfree nvidia driver
