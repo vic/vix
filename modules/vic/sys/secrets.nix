@@ -42,7 +42,7 @@ in
           home.activation.link-ssh-id =
             lib.hm.dag.entryAfter
               [
-                "link-flake"
+                "check-checkout"
                 "sops-nix"
                 "reloadSystemd"
               ]

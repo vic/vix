@@ -2,6 +2,7 @@
 { ren, ... }:
 {
   ren.host.mordor = {
+    checkout = "/home/vic/hk/vix";
     system = ren.system.x86_64-linux;
     users = [ ren.user.vic ];
     workstation = true;
@@ -43,7 +44,6 @@
     at = ren.host.mordor;
     includes = [
       ren.aspects.trusted
-      ren.aspects.live-dots
       ren.aspects.mordor-hardware
     ];
   };

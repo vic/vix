@@ -44,4 +44,19 @@ in
       };
     }
   );
+
+  # every machine, laptops and servers too
+  ren.aspects.nix-tuning = {
+    at = ren.lib.anyOf [
+      ren.kinds.host
+      ren.kinds.mac
+    ];
+    os.nix.settings = {
+      min-free = 128 * 1024 * 1024; # gc starts when a build leaves less free
+      max-free = 1024 * 1024 * 1024; # and frees up to this much
+      connect-timeout = 5;
+      fallback = true; # build locally when a substituter fails
+      builders-use-substitutes = true;
+    };
+  };
 }

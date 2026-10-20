@@ -2,6 +2,7 @@
 { ren, ... }:
 {
   ren.mac.varda = {
+    checkout = "/home/vic/hk/vix";
     system = ren.system.aarch64-darwin;
     users = [ ren.user.vic ];
     workstation = true;
@@ -11,7 +12,6 @@
     at = ren.mac.varda;
     includes = [
       ren.aspects.trusted
-      ren.aspects.live-dots
     ];
   };
 }

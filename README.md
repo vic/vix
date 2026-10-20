@@ -1,50 +1,168 @@
 # vix
 
-Vic's machines, homes and dev envs, written in [Ren](https://github.com/vic/ren) (built on [Gen](https://github.com/sini/gen)) - a re-interpretation of [Den](https://github.com/denful/den) capabilities.
-This file is generated. Edit `modules/docs/`, then run `nix run .#write-files`.
+Vic's machines, homes and dev envs in [Ren](https://github.com/vic/ren) (built on [Gen](https://github.com/sini/gen)), a re-take on [Den](https://github.com/denful/den).
+Generated file: edit `modules/docs/`, then run `nix run .#write-files`.
 
 ## A tour
 
-Ren holds typed data in **kinds**. Kinds with `below` form a **scope tree**.
-Each step below goes one level down. Names are real.
+- **Kinds** hold typed data. Kinds with `below` form the **scope tree**, rooted at `ren.fleet.vix`.
+- **Machines** hold facts: `host` (NixOS: frodo), `mac` (nix-darwin: varda), `guest` (microvm on a host: gen, dnx on frodo).
+- **Homes** are standalone home-manager: `bitstream`, `nargun`. **Users** (`ren.user.vic`) get one scope per machine or home.
+- **Systems** hold vim profiles (`nvim`, `lazyvim`) and dev envs (`rustenv`, `goenv`).
+- **Aspects** bundle config; `at` says where: `ren.aspects.direnv = { at = ren.aspects.vic-headless; homeManager.programs.direnv.enable = true; };`
+- **Channels** carry data from emitters to one receiver: `git-ignores = _: [ ".claude" ];` lands in `git`.
+- **Classes** are the other aspect keys (`nixos`, `homeManager`, `account`, `vim`, `files`...); each turns modules into a flake output.
 
-**The fleet.** `ren.fleet.vix` is the root. Everything lives below it.
+## Commands
 
-**Systems.** `x86_64-linux`, `aarch64-darwin` and two more. Each machine, home and env is built for one.
-
-**Machines.** A machine is abstract: it holds typed facts. There are three kinds of it:
-`host` (NixOS), `mac` (nix-darwin) and `guest` (a microvm on a host).
-Community aspects key on the facts. Say `cpu = "amd"` and the kvm-amd module comes in.
-```nix
-ren.host.frodo = { system = ren.system.x86_64-linux; users = [ ren.user.vic ]; form = "laptop"; desktops = [ "niri" ]; };
+```sh
+nix build .#nixosConfigurations.frodo.config.system.build.toplevel
+nix build '.#homeConfigurations."vic@bitstream".activationPackage'
+nix run .#write-files                 # regenerate this README
+nix flake check                       # includes checks.x86_64-linux."files/README.md"
+nix eval --json .#ci.matrix           # every CI build job: host, mac, home, devshell
 ```
 
-**Users.** `ren.user.vic` is a person: name, email, shell. A machine lists its users.
-Each listed user becomes a scope below that machine.
+## Fleet map
 
-**Homes and guests.** `bitstream` and `nargun` are standalone homes of vic: no OS, only home-manager.
-`gen` and `dnx` are guests of frodo: one claude microvm for each `ren.workspace`.
+Generated from live Ren instances (`ren.host`, `ren.mac`, `ren.guest`, `ren.home`). JSON: `nix build .#fleet-ir`.
 
-**Profiles and envs.** Below each system live the vim profiles (`nvim`, `lazyvim`, ...) and the dev envs (`rustenv`, `goenv`, ...).
-A profile builds one neovim. An env builds a devshell. Machines list the envs their users get.
+Scope tree: `[host]` `(mac)` `[[guest]]` `[/home/]` `((user))`, grouped by system. Each machine spawns its own `vic` scope; drawn once.
 
-**Aspects.** An aspect is a bundle of config. Its `at` says where it is active.
-`ren.aspects.vic-headless` is every scope where vic lives. `ren.aspects.vic-gui` is graphical machines only.
-```nix
-ren.aspects.direnv = { at = ren.aspects.vic-headless; homeManager.programs.direnv.enable = true; };
+```mermaid
+flowchart LR
+  fleet_vix["vix"]
+  subgraph system_aarch64_darwin ["aarch64-darwin"]
+    mac_bert("bert")
+    mac_varda("varda")
+  end
+  subgraph system_aarch64_linux ["aarch64-linux"]
+    host_bill["bill"]
+  end
+  subgraph system_x86_64_darwin ["x86_64-darwin"]
+    mac_yavanna("yavanna")
+  end
+  subgraph system_x86_64_linux ["x86_64-linux"]
+    host_annatar["annatar"]
+    host_bombadil["bombadil"]
+    host_frodo["frodo"]
+    host_mordor["mordor"]
+    host_nargun["nargun"]
+    host_nienna["nienna"]
+    host_smaug["smaug"]
+    host_tom["tom"]
+    guest_dnx[["dnx"]]
+    guest_gen[["gen"]]
+    home_bitstream[/"bitstream"/]
+    home_nargun[/"nargun"/]
+  end
+  user_vic(("vic"))
+  fleet_vix --> system_aarch64_darwin
+  fleet_vix --> system_aarch64_linux
+  fleet_vix --> system_x86_64_darwin
+  fleet_vix --> system_x86_64_linux
+  host_frodo -->|"guest"| guest_dnx
+  host_frodo -->|"guest"| guest_gen
+  host_annatar --> user_vic
+  host_bombadil --> user_vic
+  host_frodo --> user_vic
+  host_mordor --> user_vic
+  host_nargun --> user_vic
+  host_nienna --> user_vic
+  host_smaug --> user_vic
+  mac_varda --> user_vic
+  mac_yavanna --> user_vic
+  guest_dnx --> user_vic
+  guest_gen --> user_vic
+  home_bitstream --> user_vic
+  home_nargun --> user_vic
 ```
 
-**Channels.** A feature emits data. One consumer writes it.
-A feature says `git-ignores = _: [ ".claude" ];` and `git` writes the global ignores.
-Dots, secrets, unfree names and env-packages work the same way.
+<details><summary>Channels and class forwarding (diagrams)</summary>
 
-**Classes.** Every other aspect key names a module system:
-`nixos`, `darwin`, `homeManager`, `homeLinux`, `homeDarwin`, `account`, `os`, `vim`, `files`.
-A class turns the collected modules into a flake output.
+**Channels**: emitter to receiver, one edge per `ren.channels` name.
 
-## Vix vocabulary
+```mermaid
+flowchart LR
+  emitter_any_scope["any scope"]
+  emitter_env["env"]
+  emitter_env_lang_aspects["env-lang aspects"]
+  emitter_fmt_README_flake_nix_no_gui["fmt README flake.nix no-gui"]
+  emitter_host_mac_home_devshell["host mac home devshell"]
+  emitter_system["system"]
+  emitter_user["user"]
+  emitter_user_feature["user feature"]
+  receiver_ai_claude("ai-claude")
+  receiver_env_devshell_and_users("env devshell and users")
+  receiver_fish("fish")
+  receiver_flake_file_class("flake-file class")
+  receiver_flake_outputs("flake outputs")
+  receiver_git("git")
+  receiver_machine("machine")
+  receiver_machine_or_home("machine or home")
+  receiver_vic_dots("vic-dots")
+  receiver_vic_secrets("vic-secrets")
+  emitter_fmt_README_flake_nix_no_gui -->|"checks"| receiver_flake_outputs
+  emitter_host_mac_home_devshell -->|"ci-jobs"| receiver_flake_outputs
+  emitter_user_feature -->|"claude-allow"| receiver_ai_claude
+  emitter_env -->|"devshells"| receiver_flake_outputs
+  emitter_user_feature -->|"dots"| receiver_vic_dots
+  emitter_env_lang_aspects -->|"env-packages"| receiver_env_devshell_and_users
+  emitter_user_feature -->|"fish-functions"| receiver_fish
+  emitter_any_scope -->|"flake-inputs"| receiver_flake_file_class
+  emitter_system -->|"formatter"| receiver_flake_outputs
+  emitter_user_feature -->|"git-ignores"| receiver_git
+  emitter_user -->|"login-shells"| receiver_machine
+  emitter_any_scope -->|"nix-features"| receiver_machine
+  emitter_system -->|"packages"| receiver_flake_outputs
+  emitter_user_feature -->|"secrets"| receiver_vic_secrets
+  emitter_any_scope -->|"unfree"| receiver_machine_or_home
+```
 
-### Kinds: typed data; a kind some `below` lists gets one scope per instance
+**Class forwarding**: solid edges carry live instance names, dashed edges are static.
+
+```mermaid
+flowchart LR
+  account["account"]
+  checks("checks")
+  darwin["darwin"]
+  darwinConfigurations("darwinConfigurations")
+  files["files"]
+  flake_file["flake-file"]
+  homeConfigurations("homeConfigurations")
+  homeDarwin["homeDarwin"]
+  homeLinux["homeLinux"]
+  homeManager["homeManager"]
+  microvm_vms("microvm.vms")
+  nixos["nixos"]
+  nixosConfigurations("nixosConfigurations")
+  os["os"]
+  packages("packages")
+  vim["vim"]
+  homeLinux -.->|"on linux"| homeManager
+  homeDarwin -.->|"on darwin"| homeManager
+  homeManager -->|"annatar, bombadil, frodo, mordor, nargun, nienna, smaug"| nixos
+  homeManager -->|"varda, yavanna"| darwin
+  homeManager -->|"vic@bitstream, vic@nargun"| homeConfigurations
+  os -.-> nixos
+  os -.-> darwin
+  account -.->|"users.users"| nixos
+  account -.->|"users.users"| darwin
+  nixos -->|"dnx, gen in frodo"| microvm_vms
+  nixos -->|"annatar, bill, bombadil, frodo, mordor, nargun, nienna, smaug, tom"| nixosConfigurations
+  darwin -->|"bert, varda, yavanna"| darwinConfigurations
+  vim -->|"astrovim, lazyvim, neovim, nvim, vscode-vim"| packages
+  files -.->|"write-files"| packages
+  files -.->|"files/README.md"| checks
+  flake_file -.->|"write-flake"| packages
+  flake_file -.->|"flake-file"| checks
+```
+
+</details>
+
+<details><summary>Vocabulary: kinds, classes, channels, profiles</summary>
+
+### Kinds: one scope per instance when some `below` lists the kind
 
 | kind | what it is | instances (`ren.<kind>.<name>`) |
 | --- | --- | --- |
@@ -99,7 +217,7 @@ A class turns the collected modules into a flake output.
 | `secrets` | user features: `[ ren.secret.x ]` | `vic-secrets`: sops-nix config |
 | `unfree` | any scope: `vix.allowUnfree [ … ]` | the machine or home's `allowUnfreePredicate` |
 
-### vic profiles: `at = ren.aspects.vic-<tier>` gates vic's features; roles are aspects machines include or derive
+### vic profiles: tiers gate features (`at = ren.aspects.vic-<tier>`); roles are included or derived
 
 | name | active |
 | --- | --- |
@@ -109,7 +227,6 @@ A class turns the collected modules into a flake output.
 | `vic-secrets` | `on-trusted`; also the sops consumer |
 | role `graphical` | hosts with desktops or wsl, workstation macs (from facts) |
 | role `installer` | iso hosts (from facts) |
-| role `live-dots` | included by a machine: dotfiles link live into ~/.flake |
 | role `metal` | a nixos host that is not a guest: builds `nixosConfigurations` |
 | role `on-darwin` | a user on a mac or darwin home (`homeDarwin`) |
 | role `on-graphical` | a user within `graphical`, no non-graphical guest between |
@@ -117,9 +234,11 @@ A class turns the collected modules into a flake output.
 | role `on-trusted` | a user within `trusted`, no untrusted guest between |
 | role `trusted` | included by a machine: holds vic's secrets |
 
-195 aspects live under `modules/`; `ren.aspects.<name>` each.
+206 aspects live under `modules/`; `ren.aspects.<name>` each.
 
-## Directory structure
+</details>
+
+<details><summary>Directory structure</summary>
 
 import-tree loads every `.nix` file under `modules/`. Paths with `/_` are skipped.
 Dir names are for humans only. Ren does not read them.
@@ -155,9 +274,9 @@ Inside `modules/vic/`:
 | `modules/vic/sys/` | fonts, ssh and system bits |
 | `modules/vic/vcs/` | git and jujutsu |
 
-## Recipes
+</details>
 
-Every `.nix` under `modules/` is a module.
+<details><summary>Recipes: add a host, feature, env, ssh host, secret</summary>
 
 **Add a host**: facts only; community aspects key on them (`modules/hosts/<name>.nix`).
 ```nix
@@ -201,17 +320,9 @@ ren.secret.groq-api-key.sopsKey = "groq_api_key";  # modules/security/secret.nix
 ren.aspects.my-feature.secrets = { ... }: [ ren.secret.groq-api-key ];
 ```
 
-## Commands
+</details>
 
-```sh
-nix build .#nixosConfigurations.frodo.config.system.build.toplevel
-nix build '.#homeConfigurations."vic@bitstream".activationPackage'
-nix run .#write-files                 # regenerate this README
-nix flake check                       # includes checks.x86_64-linux."files/README.md"
-nix eval --json .#ci.matrix              # every CI build job: host, mac, home, devshell
-```
-
-## History
+<details><summary>History</summary>
 
 - [Ren (current)](https://github.com/vic/vix/tree/ren)
 - [Den without flakes](https://github.com/vic/vix/tree/historic/den)
@@ -221,3 +332,5 @@ nix eval --json .#ci.matrix              # every CI build job: host, mac, home, 
 - [flake-parts](https://github.com/vic/vix/tree/historic/flake-parts)
 - [old m1 flake](https://github.com/vic/vix/tree/historic/mk-darwin-system) with [mk-darwin-system](https://github.com/vic/mk-darwin-system)
 - other with snowfall-lib lost
+
+</details>

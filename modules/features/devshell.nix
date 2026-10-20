@@ -7,6 +7,9 @@
 {
   ren.aspects.maintainer-shell = {
     at = ren.kinds.system;
+    checks = { system, ... }: {
+      ${system.name}.devshell-default = inputs.self.devShells.${system.name}.default;
+    };
     devshells =
       { system, ... }:
       let

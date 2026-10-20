@@ -23,6 +23,7 @@
     system.stateVersion = "26.11";
   };
   ren.host.frodo = {
+    checkout = "/home/vic/hk/vix";
     system = ren.system.x86_64-linux;
     users = [ ren.user.vic ];
     form = "laptop";
@@ -42,7 +43,6 @@
       };
     includes = [
       ren.aspects.trusted
-      ren.aspects.live-dots
       ren.aspects.frodo-hardware
       ren.aspects.frodo-base
       ren.aspects.frodo-audio

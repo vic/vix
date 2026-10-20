@@ -1,9 +1,5 @@
 # readme recipes: the common edits, each a few lines of real vix nix.
 ''
-  ## Recipes
-
-  Every `.nix` under `modules/` is a module.
-
   **Add a host**: facts only; community aspects key on them (`modules/hosts/<name>.nix`).
   ```nix
   ren.host.nargun = {

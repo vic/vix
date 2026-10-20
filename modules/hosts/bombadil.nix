@@ -2,6 +2,7 @@
 { ren, ... }:
 {
   ren.host.bombadil = {
+    checkout = "/home/vic/hk/vix";
     system = ren.system.x86_64-linux;
     users = [ ren.user.vic ];
     form = "iso";
@@ -17,7 +18,6 @@
     at = ren.host.bombadil;
     includes = [
       ren.aspects.trusted
-      ren.aspects.live-dots
     ];
   };
 }

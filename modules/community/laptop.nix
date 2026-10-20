@@ -20,7 +20,11 @@ in
 
       # Swap partition (hibernate) stays; zram takes the first pages.
       zramSwap.enable = true;
-      services.earlyoom.enable = true;
+      zramSwap.memoryPercent = 50; # the nixpkgs default, explicit
+      services.earlyoom = {
+        enable = true;
+        freeSwapThreshold = 10; # explicit: both free mem and free swap must fall below 10%
+      };
 
       services.fwupd.enable = true;
       services.power-profiles-daemon.enable = lib.mkDefault true;

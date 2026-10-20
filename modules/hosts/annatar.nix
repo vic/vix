@@ -2,6 +2,7 @@
 { ren, ... }:
 {
   ren.host.annatar = {
+    checkout = "/home/vic/hk/vix";
     system = ren.system.x86_64-linux;
     users = [ ren.user.vic ];
     form = "wsl";
@@ -17,7 +18,6 @@
     at = ren.host.annatar;
     includes = [
       ren.aspects.trusted
-      ren.aspects.live-dots
       ren.aspects.annatar-distro
     ];
   };

@@ -2,6 +2,7 @@
 { ren, ... }:
 {
   ren.host.nargun = {
+    checkout = "/home/vic/hk/vix";
     system = ren.system.x86_64-linux;
     users = [ ren.user.vic ];
     workstation = true;
@@ -44,7 +45,6 @@
     at = ren.host.nargun;
     includes = [
       ren.aspects.trusted
-      ren.aspects.live-dots
       ren.aspects.nargun-hardware
     ];
   };
