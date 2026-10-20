@@ -237,7 +237,7 @@ flowchart LR
 | role `on-trusted` | a user within `trusted`, no untrusted guest between |
 | role `trusted` | included by a machine: holds vic's secrets |
 
-205 aspects live under `modules/`; `ren.aspects.<name>` each.
+206 aspects live under `modules/`; `ren.aspects.<name>` each.
 
 </details>
 
