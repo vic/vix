@@ -1,7 +1,6 @@
 # power: scx_lavd follows the power profile on laptops; thermald on intel laptops.
 { lib, ren, ... }:
 let
-  vix = import ../_lib.nix { inherit lib; };
   laptop = ren.lib.and [
     ren.kinds.host
     (ren.lib.when (s: s.host.form == "laptop"))
