@@ -5,6 +5,7 @@ concurrency:
 jobs:
   build-macos-15-intel:
     continue-on-error: "${{ matrix.allowFailure }}"
+    if: "github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event.review.state == 'approved' || github.event.label.name == 'ci' || (github.event.action == 'synchronize' && contains(github.event.pull_request.labels.*.name, 'ci'))"
     name: "build ${{ matrix.name }}"
     runs-on: "macos-15-intel"
     steps:
@@ -38,6 +39,7 @@ jobs:
             system: "x86_64-darwin"
   build-macos-latest:
     continue-on-error: "${{ matrix.allowFailure }}"
+    if: "github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event.review.state == 'approved' || github.event.label.name == 'ci' || (github.event.action == 'synchronize' && contains(github.event.pull_request.labels.*.name, 'ci'))"
     name: "build ${{ matrix.name }}"
     runs-on: "macos-latest"
     steps:
@@ -76,6 +78,7 @@ jobs:
             system: "aarch64-darwin"
   build-ubuntu-24_04-arm:
     continue-on-error: "${{ matrix.allowFailure }}"
+    if: "github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event.review.state == 'approved' || github.event.label.name == 'ci' || (github.event.action == 'synchronize' && contains(github.event.pull_request.labels.*.name, 'ci'))"
     name: "build ${{ matrix.name }}"
     runs-on: "ubuntu-24.04-arm"
     steps:
@@ -109,6 +112,7 @@ jobs:
             system: "aarch64-linux"
   build-ubuntu-latest:
     continue-on-error: "${{ matrix.allowFailure }}"
+    if: "github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event.review.state == 'approved' || github.event.label.name == 'ci' || (github.event.action == 'synchronize' && contains(github.event.pull_request.labels.*.name, 'ci'))"
     name: "build ${{ matrix.name }}"
     runs-on: "ubuntu-latest"
     steps:
@@ -313,7 +317,13 @@ jobs:
             system: "x86_64-linux"
 name: "ci"
 on:
-  pull_request: {}
+  pull_request:
+    types:
+      - "labeled"
+      - "synchronize"
+  pull_request_review:
+    types:
+      - "submitted"
   push:
     branches:
       - "ren"
