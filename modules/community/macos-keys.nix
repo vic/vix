@@ -1,9 +1,15 @@
 # macos-keys: keyd remap to macOS-style keys, on hosts with keyboard = macos.
-{ mod, hostWhen, ... }:
+{ lib, ren, ... }:
+let
+  vix = import ../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.macos-keys = {
-    at = hostWhen (h: h.keyboard == "macos");
-    nixos = mod (
+    at = ren.lib.and [
+      ren.kinds.host
+      (ren.lib.when (s: s.host.keyboard == "macos"))
+    ];
+    nixos = vix.mod (
       {
         lib,
         pkgs,

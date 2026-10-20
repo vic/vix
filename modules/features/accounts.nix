@@ -1,6 +1,7 @@
 # Accounts: each user gets an account and a home on its machine; admins join wheel; the login shell is enabled.
-{ ren, place, ... }:
+{ lib, ren, ... }:
 let
+  inherit (import ../_lib.nix { inherit lib; }) place;
   inherit (ren.lib)
     and
     anyOf
@@ -71,7 +72,6 @@ in
       system.primaryUser = (builtins.head (builtins.filter (u: u.admin) mac.users)).name;
     };
   };
-
   ren.aspects.login-shell = {
     at = withShell;
     account = { user, pkgs, ... }: { shell = pkgs.${user.shell}; };

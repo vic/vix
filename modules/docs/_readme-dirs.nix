@@ -1,5 +1,5 @@
-# readme dirs: live table of modules/ and modules/vic/ directories, checked against docs/vocabulary-dirs.nix.
-{ vocabDirs, ... }:
+# readme dirs (a fn of vocabDirs): live table of modules/ and modules/vic/ directories, checked against docs/_vocabulary-dirs.nix.
+{ vocabDirs }:
 let
   inherit (builtins)
     attrNames
@@ -25,7 +25,7 @@ let
     if missing == [ ] && stale == [ ] then
       lines
     else
-      throw "docs/vocabulary-dirs.nix ${what}: missing [${toString missing}] stale [${toString stale}]";
+      throw "docs/_vocabulary-dirs.nix ${what}: missing [${toString missing}] stale [${toString stale}]";
   table =
     prefix: p: lines:
     concatStringsSep "\n" (
@@ -36,17 +36,15 @@ let
       ++ map (n: "| `${prefix}${n}/` | ${lines.${n}} |") (attrNames (described prefix (dirsOf p) lines))
     );
 in
-{
-  _module.args.readmeDirs = ''
-    ## Directory structure
+''
+  ## Directory structure
 
-    import-tree loads every `.nix` file under `modules/`. Paths with `/_` are skipped.
-    Dir names are for humans only. Ren does not read them.
+  import-tree loads every `.nix` file under `modules/`. Paths with `/_` are skipped.
+  Dir names are for humans only. Ren does not read them.
 
-    ${table "modules/" ./.. vocabDirs.top}
+  ${table "modules/" ./.. vocabDirs.top}
 
-    Inside `modules/vic/`:
+  Inside `modules/vic/`:
 
-    ${table "modules/vic/" ./../vic vocabDirs.vic}
-  '';
-}
+  ${table "modules/vic/" ./../vic vocabDirs.vic}
+''

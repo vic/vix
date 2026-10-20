@@ -2,13 +2,12 @@
 {
   ren,
   inputs,
-  pkgsFor,
   ...
 }:
 let
   treefmt =
     system:
-    inputs.treefmt-nix.lib.evalModule (pkgsFor system) {
+    inputs.treefmt-nix.lib.evalModule system.pkgs {
       projectRootFile = "flake.nix";
       programs = {
         nixfmt.enable = true;

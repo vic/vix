@@ -1,5 +1,5 @@
 # fish: functions, aliases, abbreviations, television and fzf integration.
-{ ren, vicAt, ... }:
+{ ren, ... }:
 {
   # any feature emits fish functions; fish writes them once.
   ren.channels.fish-functions = {
@@ -8,7 +8,7 @@
     to = e: e;
   };
   ren.aspects.fish = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     fish-functions = { ... }: import ./_fish/functions.nix { };
     homeManager =
       { pkgs, fish-functions, ... }:

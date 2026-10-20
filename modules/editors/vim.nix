@@ -2,14 +2,12 @@
 {
   ren,
   lib,
-  opt,
-  maybe,
   inputs,
-  pkgsFor,
   ...
 }:
 let
-  # every feature an aspect can gate on (`vimFeature`)
+  vix = import ../_lib.nix { inherit lib; };
+  # every feature an aspect can gate on: `at = ren.lib.when (s: builtins.elem "snacks" (s.vim.features or [ ]));`
   features = builtins.filter (w: builtins.isString w && w != "") (
     builtins.split "[[:space:]]+" ''
       avante blink bufferline codecompanion conform copilot copilot-chat dropbar flash globals
@@ -20,20 +18,12 @@ let
   );
 in
 {
-  # feature gate for aspects: `at = vimFeature "snacks";`
-  _module.args.vimFeature =
-    f:
-    ren.lib.and [
-      ren.kinds.vim
-      (ren.lib.when (s: builtins.elem f s.vim.features))
-    ];
-
   ren.kinds.system.below = [ ren.kinds.vim ]; # one profile scope per system (merges with topology/fleet.nix, v33)
   ren.kinds.vim = {
-    features = opt (lib.types.listOf (lib.types.enum features)) [ ];
-    theme = maybe lib.types.str; # a colorscheme name
-    gui = opt lib.types.bool false; # also emit packages.<name>-gui (neovide)
-    aliases = opt (lib.types.listOf lib.types.str) [ ]; # extra binary names
+    features = vix.opt (lib.types.listOf (lib.types.enum features)) [ ];
+    theme = vix.maybe lib.types.str; # a colorscheme name
+    gui = vix.opt lib.types.bool false; # also emit packages.<name>-gui (neovide)
+    aliases = vix.opt (lib.types.listOf lib.types.str) [ ]; # extra binary names
   };
 
   ren.aspects.vim-inputs = {
@@ -64,7 +54,7 @@ in
         # a profile's aspects may allow unfree plugin deps (`unfree = allowUnfree [ .. ];`)
         pkgs =
           if unfree == { } then
-            pkgsFor system
+            system.pkgs
           else
             import inputs.nixpkgs {
               system = system.name;

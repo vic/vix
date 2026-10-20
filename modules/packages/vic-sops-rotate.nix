@@ -1,12 +1,12 @@
 # vic-sops-rotate: rotate every vic secret file.
-{ ren, pkgsFor, ... }:
+{ ren, ... }:
 {
   ren.aspects.vic-sops-rotate = {
     at = ren.kinds.system;
     packages =
       { system, ... }:
       {
-        vic-sops-rotate = (pkgsFor system).writeShellApplication {
+        vic-sops-rotate = system.pkgs.writeShellApplication {
           name = "vic-sops-rotate";
           text = ''
             # shellcheck disable=SC2011

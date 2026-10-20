@@ -2,7 +2,6 @@
 {
   ren,
   inputs,
-  pkgsFor,
   ...
 }:
 {
@@ -11,7 +10,7 @@
     devshells =
       { system, ... }:
       let
-        pkgs = pkgsFor system;
+        pkgs = system.pkgs;
         apps = inputs.self.packages.${system.name};
         s = inputs.self.nixosConfigurations.nargun.config.nix.settings; # a workstation: carries the vix cachix (as old vix)
         nixConf = pkgs.writeText "nix.conf" (

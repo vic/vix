@@ -1,11 +1,14 @@
 # Claude Code: a read-only declarative settings.json. CC cannot mutate it at
 # runtime; change config here, not in the TUI.
 {
+  inputs,
+  lib,
   ren,
-  vicAt,
-  mod,
   ...
 }:
+let
+  vix = import ../../_lib.nix { inherit lib; };
+in
 {
   # features emit permission rules;
   # ai-claude writes them once.
@@ -15,14 +18,13 @@
     to = e: e;
   };
   ren.aspects.ai-claude = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     git-ignores = { ... }: [ ".claude" ];
     homeManager =
       { claude-allow, ... }:
-      mod (
+      vix.mod (
         {
           config,
-          inputs',
           lib,
           pkgs,
           ...
@@ -40,7 +42,7 @@
 
           programs.claude-code = {
             enable = true;
-            package = inputs'.llm-agents.packages.claude-code;
+            package = (vix.perSystem pkgs inputs.llm-agents).packages.claude-code;
             enableMcpIntegration = true;
 
             lspServers.nix = {

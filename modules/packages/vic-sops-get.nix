@@ -1,12 +1,12 @@
 # vic-sops-get: decrypt vic secrets with sops, optionally derive an age key.
-{ ren, pkgsFor, ... }:
+{ ren, ... }:
 {
   ren.aspects.vic-sops-get = {
     at = ren.kinds.system;
     packages =
       { system, ... }:
       let
-        pkgs = pkgsFor system;
+        pkgs = system.pkgs;
       in
       {
         vic-sops-get = pkgs.writeShellApplication {

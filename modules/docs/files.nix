@@ -2,7 +2,6 @@
 {
   ren,
   inputs,
-  pkgsFor,
   ...
 }:
 {
@@ -13,12 +12,10 @@
       ms:
       let
         e = inputs.nixpkgs.lib.evalModules {
+          specialArgs.pkgs = system.pkgs;
           modules = [
             inputs.files.module
-            {
-              config._module.args.pkgs = pkgsFor system;
-              config.files.root = inputs.self;
-            }
+            { config.files.root = inputs.self; }
           ]
           ++ ms;
         };

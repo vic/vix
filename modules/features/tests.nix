@@ -2,7 +2,6 @@
 {
   ren,
   inputs,
-  pkgsFor,
   ...
 }:
 let
@@ -56,7 +55,7 @@ in
       {
         ${system.name} = lib.mapAttrs (
           name: ps:
-          (pkgsFor system).runCommand name { } ''
+          system.pkgs.runCommand name { } ''
             ${lib.concatMapStringsSep "\n" (p: "echo ${lib.escapeShellArg p}") ps}
             ${if ps == [ ] then "touch $out" else "exit 1"}
           ''

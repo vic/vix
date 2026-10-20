@@ -1,17 +1,22 @@
 # nvidia: proprietary driver, nouveau blacklisted, on nvidia hosts.
 {
-  mod,
-  hostWhen,
-  allowUnfree,
+  lib,
+  ren,
   ...
 }:
+let
+  vix = import ../_lib.nix { inherit lib; };
+in
 {
-  ren.aspects.nvidia.at = hostWhen (h: h.gpu == "nvidia");
-  ren.aspects.nvidia.unfree = allowUnfree [
+  ren.aspects.nvidia.at = ren.lib.and [
+    ren.kinds.host
+    (ren.lib.when (s: s.host.gpu == "nvidia"))
+  ];
+  ren.aspects.nvidia.unfree = vix.allowUnfree [
     "nvidia-x11"
     "nvidia-settings"
   ];
-  ren.aspects.nvidia.nixos = mod (
+  ren.aspects.nvidia.nixos = vix.mod (
     { config, ... }:
     {
       boot.initrd.kernelModules = [ "nvidia" ];

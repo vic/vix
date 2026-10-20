@@ -1,8 +1,8 @@
 # jujutsu-revsets: jj settings.
-{ vicAt, ... }:
+{ ren, ... }:
 {
   ren.aspects.jujutsu-revsets = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     homeManager = { ... }: {
       programs.jujutsu.settings = {
         revset-aliases = {

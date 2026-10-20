@@ -1,8 +1,11 @@
 # enthium: the Enthium keyboard layout, on hosts that list it.
-{ inputs, hostWhen, ... }:
+{ inputs, ren, ... }:
 {
   ren.aspects.enthium = {
-    at = hostWhen (h: builtins.elem "enthium" h.layouts);
+    at = ren.lib.and [
+      ren.kinds.host
+      (ren.lib.when (s: builtins.elem "enthium" s.host.layouts))
+    ];
     flake-inputs =
       { ... }:
       {

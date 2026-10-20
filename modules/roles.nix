@@ -1,18 +1,18 @@
-# Roles: aspects user features gate on with `inRole`; graphical and installer derive from machine facts.
-{
-  ren,
-  hostWhen,
-  macWhen,
-  ...
-}:
+# Roles: aspects machines include or derive from facts; users gate on on-graphical and on-trusted.
+{ ren, ... }:
 let
-  inherit (ren.lib) and not within;
-in
-{
-  # under a scope holding the role, with no guest in between that lacks it (a guest is its own machine).
-  _module.args.inRole =
+  inherit (ren.lib)
+    and
+    anyOf
+    not
+    when
+    within
+    ;
+  # a user under a scope holding the role, with no guest in between that lacks it (a guest is its own machine).
+  inRole =
     role:
     and [
+      ren.kinds.user
       (within role)
       (not (
         within (and [
@@ -21,12 +21,25 @@ in
         ])
       ))
     ];
-
-  ren.aspects.graphical.at = ren.lib.anyOf [
-    (hostWhen (h: h.desktops != [ ] || h.form == "wsl")) # gui apps, gui dotfiles
-    (macWhen (m: m.workstation))
+in
+{
+  ren.aspects.graphical.at = anyOf [
+    (and [
+      ren.kinds.host
+      (when (s: s.host.desktops != [ ] || s.host.form == "wsl"))
+    ]) # gui apps, gui dotfiles
+    (and [
+      ren.kinds.mac
+      (when (s: s.mac.workstation))
+    ])
   ];
-  ren.aspects.installer.at = hostWhen (h: h.form == "iso"); # an iso image: no heavy home packages
+  ren.aspects.installer.at = and [
+    ren.kinds.host
+    (when (s: s.host.form == "iso"))
+  ]; # an iso image: no heavy home packages
   ren.aspects.trusted = { }; # holds vic's secrets: sops, ssh keys
   ren.aspects.live-dots = { }; # has the ~/.flake checkout: dotfiles link live into it
+
+  ren.aspects.on-graphical.at = inRole ren.aspects.graphical;
+  ren.aspects.on-trusted.at = inRole ren.aspects.trusted;
 }

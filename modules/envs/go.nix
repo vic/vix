@@ -1,5 +1,5 @@
 # envs: go tools.
-{ ren, pkgsFor, ... }:
+{ ren, ... }:
 {
   ren.aspects.env-go = {
     at = ren.lib.and [
@@ -9,7 +9,7 @@
     env-packages =
       { system, ... }:
       let
-        p = pkgsFor system;
+        p = system.pkgs;
       in
       [
         p.go

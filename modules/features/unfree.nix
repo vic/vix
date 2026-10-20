@@ -1,10 +1,11 @@
 # Unfree: any scope allows unfree packages by name; each machine and home config accepts what its subtree allows.
-{ ren, mod, ... }:
+{ lib, ren, ... }:
 let
+  vix = import ../_lib.nix { inherit lib; };
   inherit (ren.lib) anyOf has;
   accept =
     { unfree, ... }:
-    mod (
+    vix.mod (
       { lib, ... }:
       lib.mkIf (unfree != { }) {
         nixpkgs.config.allowUnfreePredicate =
@@ -13,15 +14,6 @@ let
     );
 in
 {
-  _module.args.allowUnfree =
-    names:
-    builtins.listToAttrs (
-      map (name: {
-        inherit name;
-        value = true;
-      }) names
-    );
-
   ren.channels.unfree = {
     fold = ren.lib.fold.attrs;
     to =

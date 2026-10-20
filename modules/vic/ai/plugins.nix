@@ -1,12 +1,13 @@
 # Claude Code plugin marketplaces, store-pinned: CC resolves plugins from these
 # nix-store paths instead of cloning from GitHub at runtime.
 {
+  lib,
   inputs,
-  vicAt,
-  mod,
+  ren,
   ...
 }:
 let
+  vix = import ../../_lib.nix { inherit lib; };
   # marketplace name -> flake input (and its input url)
   marketplaces = {
     superpowers-extended-cc-marketplace = "github:pcvelz/superpowers";
@@ -31,14 +32,14 @@ in
 {
 
   ren.aspects.ai-plugins = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     flake-inputs =
       { ... }:
       builtins.mapAttrs (_: url: {
         inherit url;
         flake = false;
       }) pinned;
-    homeManager = mod (
+    homeManager = vix.mod (
       { lib, pkgs, ... }:
       let
         srcOf = name: inputs.${name};

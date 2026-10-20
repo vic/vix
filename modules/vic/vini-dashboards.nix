@@ -1,10 +1,12 @@
 # vini-dashboards: loopback web dashboards on vini, reached via the vini-tunnel forwards (sys/ssh.nix). DISABLED: no `at`.
-{ mod, ... }:
+{ inputs, lib, ... }:
+let
+  vix = import ../_lib.nix { inherit lib; };
+in
 {
-  ren.aspects.vic-vini-dashboards.homeManager = mod (
+  ren.aspects.vic-vini-dashboards.homeManager = vix.mod (
     {
       config,
-      inputs',
       pkgs,
       ...
     }:
@@ -28,7 +30,7 @@
         # ~/.claude session browser; public-url is frodo's forwarded port.
         agentsview =
           service "agentsview session browser"
-            "${inputs'.llm-agents.packages.agentsview}/bin/agentsview serve --host 127.0.0.1 --port 8080 --no-browser --public-url http://127.0.0.1:18080"
+            "${(vix.perSystem pkgs inputs.llm-agents).packages.agentsview}/bin/agentsview serve --host 127.0.0.1 --port 8080 --no-browser --public-url http://127.0.0.1:18080"
             { };
 
         omni-sqlite-web =

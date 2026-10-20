@@ -1,10 +1,18 @@
 # jujutsu: identity, ssh signing, jjui wrappers.
-{ vicAt, ... }:
+{
+  inputs,
+  lib,
+  ren,
+  ...
+}:
+let
+  vix = import ../../../_lib.nix { inherit lib; };
+in
 {
 
   ren.aspects.jujutsu = {
     dots.".config/jjui" = "config/jjui";
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     flake-inputs =
       { ... }:
       {
@@ -22,12 +30,11 @@
     homeManager =
       {
         pkgs,
-        inputs',
         user,
         ...
       }:
       let
-        jjui = inputs'.jjui.packages.jjui;
+        jjui = (vix.perSystem pkgs inputs.jjui).packages.jjui;
         jjui-wrapped = pkgs.writeShellApplication {
           name = "jjui";
           text = ''
@@ -37,7 +44,7 @@
           '';
         };
 
-        majjit = inputs'.jjui.packages.jjui;
+        majjit = (vix.perSystem pkgs inputs.jjui).packages.jjui;
         majjit-wrapped = pkgs.writeShellApplication {
           name = "majjit";
           text = ''

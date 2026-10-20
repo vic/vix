@@ -1,8 +1,7 @@
 # vic-edge: edgevpn wrapper reading the token from sops.
 {
   ren,
-  pkgsFor,
-  edgevpnFor,
+  inputs,
   ...
 }:
 {
@@ -11,7 +10,7 @@
     packages =
       { system, ... }:
       let
-        pkgs = pkgsFor system;
+        pkgs = system.pkgs;
       in
       {
         vic-edge = pkgs.writeShellApplication {
@@ -21,7 +20,7 @@
               ADDRESS="''${ADDRESS:-"192.168.192.192/24"}" \
               EDGEVPNLOGLEVEL="''${EDGEVPNLOGLEVEL:-debug}" \
               EDGEVPNTOKEN="''${EDGEVPNTOKEN:-$(< "''${HOME}"/.config/sops-nix/secrets/edge.token)}" \
-              ${edgevpnFor pkgs}/bin/edgevpn "$@"
+              ${inputs.self.packages.${system.name}.edgevpn}/bin/edgevpn "$@"
           '';
         };
       };

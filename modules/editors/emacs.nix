@@ -2,24 +2,23 @@
 {
   ren,
   lib,
-  opt,
-  maybe,
   inputs,
   ...
 }:
 let
+  vix = import ../_lib.nix { inherit lib; };
   t = lib.types;
   doomRev = inputs.doom-emacs.rev;
 in
 {
   ren.kinds.emacs = {
-    initDir = maybe t.str; # --init-directory of the daemon
-    daemon = opt t.bool false; # this distribution runs as the emacs service
-    configDots = maybe t.str; # dots source linked at ~/.config/<name>
-    wrapper = maybe t.str; # flake input whose package of the same name wraps our emacs
-    bootstrap = maybe t.str; # activation script text; installed as <name>-install
-    bins = opt (t.attrsOf t.str) { }; # shell scripts put on PATH
-    fish = opt (t.attrsOf t.str) { }; # fish function bodies
+    initDir = vix.maybe t.str; # --init-directory of the daemon
+    daemon = vix.opt t.bool false; # this distribution runs as the emacs service
+    configDots = vix.maybe t.str; # dots source linked at ~/.config/<name>
+    wrapper = vix.maybe t.str; # flake input whose package of the same name wraps our emacs
+    bootstrap = vix.maybe t.str; # activation script text; installed as <name>-install
+    bins = vix.opt (t.attrsOf t.str) { }; # shell scripts put on PATH
+    fish = vix.opt (t.attrsOf t.str) { }; # fish function bodies
   };
 
   ren.emacs.spc = {

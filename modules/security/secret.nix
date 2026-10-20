@@ -2,10 +2,10 @@
 {
   ren,
   lib,
-  maybe,
   ...
 }:
 let
+  vix = import ../_lib.nix { inherit lib; };
   t = lib.types;
   bin = file: {
     format = "binary";
@@ -15,9 +15,9 @@ in
 {
   ren.kinds.secret = {
     sopsKey = t.str; # sops key path
-    format = maybe (t.enum [ "binary" ]);
-    sopsFile = maybe t.path;
-    path = maybe t.str;
+    format = vix.maybe (t.enum [ "binary" ]);
+    sopsFile = vix.maybe t.path;
+    path = vix.maybe t.str;
   };
   ren.channels.secrets = {
     fold = ren.lib.fold.list;

@@ -1,5 +1,5 @@
 # git: identity from the user binding, ssh signing, difftastic, delta pager.
-{ ren, vicAt, ... }:
+{ ren, ... }:
 {
   # any feature emits the paths it wants git to ignore; git writes them once.
   ren.channels.git-ignores = {
@@ -9,7 +9,7 @@
   };
   ren.aspects.git = {
     dots.".config/gh/config.yml" = "config/gh/config.yml";
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     git-ignores = { ... }: [
       ".DS_Store"
       "*.swp"

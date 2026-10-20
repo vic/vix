@@ -1,8 +1,11 @@
 # Role wsl: a NixOS-WSL machine (form = wsl); vic is the default user.
-{ inputs, hostWhen, ... }:
+{ inputs, ren, ... }:
 {
   ren.aspects.wsl = {
-    at = hostWhen (h: h.form == "wsl");
+    at = ren.lib.and [
+      ren.kinds.host
+      (ren.lib.when (s: s.host.form == "wsl"))
+    ];
     flake-inputs =
       { ... }:
       {

@@ -2,16 +2,11 @@
 {
   ren,
   lib,
-  usersOf,
   ...
 }:
 let
+  vix = import ../_lib.nix { inherit lib; };
   inherit (ren.lib) and within not;
-  metal = and [
-    ren.kinds.host
-    (not ren.kinds.guest)
-  ]; # physical nixos hosts
-  guestsOf = h: lib.filterAttrs (_: g: ren.lib.same g.on h) ren.guest; # h: a host instance
   callable = m: builtins.isFunction m || (builtins.isAttrs m && m ? __functor);
   # users.users is a shorthand submodule (config only): resolve content fns and `imports` here.
   resolve =
@@ -41,19 +36,20 @@ let
     };
 in
 {
-  _module.args = {
-    inherit metal guestsOf;
-  };
+  ren.aspects.metal.at = and [
+    ren.kinds.host
+    (not ren.kinds.guest)
+  ]; # physical nixos hosts
 
   ren.kinds.host = {
     is = ren.kinds.machine;
     below = [ ren.kinds.user ];
-    spawns.user = s: usersOf s.host;
+    spawns.user = s: vix.usersOf s.host;
   };
 
   ren.classes.nixos = [
     {
-      at = metal;
+      at = ren.aspects.metal;
       into = { host, ... }: ms: {
         nixosConfigurations.${host.name} = host.channel.nixpkgs.lib.nixosSystem {
           system = host.system.name;

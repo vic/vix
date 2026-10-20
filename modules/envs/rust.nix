@@ -2,7 +2,6 @@
 {
   ren,
   inputs,
-  pkgsFor,
   ...
 }:
 {
@@ -22,7 +21,7 @@
     env-packages =
       { system, ... }:
       let
-        p = (pkgsFor system).extend (import inputs.rust-overlay);
+        p = system.pkgs.extend (import inputs.rust-overlay);
       in
       [
         (p.rust-bin.stable.latest.default.override {

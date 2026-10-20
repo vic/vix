@@ -1,8 +1,8 @@
 # jujutsu-aliases: jj settings.
-{ vicAt, ... }:
+{ ren, ... }:
 {
   ren.aspects.jujutsu-aliases = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     homeManager = { ... }: {
       programs.jujutsu.settings.aliases = {
         tug = [

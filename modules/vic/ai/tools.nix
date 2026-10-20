@@ -1,12 +1,16 @@
 # Agent CLIs from numtide/llm-agents.nix, with their Claude Code wiring.
 {
-  vicAt,
-  mod,
+  inputs,
+  lib,
+  ren,
   ...
 }:
+let
+  vix = import ../../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.ai-tools = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     claude-allow = { ... }: [
       "Bash(br *)"
       "Bash(codegraph *)"
@@ -17,15 +21,14 @@
       ".codegraph"
       "/AGENTS.md"
     ];
-    homeManager = mod (
+    homeManager = vix.mod (
       {
-        inputs',
         lib,
         pkgs,
         ...
       }:
       let
-        llm = inputs'.llm-agents.packages;
+        llm = (vix.perSystem pkgs inputs.llm-agents).packages;
 
         calldiff = pkgs.writeShellApplication {
           name = "calldiff";

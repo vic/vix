@@ -1,20 +1,23 @@
 # Local stdio MCP servers for code discovery, spawned per session by Claude Code.
 # (codegraph lives in tools.nix beside its CLI; headroom in headroom.nix.)
 {
-  vicAt,
-  mod,
+  lib,
+  ren,
   ...
 }:
+let
+  vix = import ../../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.ai-mcp = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     claude-allow = { ... }: [ "Bash(serena *)" ] ++ (import ./_quipu.nix).tools;
     git-ignores = { ... }: [
       ".serena"
       ".cbmignore"
       ".quipu"
     ];
-    homeManager = mod (
+    homeManager = vix.mod (
       {
         config,
         lib,

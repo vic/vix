@@ -2,8 +2,6 @@
 {
   ren,
   inputs,
-  pkgsFor,
-  inRole,
   ...
 }:
 let
@@ -13,11 +11,11 @@ let
     and [
       ren.kinds.user
       (within kind)
-      (not (inRole ren.aspects.graphical))
+      (not ren.aspects.on-graphical)
     ];
   # every share/applications/*.desktop in the home path must be a terminal app.
   check = system: name: homePath: {
-    ${system.name}."no-gui-${name}" = (pkgsFor system).runCommand "no-gui-${name}" { } ''
+    ${system.name}."no-gui-${name}" = system.pkgs.runCommand "no-gui-${name}" { } ''
       bad=0
       for f in ${homePath}/share/applications/*.desktop; do
         [ -e "$f" ] || continue

@@ -1,14 +1,15 @@
 # secrets: sops-nix home secrets (the emitted ones), templates and the ssh identity links.
 {
+  lib,
   ren,
-  vicAt,
   inputs,
-  mod,
   ...
 }:
+let
+  vix = import ../../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.vic-secrets = {
-    at = vicAt.secrets;
     flake-inputs =
       { ... }:
       {
@@ -28,7 +29,7 @@
     ];
     homeManager =
       { secrets, ... }:
-      mod (
+      vix.mod (
         {
           config,
           pkgs,

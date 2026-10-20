@@ -1,14 +1,17 @@
 # lightjj: browser UI for jj, served from wherever the repo lives (also headless vini).
 {
+  lib,
   inputs,
-  vicAt,
-  mod,
+  ren,
   ...
 }:
+let
+  vix = import ../../_lib.nix { inherit lib; };
+in
 {
 
   ren.aspects.ai-lightjj = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     flake-inputs =
       { ... }:
       {
@@ -17,10 +20,10 @@
           inputs.nixpkgs.follows = "nixpkgs";
         };
       };
-    homeManager = mod (
-      { inputs', ... }:
+    homeManager = vix.mod (
+      { pkgs, ... }:
       {
-        home.packages = [ inputs'.lightjj.packages.default ];
+        home.packages = [ (vix.perSystem pkgs inputs.lightjj).packages.default ];
         programs.claude-code.skills.lightjj = "${inputs.lightjj}/cmd/lightjj/SKILL.md";
       }
     );

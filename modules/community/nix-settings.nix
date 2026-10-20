@@ -1,17 +1,24 @@
 # nix-settings: cachix substitutes, flakes, trusted users, weekly gc, on workstations and wsl (nixos and darwin).
 {
+  lib,
   ren,
-  mod,
-  hostWhen,
-  macWhen,
   ...
 }:
+let
+  vix = import ../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.nix-settings.at = ren.lib.anyOf [
-    (hostWhen (h: h.workstation || h.form == "wsl"))
-    (macWhen (m: m.workstation))
+    (ren.lib.and [
+      ren.kinds.host
+      (ren.lib.when (s: s.host.workstation || s.host.form == "wsl"))
+    ])
+    (ren.lib.and [
+      ren.kinds.mac
+      (ren.lib.when (s: s.mac.workstation))
+    ])
   ];
-  ren.aspects.nix-settings.os = mod (
+  ren.aspects.nix-settings.os = vix.mod (
     { pkgs, config, ... }:
     {
       nix = {

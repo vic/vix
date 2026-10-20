@@ -3,15 +3,18 @@
 # at the versions that were installed in ~/node_modules (same pattern as calldiff
 # in ../tools.nix). lightjj: ../lightjj.nix; notebooklm-mcp: ../browser-tools.nix.
 {
+  lib,
   inputs,
-  vicAt,
-  mod,
+  ren,
   ...
 }:
+let
+  vix = import ../../../_lib.nix { inherit lib; };
+in
 {
 
   ren.aspects.ai-vic-upstream = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     flake-inputs =
       { ... }:
       {
@@ -24,7 +27,7 @@
           flake = false;
         };
       };
-    homeManager = mod (
+    homeManager = vix.mod (
       { lib, pkgs, ... }:
       let
         # bin name -> npm package spec providing it

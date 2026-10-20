@@ -1,17 +1,18 @@
 # vim snacks: snacks.nvim, vic's header, picker keymaps, and the nvim profile's dashboard + toggles.
 {
-  vimFeature,
-  mod,
+  lib,
+  ren,
   ...
 }:
 let
+  vix = import ../../_lib.nix { inherit lib; };
   on = {
     enabled = true;
   };
 in
 {
   ren.aspects.vim-snacks = {
-    at = vimFeature "snacks";
+    at = ren.lib.when (s: builtins.elem "snacks" (s.vim.features or [ ]));
     vim.vim.utility.snacks-nvim = {
       enable = true;
       setupOpts = {
@@ -34,18 +35,18 @@ in
   };
 
   ren.aspects.vim-snacks-header = {
-    at = vimFeature "snacks-header";
+    at = ren.lib.when (s: builtins.elem "snacks-header" (s.vim.features or [ ]));
     vim.vim.utility.snacks-nvim.setupOpts.dashboard.preset.header = builtins.readFile ./header.txt;
   };
 
   ren.aspects.vim-snacks-keys = {
-    at = vimFeature "snacks-keys";
+    at = ren.lib.when (s: builtins.elem "snacks-keys" (s.vim.features or [ ]));
     vim = import ./_keys.nix;
   };
 
   ren.aspects.vim-snacks-extras = {
-    at = vimFeature "snacks-extras";
-    vim = mod (
+    at = ren.lib.when (s: builtins.elem "snacks-extras" (s.vim.features or [ ]));
+    vim = vix.mod (
       { lib, ... }:
       {
         vim.utility.snacks-nvim.setupOpts.dashboard.sections = [

@@ -1,5 +1,8 @@
 # frodo session: audio, apps and desktop of vic's laptop.
-{ mod, ... }:
+{ lib, ... }:
+let
+  vix = import ../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.frodo-audio.nixos = {
     hardware.bluetooth.enable = true;
@@ -13,7 +16,7 @@
       pulse.enable = true;
     };
   };
-  ren.aspects.frodo-apps.nixos = mod (
+  ren.aspects.frodo-apps.nixos = vix.mod (
     { lib, pkgs, ... }:
     {
       programs.direnv.enable = true;

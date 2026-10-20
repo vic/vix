@@ -2,22 +2,25 @@
 # symlink; browse widgets in its TUI, but change the layout here.
 # One line: model, burn (ctx, $, $/h, tokens), quotas, last skill, last MCP tool.
 {
-  vicAt,
-  mod,
+  inputs,
+  lib,
+  ren,
   ...
 }:
+let
+  vix = import ../../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.ai-statusline = {
-    at = vicAt.headless;
-    homeManager = mod (
+    at = ren.aspects.vic-headless;
+    homeManager = vix.mod (
       {
         lib,
         pkgs,
-        inputs',
         ...
       }:
       let
-        ccstatusline = lib.getExe inputs'.llm-agents.packages.ccstatusline;
+        ccstatusline = lib.getExe (vix.perSystem pkgs inputs.llm-agents).packages.ccstatusline;
 
         script =
           name:
@@ -141,7 +144,7 @@
         ];
       in
       {
-        home.packages = [ inputs'.llm-agents.packages.ccstatusline ];
+        home.packages = [ (vix.perSystem pkgs inputs.llm-agents).packages.ccstatusline ];
 
         # home.file, not xdg.configFile: ccstatusline joins homedir + ".config"
         # directly and never consults XDG_CONFIG_HOME, so this is the path it reads.

@@ -29,9 +29,9 @@ Each listed user becomes a scope below that machine.
 A profile builds one neovim. An env builds a devshell. Machines list the envs their users get.
 
 **Aspects.** An aspect is a bundle of config. Its `at` says where it is active.
-`vicAt.headless` means every scope where vic lives. `vicAt.gui` means graphical machines only.
+`ren.aspects.vic-headless` is every scope where vic lives. `ren.aspects.vic-gui` is graphical machines only.
 ```nix
-ren.aspects.direnv = { at = vicAt.headless; homeManager.programs.direnv.enable = true; };
+ren.aspects.direnv = { at = ren.aspects.vic-headless; homeManager.programs.direnv.enable = true; };
 ```
 
 **Channels.** A feature emits data. One consumer writes it.
@@ -94,24 +94,29 @@ A class turns the collected modules into a flake output.
 | `formatter` | each system (treefmt) | flake `formatter.<sys>` (`nix fmt`) |
 | `git-ignores` | user features | `git` global ignores |
 | `login-shells` | users with a shell | their machine enables `programs.<shell>` |
-| `packages` | aspects at a system | flake `packages.<sys>`, read back as `self'.packages` |
+| `packages` | aspects at a system | flake `packages.<sys>`, read back as `(vix.perSystem pkgs inputs.self).packages` |
 | `secrets` | user features: `[ ren.secret.x ]` | `vic-secrets`: sops-nix config |
-| `unfree` | any scope: `allowUnfree [ … ]` | the machine or home's `allowUnfreePredicate` |
+| `unfree` | any scope: `vix.allowUnfree [ … ]` | the machine or home's `allowUnfreePredicate` |
 
-### vic profiles: `at = vicAt.<tier>` gates vic's features; roles are aspects machines include or derive
+### vic profiles: `at = ren.aspects.vic-<tier>` gates vic's features; roles are aspects machines include or derive
 
 | name | active |
 | --- | --- |
-| `vicAt.full` | not on iso images (not within `installer`) |
-| `vicAt.gui` | within `graphical`: every gui program lives here |
-| `vicAt.headless` | everywhere vic lives: terminal tools only (homes, guests, servers) |
-| `vicAt.secrets` | within `trusted` |
+| `vic-full` | not on iso images (not within `installer`) |
+| `vic-gui` | `on-graphical`: every gui program lives here |
+| `vic-headless` | everywhere vic lives: terminal tools only (homes, guests, servers) |
+| `vic-secrets` | `on-trusted`; also the sops consumer |
 | role `graphical` | hosts with desktops or wsl, workstation macs (from facts) |
 | role `installer` | iso hosts (from facts) |
 | role `live-dots` | included by a machine: dotfiles link live into ~/.flake |
+| role `metal` | a nixos host that is not a guest: builds `nixosConfigurations` |
+| role `on-darwin` | a user on a mac or darwin home (`homeDarwin`) |
+| role `on-graphical` | a user within `graphical`, no non-graphical guest between |
+| role `on-linux` | a user on a linux machine or home (`homeLinux`) |
+| role `on-trusted` | a user within `trusted`, no untrusted guest between |
 | role `trusted` | included by a machine: holds vic's secrets |
 
-188 aspects live under `modules/`; `ren.aspects.<name>` each.
+193 aspects live under `modules/`; `ren.aspects.<name>` each.
 
 ## Directory structure
 
@@ -129,7 +134,7 @@ Dir names are for humans only. Ren does not read them.
 | `modules/hosts/` | NixOS and darwin machines, and frodo's guests |
 | `modules/net/` | ssh hosts and remote desktop |
 | `modules/packages/` | own packages and scripts |
-| `modules/people/` | users, and the vicAt feature tiers |
+| `modules/people/` | users, and the vic-* feature tier aspects |
 | `modules/platforms/` | channels (nixpkgs pins) and how machines are built |
 | `modules/security/` | secrets declared as data |
 | `modules/topology/` | kinds and the scope tree: fleet, machines, users |
@@ -167,7 +172,7 @@ ren.host.nargun = {
 **Add a user feature**: one aspect, gated by a tier (`modules/vic/<area>/<name>.nix`).
 ```nix
 ren.aspects.dev-tools = {
-  at = vicAt.full;
+  at = ren.aspects.vic-full;
   homeManager = { pkgs, ... }: { home.packages = [ pkgs.gh pkgs.jq ]; };
 };
 ```
@@ -177,7 +182,7 @@ ren.aspects.dev-tools = {
 ren.env.goenv.langs = [ "go" ];
 ren.aspects.env-go = {
   at = ren.lib.and [ ren.kinds.env (ren.lib.when (s: builtins.elem "go" s.env.langs)) ];
-  env-packages = { system, ... }: [ (pkgsFor system).go ];
+  env-packages = { system, ... }: [ system.pkgs.go ];
 };
 ```
 

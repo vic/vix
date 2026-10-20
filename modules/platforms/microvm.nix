@@ -3,14 +3,13 @@
   ren,
   lib,
   inputs,
-  usersOf,
-  metal,
-  guestsOf,
   ...
 }:
 let
+  vix = import ../_lib.nix { inherit lib; };
   inherit (ren.lib) and has;
   tap = g: "vm-${g.name}";
+  guestsOf = h: lib.filterAttrs (_: g: ren.lib.same g.on h) ren.guest; # h: a host instance
 in
 {
   # hosts run guests (merges with the host kind in platforms/nixos.nix, v33)
@@ -20,7 +19,7 @@ in
   ren.kinds.guest = {
     is = ren.kinds.host; # declares its own `below`: no guest in a guest
     below = [ ren.kinds.user ];
-    spawns.user = s: usersOf s.guest;
+    spawns.user = s: vix.usersOf s.guest;
     on = ren.kinds.host;
     addr = lib.types.str; # host route 10.0.0.0/32 <-> addr/32 (microvm docs: routed-network.md)
     macAddress = lib.types.str;
@@ -75,7 +74,7 @@ in
 
   ren.aspects.vm-host = {
     at = and [
-      metal
+      ren.aspects.metal
       (has ren.kinds.guest)
     ];
     nixos =

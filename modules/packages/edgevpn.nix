@@ -1,8 +1,7 @@
-# edgevpn: the mudler/edgevpn package (module arg edgevpnFor builds it for a pkgs).
+# edgevpn: the mudler/edgevpn package (vic-edge wraps it).
 {
   ren,
   inputs,
-  pkgsFor,
   ...
 }:
 let
@@ -17,7 +16,6 @@ let
     };
 in
 {
-  _module.args = { inherit edgevpnFor; };
 
   ren.aspects.edgevpn = {
     at = ren.kinds.system;
@@ -29,6 +27,6 @@ in
           flake = false;
         };
       };
-    packages = { system, ... }: { edgevpn = edgevpnFor (pkgsFor system); };
+    packages = { system, ... }: { edgevpn = edgevpnFor system.pkgs; };
   };
 }

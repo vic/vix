@@ -1,15 +1,18 @@
 # Agent tools that drive or render through a browser.
 {
-  vicAt,
-  mod,
+  inputs,
+  lib,
+  ren,
   ...
 }:
+let
+  vix = import ../../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.ai-browser-tools = {
-    at = vicAt.gui;
-    homeManager = mod (
+    at = ren.aspects.vic-gui;
+    homeManager = vix.mod (
       {
-        inputs',
         lib,
         pkgs,
         ...
@@ -24,7 +27,7 @@
       {
         home.packages = [
           notebooklm-mcp
-          inputs'.llm-agents.packages.openspecui
+          (vix.perSystem pkgs inputs.llm-agents).packages.openspecui
           pkgs.playwright-mcp
           pkgs.mermaid-cli # diagram-mermaid-render
         ];

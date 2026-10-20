@@ -1,30 +1,33 @@
 # nvim: vic's vim profiles (editors/vim.nix, vic/nvf) on PATH; neovide `<name>-gui` wrappers on the desktop.
 {
-  vicAt,
+  lib,
   ren,
+  inputs,
   ...
 }:
 let
+  vix = import ../../_lib.nix { inherit lib; };
   profiles = builtins.attrNames ren.vim;
+  own = pkgs: (vix.perSystem pkgs inputs.self).packages; # this flake's packages (vim profiles)
 in
 {
   ren.aspects.vic-nvim = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     homeManager =
-      { pkgs, self', ... }:
+      { pkgs, ... }:
       {
-        home.packages = map (p: self'.packages.${p}) profiles ++ [ pkgs.neovim-remote ];
+        home.packages = map (p: (own pkgs).${p}) profiles ++ [ pkgs.neovim-remote ];
         home.sessionVariables.EDITOR = "vim";
       };
   };
 
   ren.aspects.vic-nvim-gui = {
-    at = vicAt.gui;
+    at = ren.aspects.vic-gui;
     homeManager =
-      { pkgs, self', ... }:
+      { pkgs, ... }:
       {
         home.packages =
-          map (p: self'.packages."${p}-gui") (builtins.filter (p: self'.packages ? "${p}-gui") profiles)
+          map (p: (own pkgs)."${p}-gui") (builtins.filter (p: own pkgs ? "${p}-gui") profiles)
           ++ [ pkgs.neovide ];
         home.sessionVariables.VISUAL = "vim-gui";
       };

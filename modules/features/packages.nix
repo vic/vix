@@ -1,7 +1,6 @@
-# Packages: each system emits flake packages; content reads them back as self'.packages.
-{ ren, inputs, ... }:
+# Packages: each system emits flake packages; content reads them back from the flake's own outputs.
+{ ren, ... }:
 {
-  _module.args.pkgsFor = system: inputs.nixpkgs.legacyPackages.${system.name};
 
   ren.channels.packages = {
     fold = ren.lib.fold.attrs;

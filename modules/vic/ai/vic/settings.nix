@@ -1,12 +1,12 @@
 # vic's frodo settings.json preferences. Where sini's claude.nix sets the
 # same key it uses lib.mkDefault, so these win.
 {
-  vicAt,
+  ren,
   ...
 }:
 {
   ren.aspects.ai-vic-settings = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     # home-manager serves its mcpServers as the `hm` plugin, hence the prefix.
     claude-allow =
       { ... }:

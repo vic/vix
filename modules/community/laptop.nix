@@ -1,8 +1,14 @@
-{ mod, hostWhen, ... }:
+{ lib, ren, ... }:
+let
+  vix = import ../_lib.nix { inherit lib; };
+in
 {
   # Laptop baseline. Ideas from sini core/{systemd,perf,nix,system,network}.
-  ren.aspects.laptop.at = hostWhen (h: h.form == "laptop");
-  ren.aspects.laptop.nixos = mod (
+  ren.aspects.laptop.at = ren.lib.and [
+    ren.kinds.host
+    (ren.lib.when (s: s.host.form == "laptop"))
+  ];
+  ren.aspects.laptop.nixos = vix.mod (
     {
       config,
       pkgs,

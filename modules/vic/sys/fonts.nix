@@ -1,9 +1,9 @@
 # fonts: nerd fonts in the user's account packages (machines only, not standalone homes).
-{ ren, vicAt, ... }:
+{ ren, ... }:
 {
   ren.aspects.vic-fonts = {
     at = ren.lib.and [
-      vicAt.headless
+      ren.aspects.vic-headless
       (ren.lib.within ren.kinds.machine) # account lands on nixos and darwin users
     ];
     account =

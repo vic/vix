@@ -1,8 +1,8 @@
 # vim langs: lsp + treesitter, languages (rust via rustaceanvim), completion, format, lint, diagnostics list.
-{ vimFeature, ... }:
+{ ren, ... }:
 {
   ren.aspects.vim-lsp = {
-    at = vimFeature "lsp";
+    at = ren.lib.when (s: builtins.elem "lsp" (s.vim.features or [ ]));
     vim.vim = {
       lsp.enable = true;
       treesitter.enable = true;
@@ -11,17 +11,17 @@
   };
 
   ren.aspects.vim-lua = {
-    at = vimFeature "lua";
+    at = ren.lib.when (s: builtins.elem "lua" (s.vim.features or [ ]));
     vim.vim.languages.lua.enable = true;
   };
 
   ren.aspects.vim-go = {
-    at = vimFeature "go";
+    at = ren.lib.when (s: builtins.elem "go" (s.vim.features or [ ]));
     vim.vim.languages.go.enable = true;
   };
 
   ren.aspects.vim-rust = {
-    at = vimFeature "rust";
+    at = ren.lib.when (s: builtins.elem "rust" (s.vim.features or [ ]));
     vim.vim = {
       languages.rust = {
         enable = true;
@@ -42,7 +42,7 @@
   };
 
   ren.aspects.vim-blink = {
-    at = vimFeature "blink";
+    at = ren.lib.when (s: builtins.elem "blink" (s.vim.features or [ ]));
     vim.vim.autocomplete.blink-cmp = {
       enable = true;
       friendly-snippets.enable = true;
@@ -60,17 +60,17 @@
   };
 
   ren.aspects.vim-conform = {
-    at = vimFeature "conform";
+    at = ren.lib.when (s: builtins.elem "conform" (s.vim.features or [ ]));
     vim.vim.formatter.conform-nvim.enable = true;
   };
 
   ren.aspects.vim-nvim-lint = {
-    at = vimFeature "nvim-lint";
+    at = ren.lib.when (s: builtins.elem "nvim-lint" (s.vim.features or [ ]));
     vim.vim.diagnostics.nvim-lint.enable = true;
   };
 
   ren.aspects.vim-trouble = {
-    at = vimFeature "trouble";
+    at = ren.lib.when (s: builtins.elem "trouble" (s.vim.features or [ ]));
     vim.vim.lsp.trouble.enable = true;
   };
 }

@@ -1,20 +1,22 @@
 # ssh: ssh client config from the ssh-host instances, ssh-agent and the persistent vini master (linux).
 {
+  lib,
   ren,
-  vicAt,
-  mod,
   ...
 }:
+let
+  vix = import ../../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.vic-ssh = {
-    at = vicAt.secrets;
+    at = ren.aspects.vic-secrets;
     secrets = { ... }: [
       ren.secret.ssh-id-ed25519
       ren.secret.ssh-conf
       ren.secret.ssh-localhost-run
     ];
 
-    homeManager = mod (
+    homeManager = vix.mod (
       { lib, ... }:
       {
         programs.ssh = {
@@ -37,7 +39,7 @@
       }
     );
 
-    homeLinux = mod (
+    homeLinux = vix.mod (
       { config, pkgs, ... }:
       {
         services.ssh-agent.enable = true;

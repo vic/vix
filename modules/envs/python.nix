@@ -1,5 +1,5 @@
 # envs: python tools.
-{ ren, pkgsFor, ... }:
+{ ren, ... }:
 {
   ren.aspects.env-python = {
     at = ren.lib.and [
@@ -9,7 +9,7 @@
     env-packages =
       { system, ... }:
       let
-        p = pkgsFor system;
+        p = system.pkgs;
       in
       [
         p.python3

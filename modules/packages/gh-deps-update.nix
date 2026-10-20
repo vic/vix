@@ -1,12 +1,12 @@
 # gh-deps-update: nix flake update, commit and open a PR.
-{ ren, pkgsFor, ... }:
+{ ren, ... }:
 {
   ren.aspects.gh-deps-update = {
     at = ren.kinds.system;
     packages =
       { system, ... }:
       let
-        pkgs = pkgsFor system;
+        pkgs = system.pkgs;
       in
       {
         gh-deps-update = pkgs.writeShellApplication {

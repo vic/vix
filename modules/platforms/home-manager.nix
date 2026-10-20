@@ -3,16 +3,25 @@
 {
   ren,
   lib,
-  opt,
-  pkgsOf,
-  linux,
-  darwin,
   ...
 }:
 let
-  inherit (ren.lib) and within has;
+  vix = import ../_lib.nix { inherit lib; };
+  inherit (ren.lib)
+    and
+    within
+    has
+    when
+    ;
   user = ren.kinds.user;
   inPlace = { ... }: ms: { homeManager.imports = ms; }; # a sub-class, forwarded in place
+  # a user on a darwin (or linux) machine or home
+  onDarwin =
+    d:
+    and [
+      user
+      (when (s: vix.place s != null && (vix.place s).system.darwin == d))
+    ];
 in
 {
   ren.kinds.home = {
@@ -20,7 +29,7 @@ in
     spawns.user = s: { ${s.home.user.name} = s.home.user; };
     user = user;
     system = ren.kinds.system;
-    channel = opt ren.kinds.channel ren.channel.unstable;
+    channel = vix.opt ren.kinds.channel ren.channel.unstable;
   };
 
   ren.classes.homeManager = [
@@ -47,7 +56,7 @@ in
         homeConfigurations."${user.name}@${home.name}" =
           home.channel.home-manager.lib.homeManagerConfiguration
             {
-              pkgs = pkgsOf home;
+              pkgs = home.channel.nixpkgs.legacyPackages.${home.system.name};
               modules = ms;
             };
       };
@@ -56,14 +65,14 @@ in
   ren.classes.homeLinux = {
     at = and [
       user
-      linux
+      ren.aspects.on-linux
     ];
     into = inPlace;
   };
   ren.classes.homeDarwin = {
     at = and [
       user
-      darwin
+      ren.aspects.on-darwin
     ];
     into = inPlace;
   };
@@ -82,4 +91,7 @@ in
     ];
     darwin = { mac, ... }: { imports = [ mac.channel.home-manager.darwinModules.home-manager ]; };
   };
+
+  ren.aspects.on-linux.at = onDarwin false;
+  ren.aspects.on-darwin.at = onDarwin true;
 }

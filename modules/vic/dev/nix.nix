@@ -1,8 +1,16 @@
 # nix: nix tooling packages.
-{ vicAt, ... }:
+{
+  inputs,
+  lib,
+  ren,
+  ...
+}:
+let
+  vix = import ../../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.nix-tools = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     flake-inputs =
       { ... }:
       {
@@ -12,7 +20,7 @@
         };
       };
     homeManager =
-      { pkgs, inputs', ... }:
+      { pkgs, ... }:
       {
         home.packages = [
           pkgs.cachix
@@ -23,7 +31,7 @@
           pkgs.tree-sitter
           pkgs.zig
           pkgs.nix-run
-          inputs'.trix.packages.trix
+          (vix.perSystem pkgs inputs.trix).packages.trix
         ];
       };
   };

@@ -1,8 +1,8 @@
 # vim moonbit: moonbit.nvim (not in nixpkgs; pinned upstream rev).
-{ vimFeature, ... }:
+{ ren, ... }:
 {
   ren.aspects.vim-moonbit = {
-    at = vimFeature "moonbit";
+    at = ren.lib.when (s: builtins.elem "moonbit" (s.vim.features or [ ]));
     vim =
       { pkgs, ... }:
       {

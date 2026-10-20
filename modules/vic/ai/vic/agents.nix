@@ -2,14 +2,17 @@
 # vic-* subagents (tiered haiku/sonnet/opus), vic skills, global CLAUDE.md.
 # Copies live beside this file; edit them here, never in ~/.claude.
 {
-  vicAt,
-  mod,
+  lib,
+  ren,
   ...
 }:
+let
+  vix = import ../../../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.ai-vic-agents = {
-    at = vicAt.headless;
-    homeManager = mod (
+    at = ren.aspects.vic-headless;
+    homeManager = vix.mod (
       { lib, ... }:
       let
         byName = dir: f: lib.mapAttrs' f (builtins.readDir dir);

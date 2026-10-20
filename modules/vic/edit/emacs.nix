@@ -1,12 +1,12 @@
 # emacs: every ren.emacs distribution as packages, fish functions, install activation, daemon and dots.
 {
+  lib,
   ren,
-  vicAt,
   inputs,
-  mod,
   ...
 }:
 let
+  vix = import ../../_lib.nix { inherit lib; };
   nl = inputs.nixpkgs.lib;
   all = nl.attrValues ren.emacs;
 in
@@ -15,7 +15,7 @@ in
     dots = nl.mapAttrs' (n: e: nl.nameValuePair ".config/${n}" e.configDots) (
       nl.filterAttrs (_: e: e.configDots != null) ren.emacs
     );
-    at = vicAt.gui;
+    at = ren.aspects.vic-gui;
     flake-inputs =
       { ... }:
       {
@@ -38,11 +38,10 @@ in
         blueprint.inputs.systems.follows = "systems";
         systems.url = "github:nix-systems/default/d36eeed142f88b5a636f2e3856a53c61654cf29b";
       };
-    homeManager = mod (
+    homeManager = vix.mod (
       {
         pkgs,
         lib,
-        inputs',
         ...
       }:
       let
@@ -72,7 +71,7 @@ in
           lib.concatMap (
             e:
             lib.optional (e.wrapper != null) (
-              inputs'.${e.wrapper}.packages.${e.wrapper}.override { emacs = emacsPkg; }
+              (vix.perSystem pkgs inputs.${e.wrapper}).packages.${e.wrapper}.override { emacs = emacsPkg; }
             )
           ) all
           ++ lib.concatMap (e: lib.mapAttrsToList pkgs.writeShellScriptBin e.bins) all;

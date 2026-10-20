@@ -1,14 +1,17 @@
 # rdesk: remote desktop tools. DISABLED (as in the old tree): no `at`, included nowhere.
-{ allowUnfree, ... }:
+{ inputs, lib, ... }:
+let
+  vix = import ../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.vic-rdesk = {
-    unfree = allowUnfree [ "anydesk" ];
+    unfree = vix.allowUnfree [ "anydesk" ];
 
     homeManager =
-      { pkgs, self', ... }:
+      { pkgs, ... }:
       {
         home.packages = [
-          self'.packages.vic-edge
+          (vix.perSystem pkgs inputs.self).packages.vic-edge
           pkgs.gsocket
         ];
       };

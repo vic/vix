@@ -1,8 +1,8 @@
 # system: home-manager cli, NH_FILE, and desktop helper tools (linux only).
-{ vicAt, ... }:
+{ ren, ... }:
 {
   ren.aspects.vic-system = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     homeLinux =
       { pkgs, ... }:
       {
@@ -20,7 +20,7 @@
       ".config/autostart/lxqt-config-touchpad-autostart.desktop" =
         "config/autostart/lxqt-config-touchpad-autostart.desktop";
     };
-    at = vicAt.gui;
+    at = ren.aspects.vic-gui;
     homeLinux =
       { pkgs, ... }:
       {

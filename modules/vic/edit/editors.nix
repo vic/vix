@@ -1,16 +1,15 @@
 # editors: gui editors, vscode vim hook, vscode-server and the unfree editors.
 {
+  lib,
   ren,
-  vicAt,
   inputs,
-  allowUnfree,
-  place,
   ...
 }:
 let
+  vix = import ../../_lib.nix { inherit lib; };
   at = ren.lib.and [
-    vicAt.full
-    vicAt.gui
+    ren.aspects.vic-full
+    ren.aspects.vic-gui
   ];
 in
 {
@@ -48,7 +47,7 @@ in
     dots =
       { parent, ... }:
       let
-        ext = if (place parent).system.darwin then "Darwin" else "Linux";
+        ext = if (vix.place parent).system.darwin then "Darwin" else "Linux";
       in
       {
         ".config/zed" = "config/zed";
@@ -60,7 +59,7 @@ in
         ".vscode/extensions/extensions.json" = "vscode/extensions/extensions-${ext}.json";
         ".cursor/extensions/extensions.json" = "cursor/extensions/extensions-${ext}.json";
       };
-    unfree = allowUnfree [
+    unfree = vix.allowUnfree [
       "cursor"
       "vscode"
     ];

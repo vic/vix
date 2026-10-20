@@ -2,10 +2,10 @@
 {
   ren,
   lib,
-  mod,
   ...
 }:
 let
+  vix = import ../../_lib.nix { inherit lib; };
   themes = p: {
     catppuccin.plugin = p.catppuccin-nvim;
     base16.plugin = p.tinted-vim;
@@ -26,7 +26,7 @@ in
     ];
     vim =
       { vim, ... }:
-      mod (
+      vix.mod (
         { pkgs, ... }:
         let
           t = themeFor pkgs.vimPlugins vim.theme;

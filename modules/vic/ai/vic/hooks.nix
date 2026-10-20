@@ -4,14 +4,17 @@
 # vic-recall), stop-gate (ctx >=70% + stale HANDOFF blocks stop once),
 # omni-ingest (detached, flock-guarded omni graph refresh).
 {
-  vicAt,
-  mod,
+  lib,
+  ren,
   ...
 }:
+let
+  vix = import ../../../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.ai-vic-hooks = {
-    at = vicAt.headless;
-    homeManager = mod (
+    at = ren.aspects.vic-headless;
+    homeManager = vix.mod (
       { config, ... }:
       let
         hookOf = script: {

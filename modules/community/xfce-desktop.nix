@@ -1,9 +1,15 @@
 # xfce-desktop: XFCE session, on hosts that list xfce.
-{ mod, hostWhen, ... }:
+{ lib, ren, ... }:
+let
+  vix = import ../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.xfce-desktop = {
-    at = hostWhen (h: builtins.elem "xfce" h.desktops);
-    nixos = mod (
+    at = ren.lib.and [
+      ren.kinds.host
+      (ren.lib.when (s: builtins.elem "xfce" s.host.desktops))
+    ];
+    nixos = vix.mod (
       { lib, ... }:
       {
         services.xserver = {

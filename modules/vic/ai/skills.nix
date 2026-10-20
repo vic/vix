@@ -1,15 +1,18 @@
 # Plain (non-plugin) Claude Code skills: the local ones under ./skills, plus
 # gstack and task-observer from upstream.
 {
+  lib,
   inputs,
-  vicAt,
-  mod,
+  ren,
   ...
 }:
+let
+  vix = import ../../_lib.nix { inherit lib; };
+in
 {
 
   ren.aspects.ai-skills = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     flake-inputs =
       { ... }:
       {
@@ -32,7 +35,7 @@
       "Bash(bun *)"
       "Bash(~/.claude/skills/*)"
     ];
-    homeManager = mod (
+    homeManager = vix.mod (
       { lib, pkgs, ... }:
       let
         # every subdirectory holding a SKILL.md, by name

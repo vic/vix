@@ -1,8 +1,8 @@
 # vim vcs: jj.nvim with vic's <leader>j keys, hunk.nvim diff editor.
-{ vimFeature, ... }:
+{ ren, ... }:
 {
   ren.aspects.vim-jj = {
-    at = vimFeature "jj";
+    at = ren.lib.when (s: builtins.elem "jj" (s.vim.features or [ ]));
     vim =
       { pkgs, ... }:
       {
@@ -29,7 +29,7 @@
   };
 
   ren.aspects.vim-hunk = {
-    at = vimFeature "hunk";
+    at = ren.lib.when (s: builtins.elem "hunk" (s.vim.features or [ ]));
     vim.vim.git.hunk-nvim.enable = true;
   };
 }

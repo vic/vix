@@ -2,15 +2,15 @@
 {
   ren,
   lib,
-  pkgsFor,
-  opt,
-  place,
   ...
 }:
+let
+  vix = import ../_lib.nix { inherit lib; };
+in
 {
   # machines and homes list the envs their users get (merges with the kind owners, v33)
-  ren.kinds.machine.envs = opt (lib.types.listOf ren.kinds.env) [ ];
-  ren.kinds.home.envs = opt (lib.types.listOf ren.kinds.env) [ ];
+  ren.kinds.machine.envs = vix.opt (lib.types.listOf ren.kinds.env) [ ];
+  ren.kinds.home.envs = vix.opt (lib.types.listOf ren.kinds.env) [ ];
   ren.kinds.system.below = [ ren.kinds.env ]; # one env scope per system
   ren.kinds.env.langs = lib.types.listOf (
     lib.types.enum [
@@ -36,7 +36,7 @@
           (ren.lib.when (
             r:
             let
-              m = place r;
+              m = vix.place r;
             in
             m != null && m.system.name == e.system.name && builtins.elem e.env.name (map (x: x.name) m.envs)
           ))
@@ -72,7 +72,7 @@
         ...
       }:
       {
-        ${env.name} = (pkgsFor system).mkShell { packages = builtins.concatLists env-packages; };
+        ${env.name} = system.pkgs.mkShell { packages = builtins.concatLists env-packages; };
       };
   };
 

@@ -2,13 +2,17 @@
 # Declarative equivalent of `herdr integration install claude` (v10), which
 # cannot edit the home-manager owned settings.json.
 {
-  vicAt,
-  mod,
+  inputs,
+  lib,
+  ren,
   ...
 }:
+let
+  vix = import ../../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.ai-herdr = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     flake-inputs =
       { ... }:
       {
@@ -40,15 +44,14 @@
         systems.url = "github:nix-systems/default/d36eeed142f88b5a636f2e3856a53c61654cf29b";
       };
     claude-allow = { ... }: [ "Bash(herdr *)" ];
-    homeManager = mod (
+    homeManager = vix.mod (
       {
-        inputs',
         lib,
         pkgs,
         ...
       }:
       let
-        herdr = inputs'.llm-agents.packages.herdr;
+        herdr = (vix.perSystem pkgs inputs.llm-agents).packages.herdr;
 
         # upstream hook silently exits 0 when python3 is not on PATH
         hook = pkgs.writeShellScript "herdr-agent-state" ''

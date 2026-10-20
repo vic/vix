@@ -9,7 +9,6 @@ let
   t = lib.types;
 in
 {
-  _module.args.pkgsOf = m: m.channel.nixpkgs.legacyPackages.${m.system.name}; # m: anything with channel + system
 
   ren.kinds.channel = {
     nixpkgs = t.raw;

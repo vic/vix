@@ -1,5 +1,5 @@
 # terminals: terminal emulators on graphical full homes.
-{ ren, vicAt, ... }:
+{ ren, ... }:
 {
   ren.aspects.terminals = {
     dots = {
@@ -7,8 +7,8 @@
       ".config/ghostty" = "config/ghostty";
     };
     at = ren.lib.and [
-      vicAt.full
-      vicAt.gui
+      ren.aspects.vic-full
+      ren.aspects.vic-gui
     ];
     homeManager =
       { pkgs, ... }:

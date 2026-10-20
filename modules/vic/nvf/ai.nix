@@ -1,8 +1,11 @@
 # vim ai: avante, codecompanion, copilot (as a blink source), CopilotChat.
-{ vimFeature, allowUnfree, ... }:
+{ lib, ren, ... }:
+let
+  vix = import ../../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.vim-avante = {
-    at = vimFeature "avante";
+    at = ren.lib.when (s: builtins.elem "avante" (s.vim.features or [ ]));
     vim.vim = {
       assistant.avante-nvim.enable = true;
       # avante's rockspec deps; nvf's avante module omits them (require "avante" fails without)
@@ -14,14 +17,14 @@
   };
 
   ren.aspects.vim-codecompanion = {
-    at = vimFeature "codecompanion";
+    at = ren.lib.when (s: builtins.elem "codecompanion" (s.vim.features or [ ]));
     # shortcut: nvf's action_palette.provider enum has no "snacks" (old config used it); default kept.
     vim.vim.assistant.codecompanion-nvim.enable = true;
   };
 
   ren.aspects.vim-copilot = {
-    at = vimFeature "copilot";
-    unfree = allowUnfree [ "copilot-language-server" ];
+    at = ren.lib.when (s: builtins.elem "copilot" (s.vim.features or [ ]));
+    unfree = vix.allowUnfree [ "copilot-language-server" ];
     vim =
       { pkgs, ... }:
       {
@@ -43,8 +46,8 @@
   };
 
   ren.aspects.vim-copilot-chat = {
-    at = vimFeature "copilot-chat";
-    unfree = allowUnfree [ "copilot-language-server" ]; # via copilot-lua
+    at = ren.lib.when (s: builtins.elem "copilot-chat" (s.vim.features or [ ]));
+    unfree = vix.allowUnfree [ "copilot-language-server" ]; # via copilot-lua
     vim =
       { pkgs, ... }:
       {

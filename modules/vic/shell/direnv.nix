@@ -2,7 +2,6 @@
 {
   ren,
   inputs,
-  vicAt,
   ...
 }:
 let
@@ -19,7 +18,7 @@ let
 in
 {
   ren.aspects.direnv = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     homeManager = {
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true;

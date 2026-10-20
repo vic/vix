@@ -1,8 +1,8 @@
 # vim editing: editor options/tools, keymap help, motions, search-replace, sessions, todos.
-{ vimFeature, ... }:
+{ ren, ... }:
 {
   ren.aspects.vim-globals = {
-    at = vimFeature "globals";
+    at = ren.lib.when (s: builtins.elem "globals" (s.vim.features or [ ]));
     vim =
       { pkgs, ... }:
       {
@@ -24,7 +24,7 @@
   };
 
   ren.aspects.vim-which-key = {
-    at = vimFeature "which-key";
+    at = ren.lib.when (s: builtins.elem "which-key" (s.vim.features or [ ]));
     vim.vim.binds.whichKey = {
       enable = true;
       setupOpts = {
@@ -39,22 +39,22 @@
   };
 
   ren.aspects.vim-flash = {
-    at = vimFeature "flash";
+    at = ren.lib.when (s: builtins.elem "flash" (s.vim.features or [ ]));
     vim.vim.utility.motion.flash-nvim.enable = true;
   };
 
   ren.aspects.vim-grug-far = {
-    at = vimFeature "grug-far";
+    at = ren.lib.when (s: builtins.elem "grug-far" (s.vim.features or [ ]));
     vim.vim.utility.grug-far-nvim.enable = true;
   };
 
   ren.aspects.vim-todo-comments = {
-    at = vimFeature "todo-comments";
+    at = ren.lib.when (s: builtins.elem "todo-comments" (s.vim.features or [ ]));
     vim.vim.notes.todo-comments.enable = true;
   };
 
   ren.aspects.vim-persistence = {
-    at = vimFeature "persistence";
+    at = ren.lib.when (s: builtins.elem "persistence" (s.vim.features or [ ]));
     vim =
       { pkgs, ... }:
       {
@@ -66,7 +66,7 @@
   };
 
   ren.aspects.vim-haunt = {
-    at = vimFeature "haunt";
+    at = ren.lib.when (s: builtins.elem "haunt" (s.vim.features or [ ]));
     vim =
       { pkgs, ... }:
       {

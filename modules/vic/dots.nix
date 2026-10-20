@@ -1,11 +1,11 @@
 # dots: pool of dotfiles emitted by features, linked into $HOME; live out-of-store links into ~/.flake on live-dots machines, else store copies.
 {
+  lib,
   ren,
-  vicAt,
-  mod,
   ...
 }:
 let
+  vix = import ../_lib.nix { inherit lib; };
   linker =
     live: config: path:
     if live then
@@ -25,7 +25,7 @@ in
   };
 
   ren.aspects.vic-dots = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     # rtk is owned by the ai modules, which this pass may not touch.
     dots.".config/rtk" = "config/rtk";
     homeManager =
@@ -35,7 +35,7 @@ in
         dots,
         ...
       }:
-      mod (
+      vix.mod (
         { config, lib, ... }:
         let
           live = is ren.aspects.live-dots parent;

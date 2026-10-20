@@ -1,8 +1,8 @@
 # jujutsu-ui: jj settings.
-{ vicAt, ... }:
+{ ren, ... }:
 {
   ren.aspects.jujutsu-ui = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     homeManager =
       { pkgs, ... }:
       let

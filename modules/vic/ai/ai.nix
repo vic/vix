@@ -1,13 +1,16 @@
 # AI: unfree agent CLIs and the extra agent packages on linux homes.
 {
-  vicAt,
-  allowUnfree,
+  lib,
+  ren,
   ...
 }:
+let
+  vix = import ../../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.ai-ai = {
-    at = vicAt.headless;
-    unfree = allowUnfree [
+    at = ren.aspects.vic-headless;
+    unfree = vix.allowUnfree [
       "copilot-language-server"
       "claude"
       "github-copilot-cli"

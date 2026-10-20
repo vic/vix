@@ -1,10 +1,18 @@
 # browsers: browsers and the fish helpers that open nixos search pages.
-{ ren, vicAt, ... }:
+{
+  inputs,
+  lib,
+  ren,
+  ...
+}:
+let
+  vix = import ../../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.vic-browsers = {
     at = ren.lib.and [
-      vicAt.full
-      vicAt.gui
+      ren.aspects.vic-full
+      ren.aspects.vic-gui
     ];
     flake-inputs =
       { ... }:
@@ -29,13 +37,13 @@
       repology-nixpkgs.body = ''open "https://repology.org/projects/?inrepo=nix_unstable&search=$argv"'';
     };
     homeManager =
-      { pkgs, inputs', ... }:
+      { pkgs, ... }:
       {
         home.packages = [
           pkgs.chromium
           pkgs.librewolf
           pkgs.qutebrowser
-          inputs'.helium.packages.default
+          (vix.perSystem pkgs inputs.helium).packages.default
         ];
       };
   };

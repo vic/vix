@@ -5,13 +5,17 @@
 # - deepwiki MCP + REPL (./dw, vendored from github:vic/dw incl. unpushed repl.js)
 # - notebooklm MCP (npx, unpinned as on frodo) + notebooklm-pack
 {
-  vicAt,
-  mod,
+  inputs,
+  lib,
+  ren,
   ...
 }:
+let
+  vix = import ../../../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.ai-vic-tools = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     flake-inputs =
       { ... }:
       {
@@ -29,10 +33,9 @@
           inputs.nixpkgs.follows = "nixpkgs";
         };
       };
-    homeManager = mod (
+    homeManager = vix.mod (
       {
         config,
-        inputs',
         lib,
         pkgs,
         ...
@@ -50,7 +53,7 @@
         home.packages = [
           vicBin
           deepwiki
-          inputs'.notebooklm-pack.packages.default
+          (vix.perSystem pkgs inputs.notebooklm-pack).packages.default
           pkgs.util-linux # flock: omni-ingest.sh
         ];
 

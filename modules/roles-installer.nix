@@ -1,8 +1,14 @@
 # installer-base: the iso image base (installer cd) plus live-session users, on iso hosts.
-{ mod, hostWhen, ... }:
+{ lib, ren, ... }:
+let
+  vix = import ./_lib.nix { inherit lib; };
+in
 {
-  ren.aspects.installer-base.at = hostWhen (h: h.form == "iso");
-  ren.aspects.installer-base.nixos = mod (
+  ren.aspects.installer-base.at = ren.lib.and [
+    ren.kinds.host
+    (ren.lib.when (s: s.host.form == "iso"))
+  ];
+  ren.aspects.installer-base.nixos = vix.mod (
     {
       lib,
       modulesPath,

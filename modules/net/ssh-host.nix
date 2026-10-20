@@ -1,11 +1,10 @@
 # ssh-host: kind of ssh client hosts; each instance becomes one programs.ssh matchBlock.
 {
   lib,
-  opt,
-  maybe,
   ...
 }:
 let
+  vix = import ../_lib.nix { inherit lib; };
   t = lib.types;
   fwd = t.submodule {
     options = {
@@ -29,18 +28,18 @@ in
 {
 
   ren.kinds.ssh-host = {
-    host = maybe t.str;
-    hostname = maybe t.str;
-    user = maybe t.str;
-    proxyJump = maybe t.str;
-    forwardAgent = maybe t.bool;
-    controlPersist = maybe t.str;
-    serverAliveInterval = maybe t.int;
-    serverAliveCountMax = maybe t.int;
-    extraOptions = opt (t.attrsOf t.str) { };
-    setEnv = opt (t.attrsOf t.str) { };
-    localForwards = opt (t.listOf fwd) [ ];
-    remoteForwards = opt (t.listOf fwd) [ ];
+    host = vix.maybe t.str;
+    hostname = vix.maybe t.str;
+    user = vix.maybe t.str;
+    proxyJump = vix.maybe t.str;
+    forwardAgent = vix.maybe t.bool;
+    controlPersist = vix.maybe t.str;
+    serverAliveInterval = vix.maybe t.int;
+    serverAliveCountMax = vix.maybe t.int;
+    extraOptions = vix.opt (t.attrsOf t.str) { };
+    setEnv = vix.opt (t.attrsOf t.str) { };
+    localForwards = vix.opt (t.listOf fwd) [ ];
+    remoteForwards = vix.opt (t.listOf fwd) [ ];
   };
 
   ren.ssh-host.edge = {

@@ -1,15 +1,20 @@
 # wl-broadcom: Broadcom STA wifi driver, on hosts with broadcom wifi.
 {
-  mod,
-  hostWhen,
-  allowUnfree,
+  lib,
+  ren,
   ...
 }:
+let
+  vix = import ../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.wl-broadcom = {
-    at = hostWhen (h: h.wifi == "broadcom");
-    unfree = allowUnfree [ "broadcom-sta" ];
-    nixos = mod (
+    at = ren.lib.and [
+      ren.kinds.host
+      (ren.lib.when (s: s.host.wifi == "broadcom"))
+    ];
+    unfree = vix.allowUnfree [ "broadcom-sta" ];
+    nixos = vix.mod (
       { lib, config, ... }:
       {
         boot.kernelModules = [ "wl" ];

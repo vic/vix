@@ -1,14 +1,19 @@
 {
-  vicAt,
-  mod,
-  hostWhen,
+  lib,
+  ren,
   ...
 }:
+let
+  vix = import ../_lib.nix { inherit lib; };
+in
 {
   # Niri session: the compositor, its helpers, and the keyring it expects.
   ren.aspects.niri-desktop = {
-    at = hostWhen (h: builtins.elem "niri" h.desktops);
-    nixos = mod (
+    at = ren.lib.and [
+      ren.kinds.host
+      (ren.lib.when (s: builtins.elem "niri" s.host.desktops))
+    ];
+    nixos = vix.mod (
       { lib, pkgs, ... }:
       {
         programs.niri.enable = true;
@@ -28,7 +33,7 @@
 
   # vic's niri and noctalia configs: on every desktop he uses (old vix linked them everywhere).
   ren.aspects.vic-niri = {
-    at = vicAt.gui;
+    at = ren.aspects.vic-gui;
     dots = {
       ".config/niri" = "config/niri";
       ".config/noctalia" = "config/noctalia";

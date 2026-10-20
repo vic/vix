@@ -2,12 +2,11 @@
 {
   ren,
   inputs,
-  vicAt,
   ...
 }:
 {
   ren.aspects.vic-nix-index = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     flake-inputs =
       { ... }:
       {
@@ -24,7 +23,7 @@
     };
   };
   ren.aspects.vic-nix-registry = {
-    at = vicAt.headless;
+    at = ren.aspects.vic-headless;
     homeManager.nix.registry = { };
   };
   ren.aspects.vic-hm-backup = {

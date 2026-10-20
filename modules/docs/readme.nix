@@ -1,13 +1,16 @@
 # readme: README.md generated from live Ren data, written by `nix run .#write-files`.
 {
   ren,
-  readmeTour,
-  readmeVocab,
-  readmeDirs,
-  readmeRecipes,
   ...
 }:
 let
+  # README parts: plain `_` files (import-tree skips them)
+  vocab = import ./_vocabulary.nix;
+  vocabDirs = import ./_vocabulary-dirs.nix;
+  readmeTour = import ./_readme-tour.nix;
+  readmeVocab = import ./_readme-vocab.nix { inherit ren vocab; };
+  readmeDirs = import ./_readme-dirs.nix { inherit vocabDirs; };
+  readmeRecipes = import ./_readme-recipes.nix;
   intro = ''
     # vix
 

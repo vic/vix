@@ -1,5 +1,5 @@
 # envs: node tools.
-{ ren, pkgsFor, ... }:
+{ ren, ... }:
 {
   ren.aspects.env-node = {
     at = ren.lib.and [
@@ -9,7 +9,7 @@
     env-packages =
       { system, ... }:
       let
-        p = pkgsFor system;
+        p = system.pkgs;
       in
       [
         p.nodejs

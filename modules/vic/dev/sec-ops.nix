@@ -1,17 +1,25 @@
 # sec-ops: sops helper scripts on trusted full homes.
-{ ren, vicAt, ... }:
+{
+  inputs,
+  lib,
+  ren,
+  ...
+}:
+let
+  vix = import ../../_lib.nix { inherit lib; };
+in
 {
   ren.aspects.sec-ops = {
     at = ren.lib.and [
-      vicAt.full
-      vicAt.secrets
+      ren.aspects.vic-full
+      ren.aspects.vic-secrets
     ];
     homeManager =
-      { self', ... }:
+      { pkgs, ... }:
       {
         home.packages = [
-          self'.packages.vic-sops-get
-          self'.packages.vic-sops-rotate
+          (vix.perSystem pkgs inputs.self).packages.vic-sops-get
+          (vix.perSystem pkgs inputs.self).packages.vic-sops-rotate
         ];
       };
   };

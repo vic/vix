@@ -1,8 +1,11 @@
 # gnome-desktop: GDM and GNOME, on hosts that list gnome.
-{ hostWhen, ... }:
+{ ren, ... }:
 {
   ren.aspects.gnome-desktop = {
-    at = hostWhen (h: builtins.elem "gnome" h.desktops);
+    at = ren.lib.and [
+      ren.kinds.host
+      (ren.lib.when (s: builtins.elem "gnome" s.host.desktops))
+    ];
     nixos = {
       services.xserver.displayManager.gdm.enable = true;
       services.xserver.desktopManager.gnome.enable = true;

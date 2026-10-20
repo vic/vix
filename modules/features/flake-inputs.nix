@@ -2,7 +2,6 @@
 {
   ren,
   inputs,
-  pkgsFor,
   ...
 }:
 {
@@ -19,7 +18,7 @@
       { system, outputs, ... }:
       ms:
       let
-        pkgs = pkgsFor system;
+        pkgs = system.pkgs;
         e = inputs.nixpkgs.lib.evalModules {
           specialArgs = { inherit inputs; }; # write-flake.nix reads `top.inputs.self`: only specialArgs reach `@top`
           modules = [

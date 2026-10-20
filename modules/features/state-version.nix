@@ -1,7 +1,8 @@
 # State versions: defaults every os and home config starts from (a host may set its own).
-{ ren, mod, ... }:
+{ lib, ren, ... }:
 let
-  default = path: v: mod ({ lib, ... }: lib.setAttrByPath path (lib.mkDefault v));
+  vix = import ../_lib.nix { inherit lib; };
+  default = path: v: vix.mod ({ lib, ... }: lib.setAttrByPath path (lib.mkDefault v));
 in
 {
   ren.aspects.nixos-state = {

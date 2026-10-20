@@ -1,8 +1,11 @@
 # kde-desktop: Plasma 6 on SDDM wayland, with avahi, on hosts that list kde.
-{ hostWhen, ... }:
+{ ren, ... }:
 {
   ren.aspects.kde-desktop = {
-    at = hostWhen (h: builtins.elem "kde" h.desktops);
+    at = ren.lib.and [
+      ren.kinds.host
+      (ren.lib.when (s: builtins.elem "kde" s.host.desktops))
+    ];
     nixos =
       { pkgs, ... }:
       {
