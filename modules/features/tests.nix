@@ -7,9 +7,7 @@
 let
   inherit (inputs.nixpkgs) lib;
   self = inputs.self; # shortcut: reads configs back from flake outputs, lazily
-  skipped = [
-    "varda" # openspec
-  ];
+  skipped = import ./_known-broken.nix;
   skipPkgs.bombadil = [ "zfs" ];
   vicHome = c: lib.attrByPath [ "home-manager" "users" "vic" ] { home.packages = [ ]; } c.config;
   hasPkg = name: ps: builtins.any (p: lib.getName p == name) ps;
@@ -53,7 +51,7 @@ in
       {
         ${system.name} = lib.mapAttrs (
           name: ps:
-          system.pkgs.runCommand name { } ''
+          system.legacyPackages.runCommand name { } ''
             ${lib.concatMapStringsSep "\n" (p: "echo ${lib.escapeShellArg p}") ps}
             ${if ps == [ ] then "touch $out" else "exit 1"}
           ''

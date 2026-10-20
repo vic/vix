@@ -4,10 +4,8 @@ let
   inherit (builtins)
     attrNames
     concatStringsSep
-    elem
     filter
     readDir
-    throw
     ;
   dirsOf =
     p:
@@ -15,17 +13,7 @@ let
       e = readDir p;
     in
     filter (n: e.${n} == "directory") (attrNames e);
-  # same guard style as readme-vocab: names every missing and stale line.
-  described =
-    what: names: lines:
-    let
-      missing = filter (n: !(lines ? ${n})) names;
-      stale = filter (n: !(elem n names)) (attrNames lines);
-    in
-    if missing == [ ] && stale == [ ] then
-      lines
-    else
-      throw "docs/_vocabulary-dirs.nix ${what}: missing [${toString missing}] stale [${toString stale}]";
+  described = import ./_described.nix "_vocabulary-dirs.nix";
   table =
     prefix: p: lines:
     concatStringsSep "\n" (
@@ -33,7 +21,7 @@ let
         "| dir | purpose |"
         "| --- | --- |"
       ]
-      ++ map (n: "| `${prefix}${n}/` | ${lines.${n}} |") (attrNames (described prefix (dirsOf p) lines))
+      ++ map (n: "| `${prefix}${n}/` | ${lines.${n}} |") (described prefix (dirsOf p) lines)
     );
 in
 ''

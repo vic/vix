@@ -6,7 +6,7 @@
     packages =
       { system, ... }:
       {
-        vic-sops-rotate = system.pkgs.writeShellApplication {
+        vic-sops-rotate = system.legacyPackages.writeShellApplication {
           name = "vic-sops-rotate";
           text = ''
             # shellcheck disable=SC2011

@@ -5,7 +5,7 @@
   ...
 }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
   t = lib.types;
   bin = file: {
     format = "binary";

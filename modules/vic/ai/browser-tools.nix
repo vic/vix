@@ -1,17 +1,16 @@
 # Agent tools that drive or render through a browser.
 {
   inputs,
-  lib,
   ren,
   ...
 }:
 let
-  vix = import ../../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
   ren.aspects.ai-browser-tools = {
     at = ren.aspects.vic-gui;
-    homeManager = vix.mod (
+    homeManager =
       {
         lib,
         pkgs,
@@ -38,7 +37,6 @@ in
           command = lib.getExe' pkgs.nodejs_24 "npx";
           args = [ "notebooklm-mcp@latest" ];
         };
-      }
-    );
+      };
   };
 }

@@ -4,21 +4,9 @@ let
   inherit (builtins)
     attrNames
     concatStringsSep
-    elem
     filter
-    throw
     ;
-  # live names, or an eval error naming every missing and stale description.
-  described =
-    what: names: lines:
-    let
-      missing = filter (n: !(lines ? ${n})) names;
-      stale = filter (n: !(elem n names)) (attrNames lines);
-    in
-    if missing == [ ] && stale == [ ] then
-      names
-    else
-      throw "docs/_vocabulary.nix ${what}: missing [${toString missing}] stale [${toString stale}]";
+  described = import ./_described.nix "_vocabulary.nix";
   row = cells: "| ${concatStringsSep " | " cells} |";
   # one row of cells per name, under a header row
   table =

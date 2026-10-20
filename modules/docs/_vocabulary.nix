@@ -36,7 +36,7 @@
     ];
     flake-inputs = [
       "any aspect: the inputs it uses"
-      "flake `flake-inputs`, read by the `flake-file` class"
+      "forwarded into the `flake-file` class (x86_64-linux)"
     ];
     ci-jobs = [
       "every buildable host, mac, home and linux devshell"

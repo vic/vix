@@ -1,13 +1,9 @@
 # Local stdio MCP servers for code discovery, spawned per session by Claude Code.
 # (codegraph lives in tools.nix beside its CLI; headroom in headroom.nix.)
 {
-  lib,
   ren,
   ...
 }:
-let
-  vix = import ../../_lib.nix { inherit lib; };
-in
 {
   ren.aspects.ai-mcp = {
     at = ren.aspects.vic-headless;
@@ -17,7 +13,7 @@ in
       ".cbmignore"
       ".quipu"
     ];
-    homeManager = vix.mod (
+    homeManager =
       {
         config,
         lib,
@@ -137,7 +133,6 @@ in
           };
         };
 
-      }
-    );
+      };
   };
 }

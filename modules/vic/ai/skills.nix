@@ -1,14 +1,10 @@
 # Plain (non-plugin) Claude Code skills: the local ones under ./skills, plus
 # gstack and task-observer from upstream.
 {
-  lib,
   inputs,
   ren,
   ...
 }:
-let
-  vix = import ../../_lib.nix { inherit lib; };
-in
 {
 
   ren.aspects.ai-skills = {
@@ -35,7 +31,7 @@ in
       "Bash(bun *)"
       "Bash(~/.claude/skills/*)"
     ];
-    homeManager = vix.mod (
+    homeManager =
       { lib, pkgs, ... }:
       let
         # every subdirectory holding a SKILL.md, by name
@@ -76,7 +72,6 @@ in
             };
         };
 
-      }
-    );
+      };
   };
 }

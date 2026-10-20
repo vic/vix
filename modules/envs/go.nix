@@ -9,7 +9,7 @@
     env-packages =
       { system, ... }:
       let
-        p = system.pkgs;
+        p = system.legacyPackages;
       in
       [
         p.go

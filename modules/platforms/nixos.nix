@@ -1,11 +1,10 @@
 # NixOS: the host kind, the nixos class (metal hosts build; guests forward into their host), `os` and `account` (users.users entry).
 {
   ren,
-  lib,
   ...
 }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
   inherit (ren.lib) and within not;
   callable = m: builtins.isFunction m || (builtins.isAttrs m && m ? __functor);
   # users.users is a shorthand submodule (config only): resolve content fns and `imports` here.

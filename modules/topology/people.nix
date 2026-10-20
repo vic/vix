@@ -1,10 +1,11 @@
 # People: the user kind (identity, login shell, admin) and how a machine spawns its users.
 {
   lib,
+  ren,
   ...
 }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
   t = lib.types;
 in
 {

@@ -5,7 +5,7 @@
   ...
 }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
   # machines and homes list the envs their users get (merges with the kind owners, v33)
@@ -72,7 +72,7 @@ in
         ...
       }:
       {
-        ${env.name} = system.pkgs.mkShell { packages = builtins.concatLists env-packages; };
+        ${env.name} = system.legacyPackages.mkShell { packages = builtins.concatLists env-packages; };
       };
   };
 

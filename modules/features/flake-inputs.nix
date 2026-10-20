@@ -5,27 +5,22 @@
   ...
 }:
 {
-  # channel `into` may not forward to a class (Ren D7): it writes the `flake-inputs` output, the class reads it.
   ren.channels.flake-inputs = {
     fold = ren.lib.fold.attrs;
-    to = _: ren.fleet.vix; # no `at`: any scope emits
-    into = { ... }: i: { flake-inputs = i; };
+    to = _: ren.system.x86_64-linux; # no `at`: any scope emits; received where the flake-file class is
+    into = { ... }: i: { flake-file.flake-file.inputs = i; }; # a class key: forwarded as content (v35)
   };
 
   ren.classes.flake-file = {
     at = ren.system.x86_64-linux; # its packages and checks are channel emissions at a system
     into =
-      { system, outputs, ... }:
+      { system, ... }:
       ms:
       let
-        pkgs = system.pkgs;
+        pkgs = system.legacyPackages;
         e = inputs.nixpkgs.lib.evalModules {
           specialArgs = { inherit inputs; }; # write-flake.nix reads `top.inputs.self`: only specialArgs reach `@top`
-          modules = [
-            inputs.flake-file.flakeModules.flake
-            { flake-file.inputs = outputs.flake-inputs; }
-          ]
-          ++ ms;
+          modules = [ inputs.flake-file.flakeModules.flake ] ++ ms;
         };
         app = n: e.config.flake-file.apps.${n} pkgs;
       in
@@ -55,7 +50,7 @@
     flake-inputs =
       { ... }:
       {
-        ren.url = "github:vic/ren";
+        ren.url = "github:vic/ren/53034ebe18ad416fdcc35503d79b54f8cc1b5a33";
         import-tree.url = "github:vic/import-tree/eb1b52eaecc57f7c136d07ae8a93e724dfecac46";
         flake-file.url = "github:vic/flake-file/d3600508b0b031221459f7358ab88c438a81ac83";
       };

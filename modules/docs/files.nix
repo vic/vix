@@ -12,7 +12,7 @@
       ms:
       let
         e = inputs.nixpkgs.lib.evalModules {
-          specialArgs.pkgs = system.pkgs;
+          specialArgs.pkgs = system.legacyPackages;
           modules = [
             inputs.files.module
             { config.files.root = inputs.self; }

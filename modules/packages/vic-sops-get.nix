@@ -6,7 +6,7 @@
     packages =
       { system, ... }:
       let
-        pkgs = system.pkgs;
+        pkgs = system.legacyPackages;
       in
       {
         vic-sops-get = pkgs.writeShellApplication {

@@ -3,15 +3,11 @@
 let
   inherit (ren.lib) anyOf;
   runners = import ./_runners.nix;
-  # jobs allowed to fail (continue-on-error), one reason each
-  knownBroken = [
-    "varda" # openspec
-  ];
   job = system: name: attr: {
     inherit name attr;
     system = system.name;
     runner = runners.${system.name};
-    allowFailure = builtins.elem name knownBroken;
+    allowFailure = builtins.elem name (import ./_known-broken.nix); # continue-on-error
   };
   one = name: j: { ${name} = j; };
 in

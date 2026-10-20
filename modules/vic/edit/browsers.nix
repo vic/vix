@@ -1,12 +1,11 @@
 # browsers: browsers and the fish helpers that open nixos search pages.
 {
   inputs,
-  lib,
   ren,
   ...
 }:
 let
-  vix = import ../../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
   ren.aspects.vic-browsers = {

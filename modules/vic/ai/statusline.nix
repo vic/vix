@@ -3,17 +3,16 @@
 # One line: model, burn (ctx, $, $/h, tokens), quotas, last skill, last MCP tool.
 {
   inputs,
-  lib,
   ren,
   ...
 }:
 let
-  vix = import ../../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
   ren.aspects.ai-statusline = {
     at = ren.aspects.vic-headless;
-    homeManager = vix.mod (
+    homeManager =
       {
         lib,
         pkgs,
@@ -164,7 +163,6 @@ in
             PostToolUse = hook (script "mcp-log") "mcp__.*";
           };
         };
-      }
-    );
+      };
   };
 }

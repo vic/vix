@@ -1,14 +1,11 @@
 # bootable: systemd-boot, networkmanager, locale, bluetooth and pipewire, on workstation hosts.
-{ lib, ren, ... }:
-let
-  vix = import ../_lib.nix { inherit lib; };
-in
+{ ren, ... }:
 {
   ren.aspects.bootable.at = ren.lib.and [
     ren.kinds.host
     (ren.lib.when (s: s.host.workstation))
   ];
-  ren.aspects.bootable.nixos = vix.mod (
+  ren.aspects.bootable.nixos =
     { lib, modulesPath, ... }:
     {
       imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
@@ -40,6 +37,5 @@ in
         alsa.support32Bit = true;
         pulse.enable = true;
       };
-    }
-  );
+    };
 }

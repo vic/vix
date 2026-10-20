@@ -1,12 +1,9 @@
 # sysctl: inotify limits, bbr + fq, zram-friendly vm settings; on every nixos host.
-{ lib, ren, ... }:
-let
-  vix = import ../_lib.nix { inherit lib; };
-in
+{ ren, ... }:
 {
   ren.aspects.sysctl = {
     at = ren.kinds.host;
-    nixos = vix.mod (
+    nixos =
       { config, lib, ... }:
       {
         boot.kernel.sysctl = lib.mkMerge [
@@ -21,7 +18,6 @@ in
             "vm.page-cluster" = 0; # no readahead on swap
           })
         ];
-      }
-    );
+      };
   };
 }

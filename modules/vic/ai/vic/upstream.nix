@@ -3,14 +3,10 @@
 # at the versions that were installed in ~/node_modules (same pattern as calldiff
 # in ../tools.nix). lightjj: ../lightjj.nix; notebooklm-mcp: ../browser-tools.nix.
 {
-  lib,
   inputs,
   ren,
   ...
 }:
-let
-  vix = import ../../../_lib.nix { inherit lib; };
-in
 {
 
   ren.aspects.ai-vic-upstream = {
@@ -27,7 +23,7 @@ in
           flake = false;
         };
       };
-    homeManager = vix.mod (
+    homeManager =
       { lib, pkgs, ... }:
       let
         # bin name -> npm package spec providing it
@@ -55,7 +51,6 @@ in
           deepwiki = "${inputs.deepwiki-skill}/skills/deepwiki";
           find-skills = "${inputs.vercel-skills}/skills/find-skills";
         };
-      }
-    );
+      };
   };
 }

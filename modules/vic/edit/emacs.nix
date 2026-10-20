@@ -1,12 +1,11 @@
 # emacs: every ren.emacs distribution as packages, fish functions, install activation, daemon and dots.
 {
-  lib,
   ren,
   inputs,
   ...
 }:
 let
-  vix = import ../../_lib.nix { inherit lib; };
+  vix = ren.helpers;
   nl = inputs.nixpkgs.lib;
   all = nl.attrValues ren.emacs;
 in
@@ -38,7 +37,7 @@ in
         blueprint.inputs.systems.follows = "systems";
         systems.url = "github:nix-systems/default/d36eeed142f88b5a636f2e3856a53c61654cf29b";
       };
-    homeManager = vix.mod (
+    homeManager =
       {
         pkgs,
         lib,
@@ -86,7 +85,6 @@ in
             data = "run ${lib.getExe (install n e)}\n";
           }
         ) (lib.filterAttrs (_: e: e.bootstrap != null) ren.emacs);
-      }
-    );
+      };
   };
 }

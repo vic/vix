@@ -1,5 +1,6 @@
 # readme: README.md generated from live Ren data, written by `nix run .#write-files`.
 {
+  lib,
   ren,
   ...
 }:
@@ -8,7 +9,7 @@ let
   vocab = import ./_vocabulary.nix;
   vocabDirs = import ./_vocabulary-dirs.nix;
   ir = import ./_fleet-ir.nix {
-    inherit ren;
+    inherit lib ren;
     chans = import ./_fleet-channels.nix;
   };
   map' = import ./_readme-map.nix { inherit ir; };
@@ -67,7 +68,7 @@ in
     packages =
       { system, ... }:
       {
-        fleet-ir = system.pkgs.writeText "fleet-ir.json" (builtins.toJSON ir);
+        fleet-ir = system.legacyPackages.writeText "fleet-ir.json" (builtins.toJSON ir);
       };
   };
 }

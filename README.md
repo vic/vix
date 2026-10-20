@@ -7,18 +7,18 @@ Generated file: edit `modules/docs/`, then run `nix run .#write-files`.
 
 | Ren | in vix |
 | --- | --- |
-| `ren.kinds.<k>` | typed data: [`host`](modules/platforms/nixos.nix#L44), [`home`](modules/platforms/home-manager.nix#L27), [`user`](modules/topology/people.nix#L11), [`env`](modules/envs/env.nix#L15) |
+| `ren.kinds.<k>` | typed data: [`host`](modules/platforms/nixos.nix#L43), [`home`](modules/platforms/home-manager.nix#L26), [`user`](modules/topology/people.nix#L12), [`env`](modules/envs/env.nix#L15) |
 | `ren.<k>.<name>` | an instance: [`ren.host.frodo`](modules/hosts/frodo.nix#L25), [`ren.user.vic`](modules/people/vic.nix#L21), [`ren.env.rustenv`](modules/envs/envs.nix#L5) |
-| `below`, `spawns` | the scope tree: [`host → user`](modules/platforms/nixos.nix#L46), [`host → guest`](modules/platforms/microvm.nix#L16), [`system → vim`](modules/editors/vim.nix#L21) |
-| `is` | subkinds: [`a host is a machine`](modules/platforms/nixos.nix#L45), [`a guest is a host`](modules/platforms/microvm.nix#L20) |
-| `ren.aspects.<a>` | one feature: [`git`](modules/vic/vcs/git.nix#L10), [`kvm-amd`](modules/community/kvm-amd.nix#L7), [`vic-gui`](modules/people/vic.nix#L8) |
+| `below`, `spawns` | the scope tree: [`host → user`](modules/platforms/nixos.nix#L45), [`host → guest`](modules/platforms/microvm.nix#L16), [`system → vim`](modules/editors/vim.nix#L21) |
+| `is` | subkinds: [`a host is a machine`](modules/platforms/nixos.nix#L44), [`a guest is a host`](modules/platforms/microvm.nix#L20) |
+| `ren.aspects.<a>` | one feature: [`git`](modules/vic/vcs/git.nix#L10), [`kvm-amd`](modules/community/kvm-amd.nix#L4), [`vic-gui`](modules/people/vic.nix#L8) |
 | `at` | where an aspect is on: [`at = ren.aspects.vic-headless`](modules/vic/shell/fish.nix#L11) |
 | `includes`, `excludes` | add or drop aspects below a scope: [`frodo includes its hardware`](modules/hosts/frodo.nix#L44), [`its guests exclude it`](modules/hosts/frodo-guests.nix#L38) |
-| `ren.classes.<c>` | a module system an aspect key feeds: [`nixos`](modules/platforms/nixos.nix#L50), [`vim`](modules/editors/vim.nix#L43) |
-| `into` | how a class builds: [`nixosConfigurations.<host>`](modules/platforms/nixos.nix#L54) |
+| `ren.classes.<c>` | a module system an aspect key feeds: [`nixos`](modules/platforms/nixos.nix#L49), [`vim`](modules/editors/vim.nix#L43) |
+| `into` | how a class builds: [`nixosConfigurations.<host>`](modules/platforms/nixos.nix#L53) |
 | `ren.channels.<c>` | data a feature emits for a receiver: [`git-ignores`](modules/vic/vcs/git.nix#L5), [`checks`](modules/features/checks.nix#L4) |
 | `fold`, `to` | how a channel merges, and who reads it: [`checks folds attrs into the fleet`](modules/features/checks.nix#L5) |
-| `and`, `anyOf`, `not`, `within`, `has`, `when` | predicates for `at` and `to`: [`when (s: s.host.cpu == "amd")`](modules/community/kvm-amd.nix#L10) |
+| `and`, `anyOf`, `not`, `within`, `has`, `when` | predicates for `at` and `to`: [`when (s: s.host.cpu == "amd")`](modules/community/kvm-amd.nix#L7) |
 | `same` | identity: [`a guest runs on the host it names in on`](modules/platforms/microvm.nix#L12) |
 
 ## Commands
@@ -211,7 +211,7 @@ flowchart LR
 | `dots` | user features: `{ "<home path>" = "<dots path>"; }` | `vic-dots`: links into $HOME |
 | `env-packages` | `env-<lang>` aspects | the env's devshell, and users whose machine lists the env |
 | `fish-functions` | user features | `fish` writes them once |
-| `flake-inputs` | any aspect: the inputs it uses | flake `flake-inputs`, read by the `flake-file` class |
+| `flake-inputs` | any aspect: the inputs it uses | forwarded into the `flake-file` class (x86_64-linux) |
 | `formatter` | each system (treefmt) | flake `formatter.<sys>` (`nix fmt`) |
 | `git-ignores` | user features | `git` global ignores |
 | `login-shells` | users with a shell | their machine enables `programs.<shell>` |
@@ -305,7 +305,7 @@ ren.aspects.dev-tools = {
 ren.env.goenv.langs = [ "go" ];
 ren.aspects.env-go = {
   at = ren.lib.and [ ren.kinds.env (ren.lib.when (s: builtins.elem "go" s.env.langs)) ];
-  env-packages = { system, ... }: [ system.pkgs.go ];
+  env-packages = { system, ... }: [ system.legacyPackages.go ];
 };
 ```
 

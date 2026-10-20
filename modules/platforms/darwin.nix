@@ -1,7 +1,7 @@
 # nix-darwin: the mac kind and the darwin class.
-{ lib, ren, ... }:
+{ ren, ... }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
   ren.kinds.mac = {
