@@ -2,6 +2,7 @@
 { ren, ... }:
 {
   ren.home.nargun = {
+    checkout = "/home/vic/hk/vix";
     user = ren.user.vic;
     system = ren.system.x86_64-linux;
   };
@@ -11,7 +12,6 @@
     includes = [
       ren.aspects.graphical
       ren.aspects.trusted
-      ren.aspects.live-dots
     ];
   };
 }

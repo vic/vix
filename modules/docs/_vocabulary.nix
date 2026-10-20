@@ -101,7 +101,6 @@
     graphical = "hosts with desktops or wsl, workstation macs (from facts)";
     installer = "iso hosts (from facts)";
     trusted = "included by a machine: holds vic's secrets";
-    live-dots = "included by a machine: dotfiles link live into ~/.flake";
     on-graphical = "a user within `graphical`, no non-graphical guest between";
     on-trusted = "a user within `trusted`, no untrusted guest between";
     on-linux = "a user on a linux machine or home (`homeLinux`)";

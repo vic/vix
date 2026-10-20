@@ -38,7 +38,6 @@ in
     (when (s: s.host.form == "iso"))
   ]; # an iso image: no heavy home packages
   ren.aspects.trusted = { }; # holds vic's secrets: sops, ssh keys
-  ren.aspects.live-dots = { }; # has the ~/.flake checkout: dotfiles link live into it
 
   ren.aspects.on-graphical.at = inRole ren.aspects.graphical;
   ren.aspects.on-trusted.at = inRole ren.aspects.trusted;

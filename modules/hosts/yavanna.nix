@@ -2,6 +2,7 @@
 { ren, ... }:
 {
   ren.mac.yavanna = {
+    checkout = "/home/vic/hk/vix";
     system = ren.system.x86_64-darwin;
     users = [ ren.user.vic ];
     workstation = true;
@@ -11,7 +12,6 @@
     at = ren.mac.yavanna;
     includes = [
       ren.aspects.trusted
-      ren.aspects.live-dots
     ];
   };
 }

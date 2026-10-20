@@ -109,7 +109,6 @@ A class turns the collected modules into a flake output.
 | `vic-secrets` | `on-trusted`; also the sops consumer |
 | role `graphical` | hosts with desktops or wsl, workstation macs (from facts) |
 | role `installer` | iso hosts (from facts) |
-| role `live-dots` | included by a machine: dotfiles link live into ~/.flake |
 | role `metal` | a nixos host that is not a guest: builds `nixosConfigurations` |
 | role `on-darwin` | a user on a mac or darwin home (`homeDarwin`) |
 | role `on-graphical` | a user within `graphical`, no non-graphical guest between |
@@ -117,7 +116,7 @@ A class turns the collected modules into a flake output.
 | role `on-trusted` | a user within `trusted`, no untrusted guest between |
 | role `trusted` | included by a machine: holds vic's secrets |
 
-202 aspects live under `modules/`; `ren.aspects.<name>` each.
+201 aspects live under `modules/`; `ren.aspects.<name>` each.
 
 ## Directory structure
 

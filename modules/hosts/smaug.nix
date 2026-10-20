@@ -2,6 +2,7 @@
 { ren, ... }:
 {
   ren.host.smaug = {
+    checkout = "/home/vic/hk/vix";
     system = ren.system.x86_64-linux;
     users = [ ren.user.vic ];
     workstation = true;
@@ -43,7 +44,6 @@
     at = ren.host.smaug;
     includes = [
       ren.aspects.trusted
-      ren.aspects.live-dots
       ren.aspects.smaug-hardware
     ];
   };
