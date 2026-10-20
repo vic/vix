@@ -6,12 +6,11 @@
 # - notebooklm MCP (npx, unpinned as on frodo) + notebooklm-pack
 {
   inputs,
-  lib,
   ren,
   ...
 }:
 let
-  vix = import ../../../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
   ren.aspects.ai-vic-tools = {
@@ -33,7 +32,7 @@ in
           inputs.nixpkgs.follows = "nixpkgs";
         };
       };
-    homeManager = vix.mod (
+    homeManager =
       {
         config,
         lib,
@@ -79,7 +78,6 @@ in
             args = [ "${./dw}/mcp.js" ];
           };
         };
-      }
-    );
+      };
   };
 }

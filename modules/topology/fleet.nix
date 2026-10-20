@@ -6,7 +6,7 @@
   ...
 }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
   pkgs = inputs.nixpkgs.legacyPackages;
 in
 {
@@ -17,13 +17,14 @@ in
     ren.kinds.home
   ];
   ren.kinds.system.darwin = vix.opt lib.types.bool false;
-  ren.kinds.system.pkgs = lib.types.raw;
+  # nixpkgs for flake outputs at a system (machines build with their channel); `pkgs` is a Ren-reserved field
+  ren.kinds.system.legacyPackages = lib.types.raw;
 
   ren.fleet.vix = { };
-  ren.system.x86_64-linux.pkgs = pkgs.x86_64-linux;
-  ren.system.aarch64-linux.pkgs = pkgs.aarch64-linux;
+  ren.system.x86_64-linux.legacyPackages = pkgs.x86_64-linux;
+  ren.system.aarch64-linux.legacyPackages = pkgs.aarch64-linux;
   ren.system.aarch64-darwin = {
     darwin = true;
-    pkgs = pkgs.aarch64-darwin;
+    legacyPackages = pkgs.aarch64-darwin;
   };
 }

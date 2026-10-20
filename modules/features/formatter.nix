@@ -7,7 +7,7 @@
 let
   treefmt =
     system:
-    inputs.treefmt-nix.lib.evalModule system.pkgs {
+    inputs.treefmt-nix.lib.evalModule system.legacyPackages {
       projectRootFile = "flake.nix";
       programs = {
         nixfmt.enable = true;

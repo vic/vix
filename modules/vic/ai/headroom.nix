@@ -6,18 +6,14 @@
 # The upstream plugin is deliberately NOT installed: its hook writes an absolute
 # store path into settings.local.json that goes stale on every rebuild.
 {
-  lib,
   ren,
   ...
 }:
-let
-  vix = import ../../_lib.nix { inherit lib; };
-in
 {
   ren.aspects.ai-headroom = {
     at = ren.aspects.vic-headless;
     claude-allow = { ... }: [ "Bash(headroom *)" ];
-    homeManager = vix.mod (
+    homeManager =
       { lib, pkgs, ... }:
       let
         headroom = pkgs.callPackage ./_pkgs/headroom-ai.nix { };
@@ -93,7 +89,6 @@ in
             ThrottleInterval = 5;
           };
         };
-      }
-    );
+      };
   };
 }

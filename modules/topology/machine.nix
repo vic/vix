@@ -5,7 +5,7 @@
   ...
 }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
   inherit (ren.lib) anyOf;
   t = lib.types;
 in

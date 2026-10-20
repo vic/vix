@@ -5,7 +5,6 @@
   ...
 }:
 let
-  vix = import ../../_lib.nix { inherit lib; };
   themes = p: {
     catppuccin.plugin = p.catppuccin-nvim;
     base16.plugin = p.tinted-vim;
@@ -25,19 +24,16 @@ in
       (ren.lib.when (s: s.vim.theme != null))
     ];
     vim =
-      { vim, ... }:
-      vix.mod (
-        { pkgs, ... }:
-        let
-          t = themeFor pkgs.vimPlugins vim.theme;
-        in
-        {
-          vim.startPlugins = [ t.plugin ];
-          vim.luaConfigRC.theme = ''
-            ${t.setup or ""}
-            vim.cmd.colorscheme('${vim.theme}')
-          '';
-        }
-      );
+      { vim, pkgs, ... }:
+      let
+        t = themeFor pkgs.vimPlugins vim.theme;
+      in
+      {
+        vim.startPlugins = [ t.plugin ];
+        vim.luaConfigRC.theme = ''
+          ${t.setup or ""}
+          vim.cmd.colorscheme('${vim.theme}')
+        '';
+      };
   };
 }

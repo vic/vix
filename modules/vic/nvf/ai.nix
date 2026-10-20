@@ -1,7 +1,7 @@
 # vim ai: avante, codecompanion, copilot (as a blink source), CopilotChat.
-{ lib, ren, ... }:
+{ ren, ... }:
 let
-  vix = import ../../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
   ren.aspects.vim-avante = {

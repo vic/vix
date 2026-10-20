@@ -1,12 +1,8 @@
 # nix-settings: cachix substitutes, flakes, trusted users, weekly gc, on workstations and wsl (nixos and darwin).
 {
-  lib,
   ren,
   ...
 }:
-let
-  vix = import ../_lib.nix { inherit lib; };
-in
 {
   ren.aspects.nix-settings.at = ren.lib.anyOf [
     (ren.lib.and [
@@ -18,7 +14,7 @@ in
       (ren.lib.when (s: s.mac.workstation))
     ])
   ];
-  ren.aspects.nix-settings.os = vix.mod (
+  ren.aspects.nix-settings.os =
     { pkgs, config, ... }:
     {
       nix = {
@@ -42,8 +38,7 @@ in
           options = "--delete-older-than 7d";
         };
       };
-    }
-  );
+    };
 
   # every machine, laptops and servers too
   ren.aspects.nix-tuning = {

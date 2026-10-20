@@ -1,11 +1,7 @@
 {
-  lib,
   ren,
   ...
 }:
-let
-  vix = import ../_lib.nix { inherit lib; };
-in
 {
   # Niri session: the compositor, its helpers, and the keyring it expects.
   ren.aspects.niri-desktop = {
@@ -13,7 +9,7 @@ in
       ren.kinds.host
       (ren.lib.when (s: builtins.elem "niri" s.host.desktops))
     ];
-    nixos = vix.mod (
+    nixos =
       { lib, pkgs, ... }:
       {
         programs.niri.enable = true;
@@ -27,8 +23,7 @@ in
           "grim"
           "slurp"
         ] pkgs;
-      }
-    );
+      };
   };
 
   # vic's niri and noctalia configs: on every desktop he uses (old vix linked them everywhere).

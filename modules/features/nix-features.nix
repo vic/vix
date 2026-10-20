@@ -32,15 +32,11 @@ in
 
   ren.aspects.nix-features = {
     at = machines;
-    os = { nix-features, ... }: {
-      nix.settings.experimental-features = builtins.attrNames (
-        builtins.listToAttrs (
-          map (name: {
-            inherit name;
-            value = null;
-          }) (builtins.concatLists nix-features)
-        )
-      ); # deduped (guests emit to their host too)
+    os = { nix-features, lib, ... }: {
+      # deduped (guests emit to their host too), sorted
+      nix.settings.experimental-features = lib.sort lib.lessThan (
+        lib.unique (lib.concatLists nix-features)
+      );
     };
   };
 }

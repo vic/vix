@@ -6,7 +6,7 @@
     packages =
       { system, ... }:
       let
-        pkgs = system.pkgs;
+        pkgs = system.legacyPackages;
       in
       {
         gh-deps-update = pkgs.writeShellApplication {

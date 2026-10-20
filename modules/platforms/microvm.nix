@@ -6,7 +6,7 @@
   ...
 }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
   inherit (ren.lib) and has;
   tap = g: "vm-${g.name}";
   guestsOf = h: lib.filterAttrs (_: g: ren.lib.same g.on h) ren.guest; # h: a host instance

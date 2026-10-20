@@ -13,7 +13,7 @@
     devshells =
       { system, ... }:
       let
-        pkgs = system.pkgs;
+        pkgs = system.legacyPackages;
         apps = inputs.self.packages.${system.name};
         s = inputs.self.nixosConfigurations.nargun.config.nix.settings; # a workstation: carries the vix cachix (as old vix)
         nixConf = pkgs.writeText "nix.conf" (

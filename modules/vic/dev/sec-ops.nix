@@ -1,12 +1,11 @@
 # sec-ops: sops helper scripts on trusted full homes.
 {
   inputs,
-  lib,
   ren,
   ...
 }:
 let
-  vix = import ../../_lib.nix { inherit lib; };
+  vix = ren.helpers;
 in
 {
   ren.aspects.sec-ops = {

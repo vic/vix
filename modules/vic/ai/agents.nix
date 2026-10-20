@@ -11,18 +11,14 @@
 # are listed by name, never `mcp__<server>__*`, so nobody gets the destructive
 # ones. Tools of a server not installed here (hindsight) are simply absent.
 {
-  lib,
   inputs,
   ren,
   ...
 }:
-let
-  vix = import ../../_lib.nix { inherit lib; };
-in
 {
   ren.aspects.ai-agents = {
     at = ren.aspects.vic-headless;
-    homeManager = vix.mod (
+    homeManager =
       { lib, pkgs, ... }:
       let
         d = ./agents;
@@ -128,7 +124,6 @@ in
         programs.claude-code.agents = lib.genAttrs' [ "scout" "gate" "spec" "build" ] (
           role: lib.nameValuePair "gen-${role}" (mkAgent role)
         );
-      }
-    );
+      };
   };
 }

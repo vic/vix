@@ -15,7 +15,8 @@
       { system, ... }:
       {
         ${system.name}.gitleaks =
-          system.pkgs.runCommand "gitleaks" { nativeBuildInputs = [ system.pkgs.gitleaks ]; }
+          system.legacyPackages.runCommand "gitleaks"
+            { nativeBuildInputs = [ system.legacyPackages.gitleaks ]; }
             ''
               gitleaks dir --no-banner --redact ${inputs.self} && touch $out
             '';

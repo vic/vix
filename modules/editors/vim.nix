@@ -6,7 +6,7 @@
   ...
 }:
 let
-  vix = import ../_lib.nix { inherit lib; };
+  vix = ren.helpers;
   # every feature an aspect can gate on: `at = ren.lib.when (s: builtins.elem "snacks" (s.vim.features or [ ]));`
   features = builtins.filter (w: builtins.isString w && w != "") (
     builtins.split "[[:space:]]+" ''
@@ -54,7 +54,7 @@ in
         # a profile's aspects may allow unfree plugin deps (`unfree = allowUnfree [ .. ];`)
         pkgs =
           if unfree == { } then
-            system.pkgs
+            system.legacyPackages
           else
             import inputs.nixpkgs {
               system = system.name;

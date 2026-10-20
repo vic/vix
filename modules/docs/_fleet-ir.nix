@@ -1,5 +1,9 @@
 # fleet ir (a fn of ren and chans): nodes + edges of three views (scopes, channels, classes) from live Ren data; `_readme-map.nix` renders each.
-{ ren, chans }:
+{
+  lib,
+  ren,
+  chans,
+}:
 let
   inherit (builtins)
     attrNames
@@ -7,7 +11,6 @@ let
     concatMap
     elem
     filter
-    listToAttrs
     match
     replaceStrings
     throw
@@ -18,17 +21,8 @@ let
     inherit kind label group;
   };
   edge = from: to: label: { inherit from to label; };
-  # one node per label: a label two edges share is drawn once
-  uniq =
-    ns:
-    attrValues (
-      listToAttrs (
-        map (n: {
-          name = n.id;
-          value = n;
-        }) ns
-      )
-    );
+  # one node per label (a label two edges share is drawn once), ordered by id
+  uniq = ns: builtins.sort (a: b: a.id < b.id) (lib.dedupByKey (n: n.id) ns);
   hosts = attrValues ren.host;
   macs = attrValues ren.mac;
   guests = attrValues ren.guest;

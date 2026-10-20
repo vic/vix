@@ -1,12 +1,5 @@
 # ssh: ssh client config from the ssh-host instances, ssh-agent and the persistent vini master (linux).
-{
-  lib,
-  ren,
-  ...
-}:
-let
-  vix = import ../../_lib.nix { inherit lib; };
-in
+{ ren, ... }:
 {
   ren.aspects.vic-ssh = {
     at = ren.aspects.vic-secrets;
@@ -16,7 +9,7 @@ in
       ren.secret.ssh-localhost-run
     ];
 
-    homeManager = vix.mod (
+    homeManager =
       { lib, ... }:
       {
         programs.ssh = {
@@ -36,10 +29,9 @@ in
           }
           // lib.mapAttrs (_: h: lib.filterAttrs (_: v: v != null) (ren.lib.data h)) ren.ssh-host;
         };
-      }
-    );
+      };
 
-    homeLinux = vix.mod (
+    homeLinux =
       { config, pkgs, ... }:
       {
         services.ssh-agent.enable = true;
@@ -60,7 +52,6 @@ in
           };
           Install.WantedBy = [ "default.target" ];
         };
-      }
-    );
+      };
   };
 }

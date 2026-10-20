@@ -1,12 +1,11 @@
 # nvim: vic's vim profiles (editors/vim.nix, vic/nvf) on PATH; neovide `<name>-gui` wrappers on the desktop.
 {
-  lib,
   ren,
   inputs,
   ...
 }:
 let
-  vix = import ../../_lib.nix { inherit lib; };
+  vix = ren.helpers;
   profiles = builtins.attrNames ren.vim;
   own = pkgs: (vix.perSystem pkgs inputs.self).packages; # this flake's packages (vim profiles)
 in
