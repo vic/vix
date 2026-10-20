@@ -3,39 +3,6 @@ concurrency:
   cancel-in-progress: true
   group: "${{ github.workflow }}-${{ github.ref }}"
 jobs:
-  build-macos-15-intel:
-    continue-on-error: "${{ matrix.allowFailure }}"
-    name: "build ${{ matrix.name }}"
-    runs-on: "macos-15-intel"
-    steps:
-      - uses: "actions/checkout@v6"
-      - uses: "DeterminateSystems/determinate-nix-action@v3"
-      - uses: "DeterminateSystems/magic-nix-cache-action@v13"
-      - uses: "cachix/cachix-action@v17"
-        with:
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-          name: "vix"
-      - run: "nix build --print-build-logs --out-link result '.#${{ matrix.attr }}'"
-      - run: "echo \"<code>$(readlink -f result)</code>\" >> \"$GITHUB_STEP_SUMMARY\""
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - allowFailure: true
-            attr: "darwinConfigurations.yavanna.config.system.build.toplevel"
-            name: "yavanna"
-            runner: "macos-15-intel"
-            system: "x86_64-darwin"
-          - allowFailure: true
-            attr: "checks.x86_64-darwin.\"devshell-default\""
-            name: "check-devshell-default-x86_64-darwin"
-            runner: "macos-15-intel"
-            system: "x86_64-darwin"
-          - allowFailure: true
-            attr: "checks.x86_64-darwin.\"fmt\""
-            name: "check-fmt-x86_64-darwin"
-            runner: "macos-15-intel"
-            system: "x86_64-darwin"
   build-macos-latest:
     continue-on-error: "${{ matrix.allowFailure }}"
     name: "build ${{ matrix.name }}"
@@ -171,7 +138,7 @@ jobs:
             name: "frodo"
             runner: "ubuntu-latest"
             system: "x86_64-linux"
-          - allowFailure: true
+          - allowFailure: false
             attr: "nixosConfigurations.mordor.config.system.build.toplevel"
             name: "mordor"
             runner: "ubuntu-latest"
@@ -289,6 +256,11 @@ jobs:
           - allowFailure: false
             attr: "checks.x86_64-linux.\"platform-packages-frodo\""
             name: "check-platform-packages-frodo-x86_64-linux"
+            runner: "ubuntu-latest"
+            system: "x86_64-linux"
+          - allowFailure: false
+            attr: "checks.x86_64-linux.\"platform-packages-mordor\""
+            name: "check-platform-packages-mordor-x86_64-linux"
             runner: "ubuntu-latest"
             system: "x86_64-linux"
           - allowFailure: false

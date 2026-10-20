@@ -8,8 +8,6 @@ let
   inherit (inputs.nixpkgs) lib;
   self = inputs.self; # shortcut: reads configs back from flake outputs, lazily
   skipped = [
-    "mordor" # unfree nvidia driver
-    "yavanna" # x86_64-darwin dropped by nixpkgs
     "varda" # openspec
   ];
   skipPkgs.bombadil = [ "zfs" ];
@@ -35,7 +33,7 @@ let
       )
     ) (lib.filterAttrs (n: _: !builtins.elem n skipped) configs);
   nargun = vicHome self.nixosConfigurations.nargun;
-  varda = vicHome self.darwinConfigurations.varda; # yavanna is x86_64-darwin: dropped by nixpkgs
+  varda = vicHome self.darwinConfigurations.varda;
   problems = {
     math-works = lib.optional (2 * 11 != 22) "math is broken";
     nargun =

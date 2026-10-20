@@ -15,6 +15,7 @@ in
   ren.aspects.nvidia.unfree = vix.allowUnfree [
     "nvidia-x11"
     "nvidia-settings"
+    "nvidia-kernel-modules"
   ];
   ren.aspects.nvidia.nixos = vix.mod (
     { config, ... }:

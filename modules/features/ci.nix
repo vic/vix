@@ -5,15 +5,13 @@ let
   runners = import ./_runners.nix;
   # jobs allowed to fail (continue-on-error), one reason each
   knownBroken = [
-    "mordor" # unfree nvidia driver
-    "yavanna" # x86_64-darwin dropped by nixpkgs
     "varda" # openspec
   ];
   job = system: name: attr: {
     inherit name attr;
     system = system.name;
     runner = runners.${system.name};
-    allowFailure = builtins.elem name knownBroken || system.name == "x86_64-darwin"; # x86_64-darwin dropped by nixpkgs
+    allowFailure = builtins.elem name knownBroken;
   };
   one = name: j: { ${name} = j; };
 in

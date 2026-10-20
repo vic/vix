@@ -47,9 +47,6 @@ flowchart LR
   subgraph system_aarch64_linux ["aarch64-linux"]
     host_bill["bill"]
   end
-  subgraph system_x86_64_darwin ["x86_64-darwin"]
-    mac_yavanna("yavanna")
-  end
   subgraph system_x86_64_linux ["x86_64-linux"]
     host_annatar["annatar"]
     host_bombadil["bombadil"]
@@ -67,7 +64,6 @@ flowchart LR
   user_vic(("vic"))
   fleet_vix --> system_aarch64_darwin
   fleet_vix --> system_aarch64_linux
-  fleet_vix --> system_x86_64_darwin
   fleet_vix --> system_x86_64_linux
   host_frodo -->|"guest"| guest_dnx
   host_frodo -->|"guest"| guest_gen
@@ -79,7 +75,6 @@ flowchart LR
   host_nienna --> user_vic
   host_smaug --> user_vic
   mac_varda --> user_vic
-  mac_yavanna --> user_vic
   guest_dnx --> user_vic
   guest_gen --> user_vic
   home_bitstream --> user_vic
@@ -150,7 +145,7 @@ flowchart LR
   homeLinux -.->|"on linux"| homeManager
   homeDarwin -.->|"on darwin"| homeManager
   homeManager -->|"annatar, bombadil, frodo, mordor, nargun, nienna, smaug"| nixos
-  homeManager -->|"varda, yavanna"| darwin
+  homeManager -->|"varda"| darwin
   homeManager -->|"vic@bitstream, vic@nargun"| homeConfigurations
   os -.-> nixos
   os -.-> darwin
@@ -158,7 +153,7 @@ flowchart LR
   account -.->|"users.users"| darwin
   nixos -->|"dnx, gen in frodo"| microvm_vms
   nixos -->|"annatar, bill, bombadil, frodo, mordor, nargun, nienna, smaug, tom"| nixosConfigurations
-  darwin -->|"bert, varda, yavanna"| darwinConfigurations
+  darwin -->|"bert, varda"| darwinConfigurations
   vim -->|"astrovim, lazyvim, neovim, nvim, vscode-vim"| packages
   files -.->|"write-files"| packages
   files -.->|"files/README.md"| checks
@@ -181,11 +176,11 @@ flowchart LR
 | `guest` | a microvm on a host (is host): its own nixos and users, built inside the host | dnx, gen |
 | `home` | a standalone home-manager home of one user | bitstream, nargun |
 | `host` | a NixOS machine (is machine) | annatar, bill, bombadil, frodo, mordor, nargun, nienna, smaug, tom |
-| `mac` | a nix-darwin machine (is machine) | bert, varda, yavanna |
+| `mac` | a nix-darwin machine (is machine) | bert, varda |
 | `machine` | abstract: typed facts (cpu, form, desktops, users, envs) hosts and macs share | - (abstract) |
 | `secret` | a sops secret a feature asks for | anthropic-api-key, copilot-api-key, edge-token, gemini-eco-key, groq-api-key, hello, openrouter-api-key, ssh-conf, ssh-id-ed25519, ssh-localhost-run |
 | `ssh-host` | one ssh client matchBlock | edge, sini, uptermd.upterm.dev, vini, vini-tunnel |
-| `system` | a nix system; machines, homes and envs are built for one | aarch64-darwin, aarch64-linux, x86_64-darwin, x86_64-linux |
+| `system` | a nix system; machines, homes and envs are built for one | aarch64-darwin, aarch64-linux, x86_64-linux |
 | `user` | a person: full name, email, login shell, admin | vic |
 | `vim` | a neovim profile: a feature list built per system into one nvf package (+ a gui wrapper) | astrovim, lazyvim, neovim, nvim, vscode-vim |
 | `workspace` | a project an isolated claude guest works on (data): repo path; one guest each | dnx, gen |
@@ -242,7 +237,7 @@ flowchart LR
 | role `on-trusted` | a user within `trusted`, no untrusted guest between |
 | role `trusted` | included by a machine: holds vic's secrets |
 
-206 aspects live under `modules/`; `ren.aspects.<name>` each.
+205 aspects live under `modules/`; `ren.aspects.<name>` each.
 
 </details>
 

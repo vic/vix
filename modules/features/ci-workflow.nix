@@ -13,7 +13,7 @@ let
           attr = "checks.${system}.\"${n}\"";
           inherit system;
           runner = runners.${system};
-          allowFailure = system == "x86_64-darwin"; # dropped by nixpkgs (same rule as ci.nix)
+          allowFailure = false;
         }) (builtins.attrNames cs)
       ) self.checks
     )
