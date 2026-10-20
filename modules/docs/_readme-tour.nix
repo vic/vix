@@ -1,12 +1,20 @@
-# readme tour: the Ren scope tree in a few lines, with real vix names.
+# readme tour: each Ren keyword once, and what vix does with it.
 ''
   ## A tour
 
-  - **Kinds** hold typed data. Kinds with `below` form the **scope tree**, rooted at `ren.fleet.vix`.
-  - **Machines** hold facts: `host` (NixOS: frodo), `mac` (nix-darwin: varda), `guest` (microvm on a host: gen, dnx on frodo).
-  - **Homes** are standalone home-manager: `bitstream`, `nargun`. **Users** (`ren.user.vic`) get one scope per machine or home.
-  - **Systems** hold vim profiles (`nvim`, `lazyvim`) and dev envs (`rustenv`, `goenv`).
-  - **Aspects** bundle config; `at` says where: `ren.aspects.direnv = { at = ren.aspects.vic-headless; homeManager.programs.direnv.enable = true; };`
-  - **Channels** carry data from emitters to one receiver: `git-ignores = _: [ ".claude" ];` lands in `git`.
-  - **Classes** are the other aspect keys (`nixos`, `homeManager`, `account`, `vim`, `files`...); each turns modules into a flake output.
+  | Ren | in vix |
+  | --- | --- |
+  | `ren.kinds.<k>` | typed data: `host`, `mac`, `home`, `user`, `env`, `vim`, `secret`, `ssh-host` |
+  | `ren.<k>.<name>` | an instance: `ren.host.frodo`, `ren.user.vic`, `ren.env.rustenv` |
+  | `below`, `spawns` | the scope tree: `fleet` → `host` → `guest`, `user`; `system` → `vim`, `env` |
+  | `is` | subkinds: `host` and `mac` are a `machine`; `guest` is a `host` |
+  | `ren.aspects.<a>` | one feature: `git`, `kvm-amd`, `vic-gui` |
+  | `at` | where an aspect is on: `at = ren.aspects.vic-headless` |
+  | `includes`, `excludes` | add or drop aspects below a scope: `frodo` includes its hardware; frodo's guests exclude it |
+  | `ren.classes.<c>` | a module system an aspect key feeds: `nixos`, `darwin`, `homeManager`, `account`, `vim`, `files` |
+  | `into` | how a class builds: `nixos` gives `nixosConfigurations.<host>` |
+  | `ren.channels.<c>` | data a feature emits for a receiver: `git-ignores`, `dots`, `secrets`, `checks` |
+  | `fold`, `to` | how a channel merges, and who reads it: `checks` folds `attrs` into the fleet |
+  | `and`, `anyOf`, `not`, `within`, `has`, `when` | predicates for `at` and `to`: `and [ ren.kinds.host (when (s: s.host.cpu == "amd")) ]` |
+  | `same` | identity: a guest runs on the host it names in `on` |
 ''
