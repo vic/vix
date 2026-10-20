@@ -56,9 +56,6 @@
             apps.vic-sops-get
             apps.vic-sops-rotate
             apps.gh-deps-update
-            apps.write-files # regenerate README.md (docs/)
-            apps.write-flake # regenerate flake.nix from flake-inputs
-            apps.write-lock
             inputs.self.formatter.${system.name}
             (cmd "vix" ''
               echo "vix commands: fmt ci hm -build -switch -boot -reboot vini-hm"
@@ -82,7 +79,15 @@
               NIX_SSHOPTS="-o BatchMode=yes" nix copy --derivation --to ssh-ng://vini "$drv"
               ssh vini "set -e; out=\$(nix build --no-link --print-out-paths --option fallback true --option connect-timeout 5 '$drv^out'); \$out/activate"
             '')
-          ];
+          ]
+          # the README and flake.nix writers are built on x86_64-linux only (docs/files.nix, features/flake-inputs.nix)
+          ++ builtins.attrValues (
+            builtins.intersectAttrs {
+              write-files = null;
+              write-flake = null;
+              write-lock = null;
+            } apps
+          );
         };
       };
   };
