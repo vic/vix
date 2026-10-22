@@ -1,20 +1,24 @@
-{ vix, den, ... }:
+# annatar: WSL host.
+{ ren, ... }:
 {
-  flake-file.inputs.nixos-wsl = {
-    url = "github:nix-community/nixos-wsl";
-    inputs.nixpkgs.follows = "nixpkgs";
-    inputs.flake-compat.follows = "";
+  ren.host.annatar = {
+    checkout = "/home/vic/hk/vix";
+    system = ren.system.x86_64-linux;
+    users = [ ren.user.vic ];
+    form = "wsl";
   };
 
-  den.aspects.annatar.includes = [
-    vix.nix-settings
-
-    den.aspects.annatar.distro
-  ];
-
-  den.aspects.annatar.distro.nixos = {
+  ren.aspects.annatar-distro.nixos = {
     fileSystems."/".device = "/dev/noroot";
     fileSystems."/".fsType = "auto";
     boot.loader.grub.enable = false;
+  };
+
+  ren.aspects.annatar = {
+    at = ren.host.annatar;
+    includes = [
+      ren.aspects.trusted
+      ren.aspects.annatar-distro
+    ];
   };
 }

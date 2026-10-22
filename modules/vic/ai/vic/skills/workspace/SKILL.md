@@ -1,6 +1,6 @@
 ---
 name: workspace
-description: jj-workspace isolation law (ALL projects) — ANY agent dispatch that EDITS repo files runs in its own jj workspace under ~/hk/workspace. Supervisor sets up + lands (linear history); agents NEVER touch jj. Use before every coding/refactor/prototype dispatch, mandatory when parallel.
+description: jj-workspace isolation law (ALL projects) — ANY agent dispatch that EDITS repo files runs in its own jj workspace under ${XDG_RUNTIME_DIR:-/tmp}/jj-ws (wiped on reboot). Supervisor sets up + lands (linear history); agents NEVER touch jj. Use before every coding/refactor/prototype dispatch, mandatory when parallel.
 ---
 
 # WORKSPACE LAW (vic, global) CVMN — parallel coding w/o mainline risk. HARD GATES.
@@ -9,12 +9,13 @@ description: jj-workspace isolation law (ALL projects) — ANY agent dispatch th
 ANY dispatch that edits repo files (rung/typesmith/hunter-prototypes/isolate-repros-in-repo/superhaiku swarm) ⟹ ISOLATE. Read-only agents (probe/reader/sweep/judge/lawyer) need none.
 
 ## SUPERVISOR DUTIES (caller owns ALL of this — never the agent)
-1. `vic-ws new <task-name> [rev]` → prints workspace path (~/hk/workspace/<repo>-<task>).
+1. Create: `mkdir -p $XDG_RUNTIME_DIR/jj-ws/<repo>` then `jj workspace add $XDG_RUNTIME_DIR/jj-ws/<repo>/<name>` → that path is the workspace.
 2. Spec carries: `WORKSPACE: <abs path> — ALL file ops INSIDE it. jj/git commands FORBIDDEN (any of: commit/new/squash/describe/abandon/rebase/workspace/git *). Violating = work DISCARDED.`
 3. One workspace per agent (k-shot ensemble ⟹ k workspaces). Disjoint-dep lanes law still applies for BUILD cost, not safety — safety now comes from isolation.
 
 ## LANDING (orchestrator ONLY, linear history)
-deliverable → vic-reviewer audits the WS DIFF → ACCEPT: `vic-ws land <name>` (squash into current @, forget, rm) in DEPENDENCY ORDER, one at a time → REJECT/ensemble-loser: `vic-ws drop <name>` (mainline untouched, zero trace).
+deliverable → vic-reviewer audits the WS DIFF → ACCEPT: from the main repo run `jj squash --from <name>@ --into @` (`-f/--from`, `-t/--into`), in DEPENDENCY ORDER, one at a time → REJECT/ensemble-loser: `jj abandon <name>@` (mainline untouched).
+- HARD: IMMEDIATELY after land or abandon, supervisor runs: (a) `jj -R <ws-dir> st` (snapshots the agent's edits; jj only snapshots the workspace a command runs in), (b) `jj workspace forget <name>` from the main repo, (c) `rm -rf <ws-dir>`. End of every wave: `jj workspace list` must show only `default`; leftovers get (a)-(c). NEVER leave a workspace behind.
 - CONFLICT on land = two agents touched same region ⟹ partition error: drop one, re-spec — NEVER hand-merge inside agent work.
 - NO landing while other agents still writing in their workspaces against the same files.
 - Mainline stays LINEAR: land = squash-into-@, never merge commits, never history rewrites of landed work.

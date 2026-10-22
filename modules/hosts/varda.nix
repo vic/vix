@@ -1,9 +1,17 @@
-{ vix, ... }:
+# varda: mac.
+{ ren, ... }:
 {
-  den.aspects.varda = {
+  ren.mac.varda = {
+    checkout = "/home/vic/hk/vix";
+    system = ren.system.aarch64-darwin;
+    users = [ ren.user.vic ];
+    workstation = true;
+  };
+
+  ren.aspects.varda = {
+    at = ren.mac.varda;
     includes = [
-      vix.nix-settings
-      vix.darwin-base
+      ren.aspects.trusted
     ];
   };
 }

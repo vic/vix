@@ -1,0 +1,3 @@
+2026-06-15T02:10:05-06:00	frontier-funnel-wave6	mixed	sonnet	182	313544	ok	11 agents: 5 read+5 funnel+1 audit; 0 survivors
+2026-06-15T02:10:05-06:00	vic-probe	haiku	low	17	12043	ok	build+smoke verify green
+2026-06-15T02:10:05-06:00	vic-probe	haiku	low	18	10170	ok	rebuild+den/berean serve verify

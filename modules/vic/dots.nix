@@ -1,10 +1,15 @@
-{ vic, ... }:
+# dots: pool of dotfiles emitted by features, linked into $HOME; live out-of-store links into the machine's vix checkout, else store copies.
+{
+  lib,
+  ren,
+  ...
+}:
 let
-  # live: out-of-store link into ~/.flake (edit in place); otherwise a store copy.
-  dotsLinker =
-    config: path:
-    if config.vic.liveDots then
-      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.flake/modules/vic/dots/${path}"
+  vix = ren.helpers;
+  linker =
+    checkout: config: path:
+    if checkout != null then
+      config.lib.file.mkOutOfStoreSymlink "${checkout}/modules/vic/dots/${path}"
     else
       builtins.path {
         path = ./dots + "/${path}";
@@ -12,71 +17,48 @@ let
       };
 in
 {
-  vic.dots.homeManager =
-    { config, lib, ... }:
-    let
-      dotsLink = dotsLinker config;
-    in
-    {
-      imports = [
-        {
-          options.vic.liveDots = lib.mkOption {
-            type = lib.types.bool;
-            default = true;
-            description = "Link dots into ~/.flake for live editing; false copies them into the store.";
+  # absolute path of the vix checkout on this machine or home: its dotfiles link live into it (null: store copies).
+  ren.kinds.machine.checkout = vix.maybe lib.types.str;
+  ren.kinds.home.checkout = vix.maybe lib.types.str;
+
+  # a feature emits { "<home.file key>" = "<path relative to modules/vic/dots>"; } for each dotfile it owns.
+  ren.channels.dots = {
+    fold = ren.lib.fold.attrs;
+    at = ren.kinds.user;
+    to = e: e;
+  };
+
+  ren.aspects.vic-dots = {
+    at = ren.aspects.vic-headless;
+    # rtk is owned by the ai modules, which this pass may not touch.
+    dots.".config/rtk" = "config/rtk";
+    homeManager =
+      {
+        parent,
+        dots,
+        config,
+        lib,
+        ...
+      }:
+      let
+        checkout = (vix.place parent).checkout;
+      in
+      {
+        home.activation.check-checkout = lib.mkIf (checkout != null) (
+          config.lib.dag.entryAfter [ "writeBoundary" ] ''
+            if ! test -d "${checkout}/modules/vic/dots"; then
+              echo "Missing vix checkout: ${checkout}/modules/vic/dots (set checkout to where vix lives)"
+              exit 1
+            fi
+          ''
+        );
+        home.file = builtins.mapAttrs (_: path: { source = linker checkout config path; }) dots // {
+          # public keys, linked from the flake source on every home (vic-ssh only lands on trusted ones).
+          ".ssh" = {
+            recursive = true;
+            source = ./dots/ssh;
           };
-        }
-      ];
-      home.activation.link-flake = lib.mkIf config.vic.liveDots (
-        config.lib.dag.entryAfter [ "writeBoundary" ] ''
-          echo Checking that "$HOME/.flake" exists.
-          if ! test -L "$HOME/.flake"; then
-            echo "Missing $HOME/.flake link"
-            exit 1
-          fi
-        ''
-      );
-      home.file.".ssh" = {
-        recursive = true;
-        source = ./dots/ssh;
+        };
       };
-      home.file.".config/jjui".source = dotsLink "config/jjui";
-      home.file.".config/nvim".source = dotsLink "config/nvim";
-      home.file.".config/astrovim".source = dotsLink "config/astrovim";
-      home.file.".config/lazyvim".source = dotsLink "config/lazyvim";
-      home.file.".config/btop".source = dotsLink "config/btop";
-      home.file.".config/bottom".source = dotsLink "config/bottom";
-      home.file.".config/rtk".source = dotsLink "config/rtk";
-      home.file.".config/gh/config.yml".source = dotsLink "config/gh/config.yml";
-    };
-
-  vic.dots.includes = [ vic.gui-dots ];
-
-  vic.gui-dots.homeManager =
-    { config, pkgs, ... }:
-    let
-      dotsLink = dotsLinker config;
-    in
-    {
-      home.file.".config/niri".source = dotsLink "config/niri";
-      home.file.".config/vscode-vim".source = dotsLink "config/vscode-vim";
-      home.file.".config/doom".source = dotsLink "config/doom";
-      home.file.".config/zed".source = dotsLink "config/zed";
-      home.file.".config/wezterm".source = dotsLink "config/wezterm";
-      home.file.".config/ghostty".source = dotsLink "config/ghostty";
-      home.file.".config/noctalia".source = dotsLink "config/noctalia";
-      home.file.".config/fontconfig".source = dotsLink "config/fontconfig";
-      home.file.".config/autostart/lxqt-config-touchpad-autostart.desktop".source =
-        dotsLink "config/autostart/lxqt-config-touchpad-autostart.desktop";
-      home.file.".config/Code/User/settings.json".source = dotsLink "config/Code/User/settings.json";
-      home.file.".config/Code/User/keybindings.json".source =
-        dotsLink "config/Code/User/keybindings.json";
-      home.file.".vscode/extensions/extensions.json".source =
-        dotsLink "vscode/extensions/extensions-${pkgs.stdenv.hostPlatform.uname.system}.json";
-      home.file.".config/Cursor/User/settings.json".source = dotsLink "config/Code/User/settings.json";
-      home.file.".config/Cursor/User/keybindings.json".source =
-        dotsLink "config/Code/User/keybindings.json";
-      home.file.".cursor/extensions/extensions.json".source =
-        dotsLink "cursor/extensions/extensions-${pkgs.stdenv.hostPlatform.uname.system}.json";
-    };
+  };
 }

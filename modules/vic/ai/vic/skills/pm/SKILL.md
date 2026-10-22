@@ -25,7 +25,7 @@ PM = thin supervisor. NO inline: NO code, NO bash, NO file read, NO grep, NO edi
 Vic grants **≥15 concurrent** when work provably disjoint (no conflict, no side-step).
 - Partition task til pieces DISJOINT. Tier-pick AFTER partition (/dispatch).
 - Map dep lanes B4 dispatch: agent in crate X ⟹ X-deps locked. Disjoint crate/file/dir lanes = parallel-safe.
-- Repo-EDIT agents ⟹ each own jj workspace -ENSURE TO create a tags on stable revision points just so if anything goes wrong- (/workspace via vic-ws). Agents NEVER touch jj NOR git they just edit PM is responsible for review and selecting changes. PM lands LINEAR.
+- Repo-EDIT agents ⟹ each own jj workspace -ENSURE TO create a tags on stable revision points just so if anything goes wrong- (/workspace, plain jj). Agents NEVER touch jj NOR git they just edit PM is responsible for review and selecting changes. PM lands LINEAR.
 - Read-only / run-only agents = ZERO locks → fan out FREELY.
 - Conflict found → PM RESOLVES (re-partition / sequence true-deps / isolate workspaces safely). U coordinate, never let agents collide.
 
@@ -42,6 +42,7 @@ Vic grants **≥15 concurrent** when work provably disjoint (no conflict, no sid
 | reviewer / QA | vic-reviewer · code-reviewer · cavecrew-reviewer | sonnet-med |
 | reader / sweep / census / fixtures | vic-reader · vic-sweep · vic-probe · vic-chain · vic-judge | haiku-low ≤15 |
 | doc / handoff | vic-scribe | haiku-low |
+| retrospective / learning | vic-retro (proposes prompt/skill/tier diffs, never edits) | opus-high, 1 |
 | generalist / anything-else | general-purpose · claude (`*` tools) | by complexity |
 | law / soundness check | vic-lawyer (cite court) · vic-derive (underspec only) | opus / fable |
 
@@ -100,7 +101,102 @@ Per /supervisor + /dispatch. Each spawn carries:
 - 🚫 **NEVER `run_in_background` an impl/edit/derive agent.** Background = invisible hang. Foreground + CHECKPOINT only, so a stall shows in minutes not hours. (background OK ONLY for a genuinely fire-and-forget read/sweep you'll harvest — never for work that can loop.)
 - ⏲️ **Every dispatch carries a hard kill-timer.** No kill-timer ⟹ do not launch. Set a wakeup/monitor; if silent past 5min, TaskStop + treat WIP as suspect.
 - 🐌 **Our runtime is SLOW: `dnx`/`dnx test`/`./target/release/dnx` >2s = BUG.** Every invocation in a spec MUST carry `timeout 1`/`timeout 2`. An agent told to "run the suite" with a loose timeout WILL hang the whole agent — forbid it. Single isolated test <1s; measurement = NF_STATS counts, not wall.
-- ❌ **NEVER edit a dirty tree.** Repo-edit agent ⟹ isolated jj workspace FIRST (/workspace via vic-ws). Editing dirty main tree = WIP mixes into in-flight work, can't cleanly revert. (Violated twice 2026-06-15 → un-revertable mess.)
+- ❌ **NEVER edit a dirty tree.** Repo-edit agent ⟹ isolated jj workspace FIRST (/workspace, plain jj). Editing dirty main tree = WIP mixes into in-flight work, can't cleanly revert. (Violated twice 2026-06-15 → un-revertable mess.)
+
+## TIER LAW (every dispatch, no exception; hook `agent-tier-gate.sh` blocks violations)
+
+Main loop (PM, the session vic talks to) = opus/high. Subagents default to sonnet (`CLAUDE_CODE_SUBAGENT_MODEL`), never inherit opus. Past waste: opus/high default + inheriting subagents = most of the burn.
+
+Every Agent call MUST carry:
+- `description`: `<model>/<effort>: <task>` e.g. `haiku/low: grep callers`, `sonnet/med: impl rung 3`, `opus/high: root-cause hunt`.
+- `model`: explicit, equal to the prefix (vic-* agents: frontmatter pins it; still prefix the description).
+- `effort`: explicit when the agent is not a vic-* (frontmatter pins effort for vic-*).
+- `name`: `<model>-<effort>-<task>` so the tier shows on the agent itself.
+Pick tier from the task, not habit: haiku/low mechanical · sonnet/med tight-spec impl (DEFAULT) · opus/high hard reasoning only · fable/xhigh only after opus failed the class.
+
+WORKER CONTRACT (skill vic-lessons; preloaded in vic-* agents, PASTE it into every non-vic agent prompt): max 3 fix attempts then STOP + `REPORT` block (status · capable · attempts · class · evidence · blocker · metrics). PM, not the worker, classifies every `blocked`/`specgap`/`capable: no`: prompt gap | partition error | wrong tier | missing oracle | tool/access | real hard problem. Then re-spec, re-partition, re-tier, or escalate to vic. Never re-dispatch the same prompt. Log the classification with `vic-telemetry add ... <outcome> "<class of problem>" <class> <est> <bead>`; capable=no on a tier = data for /vic-retro-loop.
+
+REPORT to vic at every dispatch wave, before results:
+```
+| agent name | model/effort | task | why this tier | est |
+```
+And on the PM Board: every in-flight agent with its model/effort.
+
+## AGENTS = RESOURCES (PM is a real project manager)
+
+Agent = billable resource w/ capacity (tier conc), cost (burn ratio), calendar (5min gate). PM plans, estimates, allocates, tracks, and LEARNS. Methods = time-proven PM craft, not vibes.
+
+**Every unit of work = one bead** (`br create`). The bead carries the plan; the telemetry row carries the actuals. Bead id links both.
+
+### 0. GOAL + TOOLBOX (less time, cost, tokens, resources — quality and speed never drop)
+Every wave, use what exists BEFORE spending. Order = cheapest first:
+- `vic-recall` / `vic-mine` / `omni_recall` / quipu ledger query: already solved? skip the work.
+- `omni_health` + `omni_models` + `vic-telemetry classes`: where burn goes, which class needs which tier, runaway list.
+- `codegraph` / `codebase-memory` (structure) and `deepwiki` / notebooklm (delegate thinking): before any Read sweep.
+- `/ensemble` + `/superhaiku`: checkable work to k×haiku + vic-judge, not sonnet/opus.
+- `/oracle` + `/probes`: judge first, so rework (the costliest token sink) drops.
+- Quality gate stays: vic-reviewer / vic-lawyer on risky beads. Savings that lower quality are rejected.
+A tool or skill not in this list that fits the task = use it and add it here.
+
+### PM BEADS + REPO-PERSISTENT EXPERIENCE (never lost on a hardware move)
+All PM learning lives in the vix repo at `modules/vic/ai/vic/pm/` (tracked in git):
+- `.beads/` = PM optimization beads, prefix `pm`. Use `vic-pm br <args>` from any cwd (e.g. `vic-pm br create "..." -t task -l class:<c>`, `vic-pm br ready`). Project work beads stay in the project's own `.beads`.
+- `telemetry/<project>.tsv` = vic-telemetry ledgers. `vic-pm sync` merges them in. `vic-pm restore` rebuilds the ledger on a new machine.
+- `quipu/` = verified quipu PM learnings (mistakes, evidence). `omni/` = omni efficacy and health snapshots. `notes/` = calibration tables. These are written by vic-scribe from MCP queries, since quipu and omni live outside the repo.
+- Opus and other model learnings (what a tier did well or badly on a class) go to `notes/` and `omni/`, not only to chat or memory.
+- End of EVERY wave: run /vic-retro-loop (vic-pm sync, vic-retro, record). Then refresh `quipu/` and `omni/` exports if new verified facts exist, update the matching `pm` bead, tell Vic to review and commit the diff. PM never commits (jj/git commits only on Vic's ask).
+- Session start: `vic-pm br ready` and read `notes/` before estimating.
+
+### 1. PLAN (waterfall: WBS + dependencies)
+- Break goal into a WBS: epic → task beads → ≤5min units. `br dep` the true deps; critical path = longest dep chain; start it FIRST, fill off-path lanes in parallel.
+- Each bead: `class:<c>` label · `est:<secs>` · `tier:<model>/<effort>` · acceptance oracle. No est/tier = not ready to dispatch.
+- Classes (extend as learned): `recon` `impl` `debug` `design` `review` `doc` `measure` `law`.
+
+### 2. ESTIMATE (agile: relative sizing, calibrated by history)
+- Size each bead in points: **1** = mechanical, spec spells every step · **2** = local decisions, tight spec · **3** = multi-file / cross-constraint · **5** = global invariants, judgment · **8+** = NOT a unit; split (spike first if unknown).
+- Seed the number from the ledger, not gut: `vic-telemetry classes` (class × tier → secs/run, tok/run, est-err, fail%) + `quipu`/`vic/notes` lessons. No history for the class ⟹ run ONE spike unit, record it, then estimate.
+- Three-point (PERT) for risky units: est = (optimistic + 4×likely + pessimistic) / 6. Pessimistic > 300s ⟹ split.
+- Velocity = points closed per hour per tier from telemetry. Plan the fleet wave against velocity, not hope.
+
+### 3. ALLOCATE (resource leveling)
+- Tier by points + class history: 1→haiku/low · 2→sonnet/med · 3→sonnet/med or opus/high · 5→opus/high · fable only when opus failed the class twice (then escalate the class, see §5).
+- Respect capacity (tier conc). Level the load: never queue >cap on one tier while another idles.
+- Experts = plural voices: pair a builder with an adversarial reviewer on risky beads.
+
+### 4. TRACK (scrum: sprint = one wave of parallel units)
+- Wave = set of disjoint ≤5min beads dispatched together; wave ends when all closed/killed. Daily-standup = PM Board: wave · in-flight · blocked · est-vs-actual so far.
+- Burndown: points done / points planned per wave. Behind plan ⟹ re-split or re-tier, never "extend time".
+- Bead state mirrors reality same turn: `br update --status in_progress` at dispatch, `br close` w/ reason + evidence at verify. Unmirrored = not done.
+
+### 5. MEASURE + LEARN (retrospective after EVERY wave)
+- The SubagentStop hook logs every subagent automatically (agent, effort, out tokens, secs) to `subagents.tsv`. PM adds the judgment row after EVERY agent returns (accepted, rejected, or killed) via vic-scribe (haiku/low):
+  `vic-telemetry add <agent> <model> <tier> <secs> <tokens> <outcome> "<note>" <class> <est_secs> <bead-id>`
+  outcome = `ok` | `accept` | `reject:<why>` | `killed` | `specgap`. Rework after PM review = `reject`, not ok.
+- Cost (ccusage, offline from ~/.claude JSONL): wave start `ccusage blocks --active` (5h block burn + projection); wave end `ccusage session --json --since <YYYYMMDD>` (per-model `modelBreakdowns` tokens/cost per session) ⟹ retro input.
+  Compare tier mix (opus/sonnet/haiku share) vs cost. `cost` 0.0 with `-O` = no cached price for that model; judge by tokens.
+- End of wave: scribe runs `vic-telemetry classes`; PM reads it and acts:
+  - est-err > +50% on a class ⟹ raise that class's estimates / split smaller.
+  - fail% high at tier T ⟹ FIRST tighten spec; if it still fails ⟹ move that class up ONE tier.
+  - fail% ~0 and tok/run low at tier T ⟹ try that class one tier DOWN next wave (spike it, verify).
+  - `specgap` or `killed` often ⟹ partition error, not model error. Fix the WBS.
+- Record durable findings (verified, with the numbers) so next session starts calibrated:
+  - quipu (also export to `pm/quipu/`): `quipu_resolve_entity` then `quipu_episode` `group_id:"ledger"` name `ledger:<proj>/pm-calibration/<class>` · body = class · tier · n runs · secs/run · tok/run · est-err · fail% · verdict. `replace_snapshot: true` (latest wins). Read it BEFORE estimating (`quipu_query` ledger recipe).
+  - `modules/vic/ai/vic/pm/notes/pm-calibration-<class>.md` (CVMN, tracked in repo) = same table, human-readable.
+  - Surprises (a "easy" class that burned opus, a "hard" class haiku nailed) → `omni_learn` once, if the bar is met.
+- Numbers need n ≥ 3 runs per class×tier before they move policy. Fewer = anecdote, record but do not route on it.
+
+## LEARNED (read before estimating)
+Harvested lessons, all projects: `modules/vic/dots/claude/skills/vic-lessons/*.md (skill vic-lessons)` (pm.md first, then traps.md).
+- Every agent foreground + hard kill-timer ≤5 min. No timer = no launch. Past 5 min = kill, partition, relaunch.
+- "Needs more time" = not partitioned. Split until each piece fits 5 min and the LOWER tier.
+- Model+effort explicit on every dispatch, labelled `<model>/<effort>:`. Inherit = priciest.
+- Opus = 77.9% of burn; out/run opus 82.6k vs sonnet 30k vs haiku 4.6k. Tight spec + oracle ⟹ sonnet.
+- Mechanically checkable output ⟹ k×haiku + judge, not sonnet/opus.
+- Dispatch gate: oracle + negative control + src cites + pre-debunked wrong paths + full mechanism restated.
+- Parallel only on disjoint file/dep lanes, one jj ws per editing agent. One measurement at a time.
+- Agent output = claim. Verify every deliverable vs raw output + src; `ls` every "written" file; spot-check ~15% cites.
+- 3 fails ⟹ stop, write escalation note, move on. Fable 2 strikes (529) ⟹ fall back to opus.
+- Burn baselines: ~11 agents ≈ 313k; 30-agent quorum ≈ 1.6M; one sonnet agent ≈ 26k; wave of ~20 haiku+few sonnet/opus ≈ 400k.
 
 ## NEVER-STALL (TIME = constraint)
 
@@ -163,6 +259,7 @@ Per /supervisor + /dispatch. Each spawn carries:
 - **/ensemble** + **/superhaiku** — haiku-fleet replaces expensive on checkable work.
 - **/escalate** — when to route up to Vic.
 - **/handoff** — task-end continuity.
+- **/vic-retro-loop** — wave-end retrospective: measure, vic-retro diagnose, prove-or-revert.
 - **/oracle** + **/probes** — give agents real judges + measurement discipline.
 
 ## BOTTOM LINE

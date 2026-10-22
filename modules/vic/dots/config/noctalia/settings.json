@@ -27,7 +27,8 @@
             "chrome-ejhkdoiecgkmdpomoahkdihbcldkgjci-Default",
             "code",
             "chromium-browser",
-            "librewolf"
+            "librewolf",
+            "chrome-gicdkkjalcpcfgoekepcelcopokhgleo-Default"
         ],
         "position": "center",
         "screenshotAnnotationTool": "",
@@ -294,7 +295,7 @@
         ]
     },
     "colorSchemes": {
-        "darkMode": false,
+        "darkMode": true,
         "generationMethod": "muted",
         "manualSunrise": "06:30",
         "manualSunset": "18:30",

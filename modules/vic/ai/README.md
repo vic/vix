@@ -142,7 +142,7 @@ skill chooses between `ast-grep`, `rg` and the graphs.
 - **rtk** compresses the output of ordinary shell commands through the hook
   above.
 - `ENABLE_TOOL_SEARCH=auto:5` defers MCP tool schemas until they are needed.
-- The **status line** (`statusline.nix`, ccstatusline) shows what is still
+- The **status line** (`statusline.nix`) shows what is still
   unlanded (branch, changes, ahead/behind, worktree) and what the session is
   costing (context %, session and weekly quota sliders).
 
@@ -214,7 +214,7 @@ Two rules apply:
 | `agents.nix`   | 16 `vic-*` subagents from `agents/` (haiku: probe, reader, sweep, scribe, chain, judge, superhaiku; sonnet: rung, isolate, reviewer, planner; opus: hunter, typesmith, lawyer, perf; xhigh: derive) | `~/.claude/agents/`                                       |
 |                | vic's 23 skills from `skills/` (vic, supervisor, dispatch, oracle, probes, lanes, ledger, handoff, ensemble, superhaiku, omni, br, kata, ned, dnet, zen, …)                                      | `~/.claude/skills/`, `~/.agents/skills/`                  |
 |                | global `CLAUDE.md` + `RTK.md` from `memory/`                                                                                                                                                    | `~/.claude/`                                              |
-| `hooks.nix`    | `boot.sh` (SessionStart), `ctx-meter.sh` (UserPromptSubmit), `cmd-ledger.sh` (PostToolUse Bash), `stop-gate.sh` + `omni-ingest.sh` (Stop)                                                         | `~/.claude/hooks/`                                        |
+| `hooks.nix`    | `boot.sh` (SessionStart), `cmd-ledger.sh` (PostToolUse Bash), `stop-gate.sh` (Stop); omni-ingest is a systemd user timer in tools.nix                                                         | `~/.claude/hooks/`                                        |
 | `tools.nix`    | `vic-run`, `vic-recall`, `vic-mine`, `vic-telemetry`, `vic-law`, `vic-gc`, `vic-ws` from `bin/`                                                                                                  | `~/bin/`                                                  |
 |                | omni (`omni/`, installed at `~/.claude/omni`) + its MCP. The DB stays at `~/.claude/omni.db`                                                                                                    | `~/.claude/omni/`                                         |
 |                | deepwiki MCP + `deepwiki` REPL (`dw/`, copied because `repl.js` has changes not pushed to `github:vic/dw`)                                                                                      | `~/hk/dw/`                                                |
@@ -313,7 +313,7 @@ modules/users/vic/
 ├── includes.nix             den.aspects.vic includes vic.ai
 └── ai/
     ├── claude.nix       Claude Code settings, permissions, budget/subagent/direnv hooks
-    ├── _scripts/        budget/subagent-stop/load-direnv (claude.nix), mcp-log/mcp-status (statusline.nix)
+    ├── _scripts/        budget/subagent-stop/load-direnv (claude.nix), statusline (statusline.nix)
     ├── agents.nix       gen-scout / gen-gate / gen-spec / gen-build
     ├── agents/          prompt fragments the agents are composed from
     ├── mcp.nix          codebase-memory, serena (+ discovery hooks)
@@ -323,11 +323,11 @@ modules/users/vic/
     ├── plugins.nix      store-pinned plugin marketplaces (+ patched caveman)
     ├── skills.nix       local skills + gstack + task-observer
     ├── skills/          local SKILL.md directories
-    ├── statusline.nix   ccstatusline: 1 line (model, ctx, $, $/h, tokens, 5h/7d quota, last skill, last MCP tool)
+    ├── statusline.nix   1-line status (model+effort, ctx, 5h/7d, $, tokens, PM beads, agents)
     ├── _pkgs/           serena-agent, headroom-ai derivations
     └── vic/             vic's tooling (§10)
         ├── agents.nix   vic-* agents, vic skills, CLAUDE.md + RTK.md
-        ├── hooks.nix    boot / ctx-meter / cmd-ledger / stop-gate / omni-ingest
+        ├── hooks.nix    boot / cmd-ledger / stop-gate
         ├── tools.nix    vic-* CLIs, omni, deepwiki, notebooklm
         ├── upstream.nix skills from source, lightjj, npx CLIs
         ├── settings.nix vic's settings.json preferences

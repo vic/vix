@@ -295,7 +295,7 @@
   "workbench.list.smoothScrolling": true,
   "workbench.panel.defaultLocation": "top",
   "workbench.panel.showLabels": false,
-  "workbench.preferredDarkColorTheme": "Solarized Dark",
+  "workbench.preferredDarkColorTheme": "Visual Studio Light",
   "workbench.preferredHighContrastColorTheme": "Visual Studio Light",
   "workbench.view.showQuietly": {
     "workbench.panel.output": false
@@ -328,7 +328,7 @@
   "chat.emptyState.history.enabled": true,
   "semanticdiff.defaultDiffViewer": true,
   "semanticdiff.closeOriginalTab": true,
-  "workbench.preferredLightColorTheme": "Dracula Theme",
+  "workbench.preferredLightColorTheme": "Dark 2026",
   "workbench.colorTheme": "Monokai Pro Light (Filter Sun)",
   "workbench.secondarySideBar.defaultVisibility": "hidden",
   "typescript.suggest.completeFunctionCalls": true,

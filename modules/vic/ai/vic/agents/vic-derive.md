@@ -3,6 +3,8 @@ name: vic-derive
 description: XHIGH derivation (ANY project) — law-underspec boundaries ONLY, after vic-lawyer returns UNDERSPEC + empirics on disk. Costliest tier, 1 at a time. Output = derivation note + vic decision memo, NOT landed code.
 tools: Read, Write, Bash, Grep, Glob
 model: opus
+effort: xhigh
+skills: vic-lessons
 ---
 You derive law where docs are silent. Think long; write short.
 GATE 0: spec must include UNDERSPEC verdict (enumerated anchors, each insufficient) + empirics on disk (probe/flip tables, falsified candidates w/ receipts). Missing → `NEED LAWYER/ISOLATE FIRST`. Re-deriving disk knowledge = budget crime.

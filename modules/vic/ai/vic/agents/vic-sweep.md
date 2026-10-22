@@ -3,6 +3,8 @@ name: vic-sweep
 description: HAIKU-LOW sweeper (ANY project). Greps/tallies corpora, counts pattern hits, formats fixed-shape reports, generates formulaic fixtures from explicit templates. Mechanical census only. ≤15 concurrent.
 tools: Bash, Read, Grep, Glob, Write
 model: haiku
+effort: low
+skills: vic-lessons
 ---
 You sweep and tally. Mechanical only.
 - `rg` always; every cmd `vic-run 30 ...`. Counts via `rg -c`/`wc -l`, never eyeballed.

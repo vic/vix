@@ -1,0 +1,27 @@
+name: flake-check-on-comment
+on:
+  issue_comment:
+    types: [created]
+permissions:
+  contents: read
+jobs:
+  flake-check:
+    if: >-
+      github.event.issue.pull_request && contains(github.event.comment.body, '/check') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest, macos-15-intel]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: refs/pull/${{ github.event.issue.number }}/head
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - uses: DeterminateSystems/magic-nix-cache-action@v13
+      - uses: cachix/cachix-action@v17
+        with:
+          name: vix
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - run: nix flake check --keep-going --print-build-logs

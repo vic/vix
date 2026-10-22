@@ -1,13 +1,45 @@
 # lightjj: browser UI for jj, served from wherever the repo lives (also headless vini).
-{ inputs, vic, ... }:
 {
-  flake-file.inputs.lightjj.url = "github:chronologos/lightjj";
+  inputs,
+  ren,
+  ...
+}:
+let
+  vix = ren.helpers;
+in
+{
 
-  vic.ai.includes = [ vic.ai.lightjj ];
-  vic.ai.lightjj.homeManager =
-    { inputs', ... }:
-    {
-      home.packages = [ inputs'.lightjj.packages.default ];
-      programs.claude-code.skills.lightjj = "${inputs.lightjj}/cmd/lightjj/SKILL.md";
-    };
+  ren.aspects.ai-lightjj = {
+    at = ren.aspects.vic-headless;
+    flake-inputs =
+      { ... }:
+      {
+        lightjj = {
+          url = "github:chronologos/lightjj/42427a1093fc70c73d5d0010a8d59909fd48a722";
+          inputs.nixpkgs.follows = "nixpkgs";
+        };
+      };
+    homeManager =
+      { pkgs, config, ... }:
+      let
+        lightjj = (vix.perSystem pkgs inputs.lightjj).packages.default;
+      in
+      {
+        home.packages = [ lightjj ];
+        programs.claude-code.skills.lightjj = "${inputs.lightjj}/cmd/lightjj/SKILL.md";
+
+        # One instance; extra repos are tabs (UI, or POST /tabs {"path"}), persisted in lightjj state.json.
+        # mkIf, not optionalAttrs: attr names must not depend on pkgs (infinite recursion).
+        systemd.user.services.lightjj = pkgs.lib.mkIf pkgs.stdenv.isLinux {
+          Unit.Description = "lightjj multi-repo jj UI";
+          Service = {
+            ExecStart = "${lightjj}/bin/lightjj -R ${config.home.homeDirectory}/hk/vix --addr 127.0.0.1:8765 --no-browser";
+            Restart = "on-failure";
+            Nice = 10;
+            MemoryMax = "512M";
+          };
+          Install.WantedBy = [ "default.target" ];
+        };
+      };
+  };
 }

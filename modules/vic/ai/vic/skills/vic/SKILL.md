@@ -528,13 +528,13 @@ CONVENTION: every project keeps docs @ `<proj>/vic/` — HANDOFF.md (resume, ≤
 | xhigh | vic-derive (law-underspec ONLY, after lawyer UNDERSPEC verdict) | 1 |
 BURN: fable ≈2× opus ≈4× sonnet ≈8× haiku. PIPELINES: bug=isolate→hunter→[lawyer]→typesmith/rung→reviewer→probe · perf=perf→[vic-gate]→rung→probe · feature=sweep→spec→rung→reviewer→probe · underspec=lawyer→derive→vic.
 
-### SKILLS (global; LOAD on trigger, NO excuse): /dispatch (b4 EVERY Agent call) · /oracle (b4 any impl/fix) · /probes (b4 any measurement/hunt) · /escalate (3 fails / underspec / scope) · /handoff (task end, ctx≥70%) · /context (session start, drift) · /playbook (recurring task) · /ledger (b4 expensive cmd) · /lanes (every dispatch moment) · /ensemble (output mechanically checkable ⟹ k×haiku+judge REPLACES sonnet/opus; verify≈generate ⟹ NEVER ensemble) · /workspace (ANY repo-editing dispatch ⟹ jj workspace ~/hk/workspace via vic-ws; agents NEVER touch jj; supervisor lands LINEAR) · /superhaiku (compile→isolate→swarm→judge→land; haiku fleet beats fable on checkable THROUGHPUT; vic-superhaiku unit agent).
+### SKILLS (global; LOAD on trigger, NO excuse): /dispatch (b4 EVERY Agent call) · /oracle (b4 any impl/fix) · /probes (b4 any measurement/hunt) · /escalate (3 fails / underspec / scope) · /handoff (task end, ctx≥70%) · /context (session start, drift) · /playbook (recurring task) · /ledger (b4 expensive cmd) · /lanes (every dispatch moment) · /ensemble (output mechanically checkable ⟹ k×haiku+judge REPLACES sonnet/opus; verify≈generate ⟹ NEVER ensemble) · /workspace (ANY repo-editing dispatch ⟹ plain-jj workspace under $XDG_RUNTIME_DIR/jj-ws; agents NEVER touch jj; supervisor lands LINEAR) · /superhaiku (compile→isolate→swarm→judge→land; haiku fleet beats fable on checkable THROUGHPUT; vic-superhaiku unit agent).
 
 ### WORKSPACE RED FLAGS (additions)
 | Violatn | Pnlty |
 |---|---|
 | WORKER runs ANY jj/git cmd | 🔥 WORK DISCARDED. history = supervisor's. |
-| repo-edit dispatch w/o vic-ws workspace | ⛔ STOP. isolate first (/workspace). |
+| repo-edit dispatch w/o jj workspace | ⛔ STOP. isolate first (/workspace). |
 | hand-merge land conflict | ❌ partition error: drop + re-spec. |
 | non-linear land (merge commits) | ⛔ land = squash-into-@. LINEAR ONLY. |
 
@@ -582,3 +582,4 @@ BURN: fable ≈2× opus ≈4× sonnet ≈8× haiku. PIPELINES: bug=isolate→hun
 SWEAR BY THIS DOC B4 + AFTER EACH INTERACTION. SUMMARIZE IT. VIC NEEDS 2 KNOW U SWEAR BY ALL RULES. SHOW THEM 2 VIC.
 UPDATE THIS FILE WITH HARD LESSONS: REINFORCE LEARNING OF GOOD / BAD THINGS YOU OBSERVED SO WE NEVER COMMIT SAME ERRORS/DIVERGE
 
+LEARNED: skill vic-lessons (modules/vic/dots/claude/skills/vic-lessons, append-only via `vic-pm learn`). Read its vic.md + traps.md.

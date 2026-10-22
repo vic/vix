@@ -1,0 +1,15 @@
+2026-07-03T11:00:15-06:00	recon-jj	haiku	low	60	26000	PASS	
+2026-07-03T11:00:24-06:00	ancestry	haiku	low	90	30000	PASS	
+2026-07-03T11:00:24-06:00	build-probe	haiku	low	30	15000	PASS	
+2026-07-03T11:00:24-06:00	clippy-gate	haiku	low	25	12000	PASS	
+2026-07-03T11:00:24-06:00	div-inspect	haiku	low	45	17000	PASS	
+2026-07-03T11:00:24-06:00	docs-union	sonnet	med	1080	126000	PASS	
+2026-07-03T11:00:24-06:00	gapmap-reader	haiku	low	60	24000	PASS	
+2026-07-03T11:00:24-06:00	nfx-audit	haiku	low	30	14000	PASS	
+2026-07-03T11:00:24-06:00	r4a-inspect	haiku	low	40	16000	PASS	
+2026-07-03T11:00:24-06:00	recon-jj	haiku	low	60	26000	PASS	
+2026-07-03T11:00:24-06:00	root-probe	haiku	low	50	19000	PASS	
+2026-07-03T11:00:24-06:00	soh-merge	haiku	low	60	26000	PASS	
+2026-07-03T11:00:24-06:00	test-gate	haiku	low	35	15000	PASS	
+2026-07-03T11:00:24-06:00	warnings-gate	haiku	low	30	13000	PASS	
+2026-07-03T11:00:24-06:00	ws-census	haiku	low	120	53000	PASS	

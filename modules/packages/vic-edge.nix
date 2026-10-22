@@ -1,23 +1,28 @@
-{ inputs, ... }:
-let
-  perSystem =
-    { pkgs, ... }:
-    let
-      edgevpn = inputs.self.packages.${pkgs.stdenvNoCC.hostPlatform.system}.edgevpn;
-    in
-    {
-      packages.vic-edge = pkgs.writeShellApplication {
-        name = "vic-edge";
-        text = ''
-          sudo env \
-            ADDRESS="''${ADDRESS:-"192.168.192.192/24"}" \
-            EDGEVPNLOGLEVEL="''${EDGEVPNLOGLEVEL:-debug}" \
-            EDGEVPNTOKEN="''${EDGEVPNTOKEN:-$(< "''${HOME}"/.config/sops-nix/secrets/edge.token)}" \
-            ${edgevpn}/bin/edgevpn "$@"
-        '';
-      };
-    };
-in
+# vic-edge: edgevpn wrapper reading the token from sops.
 {
-  inherit perSystem;
+  ren,
+  inputs,
+  ...
+}:
+{
+  ren.aspects.vic-edge = {
+    at = ren.kinds.system;
+    packages =
+      { system, ... }:
+      let
+        pkgs = system.legacyPackages;
+      in
+      {
+        vic-edge = pkgs.writeShellApplication {
+          name = "vic-edge";
+          text = ''
+            sudo env \
+              ADDRESS="''${ADDRESS:-"192.168.192.192/24"}" \
+              EDGEVPNLOGLEVEL="''${EDGEVPNLOGLEVEL:-debug}" \
+              EDGEVPNTOKEN="''${EDGEVPNTOKEN:-$(< "''${HOME}"/.config/sops-nix/secrets/edge.token)}" \
+              ${inputs.self.packages.${system.name}.edgevpn}/bin/edgevpn "$@"
+          '';
+        };
+      };
+  };
 }

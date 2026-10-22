@@ -26,4 +26,13 @@
   vu1 = ''vu -c "'1"'';
   vu2 = ''vu -c "'2"'';
   v = "vu --fork -- -c \"'0\"";
+
+  # claude agents: model x effort per vic dispatch tiers
+  haiku = "claude --model haiku --effort low";
+  sonnet = "claude --model sonnet --effort medium";
+  sonet = "sonnet";
+  opus = "claude --model opus --effort high";
+  fable = "claude --model claude-fable-5-1 --effort xhigh";
+  pm = ''claude --model opus --effort high "/pm"'';
+  derive = ''claude --model claude-fable-5-1 --effort xhigh "/vic"'';
 }

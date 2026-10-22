@@ -1,18 +1,28 @@
 #!/usr/bin/env bash
-# vic-telemetry add <agent> <model> <tier> <secs> <tokens> <outcome> [note] | report | recent [n]
+# vic-telemetry add <agent> <model> <tier> <secs> <tokens> <outcome> [note] [class] [est_secs] [bead] | report | classes | recent [n]
 # Per-project burn ledger → routing-policy feedback (/dispatch = living table). GLOBAL.
+# class = task type (recon impl debug design review doc ...); est_secs = PM's estimate b4 dispatch;
+# bead = br id. est vs secs = estimate error; class × tier × outcome = which work needs a better model.
 k=$(printf '%s' "${CLAUDE_PROJECT_DIR:-$PWD}" | sed 's|/|-|g')
 d="$HOME/.cache/claude-ledger/$k"; f="$d/telemetry.tsv"; mkdir -p "$d"
 case "${1:-}" in
   add) shift
-    printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$(date -Is)" \
-      "${1:?agent}" "${2:?model}" "${3:?tier}" "${4:?secs}" "${5:?tokens}" "${6:?outcome}" "${7:-}" >> "$f" ;;
+    printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$(date -Is)" \
+      "${1:?agent}" "${2:?model}" "${3:?tier}" "${4:?secs}" "${5:?tokens}" "${6:?outcome}" "${7:-}" \
+      "${8:--}" "${9:--}" "${10:--}" >> "$f" ;;
   report) [ -f "$f" ] || { echo "no telemetry yet ($k)"; exit 0; }
     printf '%-16s %5s %12s %10s %8s %6s\n' agent runs tokens tok/run secs fails
     awk -F'\t' '{n[$2]++; tok[$2]+=$6; sec[$2]+=$5; if($7!~/^(ok|accept)/) bad[$2]++}
       END{for(a in n) printf "%-16s %5d %12d %10d %8d %6d\n",a,n[a],tok[a],tok[a]/n[a],sec[a],bad[a]+0}' "$f" \
       | sort -k3,3 -rn
     echo "── tok/run high + ok on easy class = downgrade tier (/dispatch). fails high = tighten spec FIRST." ;;
+  classes) [ -f "$f" ] || { echo "no telemetry yet ($k)"; exit 0; }
+    printf '%-12s %-7s %5s %9s %8s %7s %6s\n' class tier runs tok/run secs/run est-err fail%
+    awk -F'\t' '$9!="" && $9!="-" {key=$9 "\t" $4; n[key]++; tok[key]+=$6; sec[key]+=$5
+        if($7!~/^(ok|accept)/) bad[key]++
+        if($10+0>0) {en[key]++; err[key]+=($5-$10)/$10}}
+      END{for(x in n){split(x,p,"\t"); printf "%-12s %-7s %5d %9d %8d %6d%% %5d%%\n",p[1],p[2],n[x],tok[x]/n[x],sec[x]/n[x],(en[x]?100*err[x]/en[x]:0),100*bad[x]/n[x]}}' "$f" | sort
+    echo "── est-err >0 = ran longer than estimated (raise estimate/split). fail% high on a class+tier = escalate that class one tier; fail% ~0 + low tok = downgrade." ;;
   recent) tail -n "${2:-15}" "$f" 2>/dev/null | column -t -s$'\t' ;;
-  *) sed -n '2,4p' "$0" ;;
+  *) sed -n '2,5p' "$0" ;;
 esac

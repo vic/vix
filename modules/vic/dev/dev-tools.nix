@@ -1,16 +1,18 @@
-{ ... }:
+# dev-tools: general developer command line packages.
+{ ren, ... }:
 {
-
-  vic.dev-tools.hm =
-    { pkgs, ... }:
-    {
-      home.packages = [
-        pkgs.diffnav
-        pkgs.gh
-        pkgs.hyperfine
-        pkgs.jq
-        pkgs.difftastic
-      ];
-    };
-
+  ren.aspects.dev-tools = {
+    at = ren.aspects.vic-full;
+    homeManager =
+      { pkgs, ... }:
+      {
+        home.packages = [
+          pkgs.diffnav
+          pkgs.gh
+          pkgs.hyperfine
+          pkgs.jq
+          pkgs.difftastic
+        ];
+      };
+  };
 }

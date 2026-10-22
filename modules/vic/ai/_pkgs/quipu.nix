@@ -9,8 +9,12 @@
 let
   version = "0.12.1";
 
-  # shortcut: linux only, add darwin targets when a darwin host needs quipu.
+  # shortcut: no x86_64-darwin target, add it when a host needs it.
   targets = {
+    "aarch64-darwin" = {
+      triple = "aarch64-apple-darwin";
+      hash = "sha256-CaYvpEZ5CpkTFwhhmlLfV4nGK7jlKvLQRTGbJFoZHJk=";
+    };
     "x86_64-linux" = {
       triple = "x86_64-unknown-linux-gnu";
       hash = "sha256-+8z/ewiI/VA1JZcerkfYN9eofeVRyCVMShI0ZWYu0zI=";
@@ -34,8 +38,8 @@ stdenv.mkDerivation {
     inherit (target) hash;
   };
 
-  nativeBuildInputs = [ autoPatchelfHook ];
-  buildInputs = [ stdenv.cc.cc.lib ];
+  nativeBuildInputs = lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook ];
+  buildInputs = lib.optionals stdenv.hostPlatform.isLinux [ stdenv.cc.cc.lib ];
 
   installPhase = ''
     runHook preInstall

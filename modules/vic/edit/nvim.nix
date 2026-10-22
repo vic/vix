@@ -1,82 +1,34 @@
-{ vic, ... }:
+# nvim: vic's vim profiles (editors/vim.nix, vic/nvf) on PATH; neovide `<name>-gui` wrappers on the desktop.
+{
+  ren,
+  inputs,
+  ...
+}:
 let
-  vim_variant =
-    pkgs: name: runtimeInputs:
-    pkgs.writeShellApplication {
-      inherit name runtimeInputs;
-      runtimeEnv = {
-        NVIM_APPNAME = name;
-      };
-      text = ''exec nvim "$@"'';
-    };
-
-  neovide_variant =
-    pkgs: name: nvim:
-    pkgs.writeShellApplication {
-      inherit name;
-      runtimeInputs = [ pkgs.neovide ];
-      text = ''exec neovide --neovim-bin ${pkgs.lib.getExe nvim} "$@"'';
-    };
+  vix = ren.helpers;
+  profiles = builtins.attrNames ren.vim;
+  own = pkgs: (vix.perSystem pkgs inputs.self).packages; # this flake's packages (vim profiles)
 in
 {
-  perSystem.treefmt.programs.stylua.enable = true;
-
-  vic.nvim = {
-    includes = [ vic.nvim-gui ];
-
+  ren.aspects.vic-nvim = {
+    at = ren.aspects.vic-headless;
     homeManager =
+      { pkgs, ... }:
       {
-        config,
-        pkgs,
-        self',
-        ...
-      }:
-      let
-        vi = pkgs.writeShellApplication {
-          name = "vi";
-          text = ''exec nvim "$@"'';
-        };
-        vim = pkgs.writeShellApplication {
-          name = "vim";
-          text = ''exec nvim "$@"'';
-        };
-      in
-      {
-        home.packages = [
-          vi
-          vim
-          config.programs.neovim.package
-          (vim_variant pkgs "neovim" [ self'.packages.neovim ])
-          (vim_variant pkgs "astrovim" [ pkgs.neovim ])
-          (vim_variant pkgs "lazyvim" [ pkgs.neovim ])
-          pkgs.neovim-remote
-        ];
-
+        home.packages = map (p: (own pkgs).${p}) profiles ++ [ pkgs.neovim-remote ];
         home.sessionVariables.EDITOR = "vim";
-
-        programs.neovim.plugins = [
-          pkgs.vimPlugins.nvim-treesitter.withAllGrammars
-        ];
       };
   };
 
-  vic.nvim-gui.homeManager =
-    { pkgs, self', ... }:
-    let
-      neovim = vim_variant pkgs "neovim" [ self'.packages.neovim ];
-      astrovim = vim_variant pkgs "astrovim" [ pkgs.neovim ];
-      lazyvim = vim_variant pkgs "lazyvim" [ pkgs.neovim ];
-    in
-    {
-      home.packages = [
-        (neovide_variant pkgs "neovim-gui" neovim)
-        (neovide_variant pkgs "astrovim-gui" astrovim)
-        (neovide_variant pkgs "lazyvim-gui" lazyvim)
-        pkgs.neovide
-        (neovide_variant pkgs "vim-gui" pkgs.neovim)
-        (vim_variant pkgs "vscode-vim" [ pkgs.neovim ])
-      ];
-
-      home.sessionVariables.VISUAL = "vim-gui";
-    };
+  ren.aspects.vic-nvim-gui = {
+    at = ren.aspects.vic-gui;
+    homeManager =
+      { pkgs, ... }:
+      {
+        home.packages =
+          map (p: (own pkgs)."${p}-gui") (builtins.filter (p: own pkgs ? "${p}-gui") profiles)
+          ++ [ pkgs.neovide ];
+        home.sessionVariables.VISUAL = "vim-gui";
+      };
+  };
 }

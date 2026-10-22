@@ -21,7 +21,7 @@ MIS-PAIRING RECEIPTS: haiku-xhigh = drift loops · fable-low = genius copy-paste
 
 ## PARTITION B4 TIER-PICK
 1 opus task usually = 1 supervisor design + 3 haiku/sonnet pieces. Tighter spec ⟹ cheaper tier. Playbook'd class (/playbook) ⟹ drop one tier. Unsure ⟹ sonnet-med. Design NEVER below opus; vic-gates (deps/encoding/scope/commit) never delegated.
-WORKSPACE GATE (/workspace): repo-editing dispatch ⟹ `vic-ws new` FIRST, path in spec, agent forbidden jj/git; supervisor lands linear (vic-ws land) / drops losers. SWARM (/superhaiku): ≥3 checkable units ⟹ compile→isolate→k×vic-superhaiku→vic-judge→land.
+WORKSPACE GATE (/workspace): repo-editing dispatch ⟹ `jj workspace add` FIRST (/workspace), path in spec, agent forbidden jj/git; supervisor lands linear (`jj squash --from <name>@ --into @`) / abandons losers. SWARM (/superhaiku): ≥3 checkable units ⟹ compile→isolate→k×vic-superhaiku→vic-judge→land.
 ENSEMBLE DOWNGRADE (/ensemble): output mechanically checkable ⟹ k×haiku (vic-chain) + vic-judge filter REPLACES sonnet/opus — 5×haiku ≈ 0.6×sonnet. Checklist-compiled chains (vic-planner CHECKLIST MODE → vic-chain) = haiku executes what only sonnet+ survived before. Verify ≈ generate (proof/design) ⟹ NO ensemble, real tier.
 
 ## SPEC SKELETON (every dispatch ≥sonnet; missing piece = agent SPEC-GAPs back)

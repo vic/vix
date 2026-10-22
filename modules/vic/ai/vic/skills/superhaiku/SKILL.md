@@ -10,10 +10,10 @@ Fleet SURPASSES fable on: units/hour (10+ vs ~2), corpus coverage, cost/accepted
 
 ## PIPELINE (5 stages, fixed)
 1. **COMPILE** (supervisor or vic-planner CHECKLIST MODE — intelligence spent ONCE): task → DAG of micro-units, each: scope ≤2 files · checklist steps w/ CHECK+EXPECT · ORACLE (runnable) + NEG control · dep edges. Unit not checkable ⟹ it stays OUT of the swarm (high-tier lane).
-2. **ISOLATE** (/workspace): `vic-ws new u<N>a<k>` per attempt — k workspaces per unit for k-shot.
+2. **ISOLATE** (/workspace): plain-jj workspace (`jj workspace add`, see /workspace) `u<N>a<k>` per attempt — k workspaces per unit for k-shot.
 3. **SWARM**: k×vic-superhaiku per unit, ALL parallel across independent DAG nodes (≤15). Prompt ≤2K tokens: unit spec + workspace path + attempt-index k (vary approach hint by k).
 4. **JUDGE**: vic-judge runs unit ORACLE on each attempt's workspace → first passer per unit. 0 passers after k → ONE recompile of THAT unit (tighter spec) → still 0 ⟹ VALVE: unit escalates one tier w/ all failures attached. NEVER round 3 at haiku.
-5. **LAND** (supervisor only): winners `vic-ws land` in DAG order + losers `vic-ws drop` → full-suite vic-probe after each land (green-tree) → vic-reviewer on the landed sum → telemetry both per-unit and pipeline totals.
+5. **LAND** (supervisor only): winners `jj squash --from <name>@ --into @` in DAG order + losers `jj abandon <name>@`, then cleanup per /workspace → full-suite vic-probe after each land (green-tree) → vic-reviewer on the landed sum → telemetry both per-unit and pipeline totals.
 
 ## WORKFLOW TEMPLATE (ultracode; adapt UNITS)
 ```js
@@ -29,7 +29,7 @@ async function run(u){
   done[u.id] = verdict; return verdict
 }
 // topological loop over UNITS calling run(); return {verdicts: done}
-// LANDING happens AFTER workflow returns — supervisor runs vic-ws land/drop per verdict.
+// LANDING happens AFTER workflow returns — supervisor squashes/abandons per verdict, then cleans up per /workspace.
 ```
 
 ## VALVES (hard, non-negotiable)

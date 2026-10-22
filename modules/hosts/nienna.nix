@@ -1,14 +1,18 @@
-{ den, vix, ... }:
+# nienna: Intel macbook workstation.
+{ ren, ... }:
 {
-  den.aspects.nienna.includes = [
-    vix.workstation
-    vix.macbook
-    (den.provides.unfree [ "broadcom-sta" ])
+  ren.host.nienna = {
+    checkout = "/home/vic/hk/vix";
+    system = ren.system.x86_64-linux;
+    users = [ ren.user.vic ];
+    workstation = true;
+    cpu = "intel";
+    wifi = "broadcom";
+    keyboard = "macos";
+    desktops = [ "xfce" ];
+  };
 
-    den.aspects.nienna.hardware
-  ];
-
-  den.aspects.nienna.hardware.nixos = {
+  ren.aspects.nienna-hardware.nixos = {
     boot.initrd.availableKernelModules = [
       "uhci_hcd"
       "ehci_pci"
@@ -32,5 +36,13 @@
       ];
     };
     swapDevices = [ ];
+  };
+
+  ren.aspects.nienna = {
+    at = ren.host.nienna;
+    includes = [
+      ren.aspects.trusted
+      ren.aspects.nienna-hardware
+    ];
   };
 }

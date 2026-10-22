@@ -1,17 +1,22 @@
-{ vix, den, ... }:
+# nargun: workstation with KDE and niri.
+{ ren, ... }:
 {
-  den.aspects.nargun.includes = [
-    vix.workstation
-    vix.kde-desktop
-    vix.niri-desktop
-    vix.macos-keys
-    vix.kvm-amd
-    vix.enthium
+  ren.host.nargun = {
+    checkout = "/home/vic/hk/vix";
+    system = ren.system.x86_64-linux;
+    users = [ ren.user.vic ];
+    workstation = true;
+    cpu = "amd";
+    keyboard = "macos";
+    desktops = [
+      "xfce"
+      "kde"
+      "niri"
+    ];
+    layouts = [ "enthium" ];
+  };
 
-    den.aspects.nargun.hardware
-  ];
-
-  den.aspects.nargun.hardware.nixos = {
+  ren.aspects.nargun-hardware.nixos = {
     boot.initrd.availableKernelModules = [
       "nvme"
       "xhci_pci"
@@ -33,6 +38,14 @@
     };
     swapDevices = [
       { device = "/dev/disk/by-uuid/3be2776b-3153-443b-95b8-0fbd06becb75"; }
+    ];
+  };
+
+  ren.aspects.nargun = {
+    at = ren.host.nargun;
+    includes = [
+      ren.aspects.trusted
+      ren.aspects.nargun-hardware
     ];
   };
 }

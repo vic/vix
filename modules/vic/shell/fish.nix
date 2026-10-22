@@ -1,30 +1,31 @@
+# fish: functions, aliases, abbreviations, television and fzf integration.
+{ ren, ... }:
 {
-  den,
-  inputs,
-  ...
-}:
-{
-  perSystem.treefmt.programs.fish_indent.enable = true;
-
-  vic.fish.includes = [ (den.provides.user-shell "fish") ];
-
-  vic.fish.homeManager =
-    { pkgs, ... }:
-    let
-      inherit (pkgs) lib;
-    in
-    {
-      home.file.".config/fish/conf.d/tv.fish".text = ''
-        ${pkgs.television}/bin/tv init fish | source
-      '';
-      home.file.".config/fish/conf.d/tvtab.fish".source = ./_fish/tv.fish;
-      programs.fzf.enable = true;
-      programs.fish = {
-        enable = true;
-        functions = import ./_fish/functions.nix { inherit inputs lib; };
-        shellAliases = import ./_fish/aliases.nix;
-        shellAbbrs = import ./_fish/abbrs.nix;
-        plugins = [ ];
+  # any feature emits fish functions; fish writes them once.
+  ren.channels.fish-functions = {
+    fold = ren.lib.fold.attrs;
+    at = ren.kinds.user;
+    to = e: e;
+  };
+  ren.aspects.fish = {
+    at = ren.aspects.vic-headless;
+    fish-functions = { ... }: import ./_fish/functions.nix { };
+    homeManager =
+      { pkgs, fish-functions, ... }:
+      {
+        home.file.".config/fish/conf.d/tv.fish".text = ''
+          ${pkgs.television}/bin/tv init fish | source
+        '';
+        home.file.".config/fish/conf.d/tvtab.fish".source = ./_fish/tv.fish;
+        programs.fzf.enable = true;
+        programs.nix-your-shell.enable = true;
+        programs.fish = {
+          enable = true;
+          functions = fish-functions;
+          shellAliases = import ./_fish/aliases.nix;
+          shellAbbrs = import ./_fish/abbrs.nix;
+          plugins = [ ];
+        };
       };
-    };
+  };
 }

@@ -1,15 +1,20 @@
-{ vix, den, ... }:
+# smaug: macbook workstation with nvidia.
+{ ren, ... }:
 {
-  den.aspects.smaug.includes = [
-    vix.workstation
-    vix.macbook
-    vix.nvidia
-    vix.all-firmware
+  ren.host.smaug = {
+    checkout = "/home/vic/hk/vix";
+    system = ren.system.x86_64-linux;
+    users = [ ren.user.vic ];
+    workstation = true;
+    cpu = "intel";
+    gpu = "nvidia";
+    wifi = "broadcom";
+    keyboard = "macos";
+    firmware = "all";
+    desktops = [ "xfce" ];
+  };
 
-    den.aspects.smaug.hardware
-  ];
-
-  den.aspects.smaug.hardware.nixos = {
+  ren.aspects.smaug-hardware.nixos = {
     boot.initrd.availableKernelModules = [
       "xhci_pci"
       "ehci_pci"
@@ -33,5 +38,13 @@
       fsType = "ext4";
     };
     swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
+  };
+
+  ren.aspects.smaug = {
+    at = ren.host.smaug;
+    includes = [
+      ren.aspects.trusted
+      ren.aspects.smaug-hardware
+    ];
   };
 }
