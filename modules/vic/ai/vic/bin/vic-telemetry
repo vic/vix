@@ -1,28 +1,120 @@
 #!/usr/bin/env bash
-# vic-telemetry add <agent> <model> <tier> <secs> <tokens> <outcome> [note] [class] [est_secs] [bead] | report | classes | recent [n]
-# Per-project burn ledger → routing-policy feedback (/dispatch = living table). GLOBAL.
-# class = task type (recon impl debug design review doc ...); est_secs = PM's estimate b4 dispatch;
-# bead = br id. est vs secs = estimate error; class × tier × outcome = which work needs a better model.
-k=$(printf '%s' "${CLAUDE_PROJECT_DIR:-$PWD}" | sed 's|/|-|g')
-d="$HOME/.cache/claude-ledger/$k"; f="$d/telemetry.tsv"; mkdir -p "$d"
+# vic-telemetry: burn + scrum feedback in the GLOBAL quipu graph (never local files).
+#   add <agent> <model> <tier> <secs> <tokens> <outcome> [note] [class] [est_secs] [bead]
+#   subagent <agent_type> <agent_id> <effort> <out_tokens> <secs> <status> <attempts>
+#   vote <sprint> <item> <driver> <card> <round>
+#   report | classes | recent [n] | votes <sprint> | import <telemetry.tsv|subagents.tsv>
+# Writes: quipu episode (group_id telemetry | scrum). Reads: quipu read (SPARQL).
+# VIC_QUIPU_DB overrides the store (tests only). Default = quipu's global store.
+set -eu
+
+db=(--db "${VIC_QUIPU_DB:-$HOME/.local/share/quipu/quipu.db}")
+ns='PREFIX a: <http://aegis.gastown.local/ontology/>'
+
+# num: digits -> JSON number, anything else -> null (dropped from properties)
+num() { [[ "$1" =~ ^[0-9]+$ ]] && printf '%s' "$1" || printf 'null'; }
+txt() { [ "$1" = - ] && printf 'null' || jq -Rn --arg v "$1" '$v'; }
+
+# ingest <episode JSON on stdin>: one quipu episode, quiet on success
+ingest() { quipu episode - "${db[@]}" >/dev/null; }
+
+# q <SPARQL body>: rows as tab-separated plain values, header and count removed
+q() {
+  quipu read "$ns $1" "${db[@]}" \
+    | awk 'NR>2 && NF && !/^[0-9]+ results?$/' \
+    | sed -e 's/\^\^<[^>]*>//g' -e 's/"//g' -e 's|http://aegis.gastown.local/ontology/||g' -e 's/  */\t/g'
+}
+
+# record <ts> <agent> <model> <tier> <secs> <tokens> <outcome> <note> <class> <est> <bead>
+record() {
+  local ts=$1 key name failed
+  key=$(basename "${CLAUDE_PROJECT_DIR:-$PWD}")
+  name="run-$(date +%s%N)-$2-$RANDOM"
+  case "$7" in ok|accept) failed=0 ;; *) failed=1 ;; esac
+  jq -n --arg name "$name" --arg ts "$ts" --arg key "$key" --arg agent "$2" --arg model "$3" \
+    --arg tier "$4" --arg outcome "$7" --arg note "$8" --arg failed "$failed" \
+    --argjson secs "$(num "$5")" --argjson tokens "$(num "$6")" --argjson est "$(num "${10}")" \
+    --argjson class "$(txt "$9")" --argjson bead "$(txt "${11}")" '
+    {name: "telemetry:\($key)/\($name)", group_id: "telemetry", source: "vic-telemetry",
+     episode_body: $note,
+     nodes: [{name: $key, type: "Project"},
+             {name: $name, type: "Run", properties: ({
+               ts: $ts, project: $key, agent: $agent, model: $model, tier: $tier,
+               outcome: $outcome, failed: ($failed | tonumber), secs: $secs,
+               tokens: $tokens, est_secs: $est, class: $class, bead: $bead
+             } | with_entries(select(.value != null)))}],
+     edges: [{source: $name, target: $key, relation: "inProject"}]}' | ingest
+}
+
 case "${1:-}" in
   add) shift
-    printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$(date -Is)" \
-      "${1:?agent}" "${2:?model}" "${3:?tier}" "${4:?secs}" "${5:?tokens}" "${6:?outcome}" "${7:-}" \
-      "${8:--}" "${9:--}" "${10:--}" >> "$f" ;;
-  report) [ -f "$f" ] || { echo "no telemetry yet ($k)"; exit 0; }
-    printf '%-16s %5s %12s %10s %8s %6s\n' agent runs tokens tok/run secs fails
-    awk -F'\t' '{n[$2]++; tok[$2]+=$6; sec[$2]+=$5; if($7!~/^(ok|accept)/) bad[$2]++}
-      END{for(a in n) printf "%-16s %5d %12d %10d %8d %6d\n",a,n[a],tok[a],tok[a]/n[a],sec[a],bad[a]+0}' "$f" \
-      | sort -k3,3 -rn
+    record "$(date -Is)" "${1:?agent}" "${2:?model}" "${3:?tier}" "${4:?secs}" "${5:?tokens}" \
+      "${6:?outcome}" "${7:-}" "${8:--}" "${9:--}" "${10:--}" ;;
+
+  subagent) shift
+    record "$(date -Is)" "${1:?agent_type}" "${3:?effort}" "${3:?effort}" "${5:--}" "${4:--}" \
+      "${6:--}" "id=${2:--} attempts=${7:--}" "-" "-" "-" ;;
+
+  vote) shift
+    jq -n --arg s "${1:?sprint}" --arg i "${2:?item}" --arg d "${3:?driver}" --arg c "${4:?card}" \
+      --arg r "${5:?round}" --arg ts "$(date -Is)" '
+      {name: "vote-\($s)-\($i)-\($d)-\($r)", group_id: "scrum", source: "vic-telemetry",
+       nodes: [{name: "vote-\($s)-\($i)-\($d)-\($r)", type: "Vote",
+                properties: {sprint: $s, item: $i, driver: $d, card: $c, round: ($r | tonumber), ts: $ts}}]}' | ingest ;;
+
+  report)
+    printf '%-18s %5s %12s %10s %8s %6s\n' agent runs tokens tok/run secs fails
+    q 'SELECT ?agent (COUNT(?r) AS ?runs) (SUM(?t) AS ?tok) (SUM(?s) AS ?sec) (SUM(?f) AS ?bad)
+       WHERE { ?r a:agent ?agent ; a:tokens ?t ; a:secs ?s ; a:failed ?f . }
+       GROUP BY ?agent ORDER BY DESC(?tok)' \
+      | awk -F'\t' '{printf "%-18s %5d %12d %10d %8d %6d\n", $1, $2, $3, $3/$2, $4, $5}'
     echo "── tok/run high + ok on easy class = downgrade tier (/dispatch). fails high = tighten spec FIRST." ;;
-  classes) [ -f "$f" ] || { echo "no telemetry yet ($k)"; exit 0; }
+
+  classes)
     printf '%-12s %-7s %5s %9s %8s %7s %6s\n' class tier runs tok/run secs/run est-err fail%
-    awk -F'\t' '$9!="" && $9!="-" {key=$9 "\t" $4; n[key]++; tok[key]+=$6; sec[key]+=$5
-        if($7!~/^(ok|accept)/) bad[key]++
-        if($10+0>0) {en[key]++; err[key]+=($5-$10)/$10}}
-      END{for(x in n){split(x,p,"\t"); printf "%-12s %-7s %5d %9d %8d %6d%% %5d%%\n",p[1],p[2],n[x],tok[x]/n[x],sec[x]/n[x],(en[x]?100*err[x]/en[x]:0),100*bad[x]/n[x]}}' "$f" | sort
-    echo "── est-err >0 = ran longer than estimated (raise estimate/split). fail% high on a class+tier = escalate that class one tier; fail% ~0 + low tok = downgrade." ;;
-  recent) tail -n "${2:-15}" "$f" 2>/dev/null | column -t -s$'\t' ;;
-  *) sed -n '2,5p' "$0" ;;
+    q 'SELECT ?class ?tier (COUNT(?r) AS ?runs) (AVG(?t) AS ?tokrun) (AVG(?s) AS ?secrun)
+       (AVG((?s - ?e) / ?e) AS ?err) (SUM(?f) AS ?bad)
+       WHERE { ?r a:class ?class ; a:tier ?tier ; a:tokens ?t ; a:secs ?s ; a:failed ?f .
+               OPTIONAL { ?r a:est_secs ?e } }
+       GROUP BY ?class ?tier ORDER BY ?class ?tier' \
+      | awk -F'\t' '{printf "%-12s %-7s %5d %9d %8d %6d%% %6d%%\n", $1, $2, $3, $4, $5, 100*$6, 100*$7/$3}'
+    echo "── est-err >0 = ran longer than estimated (raise estimate/split). fail% high on a class+tier = escalate one tier; fail% ~0 + low tok = downgrade." ;;
+
+  recent) shift
+    printf '%-25s %-14s %-7s %8s %8s %s\n' ts agent tier secs tokens outcome
+    q "SELECT ?ts ?agent ?tier ?secs ?tokens ?outcome WHERE { ?r a:ts ?ts ; a:agent ?agent ; a:tier ?tier ; a:secs ?secs ; a:tokens ?tokens ; a:outcome ?outcome . }
+       ORDER BY DESC(?ts) LIMIT ${1:-15}" \
+      | awk -F'\t' '{printf "%-25s %-14s %-7s %8s %8s %s\n", $1, $2, $3, $4, $5, $6}' ;;
+
+  votes) shift
+    printf '%-12s %-12s %-8s %s\n' item driver card round
+    q "SELECT ?item ?driver ?card ?round WHERE { ?v a:sprint \"${1:?sprint}\" ; a:item ?item ; a:driver ?driver ; a:card ?card ; a:round ?round . }
+       ORDER BY ?item ?round ?driver" \
+      | awk -F'\t' '{printf "%-12s %-12s %-8s %s\n", $1, $2, $3, $4}' ;;
+
+  import) shift
+    f=${1:?tsv}
+    dir=$(basename "$(dirname "$f")")
+    key=${dir##*-}
+    tag=$(printf '%s-%s' "$dir" "$(basename "$f" .tsv)" | sed -e 's/^-*//' -e 's/[^A-Za-z0-9_.-]/-/g')
+    # 11 columns = add rows; 8 columns = pre-class add rows (no class/est/bead). Other lines (the
+    # legacy subagents.tsv is multi-line JSON debris) are skipped, never imported.
+    awk -F'\t' 'NF==11 {print; next}
+      NF==8 {print $0 "\t-\t-\t-"}' "$f" \
+    | jq -Rs --arg key "$key" --arg tag "$tag" '
+      split("\n") | map(select(length > 0) | split("\t")) | to_entries
+      | map(.key as $i | .value as $f | {name: "run-\($tag)-\($i)", ts: $f[0], agent: $f[1], model: $f[2], tier: $f[3],
+          secs: $f[4], tokens: $f[5], outcome: $f[6], note: $f[7], class: $f[8], est: $f[9], bead: $f[10]})
+      | {name: "import-\($tag)", group_id: "telemetry", source: "vic-telemetry import",
+         nodes: ([{name: $key, type: "Project"}] + map({name: .name, type: "Run", properties:
+           ({ts: .ts, project: $key, agent: .agent, model: .model, tier: .tier, outcome: .outcome,
+             secs: ((.secs | tonumber?) // null), tokens: ((.tokens | tonumber?) // null),
+             failed: (if (.outcome | test("^(ok|accept)")) then 0 else 1 end),
+             est_secs: ((.est | tonumber?) // null), class: (if .class == "-" then null else .class end),
+             bead: (if .bead == "-" then null else .bead end)} | with_entries(select(.value != null)))})),
+         edges: map({source: .name, target: $key, relation: "inProject"})}' \
+    | ingest
+    echo "imported $(awk -F'\t' 'NF==11||NF==8{n++} END{print n+0}' "$f") valid rows from $f" ;;
+
+  *) sed -n '2,8p' "$0" ;;
 esac

@@ -10,8 +10,9 @@ Load skills `pm` (tier law, WORKER CONTRACT, "AGENTS = RESOURCES", "MEASURE + LE
 ## Chain of command
 
 - **CEO = Vic.** He sets the goals and makes the final calls. Only the lead talks to the CEO.
-- **Lead = the main session** (tech lead). It never reads or edits files. It runs jj only: it creates each driver's workspace and lands the work. Its other actions: spawn the pool, SendMessage, TaskStop a hung member, read messages, decide, report to the CEO.
-- **Team = the pool.** Members talk to the lead. The lead reads every message.
+- **Lead = the main session** (tech lead). It never reads or edits files. It runs jj only: it creates each driver's workspace and lands the work. Its other actions: spawn the pool, SendMessage, TaskStop a hung member, read messages, relay chat, decide, report to the CEO.
+- **Team = the pool.** Members talk to the lead. Drivers may also message each other (see Driver teamwork). The lead reads every message.
+- **Chat = Vic's remote line.** The lead is chat-aware and relays targeted messages (see Chat relay).
 
 Why: in MAST, specification failures (FM-1.1 to FM-1.5) add up to 44.2% of failures and verification failures (FM-3.1 to FM-3.3) to 23.5%. Systems with explicit verifiers, such as MetaGPT and ChatDev, show fewer failures. Both claims are from §4 of [MAST, arXiv 2503.13657](https://arxiv.org/html/2503.13657); the sums are computed from its per-mode figures.
 
@@ -21,13 +22,13 @@ Why: in MAST, specification failures (FM-1.1 to FM-1.5) add up to 44.2% of failu
 |---|---|---|
 | Lead | Owns the goal and the gate. Routes all messages and stops loops. Never types. | MAST §4: disobey task spec (FM-1.1) 11.8%, "Unaware of termination conditions" (FM-1.5) 12.4%. Conductor and Traffic Cop roles in the [Mob Programming RPG](https://github.com/willemlarsen/mobprogrammingrpg/blob/master/rpg_roles_plain_text.md) |
 | Visionary | Challenges the goal and the direction, not the code. Asks: right bet? what do we skip? what is 10x simpler? | **No controlled study backs this role. The CEO chose it.** |
-| Scrum master | Process and measurement only. Defines the sprint, runs the board, tracks burndown, posts metrics, closes the sprint. | pm §4 TRACK and §5 MEASURE + LEARN |
+| Scrum master | Process and measurement only. Defines the sprint, runs the scrum session (shows cards, collects secret votes, reveals them together, sets points from measured data), tracks burndown, posts metrics, closes the sprint. | pm §4 TRACK and §5 MEASURE + LEARN. The card-to-seconds map is learned from `vic-telemetry classes`, not a fixed table. |
 | Planner | Technical WBS: micro-tasks with files, exact text to paste, CHECK, EXPECT. | Navigator role ([RPG](https://github.com/willemlarsen/mobprogrammingrpg/blob/master/rpg_roles_plain_text.md)). Strong style: an idea goes through someone else's hands ([Zuill 2014](https://www.agilealliance.org/wp-content/uploads/2015/12/ExperienceReport.2014.Zuill_.pdf)). Adding roles beyond Engineer improves executability and revision cost ([MetaGPT §4.4, Table 3](https://arxiv.org/html/2308.00352v7)) |
-| Driver | Executes one micro-task exactly as written and reports the CHECK output. No design. | Driver role ([RPG](https://github.com/willemlarsen/mobprogrammingrpg/blob/master/rpg_roles_plain_text.md)) |
+| Driver | Executes one micro-task exactly as written and reports the CHECK output. No design. Votes in the scrum session, secret until the reveal. Team-ups with other drivers by direct message (see Driver teamwork). | Driver role ([RPG](https://github.com/willemlarsen/mobprogrammingrpg/blob/master/rpg_roles_plain_text.md)). Secret vote, then reveal (planning poker): no controlled study backs it; the CEO chose it. |
 | Tester | **Owns the oracle.** Runs it on every diff and reports pass/fail with output. Never edits. | Executable feedback: +4.2% / +5.4% Pass@1 on HumanEval / MBPP ([MetaGPT §4.4, Fig. 4](https://arxiv.org/html/2308.00352v7)). Adding the testing phase raises executability from 0.81 to 0.88 ([ChatDev §4.2, Table 4](https://arxiv.org/html/2307.07924v5)) |
 | Reviewer | **Owns the diff review.** Returns accept or a concrete fix. | Removing roles drops quality from 0.3953 to 0.2212. A "careful reviewer" role finds more bugs; without it, feedback stays high-level ([ChatDev §4.2, Table 4](https://arxiv.org/html/2307.07924v5)) |
 | Adversary | **Owns the attack.** Finds the case that breaks the result. The lead judges. | Debate with a judge breaks Degeneration-of-Thought; it needs an adaptive stop and only moderate disagreement ([MAD, arXiv 2305.19118](https://arxiv.org/abs/2305.19118)) |
-| Researcher (robin) | Answers questions with file:line or URL evidence. Read-only. | Researcher role ([RPG](https://github.com/willemlarsen/mobprogrammingrpg/blob/master/rpg_roles_plain_text.md)) |
+| Researcher (robin) | Answers questions with file:line or URL evidence. Read-only. Runs before the scrum session; no planning starts before research returns. | Researcher role ([RPG](https://github.com/willemlarsen/mobprogrammingrpg/blob/master/rpg_roles_plain_text.md)) |
 | Scribe | Decision log, handoff notes, telemetry rows. | Archivist role ([RPG](https://github.com/willemlarsen/mobprogrammingrpg/blob/master/rpg_roles_plain_text.md)). Context loss is FM-1.4, 2.80% (MAST §4) |
 | Retro | Reads the sprint metrics and proposes estimate, tier and prompt changes. Never edits. | pm §5: retro after every wave; skill vic-retro-loop |
 
@@ -91,22 +92,48 @@ Evidence limits:
 
 1. **CEO -> lead:** goal and constraints.
 2. **Lead -> visionary:** "challenge this goal". It returns keep, cut or reframe, with a reason. The lead decides; a changed goal goes back to the CEO.
-3. **Lead -> scrum master:** define the sprint before work starts. It returns the goal, a timebox ≤ 60 min, and a backlog. Each backlog item has a definition of done, an oracle, points, est secs, tier and class, seeded from `vic-telemetry classes` and the pm calibration notes. It creates one tracker item per backlog item: GH issues on vic/vix for vix work, `vic-pm br` for PM-learning beads.
-4. **Lead -> planner:** the backlog. It returns micro-tasks (each ≤ 5 min, CHECK + EXPECT), one lane per driver. The lead accepts, or sends them back once. Lead all `jj` workspaces and creates temporary ones for drivers to code in. Lead is required to load `pm` SKILL.
-5. **Lead -> drivers:** pull model: each idle driver gets the item the scrum master picked, one SendMessage per driver, in the same turn. Each task carries its timebox. Never give two drivers the same file.
-6. **Drivers -> lead:** REPORT with CHECK output. The lead sends the workspace path and the changed line ranges to the tester, the reviewer and the adversary in the same turn. Drivers never perform jj/git operations.
-7. **Tester, reviewer, adversary -> lead:** oracle pass/fail, accept/fix, strongest objection. On a fix, the lead sends it to the same driver.
-8. **Lead lands** each item that passed the oracle and the review: it rebases the change onto `main` linear, moves the `main` bookmark, and starts that driver's workspace on the new `main` for its next task. It never pushes; any push or PR is the CEO's call.
-9. **Scrum master + scribe -> lead:** run `vic-telemetry classes` and post the sprint metrics (below).
-10. **Lead -> retro:** vic-retro reads the metrics, then /vic-retro-loop runs. The output is changes to the next sprint's estimates and tiers.
-11. **Lead -> CEO:** the pm wave table and the PM Board (wave, in flight, blocked, est vs actual), plus shipped items and decisions needed.
+3. **Lead -> researchers (research first):** the questions the sprint depends on. Answers carry file:line or URL evidence. No scrum session and no planning start before research returns.
+4. **Scrum session (before any planning):**
+   1. **Lead -> scrum master:** define the sprint. It returns the goal, a timebox ≤ 60 min, and a backlog. Each backlog item has a definition of done, an oracle, est secs, tier and class, seeded from `vic-telemetry classes` and the pm calibration notes. It creates one tracker item per backlog item: GH issues on vic/vix for vix work, `vic-pm br` for PM-learning beads.
+   2. **Cards:** the scrum master shows the deck (1, 2, 3, 5, 8, 13, and `?`) for each item. `?` = unknown: the item goes back to the scrum master to split, then votes again.
+   3. **Secret vote:** each driver sends its card to the scrum master only. No driver sees another vote before the reveal.
+   4. **Reveal:** the scrum master shows all cards at once, to all drivers.
+   5. **Spread:** if the cards differ, the highest and lowest voter each give one reason. One re-vote. After the re-vote, the scrum master sets the points.
+   6. **Points to secs:** the card-to-seconds map is measured, not fixed. `vic-telemetry classes` gives the median actual secs per point per class. The scrum master sets est secs from that map.
+   7. **Done:** the session ends when every item has points and every item fits the 5-min task limit or is split. The lead accepts the backlog or sends it back once.
+5. **Lead -> planner:** the scrum-approved backlog. It returns micro-tasks (each ≤ 5 min, CHECK + EXPECT), one lane per driver. The lead accepts, or sends them back once. Lead all `jj` workspaces and creates temporary ones for drivers to code in. Lead is required to load `pm` SKILL.
+6. **Lead -> drivers:** pull model: each idle driver gets the item the scrum master picked, one SendMessage per driver, in the same turn. Each task carries its timebox. Never give two drivers the same file. Drivers may team up (see Driver teamwork).
+7. **Drivers -> lead:** REPORT with CHECK output. The lead sends the workspace path and the changed line ranges to the tester, the reviewer and the adversary in the same turn. Drivers never perform jj/git operations.
+8. **Tester, reviewer, adversary -> lead:** oracle pass/fail, accept/fix, strongest objection. On a fix, the lead sends it to the same driver.
+9. **Lead lands** each item that passed the oracle and the review: it rebases the change onto `main` linear, moves the `main` bookmark, and starts that driver's workspace on the new `main` for its next task. It never pushes; any push or PR is the CEO's call.
+10. **Scrum master + scribe -> lead:** run `vic-telemetry classes` and post the sprint metrics (below).
+11. **Lead -> retro:** vic-retro reads the metrics, then /vic-retro-loop runs. The output is changes to the next sprint's estimates and tiers.
+12. **Lead -> CEO:** the pm wave table and the PM Board (wave, in flight, blocked, est vs actual), plus shipped items and decisions needed.
 
 ## Measurement (scrum master, per pm §5)
 
 - Per item: est vs actual secs, tokens per member, outcome (`ok`, `accept`, `reject:<why>`, `killed`, `specgap`).
 - Per sprint: points done vs planned (burndown), tier mix (opus/sonnet/haiku share), fail% per class and tier.
 - Row: `vic-telemetry add <agent> <model> <tier> <secs> <tokens> <outcome> "<note>" <class> <est_secs> <bead-id>`. `<bead-id>` = the tracker item id (GH issue number or `vic-pm br` id).
+- Scrum votes: each vote is `vic-telemetry vote <sprint> <item> <driver> <card> <round>`. Reveal and planning read `vic-telemetry votes <sprint>`. All feedback lives in quipu, never in files. Link each vote to its item: `vote → onItem → <bead-id>`, `vote → by → <driver>`; verify with `quipu_search_facts`.
+- Per vote: each card, the reveal spread, the re-vote count, and each card's gap to the measured secs. Put these in the row note.
 - Retro rules (pm §5): est-err > +50% on a class -> raise estimates or split. High fail% at a tier -> tighten the spec first, then go up one tier. Near-zero fail% -> try one tier down. Policy moves only with n ≥ 3 runs.
+
+## Driver teamwork
+
+- Drivers may SendMessage each other to agree an interface, a name or a handoff. Name the file path and the exact symbol. Never paste file contents.
+- A team-up message carries its own timebox: "timebox: N s". The time counts against the driver's task timer.
+- After an agreement, the driver sends the lead one line: who, what, which path. The lead reads every message.
+- Drivers never reassign work, never change file ownership and never change scope. The scrum master and the lead decide those.
+- A team-up never gives two drivers the same file. Agree the split; do not share an edit.
+
+## Chat relay (lead)
+
+- Vic can message the mob from chat. The lead is chat-aware.
+- A remote message that names a member (`@<role>-<n>`) goes to that member with SendMessage in the same turn. The text stays unchanged. The lead adds only the sender tag.
+- A remote message with no named member goes to the scrum master, who routes it.
+- A member's answer to chat goes back through the lead, and the lead posts it. The lead never answers chat for a member and never edits a member's text.
+- A remote message that changes the goal is a CEO call. The lead asks for confirmation in chat before it changes the backlog.
 
 ## Spec rules for drivers (lessons from the 2026-10-21 mob)
 

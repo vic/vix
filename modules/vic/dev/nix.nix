@@ -14,7 +14,7 @@ in
       { ... }:
       {
         trix = {
-          url = "github:aanderse/trix/222013b234cd8db2314f8fca4fff9ac5be5e69f5";
+          url = "github:aanderse/trix";
           inputs.nixpkgs.follows = "nixpkgs";
         };
       };

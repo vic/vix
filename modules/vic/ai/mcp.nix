@@ -2,6 +2,7 @@
 # (codegraph lives in tools.nix beside its CLI; headroom in headroom.nix.)
 {
   ren,
+  inputs,
   ...
 }:
 {
@@ -22,7 +23,7 @@
       }:
       let
         cbm = pkgs.codebase-memory-mcp;
-        quipu = pkgs.callPackage ./_pkgs/quipu.nix { };
+        quipu = pkgs.callPackage ./_pkgs/quipu.nix { src = inputs.quipu; };
         # One global graph, like the global codegraph. The signing key defaults to
         # .quipu/ in the cwd, which would drop a private key into every repo.
         kb = import ./_quipu.nix;

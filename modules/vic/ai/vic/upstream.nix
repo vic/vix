@@ -15,11 +15,11 @@
       { ... }:
       {
         deepwiki-skill = {
-          url = "github:seflless/deepwiki/3ba91173780c14cd2079938475a13ccc8f5d05f6";
+          url = "github:seflless/deepwiki";
           flake = false;
         };
         vercel-skills = {
-          url = "github:vercel-labs/skills/13e4063a1cf913f5606d57d42ab83a86f5001e04";
+          url = "github:vercel-labs/skills";
           flake = false;
         };
       };

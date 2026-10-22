@@ -25,6 +25,7 @@
       "/.github/instructions"
       "/vic"
       "*.key"
+      "*.age"
       "target"
       "result"
       "out"

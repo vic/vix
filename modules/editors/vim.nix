@@ -32,11 +32,11 @@ in
       { ... }:
       {
         nvf = {
-          url = "github:notashelf/nvf/969775ccc2830a70119ba8720a4cf250490a1f56";
+          url = "github:notashelf/nvf";
           inputs.mnw.follows = "mnw";
           inputs.nixpkgs.follows = "nixpkgs";
         };
-        mnw.url = "github:Gerg-L/mnw/a582dbedf7c8ec7effa6939ac5bdd23b27267d1b";
+        mnw.url = "github:Gerg-L/mnw";
       };
   };
 

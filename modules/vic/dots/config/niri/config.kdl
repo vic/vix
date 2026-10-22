@@ -234,7 +234,7 @@ layout {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 // This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-at-startup "noctalia-shell"
+spawn-at-startup "noctalia"
 spawn-at-startup "ghostty"
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -322,7 +322,7 @@ binds {
         spawn "ghostty"
     }
     Mod+A hotkey-overlay-title="Run an Application: launcher" {
-        spawn-sh "noctalia-shell ipc call launcher toggle"
+        spawn-sh "noctalia ipc call launcher toggle"
     }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" {
         spawn "swaylock"

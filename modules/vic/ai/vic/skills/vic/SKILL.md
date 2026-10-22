@@ -166,6 +166,8 @@ Shell = fish. Heredocs DON'T WORK. NEVER `cat`, NEVER python, NEVER `git`.
 - **RETRIEVE b4 work/derive/re-read:** `quipu_context` / `quipu_search_nodes` / `quipu_search_facts` on task entities. Use what recorded. NO re-derive.
 - **SAVE after verified result** (root cause, decision, measured fact, dead end, vic correction): `quipu_resolve_entity` 1st, then `quipu_knot` / `quipu_episode` w/ evidence.
 - Verified facts ONLY. NO guesses. NO dup — search 1st.
+- **LINK, don't just record:** every new entity gets typed edges to existing ones (`uses`, `depends_on`, `caused_by`, `supersedes`, `verified_by`). Pass them as `edges` on `quipu_episode` or as triples in `quipu_knot`. Reuse IRIs from `quipu_resolve_entity`. Isolated node = unfinished write.
+- **VERIFY the edge:** `quipu_search_facts` on the subject must return the new relation. Missing = not linked.
 - Subagents SAME rule. Report 2 vic what read/wrote.
 - CVMN spk in saved text.
 

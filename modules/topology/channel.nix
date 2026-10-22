@@ -22,13 +22,13 @@ in
     flake-inputs =
       { ... }:
       {
-        nixpkgs.url = "github:nixos/nixpkgs/8edc0c72e3a38faf5434e40d1f19431125fe4b30";
+        nixpkgs.url = "github:nixos/nixpkgs";
         home-manager = {
-          url = "github:nix-community/home-manager/c58f54c733a7894d84fa2fdff26cc12088c4b78c";
+          url = "github:nix-community/home-manager";
           inputs.nixpkgs.follows = "nixpkgs";
         };
         darwin = {
-          url = "github:LnL7/nix-darwin/4cff07de74b50e64bdd68cd4e722ab5b6b35ee48";
+          url = "github:LnL7/nix-darwin";
           inputs.nixpkgs.follows = "nixpkgs";
         };
       };

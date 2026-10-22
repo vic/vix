@@ -17,8 +17,11 @@
           ${pkgs.television}/bin/tv init fish | source
         '';
         home.file.".config/fish/conf.d/tvtab.fish".source = ./_fish/tv.fish;
-        programs.fzf.enable = true;
-        programs.fzf.historyWidget.command = ""; # atuin owns Ctrl-R
+        programs.fzf = {
+          enable = true;
+          # fzf's fish bindings take ctrl-r from tv's fish-history widget.
+          enableFishIntegration = false;
+        };
         programs.nix-your-shell.enable = true;
         programs.fish = {
           enable = true;

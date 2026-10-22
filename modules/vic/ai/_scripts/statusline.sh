@@ -65,10 +65,10 @@ d="$HOME/.cache/claude-ledger/${cwd//\//-}"
 now=$(date +%s); ag=0; last=""
 if [ -f "$d/sub-starts" ]; then
   s=$(awk -v t=$((now-3600)) '$1>t' "$d/sub-starts" | wc -l)
-  e=$(tail -n 50 "$d/subagents.tsv" 2>/dev/null | awk -F'\t' -v t="$(date -d @$((now-3600)) -Is)" '$1>t' | wc -l)
+  e=$(vic-telemetry recent 50 2>/dev/null | tail -n +2 | awk -v t="$(date -d @$((now-3600)) -Is)" '$1>t' | wc -l)
   ag=$(( s > e ? s - e : 0 ))
 fi
-[ -f "$d/subagents.tsv" ] && last=$(tail -n1 "$d/subagents.tsv" | awk -F'\t' '{sub(/^vic-/,"",$2); printf "%s:%s", $2, $7}')
+last=$(vic-telemetry recent 1 2>/dev/null | tail -n +2 | awk '{sub(/^vic-/,"",$2); printf "%s:%s", $2, $6}')
 
 c() { printf '\033[%sm%s\033[0m' "$1" "$2"; }
 cc=32; case "$ctx" in "?") cc=90 ;; *) if [ "$ctx" -ge 85 ]; then cc=31; elif [ "$ctx" -ge 70 ]; then cc=33; fi ;; esac

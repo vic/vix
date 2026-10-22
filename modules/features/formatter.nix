@@ -53,7 +53,7 @@ in
       { ... }:
       {
         treefmt-nix = {
-          url = "github:numtide/treefmt-nix/0d6d739a833ba9a9c93034862e4a7b061a062a1c";
+          url = "github:numtide/treefmt-nix";
           inputs.nixpkgs.follows = "nixpkgs";
         };
       };

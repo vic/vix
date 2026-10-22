@@ -15,7 +15,7 @@ in
       { ... }:
       {
         lightjj = {
-          url = "github:chronologos/lightjj/42427a1093fc70c73d5d0010a8d59909fd48a722";
+          url = "github:chronologos/lightjj";
           inputs.nixpkgs.follows = "nixpkgs";
         };
       };

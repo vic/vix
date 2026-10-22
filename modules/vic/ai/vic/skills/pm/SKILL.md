@@ -153,7 +153,7 @@ All PM learning lives in the vix repo at `modules/vic/ai/vic/pm/` (tracked in gi
 
 ### 2. ESTIMATE (agile: relative sizing, calibrated by history)
 - Size each bead in points: **1** = mechanical, spec spells every step · **2** = local decisions, tight spec · **3** = multi-file / cross-constraint · **5** = global invariants, judgment · **8+** = NOT a unit; split (spike first if unknown).
-- Seed the number from the ledger, not gut: `vic-telemetry classes` (class × tier → secs/run, tok/run, est-err, fail%) + `quipu`/`vic/notes` lessons. No history for the class ⟹ run ONE spike unit, record it, then estimate.
+- Seed the number from the ledger, not gut: query quipu with the MCP tool `quipu_query` (telemetry rows, group_id telemetry: class × tier → secs/run, tok/run, est-err, fail%; `vic-telemetry classes` is the fallback) + `quipu`/`vic/notes` lessons. No history for the class ⟹ run ONE spike unit, record it, then estimate.
 - Three-point (PERT) for risky units: est = (optimistic + 4×likely + pessimistic) / 6. Pessimistic > 300s ⟹ split.
 - Velocity = points closed per hour per tier from telemetry. Plan the fleet wave against velocity, not hope.
 
@@ -168,7 +168,7 @@ All PM learning lives in the vix repo at `modules/vic/ai/vic/pm/` (tracked in gi
 - Bead state mirrors reality same turn: `br update --status in_progress` at dispatch, `br close` w/ reason + evidence at verify. Unmirrored = not done.
 
 ### 5. MEASURE + LEARN (retrospective after EVERY wave)
-- The SubagentStop hook logs every subagent automatically (agent, effort, out tokens, secs) to `subagents.tsv`. PM adds the judgment row after EVERY agent returns (accepted, rejected, or killed) via vic-scribe (haiku/low):
+- The SubagentStop hook logs every subagent automatically (agent, effort, out tokens, secs) to the quipu graph (group_id telemetry, via `vic-telemetry subagent`). Never a local file. PM adds the judgment row after EVERY agent returns (accepted, rejected, or killed) via vic-scribe (haiku/low):
   `vic-telemetry add <agent> <model> <tier> <secs> <tokens> <outcome> "<note>" <class> <est_secs> <bead-id>`
   outcome = `ok` | `accept` | `reject:<why>` | `killed` | `specgap`. Rework after PM review = `reject`, not ok.
 - Cost (ccusage, offline from ~/.claude JSONL): wave start `ccusage blocks --active` (5h block burn + projection); wave end `ccusage session --json --since <YYYYMMDD>` (per-model `modelBreakdowns` tokens/cost per session) ⟹ retro input.
@@ -179,7 +179,7 @@ All PM learning lives in the vix repo at `modules/vic/ai/vic/pm/` (tracked in gi
   - fail% ~0 and tok/run low at tier T ⟹ try that class one tier DOWN next wave (spike it, verify).
   - `specgap` or `killed` often ⟹ partition error, not model error. Fix the WBS.
 - Record durable findings (verified, with the numbers) so next session starts calibrated:
-  - quipu (also export to `pm/quipu/`): `quipu_resolve_entity` then `quipu_episode` `group_id:"ledger"` name `ledger:<proj>/pm-calibration/<class>` · body = class · tier · n runs · secs/run · tok/run · est-err · fail% · verdict. `replace_snapshot: true` (latest wins). Read it BEFORE estimating (`quipu_query` ledger recipe).
+  - quipu (also export to `pm/quipu/`): `quipu_resolve_entity` then `quipu_episode` `group_id:"ledger"` name `ledger:<proj>/pm-calibration/<class>` · body = class · tier · n runs · secs/run · tok/run · est-err · fail% · verdict. `replace_snapshot: true` (latest wins). Add edges: `class → measuredBy → telemetry`, `class → tier → <tier>`. Read it BEFORE estimating (`quipu_query` ledger recipe).
   - `modules/vic/ai/vic/pm/notes/pm-calibration-<class>.md` (CVMN, tracked in repo) = same table, human-readable.
   - Surprises (a "easy" class that burned opus, a "hard" class haiku nailed) → `omni_learn` once, if the bar is met.
 - Numbers need n ≥ 3 runs per class×tier before they move policy. Fewer = anecdote, record but do not route on it.

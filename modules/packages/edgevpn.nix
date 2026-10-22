@@ -23,7 +23,7 @@ in
       { ... }:
       {
         edgevpn = {
-          url = "github:mudler/edgevpn/fa89190c1c0c0ab20a82a7de5159e08effbd359a";
+          url = "github:mudler/edgevpn";
           flake = false;
         };
       };

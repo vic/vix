@@ -71,7 +71,7 @@ in
       { ... }:
       {
         doom-emacs = {
-          url = "github:doomemacs/doomemacs/59cdaa32ae933469bb6a1fb3cadee8a988c15968";
+          url = "github:doomemacs/doomemacs";
           flake = false;
         };
       };

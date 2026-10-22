@@ -19,7 +19,7 @@ in
       { ... }:
       {
         SPC = {
-          url = "github:vic/SPC/7217d72e2b2a6053fbb7e3ea3f5bdaac65d69327";
+          url = "github:vic/SPC";
           inputs = {
             bats-assert.follows = "bats-assert";
             bats-support.follows = "bats-support";
@@ -28,14 +28,14 @@ in
             treefmt-nix.follows = "treefmt-nix";
           };
         };
-        bats-assert.url = "github:bats-core/bats-assert/123860c029685bc0a4150ed57ee97fc7f7cc9d31";
+        bats-assert.url = "github:bats-core/bats-assert";
         bats-assert.flake = false;
-        bats-support.url = "github:ztombol/bats-support/64e7436962affbe15974d181173c37e1fac70073";
+        bats-support.url = "github:ztombol/bats-support";
         bats-support.flake = false;
-        blueprint.url = "github:numtide/blueprint/7865bc350e583799db5473e7b4f7b280d8df2546";
+        blueprint.url = "github:numtide/blueprint";
         blueprint.inputs.nixpkgs.follows = "nixpkgs";
         blueprint.inputs.systems.follows = "systems";
-        systems.url = "github:nix-systems/default/d36eeed142f88b5a636f2e3856a53c61654cf29b";
+        systems.url = "github:nix-systems/default";
       };
     homeManager =
       {

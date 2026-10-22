@@ -12,7 +12,7 @@
 
   inputs = {
     SPC = {
-      url = "github:vic/SPC/7217d72e2b2a6053fbb7e3ea3f5bdaac65d69327";
+      url = "github:vic/SPC";
       inputs = {
         bats-assert.follows = "bats-assert";
         bats-support.follows = "bats-support";
@@ -22,22 +22,22 @@
       };
     };
     bats-assert = {
-      url = "github:bats-core/bats-assert/123860c029685bc0a4150ed57ee97fc7f7cc9d31";
+      url = "github:bats-core/bats-assert";
       flake = false;
     };
     bats-support = {
-      url = "github:ztombol/bats-support/64e7436962affbe15974d181173c37e1fac70073";
+      url = "github:ztombol/bats-support";
       flake = false;
     };
     blueprint = {
-      url = "github:numtide/blueprint/7865bc350e583799db5473e7b4f7b280d8df2546";
+      url = "github:numtide/blueprint";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems";
       };
     };
     bun2nix = {
-      url = "github:Mic92/bun2nix/07a5bfc8ac36c5370199343fa620b69f63186e33";
+      url = "github:Mic92/bun2nix";
       inputs = {
         flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
@@ -46,19 +46,19 @@
       };
     };
     caveman = {
-      url = "github:JuliusBrussee/caveman/d262ab3882952a59312ff3537cd86d894523c5ab";
+      url = "github:JuliusBrussee/caveman";
       flake = false;
     };
     claude-plugins-official = {
-      url = "github:anthropics/claude-plugins-official/f359d43b406057f1a8cdbc4ea93b827642c162e6";
+      url = "github:anthropics/claude-plugins-official";
       flake = false;
     };
     darwin = {
-      url = "github:LnL7/nix-darwin/4cff07de74b50e64bdd68cd4e722ab5b6b35ee48";
+      url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     deepwiki-skill = {
-      url = "github:seflless/deepwiki/3ba91173780c14cd2079938475a13ccc8f5d05f6";
+      url = "github:seflless/deepwiki";
       flake = false;
     };
     devshell = {
@@ -66,42 +66,42 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     diagram-design = {
-      url = "github:cathrynlavery/diagram-design/657c71d199a5bc07c61bb2071f14175024986442";
+      url = "github:cathrynlavery/diagram-design";
       flake = false;
     };
     disko = {
-      url = "github:nix-community/disko/725ea35e410ad83be4931d1bff7e090eacaf3563";
+      url = "github:nix-community/disko";
       flake = false;
     };
     doom-emacs = {
-      url = "github:doomemacs/doomemacs/59cdaa32ae933469bb6a1fb3cadee8a988c15968";
+      url = "github:doomemacs/doomemacs";
       flake = false;
     };
     edgevpn = {
-      url = "github:mudler/edgevpn/fa89190c1c0c0ab20a82a7de5159e08effbd359a";
+      url = "github:mudler/edgevpn";
       flake = false;
     };
     enthium = {
-      url = "github:sunaku/enthium/832ac5562b00e2b0776e5268b04c19ebe0eabfb7";
+      url = "github:sunaku/enthium";
       flake = false;
     };
-    files.url = "github:sini/files/b79ab01ba5394ddf3c1d0fadafbcc1ccb9536c5f";
-    flake-file.url = "github:vic/flake-file/d3600508b0b031221459f7358ab88c438a81ac83";
+    files.url = "github:sini/files";
+    flake-file.url = "github:vic/flake-file";
     flake-parts = {
-      url = "github:hercules-ci/flake-parts/024633cd702b10285db5cb19b40ad48d2399ba60";
+      url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs-lib";
     };
-    flake-utils.url = "github:numtide/flake-utils/04c1b180862888302ddfb2e3ad9eaa63afc60cf8";
+    flake-utils.url = "github:numtide/flake-utils";
     genie-agent = {
-      url = "github:sini/genie-agent/4c1ade83da5b80d080ee2051e5bf8f70dd5ad7f7";
+      url = "github:sini/genie-agent";
       flake = false;
     };
     gstack = {
-      url = "github:garrytan/gstack/953a62a72412ba2ec430972226b7b3a999839df5";
+      url = "github:garrytan/gstack";
       flake = false;
     };
     helium = {
-      url = "github:vikingnope/helium-browser-nix-flake/0df2692a56b16a6101e0ad6ed0133c59241b9591";
+      url = "github:vikingnope/helium-browser-nix-flake";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         nixpkgs-darwin.follows = "nixpkgs-darwin";
@@ -109,7 +109,7 @@
       };
     };
     home-manager = {
-      url = "github:nix-community/home-manager/c58f54c733a7894d84fa2fdff26cc12088c4b78c";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     impermanence = {
@@ -119,20 +119,20 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    import-tree.url = "github:vic/import-tree/eb1b52eaecc57f7c136d07ae8a93e724dfecac46";
+    import-tree.url = "github:vic/import-tree";
     jjui = {
-      url = "github:idursun/jjui/151c7c51bf5b2cf49ea9ccdcde8ef98538f59787";
+      url = "github:idursun/jjui";
       inputs = {
         flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
       };
     };
     lightjj = {
-      url = "github:chronologos/lightjj/42427a1093fc70c73d5d0010a8d59909fd48a722";
+      url = "github:chronologos/lightjj";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     llm-agents = {
-      url = "github:numtide/llm-agents.nix/d058453d8128aaeaba2c02275bac259913a0dd3e";
+      url = "github:numtide/llm-agents.nix";
       inputs = {
         bun2nix.follows = "bun2nix";
         flake-parts.follows = "flake-parts";
@@ -142,35 +142,35 @@
       };
     };
     mattpocock = {
-      url = "github:mattpocock/skills/49dd158d1076134a641b33efb035946536778336";
+      url = "github:mattpocock/skills";
       flake = false;
     };
     microvm = {
       url = "github:microvm-nix/microvm.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mnw.url = "github:Gerg-L/mnw/a582dbedf7c8ec7effa6939ac5bdd23b27267d1b";
+    mnw.url = "github:Gerg-L/mnw";
     nix-index-database = {
-      url = "github:nix-community/nix-index-database/9a2dd40780eeab8543aa97c59c26f11267025616";
+      url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-systems.url = "github:nix-systems/default/d36eeed142f88b5a636f2e3856a53c61654cf29b";
+    nix-systems.url = "github:nix-systems/default";
     nix-wrapper-modules = {
       url = "github:nix-community/nix-wrapper-modules";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-wsl = {
-      url = "github:nix-community/nixos-wsl/72c92b11bb8289e6651c7fef29cc0a885fd6a255";
+      url = "github:nix-community/nixos-wsl";
       inputs = {
         flake-compat.follows = "";
         nixpkgs.follows = "nixpkgs";
       };
     };
-    nixpkgs.url = "github:nixos/nixpkgs/8edc0c72e3a38faf5434e40d1f19431125fe4b30";
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/240fddad86d7a0520319f21d8be1b43db426b18d";
+    nixpkgs.url = "github:nixos/nixpkgs";
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs";
     nixpkgs-lib.follows = "nixpkgs";
     notebooklm-pack = {
-      url = "github:meta-introspector/notebooklm-pack/a6cda4392ad06b409147f5d4083afcbe6ae36bc8";
+      url = "github:meta-introspector/notebooklm-pack";
       inputs = {
         flake-utils.follows = "flake-utils";
         nixpkgs.follows = "nixpkgs";
@@ -178,52 +178,56 @@
       };
     };
     nvf = {
-      url = "github:notashelf/nvf/969775ccc2830a70119ba8720a4cf250490a1f56";
+      url = "github:notashelf/nvf";
       inputs = {
         mnw.follows = "mnw";
         nixpkgs.follows = "nixpkgs";
       };
     };
     one-skill-to-rule-them-all = {
-      url = "github:rebelytics/one-skill-to-rule-them-all/56e890712273ce231b478adc56ee2eb81101c3d6";
+      url = "github:rebelytics/one-skill-to-rule-them-all";
       flake = false;
     };
     ponytail = {
-      url = "github:dietrichgebert/ponytail/2961b52fc1fe6a5a87c7a959a79512e5c2f3ffe5";
+      url = "github:dietrichgebert/ponytail";
       flake = false;
     };
-    ren.url = "github:vic/ren/22076e78117e7f080074dd2a3abae7bcdd4dcca6";
+    quipu = {
+      url = "github:scbrown/quipu";
+      flake = false;
+    };
+    ren.url = "github:vic/ren";
     rust-overlay = {
-      url = "github:oxalica/rust-overlay/3100cf6ff140fb298f09192de610f4037d3bab0f";
+      url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
-      url = "github:Mic92/sops-nix/ee48786c6f9160d2c1a084aac841f68195b8420c";
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     superpowers-extended-cc-marketplace = {
-      url = "github:pcvelz/superpowers/cb12f4fdfcd31e2c76b06cc2b39dc21986b97b0a";
+      url = "github:pcvelz/superpowers";
       flake = false;
     };
-    systems.url = "github:nix-systems/default/d36eeed142f88b5a636f2e3856a53c61654cf29b";
+    systems.url = "github:nix-systems/default";
     treefmt-nix = {
-      url = "github:numtide/treefmt-nix/0d6d739a833ba9a9c93034862e4a7b061a062a1c";
+      url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     trix = {
-      url = "github:aanderse/trix/222013b234cd8db2314f8fca4fff9ac5be5e69f5";
+      url = "github:aanderse/trix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ui-ux-pro-max-skill = {
-      url = "github:nextlevelbuilder/ui-ux-pro-max-skill/7246805992a42b7bba37d4cac83b01416f0c6c44";
+      url = "github:nextlevelbuilder/ui-ux-pro-max-skill";
       flake = false;
     };
     vercel-skills = {
-      url = "github:vercel-labs/skills/13e4063a1cf913f5606d57d42ab83a86f5001e04";
+      url = "github:vercel-labs/skills";
       flake = false;
     };
     vscode-server = {
-      url = "github:nix-community/nixos-vscode-server/2f984dfbe7e5271b5c413d3e734374cc1306c921";
+      url = "github:nix-community/nixos-vscode-server";
       inputs.flake-parts.follows = "flake-parts";
     };
   };

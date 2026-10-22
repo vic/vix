@@ -16,12 +16,12 @@ in
       { ... }:
       {
         jjui = {
-          url = "github:idursun/jjui/151c7c51bf5b2cf49ea9ccdcde8ef98538f59787";
+          url = "github:idursun/jjui";
           inputs.flake-parts.follows = "flake-parts";
           inputs.nixpkgs.follows = "nixpkgs";
         };
         flake-parts = {
-          url = "github:hercules-ci/flake-parts/024633cd702b10285db5cb19b40ad48d2399ba60";
+          url = "github:hercules-ci/flake-parts";
           inputs.nixpkgs-lib.follows = "nixpkgs-lib";
         };
         nixpkgs-lib.follows = "nixpkgs";

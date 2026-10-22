@@ -11,7 +11,7 @@
       { ... }:
       {
         nix-index-database = {
-          url = "github:nix-community/nix-index-database/9a2dd40780eeab8543aa97c59c26f11267025616";
+          url = "github:nix-community/nix-index-database";
           inputs.nixpkgs.follows = "nixpkgs";
         };
       };

@@ -18,13 +18,13 @@ let
   };
   # flake inputs of the marketplaces, pinned
   pinned = {
-    superpowers-extended-cc-marketplace = "github:pcvelz/superpowers/cb12f4fdfcd31e2c76b06cc2b39dc21986b97b0a";
-    ponytail = "github:dietrichgebert/ponytail/2961b52fc1fe6a5a87c7a959a79512e5c2f3ffe5";
-    mattpocock = "github:mattpocock/skills/49dd158d1076134a641b33efb035946536778336";
-    diagram-design = "github:cathrynlavery/diagram-design/657c71d199a5bc07c61bb2071f14175024986442";
-    ui-ux-pro-max-skill = "github:nextlevelbuilder/ui-ux-pro-max-skill/7246805992a42b7bba37d4cac83b01416f0c6c44";
-    claude-plugins-official = "github:anthropics/claude-plugins-official/f359d43b406057f1a8cdbc4ea93b827642c162e6";
-    caveman = "github:JuliusBrussee/caveman/d262ab3882952a59312ff3537cd86d894523c5ab";
+    superpowers-extended-cc-marketplace = "github:pcvelz/superpowers";
+    ponytail = "github:dietrichgebert/ponytail";
+    mattpocock = "github:mattpocock/skills";
+    diagram-design = "github:cathrynlavery/diagram-design";
+    ui-ux-pro-max-skill = "github:nextlevelbuilder/ui-ux-pro-max-skill";
+    claude-plugins-official = "github:anthropics/claude-plugins-official";
+    caveman = "github:JuliusBrussee/caveman";
   };
 in
 {

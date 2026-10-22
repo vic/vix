@@ -21,7 +21,6 @@ in
         home.packages = [
           pkgs.github-copilot-cli
           pkgs.copilot-language-server
-          pkgs.aider-chat
         ];
       };
   };

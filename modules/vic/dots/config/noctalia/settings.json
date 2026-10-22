@@ -28,7 +28,10 @@
             "code",
             "chromium-browser",
             "librewolf",
-            "chrome-gicdkkjalcpcfgoekepcelcopokhgleo-Default"
+            "chrome-gicdkkjalcpcfgoekepcelcopokhgleo-Default",
+            "chrome-mjoklplbddabcmpepnokjaffbmgbkkgg-Default",
+            "chrome-lodlkdfmihgonocnmddehnfgiljnadcf-Default",
+            "chrome-bcngdmpegpihnheapppgoniglphkpfhm-Default"
         ],
         "position": "center",
         "screenshotAnnotationTool": "",
@@ -435,9 +438,12 @@
         ],
         "onlySameOutput": true,
         "pinnedApps": [
+            "chrome-lodlkdfmihgonocnmddehnfgiljnadcf-Default",
             "chrome-ejhkdoiecgkmdpomoahkdihbcldkgjci-Default",
             "chrome-gicdkkjalcpcfgoekepcelcopokhgleo-Default",
-            "com.mitchellh.ghostty"
+            "helium",
+            "com.mitchellh.ghostty",
+            "chrome-mjoklplbddabcmpepnokjaffbmgbkkgg-Default"
         ],
         "pinnedStatic": true,
         "position": "top",

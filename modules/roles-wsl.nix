@@ -10,7 +10,7 @@
       { ... }:
       {
         nixos-wsl = {
-          url = "github:nix-community/nixos-wsl/72c92b11bb8289e6651c7fef29cc0a885fd6a255";
+          url = "github:nix-community/nixos-wsl";
           inputs.flake-compat.follows = "";
           inputs.nixpkgs.follows = "nixpkgs";
         };

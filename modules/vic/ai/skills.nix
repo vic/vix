@@ -13,15 +13,19 @@
       { ... }:
       {
         genie-agent = {
-          url = "github:sini/genie-agent/4c1ade83da5b80d080ee2051e5bf8f70dd5ad7f7";
+          url = "github:sini/genie-agent";
           flake = false;
         };
         gstack = {
-          url = "github:garrytan/gstack/953a62a72412ba2ec430972226b7b3a999839df5";
+          url = "github:garrytan/gstack";
           flake = false;
         };
         one-skill-to-rule-them-all = {
-          url = "github:rebelytics/one-skill-to-rule-them-all/56e890712273ce231b478adc56ee2eb81101c3d6";
+          url = "github:rebelytics/one-skill-to-rule-them-all";
+          flake = false;
+        };
+        quipu = {
+          url = "github:scbrown/quipu";
           flake = false;
         };
       };
@@ -57,6 +61,8 @@
             // {
               gstack = "${inputs.gstack}";
               task-observer = "${inputs.one-skill-to-rule-them-all}";
+              quipu = "${inputs.quipu}/skills/quipu";
+              quipu-embedded-artifacts = "${inputs.quipu}/skills/quipu-embedded-artifacts";
               # upstream has no SKILL.md: frontmatter + local deltas + upstream index become one
               operating-memory = pkgs.runCommand "operating-memory-skill" { } ''
                 cp -r ${inputs.genie-agent}/operating-memory $out

@@ -38,7 +38,7 @@
         "fish"
         "fd"
         "jq"
-        "noctalia-shell"
+        "noctalia"
       ] pkgs;
       users.users.vic = {
         description = "vic";

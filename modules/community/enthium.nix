@@ -10,7 +10,7 @@
       { ... }:
       {
         enthium = {
-          url = "github:sunaku/enthium/832ac5562b00e2b0776e5268b04c19ebe0eabfb7";
+          url = "github:sunaku/enthium";
           flake = false;
         };
       };

@@ -29,7 +29,7 @@
   ren.aspects.files-inputs = {
     at = ren.fleet.vix;
     flake-inputs = { ... }: {
-      files.url = "github:sini/files/b79ab01ba5394ddf3c1d0fadafbcc1ccb9536c5f";
+      files.url = "github:sini/files";
     };
   };
 }

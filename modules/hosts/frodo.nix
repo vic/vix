@@ -42,7 +42,7 @@
       { ... }:
       {
         disko = {
-          url = "github:nix-community/disko/725ea35e410ad83be4931d1bff7e090eacaf3563";
+          url = "github:nix-community/disko";
           flake = false;
         };
       };
