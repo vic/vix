@@ -155,6 +155,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-systems.url = "github:nix-systems/default/d36eeed142f88b5a636f2e3856a53c61654cf29b";
+    nix-wrapper-modules = {
+      url = "github:nix-community/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl/72c92b11bb8289e6651c7fef29cc0a885fd6a255";
       inputs = {
