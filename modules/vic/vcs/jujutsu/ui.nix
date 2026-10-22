@@ -34,7 +34,7 @@
                 "diff"
                 "show"
               ];
-              ui.pager = pkgs.lib.getExe pkgs.delta;
+              ui.pager = [ (pkgs.lib.getExe pkgs.delta) "--line-numbers" ];
               ui.diff-formatter = diff-formatter;
             }
             {

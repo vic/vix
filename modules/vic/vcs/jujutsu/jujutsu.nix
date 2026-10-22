@@ -28,6 +28,7 @@ in
       };
     homeManager =
       {
+        config,
         pkgs,
         user,
         ...
@@ -57,9 +58,12 @@ in
         home.packages = [
           jjui-wrapped
           majjit-wrapped
+          (inputs.nix-wrapper-modules.wrappers.jujutsu.wrap {
+            inherit pkgs;
+            settings = config.programs.jujutsu.settings;
+          })
         ];
         programs.jujutsu = {
-          enable = true;
           settings = {
             user.name = user.fullName;
             user.email = user.email;
