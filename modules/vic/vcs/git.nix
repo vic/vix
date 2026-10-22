@@ -1,5 +1,5 @@
 # git: identity from the user binding, ssh signing, difftastic, delta pager.
-{ ren, ... }:
+{ ren, inputs, ... }:
 {
   # any feature emits the paths it wants git to ignore; git writes them once.
   ren.channels.git-ignores = {
@@ -49,23 +49,47 @@
         git-ignores,
         ...
       }:
-      {
-        home.packages = [ pkgs.difftastic ];
-        programs.git = {
-          enable = true;
-          signing.format = "ssh";
+      let
+        delta = lib.getExe pkgs.delta;
+        lfs = lib.getExe pkgs.git-lfs;
+        git = inputs.nix-wrapper-modules.wrappers.git.wrap {
+          inherit pkgs;
           settings = {
             user.name = user.fullName;
             user.email = user.email;
             init.defaultBranch = "main";
             pull.rebase = true;
             pager.difftool = true;
+            pager.blame = delta;
             diff.tool = "difftastic";
             difftool.prompt = false;
             difftool.difftastic.cmd = "${pkgs.difftastic}/bin/difft $LOCAL $REMOTE";
             github.user = "vic";
             gitlab.user = "vic";
             core.editor = "vim";
+            core.pager = delta;
+            core.excludesFile = pkgs.writeText "git-ignore" (
+              lib.concatStringsSep "\n" (lib.unique (builtins.concatLists git-ignores)) + "\n"
+            );
+            core.attributesFile = pkgs.writeText "git-attributes" "* merge=mergiraf\n";
+            interactive.diffFilter = "${delta} --color-only";
+            delta = {
+              line-numbers = true;
+              side-by-side = false;
+            };
+            merge.conflictStyle = "diff3";
+            merge.mergiraf = {
+              name = "mergiraf";
+              driver = "${lib.getExe pkgs.mergiraf} merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
+            };
+            filter.lfs = {
+              clean = "${lfs} clean -- %f";
+              process = "${lfs} filter-process";
+              required = true;
+              smudge = "${lfs} smudge -- %f";
+            };
+            gpg.format = "ssh";
+            gpg.ssh.program = "${pkgs.openssh}/bin/ssh-keygen";
             alias = {
               "dff" = "difftool";
               "fap" = "fetch --all -p";
@@ -75,22 +99,23 @@
                 "for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'";
             };
           };
-          ignores = lib.unique (builtins.concatLists git-ignores);
-          includes = [ ];
-          lfs.enable = true;
         };
+      in
+      {
+        home.packages = [
+          pkgs.difftastic
+          pkgs.git-lfs
+          git
+        ];
 
         programs.mergiraf = {
           enable = true;
-          enableGitIntegration = true;
+          enableGitIntegration = false;
           enableJujutsuIntegration = true;
         };
 
         programs.delta.enable = true;
-        programs.delta.options = {
-          line-numbers = true;
-          side-by-side = false;
-        };
+        programs.delta.enableGitIntegration = false;
       };
   };
 }
