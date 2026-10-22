@@ -5,4 +5,3 @@ old
 .direnv
 .DS_Store
 flake.nix
-flake.lock

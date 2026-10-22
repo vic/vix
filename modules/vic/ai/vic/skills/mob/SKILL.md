@@ -1,6 +1,6 @@
 ---
 name: mob
-description: Run a mob of long-lived teammates in startup sprints. Vic is the CEO. The main session is the lead: it never reads or edits files and runs jj only. An always-alive pool does all the work: visionary, scrum master, planner, drivers, tester, reviewer, adversary, researchers, scribe, retro. Backed by skill pm for estimates and telemetry. Triggers - "/mob", "mob this", "run the mob", "ensemble", "team of robins", "startup mode", "sprint this".
+description: Run a mob of long-lived teammates in startup sprints. Vic is the CEO. The main session is the lead: it never reads or edits files. An always-alive pool does all the work: visionary, scrum master, planner, drivers, tester, reviewer, adversary, researchers, scribe, retro. Backed by skill pm for estimates and telemetry. Triggers - "/mob", "mob this", "run the mob", "ensemble", "team of robins", "startup mode", "sprint this".
 ---
 
 # mob: an always-alive agent team, run as a startup
@@ -57,14 +57,14 @@ Evidence limits:
 - Spawn the full pool once at mob start, in one message. Name each member `<role>-<n>` and label each spawn `<model>/<effort>: <role>`.
 - Opus cap: pm caps count AWAKE members. The lead keeps at most 3 opus members awake at once. Up to 6 opus members exist, but at most 3 hold work at a time.
 - Every brief says: you are long-lived; when done, send REPORT to the lead and wait; never end on your own.
-- Access: each driver gets its OWN long-lived jj workspace. The lead creates it at spawn and reuses it for every task. Drivers edit only inside that workspace and never run jj or git. All other members are read-only.
+- Access: each driver gets its OWN jj workspace PER task. The lead creates it at spawn and reuses it for every task. Drivers edit only inside that workspace and never run jj or git. All other members are read-only.
 
 ## Overrides of pm
 
 1. Members stay alive for the whole mob. pm kills agents after the work; mob does not. No new members: no pings, no keep-alive messages.
 2. The pm 5-min gate applies per task, not per member. Every task message carries a timer: "timebox: N s".
 3. A member is replaced in two cases only: it passes its task timer (hung: the lead TaskStops it), or its context passes 60% (the ctx-meter threshold). In both cases the replacement starts from the member's handoff note, under the same name. No other member is killed without the CEO.
-4. The lead runs jj, an exception to pm's "NO bash" rule. It runs jj only, and still reads and edits no files. Members never run jj or git. Any push or PR is the CEO's call.
+4. The lead is PM runs jj, an exception to pm's "NO bash" rule. It runs jj only, and still reads and edits no files. Members never run jj or git. Any push or PR is the CEO's call.
 5. Pool members run as persistent background teammates. This is an exemption from pm's "no run_in_background impl agents". The stall guard is the per-task timer plus the lead's TaskStop.
 
 ## Cost of an always-alive pool
@@ -92,9 +92,9 @@ Evidence limits:
 1. **CEO -> lead:** goal and constraints.
 2. **Lead -> visionary:** "challenge this goal". It returns keep, cut or reframe, with a reason. The lead decides; a changed goal goes back to the CEO.
 3. **Lead -> scrum master:** define the sprint before work starts. It returns the goal, a timebox ≤ 60 min, and a backlog. Each backlog item has a definition of done, an oracle, points, est secs, tier and class, seeded from `vic-telemetry classes` and the pm calibration notes. It creates one tracker item per backlog item: GH issues on vic/vix for vix work, `vic-pm br` for PM-learning beads.
-4. **Lead -> planner:** the backlog. It returns micro-tasks (each ≤ 5 min, CHECK + EXPECT), one lane per driver. The lead accepts, or sends them back once.
+4. **Lead -> planner:** the backlog. It returns micro-tasks (each ≤ 5 min, CHECK + EXPECT), one lane per driver. The lead accepts, or sends them back once. Lead all `jj` workspaces and creates temporary ones for drivers to code in. Lead is required to load `pm` SKILL.
 5. **Lead -> drivers:** pull model: each idle driver gets the item the scrum master picked, one SendMessage per driver, in the same turn. Each task carries its timebox. Never give two drivers the same file.
-6. **Drivers -> lead:** REPORT with CHECK output. The lead sends the workspace path and the changed line ranges to the tester, the reviewer and the adversary in the same turn.
+6. **Drivers -> lead:** REPORT with CHECK output. The lead sends the workspace path and the changed line ranges to the tester, the reviewer and the adversary in the same turn. Drivers never perform jj/git operations.
 7. **Tester, reviewer, adversary -> lead:** oracle pass/fail, accept/fix, strongest objection. On a fix, the lead sends it to the same driver.
 8. **Lead lands** each item that passed the oracle and the review: it rebases the change onto `main` linear, moves the `main` bookmark, and starts that driver's workspace on the new `main` for its next task. It never pushes; any push or PR is the CEO's call.
 9. **Scrum master + scribe -> lead:** run `vic-telemetry classes` and post the sprint metrics (below).

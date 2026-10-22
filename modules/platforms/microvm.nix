@@ -82,6 +82,8 @@ in
       {
         imports = [ inputs.microvm.nixosModules.host ];
         systemd.network.enable = true; # only for the vm-* taps below
+        # taps have no carrier while their guest is down; NetworkManager-wait-online covers the uplink
+        systemd.network.wait-online.enable = false;
         # keep the host DNS stack as it was (NetworkManager + resolvconf): networkd would switch it to resolved
         services.resolved.enable = false;
         networking.networkmanager.unmanaged = [ "interface-name:vm-*" ];
