@@ -15,4 +15,5 @@
   fish-functions = "user feature -> fish";
   git-ignores = "user feature -> git";
   claude-allow = "user feature -> ai-claude";
+  persist = "user feature -> host impermanence";
 }

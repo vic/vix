@@ -18,6 +18,7 @@
         '';
         home.file.".config/fish/conf.d/tvtab.fish".source = ./_fish/tv.fish;
         programs.fzf.enable = true;
+        programs.fzf.historyWidget.command = ""; # atuin owns Ctrl-R
         programs.nix-your-shell.enable = true;
         programs.fish = {
           enable = true;

@@ -90,6 +90,10 @@
       "user features"
       "`ai-claude` settings.json permissions"
     ];
+    persist = [
+      "user features"
+      "host `environment.persistence` paths"
+    ];
   };
   tiers = {
     vic-headless = "everywhere vic lives: terminal tools only (homes, guests, servers)";

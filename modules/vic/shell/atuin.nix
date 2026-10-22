@@ -29,7 +29,7 @@ in
           };
         };
 
-        systemd.user.services.atuin-backup = lib.mkIf pkgs.stdenv.isLinux {
+        systemd.user.services.atuin-backup = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
           Unit.Description = "Encrypt atuin history into the vix repo";
           Service = {
             Type = "oneshot";
@@ -48,7 +48,7 @@ in
           };
         };
 
-        systemd.user.timers.atuin-backup = lib.mkIf pkgs.stdenv.isLinux {
+        systemd.user.timers.atuin-backup = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
           Unit.Description = "Daily atuin history backup";
           Timer = {
             OnCalendar = "daily";

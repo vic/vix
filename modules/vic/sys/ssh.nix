@@ -11,6 +11,24 @@
 
     homeManager =
       { lib, ... }:
+      let
+        # ssh-host fields to upstream ssh_config directive names
+        directive =
+          h:
+          {
+            HostName = h.hostname;
+            User = h.user;
+            ProxyJump = h.proxyJump;
+            ForwardAgent = h.forwardAgent;
+            ControlPersist = h.controlPersist;
+            ServerAliveInterval = h.serverAliveInterval;
+            ServerAliveCountMax = h.serverAliveCountMax;
+            SetEnv = h.setEnv;
+            LocalForward = h.localForwards;
+            RemoteForward = h.remoteForwards;
+          }
+          // h.extraOptions;
+      in
       {
         programs.ssh = {
           enable = true;
@@ -19,15 +37,15 @@
             "~/.config/sops-nix/secrets/ssh/sops_ssh_config"
             "~/.ssh/config.local"
           ];
-          matchBlocks = {
+          settings = {
             "*" = {
-              controlMaster = "auto";
-              controlPath = "~/.ssh/socket-%r@%h:%p";
-              controlPersist = "10m";
-              addKeysToAgent = "yes";
+              ControlMaster = "auto";
+              ControlPath = "~/.ssh/socket-%r@%h:%p";
+              ControlPersist = "10m";
+              AddKeysToAgent = "yes";
             };
           }
-          // lib.mapAttrs (_: h: lib.filterAttrs (_: v: v != null) (ren.lib.data h)) ren.ssh-host;
+          // lib.mapAttrs (_: h: lib.filterAttrs (_: v: v != null && v != [ ] && v != { }) (directive (ren.lib.data h))) ren.ssh-host;
         };
       };
 

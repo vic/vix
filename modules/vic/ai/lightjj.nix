@@ -30,7 +30,7 @@ in
 
         # One instance; extra repos are tabs (UI, or POST /tabs {"path"}), persisted in lightjj state.json.
         # mkIf, not optionalAttrs: attr names must not depend on pkgs (infinite recursion).
-        systemd.user.services.lightjj = pkgs.lib.mkIf pkgs.stdenv.isLinux {
+        systemd.user.services.lightjj = pkgs.lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
           Unit.Description = "lightjj multi-repo jj UI";
           Service = {
             ExecStart = "${lightjj}/bin/lightjj -R ${config.home.homeDirectory}/hk/vix --addr 127.0.0.1:8765 --no-browser";

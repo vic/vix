@@ -22,7 +22,6 @@ in
           pkgs.github-copilot-cli
           pkgs.copilot-language-server
           pkgs.aider-chat
-          pkgs.gemini-cli-bin
         ];
       };
   };
