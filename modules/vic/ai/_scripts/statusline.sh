@@ -27,14 +27,19 @@ if [ -s "$sub" ]; then
     ((.five_hour.resets_at // empty | fromdateiso8601) - $now), ((.seven_day.resets_at // empty | fromdateiso8601) - $now)]
     | map(if type=="number" then floor else . end) | @tsv' "$sub" 2>/dev/null)
 fi
-# "<reset in> <burn>/unit <hot>": burn = pct used per elapsed window time; hot=1 when it projects past 100% at reset
+# "<reset in> <burn>/unit <left> left <hot>": burn = pct used per elapsed window time;
+# left = time until 100% at that burn; hot=1 when it projects past 100% at reset
 burn() { # pct remaining_s window_s unit_s unit_name
-  awk -v p="$1" -v r="$2" -v w="$3" -v u="$4" -v n="$5" 'BEGIN{
+  awk -v p="$1" -v r="$2" -v w="$3" -v u="$4" -v n="$5" '
+  function dur(s) { return s >= 86400 ? sprintf("%dd%dh", s/86400, (s%86400)/3600) : s >= 3600 ? sprintf("%dh%02dm", s/3600, (s%3600)/60) : sprintf("%dm", s/60) }
+  BEGIN{
     if (p !~ /^[0-9]+$/ || r < 0 || r > w) { print "?"; exit }
     e = w - r
-    t = r >= 86400 ? sprintf("%dd%dh", r/86400, (r%86400)/3600) : r >= 3600 ? sprintf("%dh%02dm", r/3600, (r%3600)/60) : sprintf("%dm", r/60)
+    t = dur(r)
     if (e < 60) { print t; exit }
-    b = p * u / e; printf "%s %.1f%%/%s %d", t, b, n, (p + b * r / u >= 100)
+    b = p * u / e; printf "%s %.1f%%/%s", t, b, n
+    if (p > 0) printf " %s left", dur(p >= 100 ? 0 : (100 - p) * e / p)
+    printf " %d", (p + b * r / u >= 100)
   }'
 }
 b5=$(burn "$five" "${r5:-0}" 18000 3600 h); b7=$(burn "$seven" "${r7:-0}" 604800 86400 d)
@@ -72,7 +77,7 @@ sc=35; case "$seven" in "?") sc=90 ;; *) [ "$seven" -ge 90 ] && sc=31 ;; esac
 # trailing 0/1 from burn(): red when projected to exhaust before reset
 q() { case "$1" in *" 1") c 31 "${1% 1}" ;; *" 0") printf '%s' "${1% 0}" ;; *) printf '%s' "$1" ;; esac; }
 o="$(c 36 "$model")${eff:+ $(c 90 "$eff")} · ctx $(c $cc "$ctx%") · 5h $(c 34 "$five%") $(q "$b5") · 7d $(c $sc "$seven%") $(q "$b7")"
-[ "$dry" != "-" ] && o+=" $(c 31 "$(date -d "+${dry}" +"%a %H:%M")")"
+[ "$dry" != "-" ] && o+=" $(c 31 "$(date -d "+${dry} seconds" +"%a %H:%M")")"
 [ -n "$cost" ] && o+=" · $(c 93 "\$$(printf '%.2f' "$cost")")"
 [ -n "$tok" ] && o+=" $(c 34 "$(( tok / 1000 ))k")"
 o+=" · PM $(c 36 "$pm")"
