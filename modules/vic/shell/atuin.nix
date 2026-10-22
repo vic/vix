@@ -1,6 +1,6 @@
 # atuin: fish history search, local only. Daily sops-encrypted snapshot lands in vic/secrets.
 # Restore (run by vic): vic-sops-get atuin-history.db > ~/.local/share/atuin/history.db
-{ ren, ... }:
+{ ren, inputs, ... }:
 let
   sopsConfig = "/home/vic/hk/vix/modules/vic/sops.yaml";
   out = "/home/vic/hk/vix/modules/vic/secrets/atuin-history.db";
@@ -10,10 +10,9 @@ in
     at = ren.aspects.vic-headless;
     homeManager =
       { pkgs, lib, ... }:
-      {
-        programs.atuin = {
-          enable = true;
-          enableFishIntegration = true;
+      let
+        atuin = inputs.nix-wrapper-modules.wrappers.atuin.wrap {
+          inherit pkgs;
           settings = {
             auto_sync = false;
             update_check = false;
@@ -28,6 +27,10 @@ in
             ];
           };
         };
+      in
+      {
+        home.packages = [ atuin ];
+        programs.fish.interactiveShellInit = "${atuin}/bin/atuin init fish | source";
 
         systemd.user.services.atuin-backup = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
           Unit.Description = "Encrypt atuin history into the vix repo";
