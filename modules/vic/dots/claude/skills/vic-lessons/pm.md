@@ -74,3 +74,4 @@
 - opus xhigh ultracode ~2h real, ~300k subagent tok for 10 builders · n=1 · src:rev/state.md
 - no per-agent meter + no max-wall telemetry: add both before claiming routing works · n=1 · src:genie/SYNTHESIS.md
 - main loop (PM/orchestrator) = opus+ (plans, specs, verifies; its errors fan out to every agent); bulk impl subagents = sonnet pinned in frontmatter. Anthropic: opus lead + sonnet subagents beat solo opus 90.2%; Claude Code alias opusplan = opus plan, sonnet execute · src:anthropic/multi-agent-research-system, code.claude.com/model-config · 2026-10-21
+- After any change, show a changed-files summary (jj st / git status --short, one line per file with what changed) so Vic sees what is being modified. · 2026-10-21

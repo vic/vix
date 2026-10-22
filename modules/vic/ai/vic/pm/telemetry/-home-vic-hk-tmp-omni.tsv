@@ -1,8 +1,0 @@
-2026-06-14T03:23:40-06:00	claude-code-guide	inherit	med	35	65605	ok	mcp-in-subagent-tools-syntax
-2026-06-14T03:23:40-06:00	general-purpose	haiku	low	9	17092	ok	codegraph-reachable-via-toolsearch
-2026-06-14T03:23:40-06:00	vic-probe	haiku	low	111	9366	ok	rebuild-flock-222k-ev-2963-errs
-2026-06-14T03:23:40-06:00	vic-probe	haiku	low	11	9189	fail	db-locked-partial-45k
-2026-06-14T03:23:40-06:00	vic-probe	haiku	low	11	9268	fail	deploy-wrong-path-omni.js
-2026-06-14T03:23:40-06:00	vic-probe	haiku	low	28	10567	ok	suite-r1-r8-green-149
-2026-06-14T03:23:40-06:00	vic-reader	haiku	low	3	6224	ok	codegraph-explicit-NOT-in-toolset
-2026-06-14T03:23:40-06:00	vic-reader	haiku	low	8	7723	ok	codegraph-wildcard-NOT-in-toolset

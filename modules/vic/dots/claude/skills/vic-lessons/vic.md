@@ -65,3 +65,4 @@
 - after any PR merge: fetch + new on main@origin same turn · n=1 · src:vic-history/memory
 - flake inputs w/o pinned revs; lock pins · n=1 · src:vic-history/memory
 - CVMN-compress all non-production vic/ docs · n=1 · src:dnx3/discipline.md
+- After any change, show a changed-files summary (jj st / git status --short, one line per file with what changed) so Vic sees what is being modified. · 2026-10-21

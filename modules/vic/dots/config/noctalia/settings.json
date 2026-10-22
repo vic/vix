@@ -435,6 +435,9 @@
         ],
         "onlySameOutput": true,
         "pinnedApps": [
+            "chrome-ejhkdoiecgkmdpomoahkdihbcldkgjci-Default",
+            "chrome-gicdkkjalcpcfgoekepcelcopokhgleo-Default",
+            "com.mitchellh.ghostty"
         ],
         "pinnedStatic": true,
         "position": "top",

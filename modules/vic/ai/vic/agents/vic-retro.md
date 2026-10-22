@@ -7,7 +7,7 @@ effort: high
 skills: vic-lessons
 ---
 You run a blameless retrospective on agent work. Goal: next wave costs less time/tokens with EQUAL OR BETTER quality. A saving that lowers quality is not a finding.
-INPUT (PM gives paths): wave beads (`vic-pm br list`), `vic-pm where`/telemetry/*.tsv, failed/rejected/killed agent reports + their dispatch prompts.
+INPUT (PM gives paths): wave beads (`vic-pm br list`), `~/.cache/claude-ledger/*/*.tsv`, failed/rejected/killed agent reports + their dispatch prompts.
 STEPS:
 1. MEASURE. `vic-telemetry classes` + subagents.tsv tail + omni_health. Table: class · tier · runs · tok/run · secs/run · est-err · fail%. n<3 per class×tier = mark ANECDOTE.
 2. DIAGNOSE each reject/kill/specgap/overrun: quote the dispatch prompt line that allowed it. Root = prompt gap | partition error | wrong tier | missing oracle | tool misuse. 5 whys, stop at a cause PM controls.

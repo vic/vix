@@ -72,7 +72,7 @@ sc=35; case "$seven" in "?") sc=90 ;; *) [ "$seven" -ge 90 ] && sc=31 ;; esac
 # trailing 0/1 from burn(): red when projected to exhaust before reset
 q() { case "$1" in *" 1") c 31 "${1% 1}" ;; *" 0") printf '%s' "${1% 0}" ;; *) printf '%s' "$1" ;; esac; }
 o="$(c 36 "$model")${eff:+ $(c 90 "$eff")} · ctx $(c $cc "$ctx%") · 5h $(c 34 "$five%") $(q "$b5") · 7d $(c $sc "$seven%") $(q "$b7")"
-[ "$dry" != "-" ] && o+=" $(c 31 "dry $(date -d "+${dry} seconds" +"%a %H:%M")")"
+[ "$dry" != "-" ] && o+=" $(c 31 "$(date -d "+${dry}" +"%a %H:%M")")"
 [ -n "$cost" ] && o+=" · $(c 93 "\$$(printf '%.2f' "$cost")")"
 [ -n "$tok" ] && o+=" $(c 34 "$(( tok / 1000 ))k")"
 o+=" · PM $(c 36 "$pm")"

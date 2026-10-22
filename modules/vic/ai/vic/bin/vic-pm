@@ -1,23 +1,14 @@
 #!/usr/bin/env bash
-# vic-pm br <args> | sync | restore | learn <vic|pm|skills|traps> "<lesson>" | where
+# vic-pm br <args> | learn <vic|pm|skills|traps> "<lesson>" | where
 # PM's persistent experience, kept in the vix repo (survives hardware moves):
 #   $VIC_PM_DIR/.beads/      PM beads (br, prefix pm): learnings + optimization tasks
-#   $VIC_PM_DIR/telemetry/   per-project copies of the vic-telemetry ledgers
 #   $VIC_PM_DIR/quipu/ omni/ notes/   exports written by PM agents (quipu/omni are MCP-only)
-# sync    = ledger -> repo (merge, never lose rows)   restore = repo -> ledger (new machine)
 # br      = br pinned to the PM beads, from any cwd
 # learn   = append-only lesson into the vic-lessons skill (live-linked into the repo; dedup)
 set -eu
 dir="${VIC_PM_DIR:-$HOME/hk/vix/modules/vic/ai/vic/pm}"
-led="$HOME/.cache/claude-ledger"
-merge() { mkdir -p "$(dirname "$2")"; cat "$1" "$2" 2>/dev/null | sort -u > "$2.new"; mv "$2.new" "$2"; }
 case "${1:-}" in
   br) shift; mkdir -p "$dir/.beads"; cd "$dir"; exec br "$@" ;;
-  sync) for f in "$led"/*/telemetry.tsv "$led"/*/subagents.tsv; do [ -f "$f" ] || continue
-          n=$(basename "$f" .tsv); merge "$f" "$dir/telemetry/$(basename "$(dirname "$f")")${n#telemetry}.tsv"; done
-        ls "$dir/telemetry" 2>/dev/null | wc -l | xargs echo "files synced:" ;;
-  restore) for f in "$dir"/telemetry/*.tsv; do [ -f "$f" ] || continue; b=$(basename "$f" .tsv); n=telemetry; case $b in *subagents) n=subagents b=${b%subagents};; esac
-          merge "$f" "$led/$b/$n.tsv"; done; echo restored ;;
   learn) f="${VIC_LESSONS_DIR:-$HOME/.claude/skills/vic-lessons}/${2:?file}.md"; [ -f "$f" ] || { echo "no $f"; exit 1; }
          l="${3:?lesson}"; grep -qF -- "$l" "$f" && { echo dup; exit 0; }
          printf -- "- %s · %s\n" "$l" "$(date +%F)" >> "$f"; echo appended ;;

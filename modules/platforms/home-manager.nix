@@ -37,7 +37,16 @@ in
         user
         (within ren.kinds.host)
       ];
-      into = { user, ... }: ms: { nixos.home-manager.users.${user.name}.imports = ms; };
+      # the same modules also build standalone as `homeConfigurations."<user>@<host>"`
+      into = { host, user, ... }: ms: {
+        nixos.home-manager.users.${user.name}.imports = ms;
+        homeConfigurations."${user.name}@${host.name}" =
+          host.channel.home-manager.lib.homeManagerConfiguration
+            {
+              pkgs = host.channel.nixpkgs.legacyPackages.${host.system.name};
+              modules = ms;
+            };
+      };
     }
     {
       at = and [

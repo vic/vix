@@ -12,7 +12,6 @@ Rule: a change ships only if quality holds (oracle + reviewer still pass) AND ti
 
 ## Loop
 ```
-1. sync    vic-pm sync                       (ledgers -> repo)
 2. retro   dispatch vic-retro (opus/high)    (measure, diagnose, ≤5 proposals, beads class:retro)
 3. judge   PM reads proposals; Vic rules on any skill/agent/tier change (no silent policy edits)
 4. apply   accepted proposal -> vic-rung/vic-scribe edits in a jj workspace; bead stays open
@@ -25,7 +24,7 @@ Rule: a change ships only if quality holds (oracle + reviewer still pass) AND ti
 - tok/run, secs/run, est-err (actual vs estimate), fail% (reject+killed+specgap), rework count.
 - Quality guards: first-run accept rate, reviewer 🔴 count, reverted landings. These must not get worse.
 - Cost: `ccusage session --json` (`modelBreakdowns` per model) and `ccusage blocks --active`; tier mix vs cost per wave.
-- Sources: `vic-telemetry classes`, `pm/telemetry/*subagents.tsv` (auto, from the SubagentStop hook), `omni_health`, `omni_recall`.
+- Sources: `vic-telemetry classes`, `~/.cache/claude-ledger/*/subagents.tsv` (auto, from the SubagentStop hook), `omni_health`, `omni_recall`.
 
 ## Proven levers (Anthropic research + vic measured history)
 - Prompt quality beats model upgrade: a failing class gets a tighter spec FIRST, tier bump SECOND.

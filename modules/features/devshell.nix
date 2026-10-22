@@ -1,4 +1,4 @@
-# devshell: the vix maintainer shell (devShells.<sys>.default), a numtide/devshell with fmt/ci/hm and host commands.
+# devshell: the vix maintainer shell (devShells.<sys>.default), a numtide/devshell with fmt/ci and host/-hm commands.
 {
   ren,
   inputs,
@@ -26,13 +26,19 @@
           )
         );
         cmd = name: help: command: { inherit name help command; };
-        # first arg is the host, defaults to this machine
-        hostCmd =
-          name: action:
-          cmd name "nh os ${action} [host]" ''
-            host="''${1:-$(hostname -s)}"
-            shift || true
-            nh os ${action} "$PRJ_ROOT#nixosConfigurations.$host" "$@"
+        # first arg is the nh action; switch/boot ask before activating
+        nhCmd =
+          name: actions: help: run:
+          cmd name "${actions} ${help}" ''
+            set -euo pipefail
+            action="''${1:-}"
+            case "$action" in
+              ${actions}) shift ;;
+              *) echo "usage: ${name} ${actions} ${help}" >&2; exit 1 ;;
+            esac
+            ask=()
+            [ "$action" = build ] || ask=(--ask)
+            ${run}
           '';
       in
       {
@@ -74,11 +80,15 @@
               nix flake check --no-build "path:$PRJ_ROOT" "$@"
               nix eval "path:$PRJ_ROOT#ci.matrix" --apply builtins.length
             '')
-            (cmd "hm" "switch this home" ''nh home switch "$PRJ_ROOT#$(whoami)@$(hostname -s)" "$@"'')
-            (hostCmd "-build" "build")
-            (hostCmd "-switch" "switch --ask")
-            (hostCmd "-boot" "boot --ask")
-            (cmd "-reboot" "boot a host config, then reboot" ''-boot "$@" && systemctl reboot'')
+            (nhCmd "-hm" "build|switch" "[nh args]: this user@host home" ''
+              nh home "$action" "path:$PRJ_ROOT" -c "$(whoami)@$(hostname -s)" "''${ask[@]}" "$@"
+            '')
+            # second arg is the host, defaults to this machine
+            (nhCmd "-os" "build|switch|boot" "[host] [nh args]" ''
+              host="$(hostname -s)"
+              if [ $# -gt 0 ] && [ "''${1#-}" = "$1" ]; then host="$1"; shift; fi
+              nh os "$action" "$PRJ_ROOT#nixosConfigurations.$host" "''${ask[@]}" "$@"
+            '')
             (cmd "vini-hm" "build vini's home here, activate it on vini" ''
               set -euo pipefail
               test "''${1:-}" = activate || { echo "usage: vini-hm activate" >&2; exit 1; }

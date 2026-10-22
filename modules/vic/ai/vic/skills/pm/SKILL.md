@@ -141,10 +141,9 @@ A tool or skill not in this list that fits the task = use it and add it here.
 ### PM BEADS + REPO-PERSISTENT EXPERIENCE (never lost on a hardware move)
 All PM learning lives in the vix repo at `modules/vic/ai/vic/pm/` (tracked in git):
 - `.beads/` = PM optimization beads, prefix `pm`. Use `vic-pm br <args>` from any cwd (e.g. `vic-pm br create "..." -t task -l class:<c>`, `vic-pm br ready`). Project work beads stay in the project's own `.beads`.
-- `telemetry/<project>.tsv` = vic-telemetry ledgers. `vic-pm sync` merges them in. `vic-pm restore` rebuilds the ledger on a new machine.
 - `quipu/` = verified quipu PM learnings (mistakes, evidence). `omni/` = omni efficacy and health snapshots. `notes/` = calibration tables. These are written by vic-scribe from MCP queries, since quipu and omni live outside the repo.
 - Opus and other model learnings (what a tier did well or badly on a class) go to `notes/` and `omni/`, not only to chat or memory.
-- End of EVERY wave: run /vic-retro-loop (vic-pm sync, vic-retro, record). Then refresh `quipu/` and `omni/` exports if new verified facts exist, update the matching `pm` bead, tell Vic to review and commit the diff. PM never commits (jj/git commits only on Vic's ask).
+- End of EVERY wave: run /vic-retro-loop (vic-retro, record). Then refresh `quipu/` and `omni/` exports if new verified facts exist, update the matching `pm` bead, tell Vic to review and commit the diff. PM never commits (jj/git commits only on Vic's ask).
 - Session start: `vic-pm br ready` and read `notes/` before estimating.
 
 ### 1. PLAN (waterfall: WBS + dependencies)
@@ -198,6 +197,15 @@ Harvested lessons, all projects: `modules/vic/dots/claude/skills/vic-lessons/*.m
 - 3 fails ⟹ stop, write escalation note, move on. Fable 2 strikes (529) ⟹ fall back to opus.
 - Burn baselines: ~11 agents ≈ 313k; 30-agent quorum ≈ 1.6M; one sonnet agent ≈ 26k; wave of ~20 haiku+few sonnet/opus ≈ 400k.
 
+## PEERS (other projects' sessions = free context)
+
+PM actively uses peers. See /vic "PEERS = LIVE CONTEXT".
+- Task start: `ListAgents`. Record related peers on the PM Board.
+- Partition step: if a piece touches a peer's project, ASK that peer (`SendMessage`, name = project) before dispatching agents to re-derive it. Peer answer = input to the spec, verified like any claim.
+- Tell agents in the spec which peers exist; agents without SendMessage route questions through PM.
+- Landed change or finding that other projects depend on → notify those peers.
+- Keep Vic-facing chatter out: peers get one precise question, not status spam.
+
 ## NEVER-STALL (TIME = constraint)
 
 /lanes always. Keep lanes saturated: build · verify · soundness · recon · plan · hygiene · measure.
@@ -216,7 +224,7 @@ Harvested lessons, all projects: `modules/vic/dots/claude/skills/vic-lessons/*.m
 ## TASK FLOW
 
 ```
-1️⃣ Vic speaks → parse goal. NO inline work.
+1️⃣ Vic speaks → parse goal. NO inline work. ListAgents → ask related peers.
 2️⃣ Partition → smallest disjoint pieces.
 3️⃣ Map dep lanes + workspace needs.
 4️⃣ Tier-pick per piece (/dispatch). Label <model>/<effort>:.
