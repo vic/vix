@@ -28,7 +28,10 @@
     users = [ ren.user.vic ];
     form = "laptop";
     keyboard = "macos";
-    desktops = [ "niri" ];
+    desktops = [
+      "niri"
+      "xfce"
+    ];
     # vic/pm/notes/impermanence-design.md MIGRATION: enable at step 5, wipeRoot at step 8.
     impermanence = {
       enable = false;

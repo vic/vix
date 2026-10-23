@@ -301,7 +301,7 @@ Changes to vic's files:
 | peer-sync, PreCompact checkpoint, tracker-drift hook | Tied to sini's hosts and the `den-ag-design` tracker repo.                                                                                                 |
 | `writing-tone` skill                                 | It is sini's personal voice.                                                                                                                               |
 | caveman, brag, hyperframes                           | caveman is off in sini's config too. brag and hyperframes are for video.                                                                                   |
-| pi / opencode / hermes / antigravity configs         | The CLIs are installed. Their per-agent config (pi's plan-mode and security-guard extensions, and the shared skills/MCPs) is not.                           |
+| pi configs                    | The CLIs are installed. Their per-agent config (pi's plan-mode and security-guard extensions, and the shared skills/MCPs) is not.                           |
 | impermanence buckets for `~/.claude`, Syncthing      | Host-level concerns.                                                                                                                                       |
 
 ## Layout

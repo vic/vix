@@ -22,7 +22,7 @@ in
     flake-inputs =
       { ... }:
       {
-        nixpkgs.url = "github:nixos/nixpkgs";
+        nixpkgs.url = "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz";
         home-manager = {
           url = "github:nix-community/home-manager";
           inputs.nixpkgs.follows = "nixpkgs";

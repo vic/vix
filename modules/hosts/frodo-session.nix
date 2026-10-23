@@ -54,7 +54,6 @@
     };
   ren.aspects.frodo-desktop.nixos = {
     services.xserver.enable = true;
-    services.xserver.desktopManager.lxqt.enable = true;
     services.xserver.xkb = {
       layout = "us";
       variant = "";

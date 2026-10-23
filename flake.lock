@@ -1284,6 +1284,26 @@
         "type": "github"
       }
     },
+    "ircc": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792760030,
+        "narHash": "sha256-Og1ptaG7wi21eiV9VE7mAVVlh3Zr9rLpgZ8AR+DBxUU=",
+        "owner": "vic",
+        "repo": "ircc",
+        "rev": "0df0b741a32f51825ed6fc2cdb7ce03227211878",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "ircc",
+        "type": "github"
+      }
+    },
     "jjui": {
       "inputs": {
         "flake-parts": [
@@ -1489,17 +1509,15 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1792746132,
-        "narHash": "sha256-lL+bBsTS/ypYlnzV9QH3dQx7hv/M6bwX2n/pJrGrFBU=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "b2263b18a47258a9b85f1204e571c7c2ba8679ba",
-        "type": "github"
+        "lastModified": 1792502884,
+        "narHash": "sha256-ij8QUxzTOHovLrNOxVRx+RAhGQFOMsJbji0veiatH5k=",
+        "rev": "02c087f3fe673c9e317f206a627cb6b910336dbe",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1097682.02c087f3fe67/nixexprs.tar.xz"
       },
       "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz"
       }
     },
     "nixpkgs-darwin": {
@@ -1673,6 +1691,7 @@
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "import-tree": "import-tree_2",
+        "ircc": "ircc",
         "jjui": "jjui",
         "lightjj": "lightjj",
         "llm-agents": "llm-agents",

@@ -65,10 +65,7 @@ in
 
           # Other agent harnesses sini runs beside Claude Code (installed, not configured).
           llm.crush
-          llm.opencode
           llm.pi
-          llm.antigravity-cli
-          llm.hermes-agent
         ];
 
         programs.claude-code = {

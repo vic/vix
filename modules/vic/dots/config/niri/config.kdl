@@ -322,7 +322,7 @@ binds {
         spawn "ghostty"
     }
     Mod+A hotkey-overlay-title="Run an Application: launcher" {
-        spawn-sh "noctalia ipc call launcher toggle"
+        spawn-sh "noctalia msg panel-toggle launcher"
     }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" {
         spawn "swaylock"

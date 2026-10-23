@@ -120,6 +120,10 @@
       };
     };
     import-tree.url = "github:vic/import-tree";
+    ircc = {
+      url = "github:vic/ircc";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     jjui = {
       url = "github:idursun/jjui";
       inputs = {
@@ -166,7 +170,7 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    nixpkgs.url = "github:nixos/nixpkgs";
+    nixpkgs.url = "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs";
     nixpkgs-lib.follows = "nixpkgs";
     notebooklm-pack = {
