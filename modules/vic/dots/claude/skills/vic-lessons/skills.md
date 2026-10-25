@@ -89,3 +89,9 @@
 ## deepwiki / research
 - read paper summaries inline, no agent for it · n=1 · src:pnx/RULINGS.md
 - design from current impls + recent work, not old thesis alone · n=1 · src:pnx/RULINGS.md
+
+## quipu
+- read ladder: `quipu_ask` catalog, then `quipu_query` SPARQL (label prefix, GROUP BY), then `quipu_context` max 3 · text search tools broken on this store · n=1 · src:quipu/live-2026-10-28
+- as-of reads (`tx`, `valid_at` on `quipu_query`) answer "what did we know before X": ledger rows at tx 409 = 1, now 68 · use in retro and root cause · n=1 · src:quipu/live-2026-10-28
+- empty / error / timeout = UNKNOWN; a zero claim needs a known-present control on the same query · n=2 · src:quipu/live-2026-10-28, quipu/docs/book/src/concepts/rule-answers.md:14
+- refusal feedback converges agents in one revision when it names the fix; authority refusals need routing, not edits · n=1 · src:quipu/benchmark/census/agent/README.md:46-73

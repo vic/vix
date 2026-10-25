@@ -778,3 +778,5 @@ binds {
         power-off-monitors
     }
 }
+
+include "noctalia.kdl"

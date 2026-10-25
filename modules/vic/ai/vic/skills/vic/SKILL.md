@@ -163,13 +163,37 @@ Shell = fish. Heredocs DON'T WORK. NEVER `cat`, NEVER python, NEVER `git`.
 ### QUIPU MCP = CONTEXT STORE (ALWAYS)
 `mcp__plugin_hm_quipu__*`. Single store 4 save + retrieve ctx. Web UI: http://127.0.0.1:8088
 
-- **RETRIEVE b4 work/derive/re-read:** `quipu_context` / `quipu_search_nodes` / `quipu_search_facts` on task entities. Use what recorded. NO re-derive.
+- **RETRIEVE b4 work/derive/re-read:** read ladder below, on task entities. Use what recorded. NO re-derive.
 - **SAVE after verified result** (root cause, decision, measured fact, dead end, vic correction): `quipu_resolve_entity` 1st, then `quipu_knot` / `quipu_episode` w/ evidence.
 - Verified facts ONLY. NO guesses. NO dup — search 1st.
 - **LINK, don't just record:** every new entity gets typed edges to existing ones (`uses`, `depends_on`, `caused_by`, `supersedes`, `verified_by`). Pass them as `edges` on `quipu_episode` or as triples in `quipu_knot`. Reuse IRIs from `quipu_resolve_entity`. Isolated node = unfinished write.
-- **VERIFY the edge:** `quipu_search_facts` on the subject must return the new relation. Missing = not linked.
+- **VERIFY the edge:** `quipu_ask` `references_to` (incoming) or `entity_facts` (outgoing) on the IRI MUST show the new relation. Missing = not linked. NOT `quipu_search_facts` (times out, below).
 - Subagents SAME rule. Report 2 vic what read/wrote.
 - CVMN spk in saved text.
+
+#### 🔬 QUIPU STORE = WHAT WORKS (measured 2026-10-28, v0.16.2, 4152 entities, 35986 facts)
+Re-measure on version change: `quipu_version` + `quipu_stats`. Design/thesis: `~/hk/sven/vic/quipu-lessons.md`.
+
+| tool | state | use |
+|---|---|---|
+| `quipu_ask` | ✅ typed named queries | 1st. `quipu_ask {}` = catalog: `entity_summary` `entity_facts` `references_to` `service_deps` `labeled_like` `entities_of_type` `brief_ground` `brief_related` `entity_work` `cochanged_with` |
+| `quipu_query` | ✅ SPARQL 1.1 | label prefix scan `FILTER(STRSTARTS(STR(?l),"ledger:<proj>/"))`, `GROUP BY` + `COUNT` 4 tallies, `tx` / `valid_at` 4 as-of |
+| `quipu_context` | ⚠️ works, dumps full bodies | `max_entities` ≤ 3. Read `summary.truncated.more_available` + `summary.embeddings.configured` |
+| `quipu_validate` | ✅ dry run, writes nothing | pre-check a write w/ inline `shapes`: issues give `focus_node` `path` `message` |
+| `quipu_impact` / `quipu_report` | ✅ | only as good as edges (ledger episodes have 1 edge: `rdf:type`) |
+| `quipu_unravel` / `quipu_entity_history` | ✅ | as-of state; one IRI's assert/retract history |
+| `quipu_search_nodes` | 🚫 0 hits even 4 exact known label | broken instrument |
+| `quipu_search_facts` | 🚫 times out (30 s) on any text | never |
+| `quipu_search` / `quipu_hybrid_search` | 🚫 "no embedding provider configured"; keyword mode disabled | never, til vic enables |
+| `quipu_explain` | 🚫 not served (needs `owl` feature, off) | — |
+
+- **EMPTY ≠ NO.** Empty / error / timeout = UNKNOWN. Zero claim needs armed control: same query on a known-present label MUST hit. quipu rule: only a complete read gives "neither".
+- **4 values, not 2:** evidence for + evidence against ⟹ supported · refuted · both · neither · (failed read) unknown. Say which.
+- **AS-OF = learn from past:** what did we know b4 X? `quipu_query` w/ `tx: <n>` or `valid_at: "<ISO>"`. E.g. ledger rows @ tx 409 = 1, now 68. Retro + root cause: compare belief-then vs now.
+- **STRICT WRITES (quipu thesis "start strict, agents bear the cost"):** shapes loaded = 0 ⟹ store gate checks NOTHING. U r the gate: `quipu_validate` ur turtle b4 `quipu_knot` (shape: evidence + source required). Refusal text = fix → retry once.
+- **Fixable vs authority:** a refusal u fix by editing (type, missing field) ≠ one needing routing/vic (scope, grant). Never re-route around an authority refusal.
+- **Counterfactual b4 retract/supersede:** `quipu_impact` w/ `remove: true` = what depends on it (store never mutated). Needs edges ⟹ LINK.
+- **Main-session only** (not in agent allowlist `modules/vic/ai/_quipu.nix`): `quipu_rule_query` (4-valued), `quipu_path_cone` / `quipu_path_backtest` (golden paths over history), `quipu_policy_check`, `quipu_shapes`, `quipu_queries`, `quipu_entity_history`, `quipu_stats`, `quipu_version`.
 
 ### 🧭 OPERATING MEMORY = QUERY ON DEMAND (ALL projects, ALL agents)
 genie `operating-memory/` (215 files: practices · traps · workflow · lessons · gen) lives in quipu as `om-load:` episodes, pinned @ upstream rev. Rules backed by measured incidents. QUERY IT, DON'T REMEMBER IT.
@@ -178,7 +202,7 @@ genie `operating-memory/` (215 files: practices · traps · workflow · lessons 
 - **HOW (verified 2026-10-15):** `quipu_query` SPARQL. Swap `<word>` 4 the situation (e.g. census, zero, landing, brief, owner, liveness, pgrep):
   `SELECT ?p ?c WHERE { ?n <http://aegis.gastown.local/ontology/path> ?p ; <http://www.w3.org/2000/01/rdf-schema#comment> ?c . FILTER(CONTAINS(LCASE(STR(?c)),"<word>") || CONTAINS(STR(?p),"<word>")) } LIMIT 10`
   → `?p` = file path. Read FULL rule @ `~/.claude/skills/operating-memory/<?p minus operating-memory/>`. Apply its How-to-apply.
-- 🚫 NOT `quipu_search_nodes` (returns 0 even 4 known terms = broken instrument). NOT `quipu_context` (78KB dump).
+- 🚫 NOT `quipu_search_nodes` (returns 0 even 4 known terms = broken instrument). NOT `quipu_context` w/o `max_entities` ≤ 3 (78KB dump).
 - 🪤 ZERO HITS ≠ NO RULE (armed-controls law). Retry 2-3 synonyms, then scan `~/.claude/skills/operating-memory/MEMORY.md` index. Control: word `census` MUST hit `practices/armed-controls.md`.
 - ⚖️ Conflict w/ vic rules ⟹ VIC WINS (operating-memory SKILL.md local deltas). Name conflict 1 line.
 - 🕰️ quipu copy = pinned rev; file on disk newer ⟹ disk wins. Upstream merge changed files ⟹ reload those episodes.
@@ -196,6 +220,8 @@ BEADS + HANDOFF + STATE r disk/tracker only ⟹ invisible cross-repo. MIRROR EAC
 - **READ (verified 2026-10-15, tx 409):** `quipu_query`:
   `SELECT ?l ?c WHERE { ?e <http://www.w3.org/2000/01/rdf-schema#label> ?l ; <http://www.w3.org/2000/01/rdf-schema#comment> ?c . FILTER(STRSTARTS(STR(?l),"ledger:<proj>/")) } LIMIT 20` (drop `<proj>/` = all projects; swap 4 `CONTAINS(LCASE(?c),"<word>")` = topic).
 - **SESSION START:** ledger query 4 proj ALONG W/ HANDOFF.md. Disagree ⟹ disk+tracker win, fix ledger.
+- **PAST MISTAKES 1st:** b4 a task, `ledger:<proj>/mistake/` + `ledger:<proj>/evidence/` prefix scan (same recipe) + om query on the task word. Hit ⟹ apply it, cite label in brief.
+- **EDGES on every ledger write:** `edges` from episode node to project, bead, file, rule it applies (`about`, `fixes`, `caused_by`, `supersedes`). Read-back: `quipu_ask references_to` on the bead/file IRI MUST list it.
 - **VERIFY every write:** read-back query MUST return the row. No row = not mirrored. Facts ONLY (evidence-b4-claim) — no plans as facts.
 - Backfill: proj w/ `.beads/` or `vic/HANDOFF.md` not yet mirrored ⟹ mirror on first touch.
 

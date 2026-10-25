@@ -149,10 +149,6 @@
       url = "github:mattpocock/skills";
       flake = false;
     };
-    microvm = {
-      url = "github:microvm-nix/microvm.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     mnw.url = "github:Gerg-L/mnw";
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -171,7 +167,7 @@
       };
     };
     nixpkgs.url = "https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz";
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs";
+    nixpkgs-darwin.follows = "nixpkgs";
     nixpkgs-lib.follows = "nixpkgs";
     notebooklm-pack = {
       url = "github:meta-introspector/notebooklm-pack";

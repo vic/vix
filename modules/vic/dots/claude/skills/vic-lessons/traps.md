@@ -82,3 +82,13 @@
 - CSS `1fr` track blows to min-content · `minmax(0, 1fr)` · n=1 · src:rev/HANDOFF.md
 - Elm let-bound fns monomorphic; no 4-tuples · top-level helper; records · n=1 · src:rev/state.md
 - agent jj workspaces left behind · after land: jj -R <ws-dir> st, jj workspace forget <name>, rm -rf <ws-dir>; ws live under $XDG_RUNTIME_DIR/jj-ws (wiped on reboot) · src:vix/2026-10-21
+
+## quipu (measured 2026-10-28, v0.16.2; table: skill vic "QUIPU STORE = WHAT WORKS")
+- `quipu_search_nodes` returns 0 even for an exact known label (`ledger:vix/mistake/git-init-in-ws`) · read with `quipu_ask` or `quipu_query` label prefix; 0 = broken instrument · n=2 · src:quipu/live-2026-10-28, vix/vic SKILL.md
+- `quipu_search_facts` times out (30 s) on any text · never use it to verify an edge; `quipu_ask references_to` / `entity_facts` · n=2 · src:quipu/live-2026-10-28
+- `quipu_search` / `quipu_hybrid_search` error "no embedding provider configured"; keyword mode disabled · do not read the error as "no match" · n=1 · src:quipu/live-2026-10-28
+- `quipu_explain` not served (needs the `owl` build feature, off) though `_quipu.nix` allowlists it · use `quipu_ask entity_facts` + the episode `source` · n=1 · src:quipu/src/mcp/definitions.rs:45
+- `quipu_context` returns full episode bodies · pass `max_entities` <= 3; read `summary.truncated.more_available` · n=2 · src:quipu/live-2026-10-28, vix/vic SKILL.md
+- store has 0 SHACL shapes loaded: knot/episode writes are not validated · pre-check with `quipu_validate` + inline shape (dry run, writes nothing) · n=1 · src:quipu/live-2026-10-28
+- telemetry hook rows: `failed=1` on every row (474 with outcome `done`), `tier` stored as JSON `{"level": …}` · fail% from `a:outcome`, not `a:failed` · n=1 · src:quipu/live-2026-10-28, vix/bin/vic-telemetry:33,55
+- ledger episodes carry 1 edge (`rdf:type`): `quipu_impact` / `references_to` find nothing from them · pass `edges` on every episode · n=1 · src:quipu/live-2026-10-28

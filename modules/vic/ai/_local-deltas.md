@@ -11,7 +11,8 @@ machine. It is installed as the `operating-memory` skill: a `[[slug]]` link name
   agent never runs jj or git; the supervisor lands (`/workspace`). Read every "commit", "push" or
   "land" step as: report the changed paths to the supervisor.
 - **The memory bank is quipu** (`mcp__plugin_hm_quipu__*`), not hindsight. Read "recall" as
-  `quipu_context` / `quipu_search_nodes` / `quipu_search_facts`; read "retain" as
+  `quipu_ask` / `quipu_query` / `quipu_context` (max 3 entities); the quipu text search tools do
+  not work on this store (skill `vic`, "QUIPU STORE = WHAT WORKS"); read "retain" as
   `quipu_resolve_entity`, then `quipu_knot` or `quipu_episode`.
 - **The tracker is br** where the project has `.beads/`. sini's `STATUS/*.sh` scripts exist only in
   den-ag-design.

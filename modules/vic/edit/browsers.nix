@@ -24,7 +24,7 @@ in
             utils.follows = "flake-utils";
           };
         };
-        nixpkgs-darwin.url = "github:NixOS/nixpkgs";
+        nixpkgs-darwin.follows = "nixpkgs";
         flake-utils.url = "github:numtide/flake-utils";
       };
     fish-functions = { ... }: {

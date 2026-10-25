@@ -295,7 +295,6 @@
   "workbench.list.smoothScrolling": true,
   "workbench.panel.defaultLocation": "top",
   "workbench.panel.showLabels": false,
-  "workbench.preferredDarkColorTheme": "Visual Studio Light",
   "workbench.preferredHighContrastColorTheme": "Visual Studio Light",
   "workbench.view.showQuietly": {
     "workbench.panel.output": false
@@ -329,7 +328,7 @@
   "semanticdiff.defaultDiffViewer": true,
   "semanticdiff.closeOriginalTab": true,
   "workbench.preferredLightColorTheme": "Dark 2026",
-  "workbench.colorTheme": "Monokai Pro Light (Filter Sun)",
+  "workbench.colorTheme": "365 10-October Dark",
   "workbench.secondarySideBar.defaultVisibility": "hidden",
   "typescript.suggest.completeFunctionCalls": true,
   "js/ts.updateImportsOnPaste.enabled": false,
@@ -348,5 +347,7 @@
   ],
   "chat.viewSessions.orientation": "stacked",
   "claudeCode.preferredLocation": "panel",
-  "claudeCode.useTerminal": true
+  "claudeCode.useTerminal": true,
+  "git.enabled": false,
+  "workbench.preferredDarkColorTheme": "Palenight Operator"
 }

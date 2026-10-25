@@ -115,7 +115,7 @@ Evidence limits:
 - Per item: est vs actual secs, tokens per member, outcome (`ok`, `accept`, `reject:<why>`, `killed`, `specgap`).
 - Per sprint: points done vs planned (burndown), tier mix (opus/sonnet/haiku share), fail% per class and tier.
 - Row: `vic-telemetry add <agent> <model> <tier> <secs> <tokens> <outcome> "<note>" <class> <est_secs> <bead-id>`. `<bead-id>` = the tracker item id (GH issue number or `vic-pm br` id).
-- Scrum votes: each vote is `vic-telemetry vote <sprint> <item> <driver> <card> <round>`. Reveal and planning read `vic-telemetry votes <sprint>`. All feedback lives in quipu, never in files. Link each vote to its item: `vote → onItem → <bead-id>`, `vote → by → <driver>`; verify with `quipu_search_facts`.
+- Scrum votes: each vote is `vic-telemetry vote <sprint> <item> <driver> <card> <round>`. Reveal and planning read `vic-telemetry votes <sprint>`. All feedback lives in quipu, never in files. Link each vote to its item: `vote → onItem → <bead-id>`, `vote → by → <driver>`; verify with `quipu_ask references_to` on the item IRI (not `quipu_search_facts`: it times out on this store, see skill `vic`, "QUIPU STORE = WHAT WORKS").
 - Per vote: each card, the reveal spread, the re-vote count, and each card's gap to the measured secs. Put these in the row note.
 - Retro rules (pm §5): est-err > +50% on a class -> raise estimates or split. High fail% at a tier -> tighten the spec first, then go up one tier. Near-zero fail% -> try one tier down. Policy moves only with n ≥ 3 runs.
 

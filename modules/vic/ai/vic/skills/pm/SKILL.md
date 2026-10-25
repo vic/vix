@@ -130,7 +130,8 @@ Agent = billable resource w/ capacity (tier conc), cost (burn ratio), calendar (
 
 ### 0. GOAL + TOOLBOX (less time, cost, tokens, resources — quality and speed never drop)
 Every wave, use what exists BEFORE spending. Order = cheapest first:
-- `vic-recall` / `vic-mine` / `omni_recall` / quipu ledger query: already solved? skip the work.
+- `vic-recall` / `vic-mine` / `omni_recall` / quipu ledger query: already solved? skip the work. quipu reads that work (measured 2026-10-28): `quipu_ask` catalog and `quipu_query` SPARQL only; `quipu_search_nodes`, `quipu_search_facts`, `quipu_search` are broken or unconfigured on this store (table in skill `vic`, "QUIPU STORE = WHAT WORKS"). An empty answer is UNKNOWN, not "not solved".
+- Past mistakes on the same class: `quipu_query` label prefix `ledger:<proj>/mistake/` and `ledger:<proj>/evidence/`. Put each hit's label in the dispatch brief.
 - `omni_health` + `omni_models` + `vic-telemetry classes`: where burn goes, which class needs which tier, runaway list.
 - `codegraph` / `codebase-memory` (structure) and `deepwiki` / notebooklm (delegate thinking): before any Read sweep.
 - `/ensemble` + `/superhaiku`: checkable work to k×haiku + vic-judge, not sonnet/opus.
@@ -154,6 +155,9 @@ All PM learning lives in the vix repo at `modules/vic/ai/vic/pm/` (tracked in gi
 ### 2. ESTIMATE (agile: relative sizing, calibrated by history)
 - Size each bead in points: **1** = mechanical, spec spells every step · **2** = local decisions, tight spec · **3** = multi-file / cross-constraint · **5** = global invariants, judgment · **8+** = NOT a unit; split (spike first if unknown).
 - Seed the number from the ledger, not gut: query quipu with the MCP tool `quipu_query` (telemetry rows, group_id telemetry: class × tier → secs/run, tok/run, est-err, fail%; `vic-telemetry classes` is the fallback) + `quipu`/`vic/notes` lessons. No history for the class ⟹ run ONE spike unit, record it, then estimate.
+- Telemetry trap (measured 2026-10-28, 893 `a:Run` rows): rows from the SubagentStop hook store `tier` as a JSON blob (`{"level": "low"}`) and `failed = 1` on every row, even with outcome `done` (474 such rows). Cause: `vic-telemetry` sets `failed=0` only for outcome `ok|accept`, and `subagent` passes the effort object as the tier. So `fail%` from `a:failed` is wrong for hook rows. Compute fail% from `a:outcome` instead (`done`/`ok`/`accept`/`PASS` = success; the stored outcome words are not uniform), and group by the `level` inside `tier`. Recipe:
+  `PREFIX a: <http://aegis.gastown.local/ontology/> SELECT ?class ?tier ?o (COUNT(?r) AS ?n) (AVG(?s) AS ?secs) WHERE { ?r a a:Run ; a:tier ?tier ; a:outcome ?o ; a:secs ?s . OPTIONAL { ?r a:class ?class } } GROUP BY ?class ?tier ?o ORDER BY ?class ?tier`
+- Drift check: run the same query with `tx: <n>` (the tx at the last wave start) and compare. A class whose numbers moved since then needs a fresh estimate.
 - Three-point (PERT) for risky units: est = (optimistic + 4×likely + pessimistic) / 6. Pessimistic > 300s ⟹ split.
 - Velocity = points closed per hour per tier from telemetry. Plan the fleet wave against velocity, not hope.
 
@@ -179,7 +183,7 @@ All PM learning lives in the vix repo at `modules/vic/ai/vic/pm/` (tracked in gi
   - fail% ~0 and tok/run low at tier T ⟹ try that class one tier DOWN next wave (spike it, verify).
   - `specgap` or `killed` often ⟹ partition error, not model error. Fix the WBS.
 - Record durable findings (verified, with the numbers) so next session starts calibrated:
-  - quipu (also export to `pm/quipu/`): `quipu_resolve_entity` then `quipu_episode` `group_id:"ledger"` name `ledger:<proj>/pm-calibration/<class>` · body = class · tier · n runs · secs/run · tok/run · est-err · fail% · verdict. `replace_snapshot: true` (latest wins). Add edges: `class → measuredBy → telemetry`, `class → tier → <tier>`. Read it BEFORE estimating (`quipu_query` ledger recipe).
+  - quipu (also export to `pm/quipu/`): `quipu_resolve_entity` then `quipu_episode` `group_id:"ledger"` name `ledger:<proj>/pm-calibration/<class>` · body = class · tier · n runs · secs/run · tok/run · est-err · fail% · verdict. `replace_snapshot: true` (latest wins). Add edges: `class → measuredBy → telemetry`, `class → tier → <tier>`. Read it BEFORE estimating (`quipu_query` ledger recipe). Verify the edges with `quipu_ask references_to` on the class IRI (not `quipu_search_facts`: it times out). `replace_snapshot` keeps history: `quipu_query` with `tx` shows the calibration that was in force when a past wave was planned.
   - `modules/vic/ai/vic/pm/notes/pm-calibration-<class>.md` (CVMN, tracked in repo) = same table, human-readable.
   - Surprises (a "easy" class that burned opus, a "hard" class haiku nailed) → `omni_learn` once, if the bar is met.
 - Numbers need n ≥ 3 runs per class×tier before they move policy. Fewer = anecdote, record but do not route on it.
