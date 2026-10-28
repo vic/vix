@@ -1,40 +1,56 @@
 # ssh: ssh client config from the ssh-host instances, ssh-agent and the persistent vini master (linux).
-{ ren, ... }:
+{ sven, lib, ... }:
+let
+  # the ports served under one home (fleet `served` entries), as local forwards: local = 10000 + remote
+  servedForwards =
+    served: home:
+    map
+      (p: {
+        bind.port = 10000 + p.port;
+        host.address = "127.0.0.1";
+        host.port = p.port;
+      })
+      (lib.concatMap (e: e.value) (lib.filter (e: lib.hasInfix "/home:${home.name}/" e.from.id) served));
+
+  # ssh-host fields to upstream ssh_config directive names
+  directive =
+    served: h:
+    {
+      HostName = h.hostname;
+      User = h.user;
+      ProxyJump = h.proxyJump;
+      ForwardAgent = h.forwardAgent;
+      ControlPersist = h.controlPersist;
+      ServerAliveInterval = h.serverAliveInterval;
+      ServerAliveCountMax = h.serverAliveCountMax;
+      SetEnv = h.setEnv;
+      LocalForward =
+        h.localForwards
+        ++ lib.optionals (h.forwardsServedBy != null) (servedForwards served h.forwardsServedBy);
+      RemoteForward = h.remoteForwards;
+    }
+    // h.extraOptions;
+in
 {
-  ren.aspects.vic-ssh = {
-    at = ren.aspects.vic-secrets;
-    secrets = { ... }: [
-      ren.secret.ssh-id-ed25519
-      ren.secret.ssh-conf
-      ren.secret.ssh-localhost-run
+  sven.aspects.vic-ssh = {
+    at = sven.aspects.vic-secrets;
+    secrets = [
+      sven.secret.ssh-id-ed25519
+      sven.secret.ssh-conf
+      sven.secret.ssh-localhost-run
     ];
 
     homeManager =
-      { lib, ... }:
-      let
-        # ssh-host fields to upstream ssh_config directive names
-        directive =
-          h:
-          {
-            HostName = h.hostname;
-            User = h.user;
-            ProxyJump = h.proxyJump;
-            ForwardAgent = h.forwardAgent;
-            ControlPersist = h.controlPersist;
-            ServerAliveInterval = h.serverAliveInterval;
-            ServerAliveCountMax = h.serverAliveCountMax;
-            SetEnv = h.setEnv;
-            LocalForward = h.localForwards;
-            RemoteForward = h.remoteForwards;
-          }
-          // h.extraOptions;
-      in
+      {
+        served ? [ ],
+        ...
+      }:
       {
         programs.ssh = {
           enable = true;
           enableDefaultConfig = false;
           includes = [
-            "~/.config/sops-nix/secrets/ssh/sops_ssh_config"
+            "~/.config/sops-nix/secrets/${sven.secret.ssh-conf.sopsKey}"
             "~/.ssh/config.local"
           ];
           settings = {
@@ -45,7 +61,9 @@
               AddKeysToAgent = "yes";
             };
           }
-          // lib.mapAttrs (_: h: lib.filterAttrs (_: v: v != null && v != [ ] && v != { }) (directive (ren.lib.data h))) ren.ssh-host;
+          // lib.mapAttrs (
+            _: h: lib.filterAttrs (_: v: v != null && v != [ ] && v != { }) (directive served h)
+          ) sven.ssh-host;
         };
       };
 

@@ -1,8 +1,8 @@
 # jujutsu-ui: jj settings.
-{ ren, ... }:
+{ sven, ... }:
 {
-  ren.aspects.jujutsu-ui = {
-    at = ren.aspects.vic-headless;
+  sven.aspects.jujutsu-ui = {
+    at = sven.aspects.vic-headless;
     homeManager =
       { pkgs, ... }:
       let
@@ -34,7 +34,10 @@
                 "diff"
                 "show"
               ];
-              ui.pager = [ (pkgs.lib.getExe pkgs.delta) "--line-numbers" ];
+              ui.pager = [
+                (pkgs.lib.getExe pkgs.delta)
+                "--line-numbers"
+              ];
               ui.diff-formatter = diff-formatter;
             }
             {

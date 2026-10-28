@@ -1,53 +1,47 @@
 # editors: gui editors, vscode vim hook, vscode-server and the unfree editors.
 {
-  ren,
+  sven,
   inputs,
+  lib,
   ...
 }:
-let
-  vix = ren.helpers;
-  at = ren.lib.and [
-    ren.aspects.vic-full
-    ren.aspects.vic-gui
-  ];
-in
 {
-  ren.aspects.vic-vscode-server.homeManager =
-    { pkgs, ... }:
-    {
-      imports = [ "${inputs.vscode-server}/modules/vscode-server/home.nix" ];
-
-      services.vscode-server = {
-        enable = true;
-        nodejsPackage = pkgs.nodejs_latest;
-        extraRuntimeDependencies = with pkgs; [
-          curl
-          wget
-        ];
-      };
-    };
-
-  ren.aspects.vic-editors = {
-    inherit at;
-    flake-inputs =
-      { ... }:
+  sven.aspects.vic-vscode-server = {
+    at = sven.aspects.vic-editors; # an include in Ren: active wherever vic-editors is
+    homeManager =
+      { pkgs, ... }:
       {
-        vscode-server = {
-          url = "github:nix-community/nixos-vscode-server";
-          inputs.flake-parts.follows = "flake-parts";
+        imports = [ "${inputs.vscode-server}/modules/vscode-server/home.nix" ];
+
+        services.vscode-server = {
+          enable = true;
+          nodejsPackage = pkgs.nodejs_latest;
+          extraRuntimeDependencies = [
+            pkgs.curl
+            pkgs.wget
+          ];
         };
-        flake-parts = {
-          url = "github:hercules-ci/flake-parts";
-          inputs.nixpkgs-lib.follows = "nixpkgs-lib";
-        };
-        nixpkgs-lib.follows = "nixpkgs";
       };
-    includes = [ ren.aspects.vic-vscode-server ];
+  };
+
+  sven.aspects.vic-editors = {
+    at = sven.lib.all [
+      sven.aspects.vic-full
+      sven.aspects.vic-gui
+    ];
+    flake-file.inputs = {
+      vscode-server = {
+        url = "github:nix-community/nixos-vscode-server";
+        inputs.flake-parts.follows = "flake-parts";
+      };
+      flake-parts = {
+        url = "github:hercules-ci/flake-parts";
+        inputs.nixpkgs-lib.follows = "nixpkgs-lib";
+      };
+      nixpkgs-lib.follows = "nixpkgs";
+    };
     dots =
-      { parent, ... }:
-      let
-        ext = if (vix.place parent).system.darwin then "Darwin" else "Linux";
-      in
+      { scope, ... }:
       {
         ".config/zed" = "config/zed";
         ".config/vscode-vim" = "config/vscode-vim";
@@ -55,10 +49,13 @@ in
         ".config/Code/User/keybindings.json" = "config/Code/User/keybindings.json";
         ".config/Cursor/User/settings.json" = "config/Code/User/settings.json";
         ".config/Cursor/User/keybindings.json" = "config/Code/User/keybindings.json";
-        ".vscode/extensions/extensions.json" = "vscode/extensions/extensions-${ext}.json";
-        ".cursor/extensions/extensions.json" = "cursor/extensions/extensions-${ext}.json";
+      }
+      # extension lists exist for Linux only: no darwin link to a missing file
+      // lib.optionalAttrs (!(sven.helpers.place scope).system.darwin) {
+        ".vscode/extensions/extensions.json" = "vscode/extensions/extensions-Linux.json";
+        ".cursor/extensions/extensions.json" = "cursor/extensions/extensions-Linux.json";
       };
-    unfree = vix.allowUnfree [
+    unfree = sven.helpers.allowUnfree [
       "cursor"
       "vscode"
     ];

@@ -1,31 +1,38 @@
 # jujutsu: identity, ssh signing, jjui wrappers.
-{
-  inputs,
-  ren,
-  ...
-}:
+{ sven, inputs, ... }:
 let
-  vix = ren.helpers;
+  # ask for the ssh key password if it is not loaded, before the tui
+  wrapped =
+    pkgs: name: tui:
+    pkgs.writeShellApplication {
+      inherit name;
+      text = ''
+        # ask for password if key is not loaded, before jjui
+        ssh-add -l || ssh-add
+        ${pkgs.lib.getExe tui} "$@"
+      '';
+    };
 in
 {
-
-  ren.aspects.jujutsu = {
+  sven.aspects.jujutsu = {
+    at = sven.aspects.vic-headless;
     dots.".config/jjui" = "config/jjui";
-    at = ren.aspects.vic-headless;
-    flake-inputs =
-      { ... }:
-      {
-        jjui = {
-          url = "github:idursun/jjui";
-          inputs.flake-parts.follows = "flake-parts";
-          inputs.nixpkgs.follows = "nixpkgs";
-        };
-        flake-parts = {
-          url = "github:hercules-ci/flake-parts";
-          inputs.nixpkgs-lib.follows = "nixpkgs-lib";
-        };
-        nixpkgs-lib.follows = "nixpkgs";
+    flake-file.inputs = {
+      jjui = {
+        url = "github:idursun/jjui";
+        inputs.flake-parts.follows = "flake-parts";
+        inputs.nixpkgs.follows = "nixpkgs";
       };
+      flake-parts = {
+        url = "github:hercules-ci/flake-parts";
+        inputs.nixpkgs-lib.follows = "nixpkgs-lib";
+      };
+      nixpkgs-lib.follows = "nixpkgs";
+      nix-wrapper-modules = {
+        url = "github:nix-community/nix-wrapper-modules";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+    };
     homeManager =
       {
         config,
@@ -34,30 +41,13 @@ in
         ...
       }:
       let
-        jjui = (vix.perSystem pkgs inputs.jjui).packages.jjui;
-        jjui-wrapped = pkgs.writeShellApplication {
-          name = "jjui";
-          text = ''
-            # ask for password if key is not loaded, before jjui
-            ssh-add -l || ssh-add
-            ${pkgs.lib.getExe jjui} "$@"
-          '';
-        };
-
-        majjit = (vix.perSystem pkgs inputs.jjui).packages.jjui;
-        majjit-wrapped = pkgs.writeShellApplication {
-          name = "majjit";
-          text = ''
-            # ask for password if key is not loaded, before jjui
-            ssh-add -l || ssh-add
-            ${pkgs.lib.getExe majjit} "$@"
-          '';
-        };
+        jjui = (sven.helpers.perSystem pkgs inputs.jjui).packages.jjui;
+        majjit = (sven.helpers.perSystem pkgs inputs.jjui).packages.jjui;
       in
       {
         home.packages = [
-          jjui-wrapped
-          majjit-wrapped
+          (wrapped pkgs "jjui" jjui)
+          (wrapped pkgs "majjit" majjit)
           (inputs.nix-wrapper-modules.wrappers.jujutsu.wrap {
             inherit pkgs;
             settings = config.programs.jujutsu.settings;

@@ -1,23 +1,13 @@
 # Agent tools that drive or render through a browser.
+{ sven, inputs, ... }:
 {
-  inputs,
-  ren,
-  ...
-}:
-let
-  vix = ren.helpers;
-in
-{
-  ren.aspects.ai-browser-tools = {
-    at = ren.aspects.vic-gui;
+  sven.aspects.ai-browser-tools = {
+    at = sven.aspects.vic-gui;
     homeManager =
-      {
-        pkgs,
-        ...
-      }:
+      { pkgs, ... }:
       {
         home.packages = [
-          (vix.perSystem pkgs inputs.llm-agents).packages.openspecui
+          (sven.helpers.perSystem pkgs inputs.llm-agents).packages.openspecui
           pkgs.playwright-mcp
           pkgs.mermaid-cli # diagram-mermaid-render
         ];

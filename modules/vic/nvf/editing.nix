@@ -1,9 +1,9 @@
 # vim editing: editor options/tools, keymap help, motions, search-replace, sessions, todos.
-{ ren, ... }:
+{ sven, ... }:
 {
-  ren.aspects.vim-globals = {
-    at = ren.lib.when (s: builtins.elem "globals" (s.vim.features or [ ]));
-    vim =
+  sven.aspects.vim-globals = {
+    at = sven.helpers.vimHas "globals";
+    nvf =
       { pkgs, ... }:
       {
         vim.extraPackages = [
@@ -23,9 +23,9 @@
       };
   };
 
-  ren.aspects.vim-which-key = {
-    at = ren.lib.when (s: builtins.elem "which-key" (s.vim.features or [ ]));
-    vim.vim.binds.whichKey = {
+  sven.aspects.vim-which-key = {
+    at = sven.helpers.vimHas "which-key";
+    nvf.vim.binds.whichKey = {
       enable = true;
       setupOpts = {
         delay = 550;
@@ -38,24 +38,24 @@
     };
   };
 
-  ren.aspects.vim-flash = {
-    at = ren.lib.when (s: builtins.elem "flash" (s.vim.features or [ ]));
-    vim.vim.utility.motion.flash-nvim.enable = true;
+  sven.aspects.vim-flash = {
+    at = sven.helpers.vimHas "flash";
+    nvf.vim.utility.motion.flash-nvim.enable = true;
   };
 
-  ren.aspects.vim-grug-far = {
-    at = ren.lib.when (s: builtins.elem "grug-far" (s.vim.features or [ ]));
-    vim.vim.utility.grug-far-nvim.enable = true;
+  sven.aspects.vim-grug-far = {
+    at = sven.helpers.vimHas "grug-far";
+    nvf.vim.utility.grug-far-nvim.enable = true;
   };
 
-  ren.aspects.vim-todo-comments = {
-    at = ren.lib.when (s: builtins.elem "todo-comments" (s.vim.features or [ ]));
-    vim.vim.notes.todo-comments.enable = true;
+  sven.aspects.vim-todo-comments = {
+    at = sven.helpers.vimHas "todo-comments";
+    nvf.vim.notes.todo-comments.enable = true;
   };
 
-  ren.aspects.vim-persistence = {
-    at = ren.lib.when (s: builtins.elem "persistence" (s.vim.features or [ ]));
-    vim =
+  sven.aspects.vim-persistence = {
+    at = sven.helpers.vimHas "persistence";
+    nvf =
       { pkgs, ... }:
       {
         vim.extraPlugins.persistence = {
@@ -65,9 +65,9 @@
       };
   };
 
-  ren.aspects.vim-haunt = {
-    at = ren.lib.when (s: builtins.elem "haunt" (s.vim.features or [ ]));
-    vim =
+  sven.aspects.vim-haunt = {
+    at = sven.helpers.vimHas "haunt";
+    nvf =
       { pkgs, ... }:
       {
         vim.extraPlugins.haunt = {

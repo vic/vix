@@ -1,17 +1,17 @@
-# readme vocabulary (a fn of ren and vocab): markdown tables rendered from live Ren names, each checked against docs/_vocabulary.nix.
-{ ren, vocab }:
+# readme vocabulary (a fn of sven, lib and vocab): markdown tables rendered from live sven names, each checked against docs/_vocabulary.nix.
+{
+  sven,
+  lib,
+  vocab,
+}:
 let
-  inherit (builtins)
-    attrNames
-    concatStringsSep
-    filter
-    ;
   described = import ./_described.nix "_vocabulary.nix";
-  row = cells: "| ${concatStringsSep " | " cells} |";
+  schema = sven.lib.schema;
+  row = cells: "| ${lib.concatStringsSep " | " cells} |";
   # one row of cells per name, under a header row
   table =
     head: cells: names:
-    concatStringsSep "\n" (
+    lib.concatStringsSep "\n" (
       map row (
         [
           head
@@ -21,13 +21,36 @@ let
       )
     );
   code = n: "`${n}`";
+  codes = xs: lib.concatMapStringsSep ", " code (lib.sort (a: b: a < b) (lib.unique xs));
   instances =
     k:
     let
-      ns = attrNames (ren.${k} or { });
+      ns = lib.attrNames (sven.${k} or { });
     in
-    if ns == [ ] then "- (abstract)" else concatStringsSep ", " ns;
-  live = what: filter (n: ren.aspects ? ${n}) (attrNames vocab.${what}); # aspects: stale lines only
+    if ns == [ ] then "- (abstract)" else lib.concatStringsSep ", " ns;
+  # every (kind, sink) declaration, from the schema: reduce name, the sinks it feeds, `out`, a sink `at`
+  decls = lib.concatLists (
+    lib.mapAttrsToList (
+      k: d:
+      lib.mapAttrsToList (
+        n: s:
+        s
+        // {
+          kind = k;
+          name = n;
+        }
+      ) d.sinks
+    ) schema.kinds
+  );
+  on = n: lib.filter (d: d.name == n) decls;
+  sinkCells = n: [
+    (code n)
+    (codes (map (d: d.kind) (on n)))
+    (codes (map (d: d.reduce) (on n)))
+    (codes (lib.concatMap (d: d.feeds ++ lib.optional d.out "out") (on n)))
+    vocab.sinks.${n}
+  ];
+  live = what: lib.filter (n: sven.aspects ? ${n}) (lib.attrNames vocab.${what}); # aspects: stale lines only
   profiles =
     map (t: [
       (code t)
@@ -37,32 +60,29 @@ let
       "role `${r}`"
       vocab.roles.${r}
     ]) (described "roles" (live "roles") vocab.roles);
+  inactive = lib.attrNames (lib.filterAttrs (_: a: a.activeAt == 0) schema.aspects);
 in
 ''
-  ### Kinds: one scope per instance when some `below` lists the kind
+  ### Kinds: one scope per instance when some `spawns` reaches the kind
 
-  ${table [ "kind" "what it is" "instances (`ren.<kind>.<name>`)" ] (k: [
+  ${table [ "kind" "what it is" "instances (`sven.<kind>.<name>`)" ] (k: [
     (code k)
     vocab.kinds.${k}
     (instances k)
-  ]) (described "kinds" (attrNames ren.kinds) vocab.kinds)}
+  ]) (described "kinds" (lib.attrNames sven.kinds) vocab.kinds)}
 
-  ### Classes: module systems an aspect key names
+  ### Sinks: where an aspect key sends its element
 
-  ${table [ "class" "builds" ] (c: [
-    (code c)
-    vocab.classes.${c}
-  ]) (described "classes" (attrNames ren.classes) vocab.classes)}
+  An element goes to the nearest ancestor-or-self scope that has the sink. A sink key that names another sink forwards the reduced value to it.
 
-  ### Channels: data an aspect key emits and a receiver folds
-
-  ${table [ "channel" "emitted by" "received by" ] (c: [ (code c) ] ++ vocab.channels.${c}) (
-    described "channels" (attrNames ren.channels) vocab.channels
+  ${table [ "sink" "on" "reduce" "forwards to" "what" ] sinkCells (
+    described "sinks" (lib.unique (map (d: d.name) decls)) vocab.sinks
   )}
 
-  ### vic profiles: tiers gate features (`at = ren.aspects.vic-<tier>`); roles are included or derived
+  ### vic profiles: tiers gate features (`at = sven.aspects.vic-<tier>`); roles come from facts or host files
 
   ${table [ "name" "active" ] (p: p) profiles}
 
-  ${toString (builtins.length (attrNames ren.aspects))} aspects live under `modules/`; `ren.aspects.<name>` each.
+  ${toString (lib.length (lib.attrNames sven.aspects))} aspects live under `modules/`; `sven.aspects.<name>` each.
+  Active nowhere (empty `at`, or a marker no scope matches): ${codes inactive}.
 ''

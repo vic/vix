@@ -1,12 +1,12 @@
 # cli-tools: everyday command line packages and nh.
-{ ren, ... }:
+{ sven, ... }:
 {
-  ren.aspects.cli-tools = {
+  sven.aspects.cli-tools = {
+    at = sven.aspects.vic-headless;
     dots = {
       ".config/btop" = "config/btop";
       ".config/bottom" = "config/bottom";
     };
-    at = ren.aspects.vic-headless;
     homeManager =
       { pkgs, ... }:
       {

@@ -1,9 +1,5 @@
 # edgevpn: the mudler/edgevpn package (vic-edge wraps it).
-{
-  ren,
-  inputs,
-  ...
-}:
+{ sven, inputs, ... }:
 let
   edgevpnFor =
     pkgs:
@@ -16,17 +12,12 @@ let
     };
 in
 {
-
-  ren.aspects.edgevpn = {
-    at = ren.kinds.system;
-    flake-inputs =
-      { ... }:
-      {
-        edgevpn = {
-          url = "github:mudler/edgevpn";
-          flake = false;
-        };
-      };
+  sven.aspects.edgevpn = {
+    at = sven.kinds.system;
+    flake-file.inputs.edgevpn = {
+      url = "github:mudler/edgevpn";
+      flake = false;
+    };
     packages = { system, ... }: { edgevpn = edgevpnFor system.legacyPackages; };
   };
 }

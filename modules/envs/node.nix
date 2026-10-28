@@ -1,15 +1,12 @@
 # envs: node tools.
-{ ren, ... }:
+{ sven, ... }:
 {
-  ren.aspects.env-node = {
-    at = ren.lib.and [
-      ren.kinds.env
-      (ren.lib.when (s: builtins.elem "node" s.env.langs))
-    ];
+  sven.aspects.env-node = {
+    at = sven.helpers.envHas "node";
     env-packages =
-      { system, ... }:
+      { env, ... }:
       let
-        p = system.legacyPackages;
+        p = env.system.legacyPackages;
       in
       [
         p.nodejs

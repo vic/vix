@@ -1,23 +1,12 @@
 # nix: nix tooling packages.
+{ sven, inputs, ... }:
 {
-  inputs,
-  ren,
-  ...
-}:
-let
-  vix = ren.helpers;
-in
-{
-  ren.aspects.nix-tools = {
-    at = ren.aspects.vic-headless;
-    flake-inputs =
-      { ... }:
-      {
-        trix = {
-          url = "github:aanderse/trix";
-          inputs.nixpkgs.follows = "nixpkgs";
-        };
-      };
+  sven.aspects.nix-tools = {
+    at = sven.aspects.vic-headless;
+    flake-file.inputs.trix = {
+      url = "github:aanderse/trix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     homeManager =
       { pkgs, ... }:
       {
@@ -31,7 +20,7 @@ in
           pkgs.tree-sitter
           pkgs.zig
           pkgs.nix-run
-          (vix.perSystem pkgs inputs.trix).packages.trix
+          (sven.helpers.perSystem pkgs inputs.trix).packages.trix
         ];
       };
   };

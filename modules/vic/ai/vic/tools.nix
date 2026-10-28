@@ -4,56 +4,43 @@
 #   at ~/.claude/omni.db, never in the store)
 # - deepwiki MCP + REPL (./dw, vendored from github:vic/dw incl. unpushed repl.js)
 # - notebooklm MCP (npx, unpinned as on frodo) + notebooklm-pack
-{
-  inputs,
-  ren,
-  ...
-}:
+{ sven, inputs, lib, ... }:
 let
-  vix = ren.helpers;
+  node = pkgs: lib.getExe pkgs.nodejs_24; # omni needs builtin node:sqlite
+  claudeDir = config: "${config.home.homeDirectory}/.claude";
 in
 {
-  ren.aspects.ai-vic-tools = {
-    at = ren.aspects.vic-headless;
-    flake-inputs =
-      { ... }:
-      {
-        notebooklm-pack = {
-          url = "github:meta-introspector/notebooklm-pack";
-          inputs = {
-            flake-utils.follows = "flake-utils";
-            nixpkgs.follows = "nixpkgs";
-            rust-overlay.follows = "rust-overlay";
-          };
-        };
-        flake-utils.url = "github:numtide/flake-utils";
-        rust-overlay = {
-          url = "github:oxalica/rust-overlay";
-          inputs.nixpkgs.follows = "nixpkgs";
+  sven.aspects.ai-vic-tools = {
+    at = sven.aspects.vic-headless;
+    flake-file.inputs = {
+      notebooklm-pack = {
+        url = "github:meta-introspector/notebooklm-pack";
+        inputs = {
+          flake-utils.follows = "flake-utils";
+          nixpkgs.follows = "nixpkgs";
+          rust-overlay.follows = "rust-overlay";
         };
       };
+      flake-utils.url = "github:numtide/flake-utils";
+      rust-overlay = {
+        url = "github:oxalica/rust-overlay";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+    };
     homeManager =
-      {
-        config,
-        lib,
-        pkgs,
-        ...
-      }:
+      { config, pkgs, ... }:
       let
-        node = lib.getExe pkgs.nodejs_24; # omni needs builtin node:sqlite
-        claudeDir = "${config.home.homeDirectory}/.claude";
-
         vicBin = pkgs.runCommandLocal "vic-bin" { } ''
           install -Dm755 -t $out/bin ${./bin}/*
         '';
-        deepwiki = pkgs.writeShellScriptBin "deepwiki" ''exec ${node} ${./dw}/repl.js "$@"'';
+        deepwiki = pkgs.writeShellScriptBin "deepwiki" ''exec ${node pkgs} ${./dw}/repl.js "$@"'';
       in
       {
         home.packages = [
           vicBin
           deepwiki
           pkgs.ccusage
-          (vix.perSystem pkgs inputs.notebooklm-pack).packages.default
+          (sven.helpers.perSystem pkgs inputs.notebooklm-pack).packages.default
         ];
 
         # Same path as before: omni's own docs point here.
@@ -62,23 +49,44 @@ in
           recursive = true;
         };
 
-        # Off the Stop hook: ingest peaks ~3.3 GB RSS, so run it on a capped timer.
-        systemd.user.services.omni-ingest = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+        programs.claude-code.mcpServers = {
+          omni = {
+            type = "stdio";
+            command = node pkgs;
+            args = [
+              "${claudeDir config}/omni/omni.js"
+              "mcp"
+            ];
+            env.OMNI_DB = "${claudeDir config}/omni.db";
+          };
+          deepwiki = {
+            type = "stdio";
+            command = node pkgs;
+            args = [ "${./dw}/mcp.js" ];
+          };
+        };
+      };
+
+    # Off the Stop hook: ingest peaks ~3.3 GB RSS, so run it on a capped timer.
+    homeLinux =
+      { config, pkgs, ... }:
+      {
+        systemd.user.services.omni-ingest = {
           Unit = {
             Description = "omni session graph ingest";
             ConditionACPower = true;
           };
           Service = {
             Type = "oneshot";
-            ExecStart = "${node} ${claudeDir}/omni/omni.js ingest";
-            Environment = [ "OMNI_DB=${claudeDir}/omni.db" ];
+            ExecStart = "${node pkgs} ${claudeDir config}/omni/omni.js ingest";
+            Environment = [ "OMNI_DB=${claudeDir config}/omni.db" ];
             Nice = 19;
             CPUQuota = "50%";
             MemoryMax = "1G";
             IOSchedulingClass = "idle";
           };
         };
-        systemd.user.timers.omni-ingest = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+        systemd.user.timers.omni-ingest = {
           Unit.Description = "omni session graph ingest";
           Timer = {
             OnBootSec = "10min";
@@ -86,23 +94,6 @@ in
             Persistent = true;
           };
           Install.WantedBy = [ "timers.target" ];
-        };
-
-        programs.claude-code.mcpServers = {
-          omni = {
-            type = "stdio";
-            command = node;
-            args = [
-              "${claudeDir}/omni/omni.js"
-              "mcp"
-            ];
-            env.OMNI_DB = "${claudeDir}/omni.db";
-          };
-          deepwiki = {
-            type = "stdio";
-            command = node;
-            args = [ "${./dw}/mcp.js" ];
-          };
         };
       };
   };

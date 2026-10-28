@@ -1,14 +1,14 @@
 # vim snacks: snacks.nvim, vic's header, picker keymaps, and the nvim profile's dashboard + toggles.
-{ ren, ... }:
+{ sven, ... }:
 let
   on = {
     enabled = true;
   };
 in
 {
-  ren.aspects.vim-snacks = {
-    at = ren.lib.when (s: builtins.elem "snacks" (s.vim.features or [ ]));
-    vim.vim.utility.snacks-nvim = {
+  sven.aspects.vim-snacks = {
+    at = sven.helpers.vimHas "snacks";
+    nvf.vim.utility.snacks-nvim = {
       enable = true;
       setupOpts = {
         bigfile = on;
@@ -29,19 +29,19 @@ in
     };
   };
 
-  ren.aspects.vim-snacks-header = {
-    at = ren.lib.when (s: builtins.elem "snacks-header" (s.vim.features or [ ]));
-    vim.vim.utility.snacks-nvim.setupOpts.dashboard.preset.header = builtins.readFile ./header.txt;
+  sven.aspects.vim-snacks-header = {
+    at = sven.helpers.vimHas "snacks-header";
+    nvf.vim.utility.snacks-nvim.setupOpts.dashboard.preset.header = builtins.readFile ./header.txt;
   };
 
-  ren.aspects.vim-snacks-keys = {
-    at = ren.lib.when (s: builtins.elem "snacks-keys" (s.vim.features or [ ]));
-    vim = import ./_keys.nix;
+  sven.aspects.vim-snacks-keys = {
+    at = sven.helpers.vimHas "snacks-keys";
+    nvf = import ./_keys.nix;
   };
 
-  ren.aspects.vim-snacks-extras = {
-    at = ren.lib.when (s: builtins.elem "snacks-extras" (s.vim.features or [ ]));
-    vim =
+  sven.aspects.vim-snacks-extras = {
+    at = sven.helpers.vimHas "snacks-extras";
+    nvf =
       { lib, ... }:
       {
         vim.utility.snacks-nvim.setupOpts.dashboard.sections = [

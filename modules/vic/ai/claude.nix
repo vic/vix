@@ -1,32 +1,88 @@
 # Claude Code: a read-only declarative settings.json. CC cannot mutate it at
-# runtime; change config here, not in the TUI.
+# runtime; change config here, not in the TUI. Features give permission rules on
+# the `claude-allow` sink; ai-claude writes them once.
+# settings.json keys that need no pkgs are layers on the `claude` sink: a higher
+# rank wins per key, equal ranks must agree (rank 0 here, rank 1 vic/settings.nix).
 {
+  sven,
   inputs,
-  ren,
+  lib,
   ...
 }:
 let
-  vix = ren.helpers;
+  # two layers disagree where a key they both set holds different leaves
+  clash =
+    a: b:
+    lib.any (
+      n: if lib.isAttrs a.${n} && lib.isAttrs b.${n} then clash a.${n} b.${n} else a.${n} != b.${n}
+    ) (lib.attrNames (lib.intersectAttrs a b));
+
+  # element: { rank; set; }; low ranks first, so a higher rank overwrites per key
+  layers = {
+    name = "layers";
+    __functor =
+      _: es:
+      let
+        sorted = lib.sort (a: b: a.value.rank < b.value.rank) es;
+      in
+      {
+        value = lib.foldl' (acc: e: lib.recursiveUpdate acc e.value.set) { } sorted;
+        errors = lib.concatLists (
+          lib.imap0 (
+            i: a:
+            lib.concatMap (
+              b:
+              lib.optional (a.value.rank == b.value.rank && clash a.value.set b.value.set) {
+                error = "claude: two layers of rank ${toString a.value.rank} disagree";
+                from = a.from.id;
+                code = "claude-layers";
+              }
+            ) (lib.drop (i + 1) sorted)
+          ) sorted
+        );
+      };
+  };
 in
 {
-  # features emit permission rules;
-  # ai-claude writes them once.
-  ren.channels.claude-allow = {
-    fold = ren.lib.fold.list;
-    at = ren.kinds.user;
-    to = e: e;
-  };
-  ren.aspects.ai-claude = {
-    at = ren.aspects.vic-headless;
-    git-ignores = { ... }: [ ".claude" ];
+  sven.kinds.user.sinks.claude = {
+    reduce = layers;
     homeManager =
+      { claude, ... }:
       {
-        claude-allow,
-        config,
-        lib,
-        pkgs,
-        ...
-      }:
+        programs.claude-code.settings = claude;
+      };
+  };
+
+  sven.aspects.ai-claude = {
+    at = sven.aspects.vic-headless;
+    git-ignores = [ ".claude" ];
+    claude =
+      { claude-allow, ... }:
+      {
+        rank = 0;
+        set = {
+          theme = "auto";
+          verbose = true;
+          effortLevel = "xhigh";
+          remoteControlAtStartup = false;
+          includeCoAuthoredBy = false;
+          gitAttribution = false;
+          attribution = {
+            commit = "";
+            pr = "";
+          };
+          autoMemoryDirectory = "~/.claude/memory";
+          teammateMode = "in-process";
+          permissions.allow = claude-allow;
+
+          env = {
+            CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
+            ENABLE_TOOL_SEARCH = "auto:5";
+          };
+        };
+      };
+    homeManager =
+      { pkgs, ... }:
       {
         home.packages = [
           pkgs.nodejs_22
@@ -40,87 +96,13 @@ in
 
         programs.claude-code = {
           enable = true;
-          package = (vix.perSystem pkgs inputs.llm-agents).packages.claude-code;
+          package = (sven.helpers.perSystem pkgs inputs.llm-agents).packages.claude-code;
           enableMcpIntegration = true;
 
           lspServers.nix = {
             command = lib.getExe pkgs.nil;
             extensionToLanguage.".nix" = "nix";
           };
-
-          settings = {
-            theme = lib.mkDefault "auto";
-            verbose = lib.mkDefault true;
-            effortLevel = lib.mkDefault "xhigh";
-            remoteControlAtStartup = false;
-            includeCoAuthoredBy = false;
-            gitAttribution = false;
-            attribution = {
-              commit = "";
-              pr = "";
-            };
-            autoMemoryDirectory = "~/.claude/memory";
-            teammateMode = "in-process";
-            permissions.allow = lib.unique (builtins.concatLists claude-allow);
-
-            env = {
-              CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
-              # CC prepends this file to every Bash tool shell; the hooks below keep
-              # it a snapshot of the cwd's direnv, so agents see the devshell.
-              CLAUDE_ENV_FILE = "${config.home.homeDirectory}/.claude/direnv-snapshot.sh";
-              ENABLE_TOOL_SEARCH = "auto:5";
-            };
-
-            # Session start and cwd change only, never per tool call: evaluating
-            # direnv on every shell fork-bombs the host.
-            hooks =
-              let
-                hookOf = script: [
-                  {
-                    hooks = [
-                      {
-                        type = "command";
-                        command = "bash ${config.home.homeDirectory}/.claude/${script} || true";
-                      }
-                    ];
-                  }
-                ];
-              in
-              {
-                SessionStart = hookOf "load-direnv.sh" ++ hookOf "budget.sh SessionStart";
-                CwdChanged = hookOf "load-direnv.sh";
-                # Before a dispatch, where a "no new dispatch" gate can still bite.
-                PreToolUse = [
-                  {
-                    matcher = "Agent";
-                    inherit (builtins.head (hookOf "budget.sh PreToolUse")) hooks;
-                  }
-                ];
-                SubagentStop = hookOf "subagent-stop.sh";
-              };
-          };
-        };
-
-        # A silent idle is the failure this names: agents stop without delivering, and
-        # the reflex (re-dispatch) duplicates finished work.
-        home.file.".claude/subagent-stop.sh" = {
-          executable = true;
-          text = builtins.readFile ./_scripts/subagent-stop.sh;
-        };
-
-        # One budget line per firing: context %, 5h/7d quota (from headroom's poller),
-        # and the gate tripped. The gates protect the handoff, not against compaction:
-        # start new work up to 75% ctx, close out from 90%, and a 7d quota >= 95%
-        # means finish in-flight and dispatch nothing new.
-        # Run on demand:  printf '{"transcript_path":"<session>.jsonl"}' | ~/.claude/budget.sh manual
-        home.file.".claude/budget.sh" = {
-          executable = true;
-          text = builtins.readFile ./_scripts/budget.sh;
-        };
-
-        home.file.".claude/load-direnv.sh" = {
-          executable = true;
-          text = builtins.readFile ./_scripts/load-direnv.sh;
         };
       };
   };

@@ -1,14 +1,8 @@
-# bert: CI runner mac, no users.
-{ ren, ... }:
+# bert: CI runner mac, no users (the runner content is the ci-runner aspect).
+{ sven, ... }:
 {
-  ren.mac.bert.system = ren.system.aarch64-darwin;
-
-  ren.aspects.bert-runner.darwin = {
-    users.users.runner.home = "/Users/runner";
-    system.primaryUser = "runner";
-  };
-  ren.aspects.bert = {
-    at = ren.mac.bert;
-    includes = [ ren.aspects.bert-runner ];
+  sven.mac.bert = {
+    system = sven.system.aarch64-darwin;
+    ghRunner = "macos-latest";
   };
 }

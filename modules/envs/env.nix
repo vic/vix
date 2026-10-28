@@ -1,99 +1,63 @@
-# envs: the env kind (a dev environment per system), its package pool channel, and the two consumers.
+# envs: the env kind (a dev environment per system, and per user on a machine that lists it), its package pool and its two consumers.
 {
-  ren,
+  sven,
   lib,
   inputs,
   ...
 }:
 let
-  vix = ren.helpers;
+  inherit (sven.lib) opt all within;
+  inherit (sven.helpers) listOf enum place;
+  envs = opt (listOf sven.kinds.env) [ ];
+  # an env scope carries the system it is built for: `{ env, ... }: env.system.legacyPackages`
+  onSystem = system: e: e // { inherit system; };
 in
 {
-  # machines and homes list the envs their users get (merges with the kind owners, v33)
-  ren.kinds.machine.envs = vix.opt (lib.types.listOf ren.kinds.env) [ ];
-  ren.kinds.home.envs = vix.opt (lib.types.listOf ren.kinds.env) [ ];
-  ren.kinds.system.below = [ ren.kinds.env ]; # one env scope per system
-  ren.kinds.env.langs = lib.types.listOf (
-    lib.types.enum [
+  # machines and homes list the envs their users get
+  sven.kinds.machine.fields.envs = envs;
+  sven.kinds.home.fields.envs = envs;
+  sven.kinds.system.spawns.env = s: lib.mapAttrs (_: onSystem s) sven.env; # one env scope per system: its devshell
+  # a user on a machine that lists an env gets its own scope of it: its packages land in the user's home
+  sven.kinds.user.spawns.env =
+    s:
+    let
+      p = place s;
+    in
+    if p == null then
+      { }
+    else
+      lib.listToAttrs (map (e: lib.nameValuePair e.name (onSystem p.system e)) p.envs);
+
+  sven.kinds.env = {
+    fields.langs = listOf (enum [
       "nix"
       "rust"
       "go"
       "node"
       "python"
       "c"
-    ]
-  );
-
-  # tools emit derivations; the pool is read by the env's devshell and by users whose machine lists the env.
-  ren.channels.env-packages = {
-    fold = ren.lib.fold.list;
-    at = ren.kinds.env;
-    to =
-      e:
-      ren.lib.anyOf [
-        e
-        (ren.lib.and [
-          ren.kinds.user
-          (ren.lib.when (
-            r:
-            let
-              m = vix.place r;
-            in
-            m != null && m.system.name == e.system.name && builtins.elem e.env.name (map (x: x.name) m.envs)
-          ))
-        ])
-      ];
+    ]);
+    # tools give lists of derivations; the env's devshell reads the pool, and a user's env gives it to the home.
+    # `env` keeps one element per env
+    sinks.env-packages.homeManager = { env, env-packages, ... }: { home.packages = builtins.concatLists env-packages; };
   };
 
-  ren.channels.devshells = {
-    fold = ren.lib.fold.attrs;
-    at = ren.lib.anyOf [
-      ren.kinds.env
-      ren.kinds.system
-    ]; # env shells, and the maintainer shell (features/devshell.nix)
-    to =
-      e:
-      ren.lib.and [
-        ren.kinds.system
-        (ren.lib.anyOf [
-          e
-          (ren.lib.has e)
-        ])
-      ];
-    into = { system, ... }: s: { devShells.${system.name} = s; };
-  };
-
-  ren.aspects.devshell = {
-    at = ren.kinds.env;
-    flake-inputs =
-      { ... }:
-      {
-        devshell = {
-          url = "github:numtide/devshell";
-          inputs.nixpkgs.follows = "nixpkgs";
-        };
-      };
+  sven.aspects.devshell = {
+    at = all [
+      sven.kinds.env
+      (within sven.kinds.system)
+    ];
+    flake-file.inputs.devshell = {
+      url = "github:numtide/devshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     devshells =
+      { env, env-packages, ... }:
       {
-        env,
-        system,
-        env-packages,
-        ...
-      }:
-      {
-        ${env.name} = (import inputs.devshell { nixpkgs = system.legacyPackages; }).mkShell {
+        ${env.name} = (import inputs.devshell { nixpkgs = env.system.legacyPackages; }).mkShell {
           name = env.name;
           packages = builtins.concatLists env-packages;
         };
-      };
-  };
-
-  ren.aspects.env-home = {
-    at = ren.kinds.user;
-    homeManager =
-      { env-packages, ... }:
-      {
-        home.packages = builtins.concatLists env-packages;
       };
   };
 }

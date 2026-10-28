@@ -1,17 +1,11 @@
 # varda: mac.
-{ ren, ... }:
+{ sven, ... }:
 {
-  ren.mac.varda = {
-    checkout = "/home/vic/hk/vix";
-    system = ren.system.aarch64-darwin;
-    users = [ ren.user.vic ];
+  sven.mac.varda = {
+    system = sven.system.aarch64-darwin;
+    users = [ sven.user.vic ];
     workstation = true;
+    ciBroken = "openspec"; # its ci job may fail
   };
-
-  ren.aspects.varda = {
-    at = ren.mac.varda;
-    includes = [
-      ren.aspects.trusted
-    ];
-  };
+  sven.aspects.trusted.at = sven.mac.varda;
 }

@@ -1,39 +1,37 @@
 # lightjj: browser UI for jj, served from wherever the repo lives (also headless vini).
-{
-  inputs,
-  ren,
-  ...
-}:
+{ sven, inputs, ... }:
 let
-  vix = ren.helpers;
+  lightjj = pkgs: (sven.helpers.perSystem pkgs inputs.lightjj).packages.default;
+  port = 8765;
 in
 {
-
-  ren.aspects.ai-lightjj = {
-    at = ren.aspects.vic-headless;
-    flake-inputs =
-      { ... }:
+  sven.aspects.ai-lightjj = {
+    at = sven.aspects.vic-headless;
+    ports = [
       {
-        lightjj = {
-          url = "github:chronologos/lightjj";
-          inputs.nixpkgs.follows = "nixpkgs";
-        };
-      };
+        inherit port;
+        what = "lightjj";
+      }
+    ];
+    flake-file.inputs.lightjj = {
+      url = "github:chronologos/lightjj";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     homeManager =
-      { pkgs, config, ... }:
-      let
-        lightjj = (vix.perSystem pkgs inputs.lightjj).packages.default;
-      in
+      { pkgs, ... }:
       {
-        home.packages = [ lightjj ];
+        home.packages = [ (lightjj pkgs) ];
         programs.claude-code.skills.lightjj = "${inputs.lightjj}/cmd/lightjj/SKILL.md";
+      };
 
-        # One instance; extra repos are tabs (UI, or POST /tabs {"path"}), persisted in lightjj state.json.
-        # mkIf, not optionalAttrs: attr names must not depend on pkgs (infinite recursion).
-        systemd.user.services.lightjj = pkgs.lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+    # One instance; extra repos are tabs (UI, or POST /tabs {"path"}), persisted in lightjj state.json.
+    homeLinux =
+      { pkgs, config, ... }:
+      {
+        systemd.user.services.lightjj = {
           Unit.Description = "lightjj multi-repo jj UI";
           Service = {
-            ExecStart = "${lightjj}/bin/lightjj -R ${config.home.homeDirectory}/hk/vix --addr 127.0.0.1:8765 --no-browser";
+            ExecStart = "${lightjj pkgs}/bin/lightjj -R ${config.home.homeDirectory}/hk/vix --addr 127.0.0.1:${toString port} --no-browser";
             Restart = "on-failure";
             Nice = 10;
             MemoryMax = "512M";

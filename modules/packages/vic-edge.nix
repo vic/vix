@@ -1,14 +1,10 @@
 # vic-edge: edgevpn wrapper reading the token from sops.
+{ sven, ... }:
 {
-  ren,
-  inputs,
-  ...
-}:
-{
-  ren.aspects.vic-edge = {
-    at = ren.kinds.system;
+  sven.aspects.vic-edge = {
+    at = sven.kinds.system;
     packages =
-      { system, ... }:
+      { system, out, ... }:
       let
         pkgs = system.legacyPackages;
       in
@@ -19,8 +15,8 @@
             sudo env \
               ADDRESS="''${ADDRESS:-"192.168.192.192/24"}" \
               EDGEVPNLOGLEVEL="''${EDGEVPNLOGLEVEL:-debug}" \
-              EDGEVPNTOKEN="''${EDGEVPNTOKEN:-$(< "''${HOME}"/.config/sops-nix/secrets/edge.token)}" \
-              ${inputs.self.packages.${system.name}.edgevpn}/bin/edgevpn "$@"
+              EDGEVPNTOKEN="''${EDGEVPNTOKEN:-$(< "''${HOME}"/.config/sops-nix/secrets/${sven.secret.edge-token.sopsKey})}" \
+              ${out.packages.${system.name}.edgevpn}/bin/edgevpn "$@"
           '';
         };
       };

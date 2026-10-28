@@ -1,16 +1,15 @@
 # git: identity from the user binding, ssh signing, difftastic, delta pager.
-{ ren, inputs, ... }:
+# The git-ignores sink (any feature emits the paths it wants git to ignore; git writes them once) is declared in topology/people.nix.
+{ sven, inputs, ... }:
 {
-  # any feature emits the paths it wants git to ignore; git writes them once.
-  ren.channels.git-ignores = {
-    fold = ren.lib.fold.list;
-    at = ren.kinds.user;
-    to = e: e;
-  };
-  ren.aspects.git = {
+  sven.aspects.git = {
+    at = sven.aspects.vic-headless;
+    flake-file.inputs.nix-wrapper-modules = {
+      url = "github:nix-community/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     dots.".config/gh/config.yml" = "config/gh/config.yml";
-    at = ren.aspects.vic-headless;
-    git-ignores = { ... }: [
+    git-ignores = [
       ".DS_Store"
       "*.swp"
       ".direnv"
@@ -69,9 +68,7 @@
             gitlab.user = "vic";
             core.editor = "vim";
             core.pager = delta;
-            core.excludesFile = pkgs.writeText "git-ignore" (
-              lib.concatStringsSep "\n" (lib.unique (builtins.concatLists git-ignores)) + "\n"
-            );
+            core.excludesFile = pkgs.writeText "git-ignore" (lib.concatStringsSep "\n" git-ignores + "\n");
             core.attributesFile = pkgs.writeText "git-attributes" "* merge=mergiraf\n";
             interactive.diffFilter = "${delta} --color-only";
             delta = {

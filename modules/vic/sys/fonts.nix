@@ -1,18 +1,18 @@
 # fonts: nerd fonts in the user's account packages (machines only, not standalone homes).
-{ ren, ... }:
+{ sven, ... }:
 {
-  ren.aspects.vic-fonts = {
-    at = ren.lib.and [
-      ren.aspects.vic-headless
-      (ren.lib.within ren.kinds.machine) # account lands on nixos and darwin users
+  sven.aspects.vic-fonts = {
+    at = sven.lib.all [
+      sven.aspects.vic-headless
+      (sven.lib.within sven.helpers.machines) # account lands on nixos and darwin users
     ];
     account =
       { pkgs, ... }:
       {
-        packages = with pkgs.nerd-fonts; [
-          victor-mono
-          jetbrains-mono
-          inconsolata
+        packages = [
+          pkgs.nerd-fonts.victor-mono
+          pkgs.nerd-fonts.jetbrains-mono
+          pkgs.nerd-fonts.inconsolata
         ];
       };
   };

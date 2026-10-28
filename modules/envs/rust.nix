@@ -1,27 +1,16 @@
 # envs: rust tools (rust-overlay stable toolchain).
+{ sven, inputs, ... }:
 {
-  ren,
-  inputs,
-  ...
-}:
-{
-  ren.aspects.env-rust = {
-    at = ren.lib.and [
-      ren.kinds.env
-      (ren.lib.when (s: builtins.elem "rust" s.env.langs))
-    ];
-    flake-inputs =
-      { ... }:
-      {
-        rust-overlay = {
-          url = "github:oxalica/rust-overlay";
-          inputs.nixpkgs.follows = "nixpkgs";
-        };
-      };
+  sven.aspects.env-rust = {
+    at = sven.helpers.envHas "rust";
+    flake-file.inputs.rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     env-packages =
-      { system, ... }:
+      { env, ... }:
       let
-        p = system.legacyPackages.extend (import inputs.rust-overlay);
+        p = env.system.legacyPackages.extend (import inputs.rust-overlay);
       in
       [
         (p.rust-bin.stable.latest.default.override {

@@ -1,24 +1,19 @@
 # annatar: WSL host.
-{ ren, ... }:
+{ sven, ... }:
 {
-  ren.host.annatar = {
-    checkout = "/home/vic/hk/vix";
-    system = ren.system.x86_64-linux;
-    users = [ ren.user.vic ];
+  sven.host.annatar = {
+    system = sven.system.x86_64-linux;
+    users = [ sven.user.vic ];
     form = "wsl";
   };
+  sven.aspects.trusted.at = sven.host.annatar;
 
-  ren.aspects.annatar-distro.nixos = {
-    fileSystems."/".device = "/dev/noroot";
-    fileSystems."/".fsType = "auto";
-    boot.loader.grub.enable = false;
-  };
-
-  ren.aspects.annatar = {
-    at = ren.host.annatar;
-    includes = [
-      ren.aspects.trusted
-      ren.aspects.annatar-distro
-    ];
+  sven.aspects.annatar-distro = {
+    at = sven.host.annatar;
+    nixos = {
+      fileSystems."/".device = "/dev/noroot";
+      fileSystems."/".fsType = "auto";
+      boot.loader.grub.enable = false;
+    };
   };
 }

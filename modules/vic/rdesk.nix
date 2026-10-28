@@ -1,17 +1,15 @@
-# rdesk: remote desktop tools. DISABLED (as in the old tree): no `at`, included nowhere.
-{ inputs, ren, ... }:
-let
-  vix = ren.helpers;
-in
+# rdesk: remote desktop tools. DISABLED (as in the old tree): `at` is empty, active nowhere.
+{ sven, ... }:
 {
-  ren.aspects.vic-rdesk = {
-    unfree = vix.allowUnfree [ "anydesk" ];
+  sven.aspects.vic-rdesk = {
+    at = [ ];
+    unfree = sven.helpers.allowUnfree [ "anydesk" ];
 
     homeManager =
-      { pkgs, ... }:
+      { out, pkgs, ... }:
       {
         home.packages = [
-          (vix.perSystem pkgs inputs.self).packages.vic-edge
+          out.packages.${pkgs.stdenv.hostPlatform.system}.vic-edge
           pkgs.gsocket
         ];
       };

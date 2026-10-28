@@ -1,23 +1,20 @@
 # secrets: sops-nix home secrets (the emitted ones), templates and the ssh identity links.
-{ ren, inputs, ... }:
+# The aspect and its `at` are in roles/tiers.nix; this file adds its content.
+{ sven, inputs, ... }:
 {
-  ren.aspects.vic-secrets = {
-    flake-inputs =
-      { ... }:
-      {
-        sops-nix = {
-          url = "github:Mic92/sops-nix";
-          inputs.nixpkgs.follows = "nixpkgs";
-        };
-      };
-    secrets = { ... }: [
-      ren.secret.hello
-      ren.secret.groq-api-key
-      ren.secret.openrouter-api-key
-      ren.secret.gemini-eco-key
-      ren.secret.copilot-api-key
-      ren.secret.anthropic-api-key
-      ren.secret.edge-token
+  sven.aspects.vic-secrets = {
+    flake-file.inputs.sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    secrets = [
+      sven.secret.hello
+      sven.secret.groq-api-key
+      sven.secret.openrouter-api-key
+      sven.secret.gemini-eco-key
+      sven.secret.copilot-api-key
+      sven.secret.anthropic-api-key
+      sven.secret.edge-token
     ];
     homeManager =
       {
@@ -57,12 +54,7 @@
           age.generateKey = false;
           defaultSopsFile = ../secrets.yaml;
           validateSopsFiles = true;
-          secrets = lib.listToAttrs (
-            map (s: {
-              name = s.sopsKey;
-              value = lib.filterAttrs (_: v: v != null) (removeAttrs (ren.lib.data s) [ "sopsKey" ]);
-            }) (lib.concatLists secrets)
-          );
+          secrets = sven.helpers.sopsSecrets secrets;
           templates = {
             "hello.toml".content = ''
               hello = "Wooo ${config.sops.placeholder.hello} Hoo";

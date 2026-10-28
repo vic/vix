@@ -1,27 +1,27 @@
-# emacs: kind describing an emacs distribution (data only, no scopes) and its instances.
+# emacs: data kind describing an emacs distribution (no scopes) and its instances.
 {
-  ren,
+  sven,
   lib,
   inputs,
   ...
 }:
 let
-  vix = ren.helpers;
+  inherit (sven.lib) opt maybe;
   t = lib.types;
   doomRev = inputs.doom-emacs.rev;
 in
 {
-  ren.kinds.emacs = {
-    initDir = vix.maybe t.str; # --init-directory of the daemon
-    daemon = vix.opt t.bool false; # this distribution runs as the emacs service
-    configDots = vix.maybe t.str; # dots source linked at ~/.config/<name>
-    wrapper = vix.maybe t.str; # flake input whose package of the same name wraps our emacs
-    bootstrap = vix.maybe t.str; # activation script text; installed as <name>-install
-    bins = vix.opt (t.attrsOf t.str) { }; # shell scripts put on PATH
-    fish = vix.opt (t.attrsOf t.str) { }; # fish function bodies
+  sven.kinds.emacs.fields = {
+    initDir = maybe t.str; # --init-directory of the daemon
+    daemon = opt t.bool false; # this distribution runs as the emacs service
+    configDots = maybe t.str; # dots source linked at ~/.config/<name>
+    wrapper = maybe t.str; # flake input whose package of the same name wraps our emacs
+    bootstrap = maybe t.str; # activation script text; installed as <name>-install
+    bins = opt (sven.helpers.attrsOf t.str) { }; # shell scripts put on PATH
+    fish = opt (sven.helpers.attrsOf t.str) { }; # fish function bodies
   };
 
-  ren.emacs.spc = {
+  sven.emacs.spc = {
     wrapper = "SPC";
     fish = {
       mg = "spc u SPC gg -r \"$PWD\" RET";
@@ -30,7 +30,7 @@ in
     };
   };
 
-  ren.emacs.doom = {
+  sven.emacs.doom = {
     initDir = "~/.config/emacs";
     daemon = true;
     configDots = "config/doom";
@@ -65,15 +65,11 @@ in
     '';
   };
 
-  ren.aspects.emacs-inputs = {
-    at = ren.fleet.vix;
-    flake-inputs =
-      { ... }:
-      {
-        doom-emacs = {
-          url = "github:doomemacs/doomemacs";
-          flake = false;
-        };
-      };
+  sven.aspects.emacs-inputs = {
+    at = sven.fleet.vix;
+    flake-file.inputs.doom-emacs = {
+      url = "github:doomemacs/doomemacs";
+      flake = false;
+    };
   };
 }

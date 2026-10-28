@@ -1,8 +1,8 @@
 # system: home-manager cli, NH_FILE, and desktop helper tools (linux only).
-{ ren, ... }:
+{ sven, ... }:
 {
-  ren.aspects.vic-system = {
-    at = ren.aspects.vic-headless;
+  sven.aspects.vic-system = {
+    at = sven.aspects.vic-headless;
     homeLinux =
       { pkgs, ... }:
       {
@@ -14,13 +14,13 @@
       };
   };
 
-  ren.aspects.vic-desktop-tools = {
+  sven.aspects.vic-desktop-tools = {
+    at = sven.aspects.vic-gui;
     dots = {
       ".config/fontconfig" = "config/fontconfig";
       ".config/autostart/lxqt-config-touchpad-autostart.desktop" =
         "config/autostart/lxqt-config-touchpad-autostart.desktop";
     };
-    at = ren.aspects.vic-gui;
     homeLinux =
       { pkgs, ... }:
       {

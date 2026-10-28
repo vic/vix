@@ -1,19 +1,19 @@
 # vim plugins: plain plugins on the runtime path (lazy.nvim, tv.nvim, tv.vim).
-{ ren, ... }:
+{ sven, ... }:
 {
-  ren.aspects.vim-lazy = {
-    at = ren.lib.when (s: builtins.elem "lazy" (s.vim.features or [ ]));
-    vim = { pkgs, ... }: { vim.startPlugins = [ pkgs.vimPlugins.lazy-nvim ]; };
+  sven.aspects.vim-lazy = {
+    at = sven.helpers.vimHas "lazy";
+    nvf = { pkgs, ... }: { vim.startPlugins = [ pkgs.vimPlugins.lazy-nvim ]; };
   };
 
-  ren.aspects.vim-tv = {
-    at = ren.lib.when (s: builtins.elem "tv" (s.vim.features or [ ]));
-    vim = { pkgs, ... }: { vim.startPlugins = [ pkgs.vimPlugins.tv-nvim ]; };
+  sven.aspects.vim-tv = {
+    at = sven.helpers.vimHas "tv";
+    nvf = { pkgs, ... }: { vim.startPlugins = [ pkgs.vimPlugins.tv-nvim ]; };
   };
 
-  ren.aspects.vim-tv-vim = {
-    at = ren.lib.when (s: builtins.elem "tv-vim" (s.vim.features or [ ]));
-    vim =
+  sven.aspects.vim-tv-vim = {
+    at = sven.helpers.vimHas "tv-vim";
+    nvf =
       { pkgs, ... }:
       {
         vim.startPlugins = [

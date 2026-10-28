@@ -1,13 +1,14 @@
-# vim: editor profiles below each system, each an nvf config built by the `vim` class into packages.<profile>.
+# vim: editor profiles below each system, each an nvf config the `nvf` sink builds into packages.<profile>.
 {
-  ren,
+  sven,
   lib,
   inputs,
   ...
 }:
 let
-  vix = ren.helpers;
-  # every feature an aspect can gate on: `at = ren.lib.when (s: builtins.elem "snacks" (s.vim.features or [ ]));`
+  inherit (sven.lib) opt maybe;
+  inherit (sven.helpers) listOf enum;
+  # every feature an aspect can gate on: `at = sven.helpers.vimHas "snacks";`
   features = builtins.filter (w: builtins.isString w && w != "") (
     builtins.split "[[:space:]]+" ''
       avante blink bufferline codecompanion conform copilot copilot-chat dropbar flash globals
@@ -18,40 +19,25 @@ let
   );
 in
 {
-  ren.kinds.system.below = [ ren.kinds.vim ]; # one profile scope per system (merges with topology/fleet.nix, v33)
-  ren.kinds.vim = {
-    features = vix.opt (lib.types.listOf (lib.types.enum features)) [ ];
-    theme = vix.maybe lib.types.str; # a colorscheme name
-    gui = vix.opt lib.types.bool false; # also emit packages.<name>-gui (neovide)
-    aliases = vix.opt (lib.types.listOf lib.types.str) [ ]; # extra binary names
-  };
-
-  ren.aspects.vim-inputs = {
-    at = ren.fleet.vix;
-    flake-inputs =
-      { ... }:
-      {
-        nvf = {
-          url = "github:notashelf/nvf";
-          inputs.mnw.follows = "mnw";
-          inputs.nixpkgs.follows = "nixpkgs";
-        };
-        mnw.url = "github:Gerg-L/mnw";
-      };
-  };
-
-  ren.classes.vim = {
-    at = ren.kinds.vim;
-    into =
+  sven.kinds.system.spawns.vim = _: sven.vim; # one profile scope per system
+  sven.kinds.vim = {
+    fields = {
+      features = opt (listOf (enum features)) [ ];
+      theme = maybe lib.types.str; # a colorscheme name
+      gui = opt lib.types.bool false; # also give packages.<name>-gui (neovide)
+      aliases = opt (listOf lib.types.str) [ ]; # extra binary names
+    };
+    # not `vim`: a sink named like its kind loses the `vim` arg to the kind. An element is an nvf module.
+    sinks.nvf.packages =
       {
         vim,
         system,
         unfree,
+        nvf,
         ...
       }:
-      modules:
       let
-        # a profile's aspects may allow unfree plugin deps (`unfree = allowUnfree [ .. ];`)
+        # a profile's aspects may allow unfree plugin deps (`unfree = sven.helpers.allowUnfree [ .. ];`)
         pkgs =
           if unfree == { } then
             system.legacyPackages
@@ -60,7 +46,7 @@ in
               system = system.name;
               config.allowUnfreePredicate = p: unfree ? ${inputs.nixpkgs.lib.getName p};
             };
-        nvim = (inputs.nvf.lib.neovimConfiguration { inherit pkgs modules; }).neovim;
+        nvim = (inputs.nvf.lib.neovimConfiguration { inherit pkgs; modules = nvf; }).neovim;
         names = [ vim.name ] ++ vim.aliases;
         bin = n: pkgs.writeShellScriptBin n ''exec ${nvim}/bin/nvim "$@"'';
         gui =
@@ -74,10 +60,26 @@ in
           };
       in
       {
-        packages = {
-          ${vim.name} = join "" bin;
-        }
-        // lib.optionalAttrs vim.gui { "${vim.name}-gui" = join "-gui" gui; };
+        ${vim.name} = join "" bin;
+      }
+      // lib.optionalAttrs vim.gui { "${vim.name}-gui" = join "-gui" gui; };
+  };
+
+  # a sink with no elements has no receiver, so no forward: a bare profile (vscode-vim) still builds
+  sven.aspects.vim-profile = {
+    at = sven.kinds.vim;
+    nvf = { };
+  };
+
+  sven.aspects.vim-inputs = {
+    at = sven.fleet.vix;
+    flake-file.inputs = {
+      nvf = {
+        url = "github:notashelf/nvf";
+        inputs.mnw.follows = "mnw";
+        inputs.nixpkgs.follows = "nixpkgs";
       };
+      mnw.url = "github:Gerg-L/mnw";
+    };
   };
 }

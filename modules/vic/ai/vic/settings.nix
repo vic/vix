@@ -1,25 +1,21 @@
-# vic's frodo settings.json preferences. Where sini's claude.nix sets the
-# same key it uses lib.mkDefault, so these win.
+# vic's frodo settings.json preferences: rank 1 on the `claude` sink, so they
+# win over claude.nix (rank 0) per key.
+{ sven, ... }:
 {
-  ren,
-  ...
-}:
-{
-  ren.aspects.ai-vic-settings = {
-    at = ren.aspects.vic-headless;
+  sven.aspects.ai-vic-settings = {
+    at = sven.aspects.vic-headless;
     # home-manager serves its mcpServers as the `hm` plugin, hence the prefix.
-    claude-allow =
-      { ... }:
-      map (t: "mcp__plugin_hm_codegraph__codegraph_${t}") [
-        "search"
-        "context"
-        "callers"
-        "callees"
-        "impact"
-        "node"
-        "status"
-      ];
-    homeManager.programs.claude-code.settings = {
+    claude-allow = map (t: "mcp__plugin_hm_codegraph__codegraph_${t}") [
+      "search"
+      "context"
+      "callers"
+      "callees"
+      "impact"
+      "node"
+      "status"
+    ];
+    claude.rank = 1;
+    claude.set = {
       # main loop (the session vic talks to) = opus/high; subagents default to sonnet
       # so an untyped dispatch never inherits opus. agent-tier-gate.sh enforces explicit tiers.
       model = "opus";

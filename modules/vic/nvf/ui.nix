@@ -1,33 +1,30 @@
 # vim ui: bars, columns, file tree, terminal, cmdline/messages UI.
-{ ren, ... }:
-let
-  vix = ren.helpers;
-in
+{ sven, ... }:
 {
-  ren.aspects.vim-bufferline = {
-    at = ren.lib.when (s: builtins.elem "bufferline" (s.vim.features or [ ]));
-    vim.vim.tabline.nvimBufferline.enable = true;
+  sven.aspects.vim-bufferline = {
+    at = sven.helpers.vimHas "bufferline";
+    nvf.vim.tabline.nvimBufferline.enable = true;
   };
 
-  ren.aspects.vim-dropbar = {
-    at = ren.lib.when (s: builtins.elem "dropbar" (s.vim.features or [ ]));
-    vim.vim.ui.dropbar-nvim.enable = true;
+  sven.aspects.vim-dropbar = {
+    at = sven.helpers.vimHas "dropbar";
+    nvf.vim.ui.dropbar-nvim.enable = true;
   };
 
-  ren.aspects.vim-lualine = {
-    at = ren.lib.when (s: builtins.elem "lualine" (s.vim.features or [ ]));
-    vim.vim.statusline.lualine.enable = true;
+  sven.aspects.vim-lualine = {
+    at = sven.helpers.vimHas "lualine";
+    nvf.vim.statusline.lualine.enable = true;
   };
 
-  ren.aspects.vim-smartcolumn = {
-    at = ren.lib.when (s: builtins.elem "smartcolumn" (s.vim.features or [ ]));
-    vim.vim.ui.smartcolumn.enable = true;
+  sven.aspects.vim-smartcolumn = {
+    at = sven.helpers.vimHas "smartcolumn";
+    nvf.vim.ui.smartcolumn.enable = true;
   };
 
-  ren.aspects.vim-scope = {
-    at = ren.lib.when (s: builtins.elem "scope" (s.vim.features or [ ]));
-    unfree = vix.allowUnfree [ "scope.nvim" ]; # no license upstream
-    vim =
+  sven.aspects.vim-scope = {
+    at = sven.helpers.vimHas "scope";
+    unfree = sven.helpers.allowUnfree [ "scope.nvim" ]; # no license upstream
+    nvf =
       { pkgs, ... }:
       {
         vim.extraPlugins.scope = {
@@ -37,18 +34,18 @@ in
       };
   };
 
-  ren.aspects.vim-neo-tree = {
-    at = ren.lib.when (s: builtins.elem "neo-tree" (s.vim.features or [ ]));
-    vim.vim.filetree.neo-tree.enable = true;
+  sven.aspects.vim-neo-tree = {
+    at = sven.helpers.vimHas "neo-tree";
+    nvf.vim.filetree.neo-tree.enable = true;
   };
 
-  ren.aspects.vim-toggleterm = {
-    at = ren.lib.when (s: builtins.elem "toggleterm" (s.vim.features or [ ]));
-    vim.vim.terminal.toggleterm.enable = true;
+  sven.aspects.vim-toggleterm = {
+    at = sven.helpers.vimHas "toggleterm";
+    nvf.vim.terminal.toggleterm.enable = true;
   };
 
-  ren.aspects.vim-noice = {
-    at = ren.lib.when (s: builtins.elem "noice" (s.vim.features or [ ]));
-    vim.vim.ui.noice.enable = true;
+  sven.aspects.vim-noice = {
+    at = sven.helpers.vimHas "noice";
+    nvf.vim.ui.noice.enable = true;
   };
 }

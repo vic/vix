@@ -1,58 +1,69 @@
-# Machines: the abstract kind of nixos hosts and macs, with typed facts community aspects key on.
-{
-  ren,
-  lib,
-  ...
-}:
+# Machines: the data kind host, guest and mac copy their fields from, with typed facts hardware aspects key on.
+{ sven, lib, ... }:
 let
-  vix = ren.helpers;
-  inherit (ren.lib) anyOf;
-  t = lib.types;
+  inherit (sven.lib) opt maybe derive;
+  inherit (sven.helpers) listOf enum;
+  # the nixos-facter report of a host with hosts/<name>/_nixos/facter.json (null otherwise)
+  facter =
+    m:
+    let
+      f = ../hosts + "/${m.name}/_nixos/facter.json";
+    in
+    if m.kind == "host" && builtins.pathExists f then
+      (builtins.fromJSON (builtins.readFile f)).hardware
+    else
+      null;
+  vendors = {
+    AuthenticAMD = "amd";
+    GenuineIntel = "intel";
+  };
+  facterCpu =
+    m:
+    let
+      v = if facter m == null then null else (lib.head ((facter m).cpu or [ { } ])).vendor_name or null;
+    in
+    if v == null then null else vendors.${v} or null;
+  facterGpu =
+    m:
+    if
+      facter m != null
+      && lib.any (g: lib.hasInfix "NVIDIA" (g.vendor.name or "")) ((facter m).graphics_card or [ ])
+    then
+      "nvidia"
+    else
+      null;
 in
 {
-  ren.kinds.machine = {
-    # abstract: no `below` lists it
-    system = ren.kinds.system;
-    channel = vix.opt ren.kinds.channel ren.channel.unstable;
-    users = vix.opt (t.listOf ren.kinds.user) [ ];
-    cpu = vix.maybe (
-      t.enum [
-        "amd"
-        "intel"
-      ]
-    );
-    gpu = vix.maybe (t.enum [ "nvidia" ]);
-    wifi = vix.maybe (t.enum [ "broadcom" ]);
-    keyboard = vix.maybe (t.enum [ "macos" ]); # remapped to mac-style keys
-    firmware = vix.maybe (t.enum [ "all" ]); # non-free firmware too
-    form = vix.maybe (
-      t.enum [
-        "laptop"
-        "wsl"
-        "iso"
-      ]
-    );
-    workstation = vix.opt t.bool false; # shared baseline: boot/audio/locale/nix config (macs: nix + darwin defaults)
-    desktops = vix.opt (t.listOf (
-      t.enum [
-        "niri"
-        "kde"
-        "xfce"
-        "gnome"
-      ]
-    )) [ ];
-    layouts = vix.opt (t.listOf (t.enum [ "enthium" ])) [ ];
+  sven.kinds.machine.fields = {
+    system = sven.kinds.system;
+    channel = opt sven.kinds.channel sven.channel.unstable;
+    users = opt (listOf sven.kinds.user) [ ];
+    # a facter report decides when the host file does not say (an explicit value, null too, wins)
+    cpu = derive (maybe (enum [
+      "amd"
+      "intel"
+    ])) facterCpu;
+    gpu = derive (maybe (enum [ "nvidia" ])) facterGpu;
+    wifi = maybe (enum [ "broadcom" ]);
+    keyboard = maybe (enum [ "macos" ]); # remapped to mac-style keys
+    firmware = maybe (enum [ "all" ]); # non-free firmware too
+    form = maybe (enum [
+      "laptop"
+      "wsl"
+      "iso"
+    ]);
+    workstation = opt lib.types.bool false; # shared baseline: boot/audio/locale/nix config (macs: nix + darwin defaults)
+    desktops = opt (listOf (enum [
+      "niri"
+      "kde"
+      "xfce"
+      "gnome"
+    ])) [ ];
+    layouts = opt (listOf (enum [ "enthium" ])) [ ];
   };
 
-  ren.aspects.hostname = {
-    at = anyOf [
-      ren.kinds.host
-      ren.kinds.mac
-    ];
-    os =
-      { name, ... }: # the machine scope's instance name
-      {
-        networking.hostName = name;
-      };
+  sven.aspects.hostname = {
+    at = sven.helpers.machines;
+    os = { scope, ... }: { networking.hostName = scope.name; };
   };
 }

@@ -1,9 +1,5 @@
 # direnv: nix-direnv with vix lib helpers; hosts keep devshell closures alive across GC.
-{
-  ren,
-  inputs,
-  ...
-}:
+{ sven, inputs, ... }:
 let
   use_nix_installables = ''
     use_nix_installables() {
@@ -17,8 +13,8 @@ let
   '';
 in
 {
-  ren.aspects.direnv = {
-    at = ren.aspects.vic-headless;
+  sven.aspects.direnv = {
+    at = sven.aspects.vic-headless;
     homeManager = {
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true;
@@ -28,10 +24,10 @@ in
   };
 
   # keep devshell closures alive across GC (sini direnv.nix:4-7), on every machine vic uses
-  ren.aspects.direnv-host = {
-    at = ren.lib.and [
-      ren.kinds.machine
-      (ren.lib.has ren.user.vic)
+  sven.aspects.direnv-host = {
+    at = sven.lib.all [
+      sven.helpers.machines
+      (sven.lib.has sven.user.vic)
     ];
     os = {
       nix.settings.keep-outputs = true;

@@ -1,14 +1,9 @@
 # fish: functions, aliases, abbreviations, television and fzf integration.
-{ ren, ... }:
+{ sven, ... }:
 {
-  # any feature emits fish functions; fish writes them once.
-  ren.channels.fish-functions = {
-    fold = ren.lib.fold.attrs;
-    at = ren.kinds.user;
-    to = e: e;
-  };
-  ren.aspects.fish = {
-    at = ren.aspects.vic-headless;
+  # the fish-functions sink (any feature emits fish functions; fish writes them once) is declared in topology/people.nix.
+  sven.aspects.fish = {
+    at = sven.aspects.vic-headless;
     fish-functions = { ... }: import ./_fish/functions.nix { };
     homeManager =
       { pkgs, fish-functions, ... }:

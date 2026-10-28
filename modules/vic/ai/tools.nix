@@ -1,33 +1,22 @@
 # Agent CLIs from numtide/llm-agents.nix, with their Claude Code wiring.
+{ sven, inputs, lib, ... }:
 {
-  inputs,
-  ren,
-  ...
-}:
-let
-  vix = ren.helpers;
-in
-{
-  ren.aspects.ai-tools = {
-    at = ren.aspects.vic-headless;
-    claude-allow = { ... }: [
+  sven.aspects.ai-tools = {
+    at = sven.aspects.vic-headless;
+    claude-allow = [
       "Bash(br *)"
       "Bash(codegraph *)"
       "Bash(openspec *)"
       "Bash(openspecui *)"
     ];
-    git-ignores = { ... }: [
+    git-ignores = [
       ".codegraph"
       "/AGENTS.md"
     ];
     homeManager =
-      {
-        lib,
-        pkgs,
-        ...
-      }:
+      { pkgs, ... }:
       let
-        llm = (vix.perSystem pkgs inputs.llm-agents).packages;
+        llm = (sven.helpers.perSystem pkgs inputs.llm-agents).packages;
 
         calldiff = pkgs.writeShellApplication {
           name = "calldiff";
@@ -83,26 +72,23 @@ in
             ];
           };
 
-          settings = {
-            # br resolves its workspace from cwd unless pinned; point this at your tracker:
-            # env.BEADS_DIR = "/path/to/tracker-repo/.beads";
+          # br resolves its workspace from cwd unless pinned; point this at your tracker:
+          # settings.env.BEADS_DIR = "/path/to/tracker-repo/.beads";
 
-            # Rewrites eligible Bash commands to `rtk <cmd>`, compressing their
-            # output before it reaches the model (what `rtk init -g --hook-only` installs).
-            hooks.PreToolUse = [
-              {
-                matcher = "Bash";
-                hooks = [
-                  {
-                    type = "command";
-                    command = "rtk hook claude";
-                  }
-                ];
-              }
-            ];
-          };
+          # Rewrites eligible Bash commands to `rtk <cmd>`, compressing their
+          # output before it reaches the model (what `rtk init -g --hook-only` installs).
+          settings.hooks.PreToolUse = [
+            {
+              matcher = "Bash";
+              hooks = [
+                {
+                  type = "command";
+                  command = "rtk hook claude";
+                }
+              ];
+            }
+          ];
         };
-
       };
   };
 }

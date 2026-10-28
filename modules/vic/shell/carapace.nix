@@ -1,8 +1,8 @@
 # carapace: multi-shell completions, fish integration only.
-{ ren, ... }:
+{ sven, ... }:
 {
-  ren.aspects.carapace = {
-    at = ren.aspects.vic-headless;
+  sven.aspects.carapace = {
+    at = sven.aspects.vic-headless;
     homeManager.programs.carapace = {
       enable = true;
       enableFishIntegration = true;

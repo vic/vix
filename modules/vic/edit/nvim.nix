@@ -1,32 +1,27 @@
 # nvim: vic's vim profiles (editors/vim.nix, vic/nvf) on PATH; neovide `<name>-gui` wrappers on the desktop.
-{
-  ren,
-  inputs,
-  ...
-}:
+{ sven, ... }:
 let
-  vix = ren.helpers;
-  profiles = builtins.attrNames ren.vim;
-  own = pkgs: (vix.perSystem pkgs inputs.self).packages; # this flake's packages (vim profiles)
+  profiles = builtins.attrNames sven.vim;
+  own = out: pkgs: out.packages.${pkgs.stdenv.hostPlatform.system}; # this flake's packages (vim profiles)
 in
 {
-  ren.aspects.vic-nvim = {
-    at = ren.aspects.vic-headless;
+  sven.aspects.vic-nvim = {
+    at = sven.aspects.vic-headless;
     homeManager =
-      { pkgs, ... }:
+      { out, pkgs, ... }:
       {
-        home.packages = map (p: (own pkgs).${p}) profiles ++ [ pkgs.neovim-remote ];
+        home.packages = map (p: (own out pkgs).${p}) profiles ++ [ pkgs.neovim-remote ];
         home.sessionVariables.EDITOR = "vim";
       };
   };
 
-  ren.aspects.vic-nvim-gui = {
-    at = ren.aspects.vic-gui;
+  sven.aspects.vic-nvim-gui = {
+    at = sven.aspects.vic-gui;
     homeManager =
-      { pkgs, ... }:
+      { out, pkgs, ... }:
       {
         home.packages =
-          map (p: (own pkgs)."${p}-gui") (builtins.filter (p: own pkgs ? "${p}-gui") profiles)
+          map (p: (own out pkgs)."${p}-gui") (builtins.filter (p: own out pkgs ? "${p}-gui") profiles)
           ++ [ pkgs.neovide ];
         home.sessionVariables.VISUAL = "vim-gui";
       };

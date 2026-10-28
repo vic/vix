@@ -1,33 +1,24 @@
 # browsers: browsers and the fish helpers that open nixos search pages.
+{ sven, inputs, ... }:
 {
-  inputs,
-  ren,
-  ...
-}:
-let
-  vix = ren.helpers;
-in
-{
-  ren.aspects.vic-browsers = {
-    at = ren.lib.and [
-      ren.aspects.vic-full
-      ren.aspects.vic-gui
+  sven.aspects.vic-browsers = {
+    at = sven.lib.all [
+      sven.aspects.vic-full
+      sven.aspects.vic-gui
     ];
-    flake-inputs =
-      { ... }:
-      {
-        helium = {
-          url = "github:vikingnope/helium-browser-nix-flake";
-          inputs = {
-            nixpkgs.follows = "nixpkgs";
-            nixpkgs-darwin.follows = "nixpkgs-darwin";
-            utils.follows = "flake-utils";
-          };
+    flake-file.inputs = {
+      helium = {
+        url = "github:vikingnope/helium-browser-nix-flake";
+        inputs = {
+          nixpkgs.follows = "nixpkgs";
+          nixpkgs-darwin.follows = "nixpkgs-darwin";
+          utils.follows = "flake-utils";
         };
-        nixpkgs-darwin.follows = "nixpkgs";
-        flake-utils.url = "github:numtide/flake-utils";
       };
-    fish-functions = { ... }: {
+      nixpkgs-darwin.follows = "nixpkgs";
+      flake-utils.url = "github:numtide/flake-utils";
+    };
+    fish-functions = {
       nixos-opt.description = "Open a browser on search.nixos.org for options";
       nixos-opt.body = ''open "https://search.nixos.org/options?sort=relevance&query=$argv"'';
       nixos-pkg.description = "Open a browser on search.nixos.org for packages";
@@ -43,7 +34,7 @@ in
           pkgs.chromium
           pkgs.librewolf
           pkgs.qutebrowser
-          (vix.perSystem pkgs inputs.helium).packages.default
+          (sven.helpers.perSystem pkgs inputs.helium).packages.default
         ];
       };
   };

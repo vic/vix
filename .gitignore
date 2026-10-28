@@ -4,4 +4,3 @@ old
 .devenv
 .direnv
 .DS_Store
-flake.nix

@@ -1,18 +1,17 @@
-# readme: README.md generated from live Ren data, written by `nix run .#write-files`.
+# readme: README.md generated from live sven data, written by `nix run .#write-files`.
 {
   lib,
-  ren,
+  sven,
+  inputs,
   ...
 }:
 let
   # README parts: plain `_` files (import-tree skips them)
   vocab = import ./_vocabulary.nix;
   vocabDirs = import ./_vocabulary-dirs.nix;
-  ir = import ./_fleet-ir.nix {
-    inherit lib ren;
-    chans = import ./_fleet-channels.nix;
-  };
-  map' = import ./_readme-map.nix { inherit ir; };
+  ir = import ./_fleet-ir.nix { inherit sven lib; };
+  map' = import ./_readme-map.nix { inherit lib ir; };
+  inherit (map') mermaid;
   # collapsed section; the blank line after </summary> lets GitHub render the markdown inside
   fold = summary: body: ''
     <details><summary>${summary}</summary>
@@ -20,25 +19,47 @@ let
     ${body}
     </details>
   '';
+  host = lib.head (lib.attrNames (lib.filterAttrs (_: h: h.users != [ ]) sven.host));
+  home = lib.head (lib.attrValues sven.home);
   intro = ''
     # vix
 
-    Vic's machines, homes and dev envs in [Ren](https://github.com/vic/ren) (built on [Gen](https://github.com/sini/gen)), a re-take on [Den](https://github.com/denful/den).
+    Vic's machines, homes and dev envs in [sven](https://github.com/vic/sven): a real-world sven fleet.
+    ${toString (lib.length (lib.attrNames sven.host))} NixOS hosts, ${toString (lib.length (lib.attrNames sven.mac))} macs, ${toString (lib.length (lib.attrNames sven.home))} standalone homes, ${toString (lib.length (lib.attrNames sven.env))} dev envs and ${toString (lib.length (lib.attrNames sven.vim))} neovim profiles, from one tree of plain Nix files.
+    Every table and diagram below is computed from the fleet when this file is written.
+
     Generated file: edit `modules/docs/`, then run `nix run .#write-files`.
   '';
   commands = ''
     ## Commands
 
     ```sh
-    nix build .#nixosConfigurations.frodo.config.system.build.toplevel
-    nix build '.#homeConfigurations."vic@bitstream".activationPackage'
-    nix run .#write-files                 # regenerate this README
-    nix flake check                       # includes checks.x86_64-linux."files/README.md"
-    nix eval --json .#ci.matrix           # every CI build job: host, mac, home, devshell
+    nix build .#nixosConfigurations.${host}.config.system.build.toplevel
+    nix build '.#homeConfigurations."${home.user.name}@${home.name}".activationPackage'
+    nix run .#write-files                                # regenerate this README and ci.yml
+    nix build .#write-flake && ./result/bin/write-flake  # regenerate flake.nix from the flake-file sink
+    nix flake check                                      # includes checks.x86_64-linux."files/README.md"
+    nix eval --json .#ci.matrix                          # every CI build job: host, mac, home, devshell
+    nix eval --impure --json --file query.nix check.violations   # invariants: [ ] when all hold
+    nix eval --impure --json --file query.nix agent.counts       # scopes, edges, aspects, kinds
+    nix eval --impure --json --expr '(import ./query.nix).ask "aspectsOn" { name = "${host}"; }'
+    nix eval --impure --json --expr '(import ./query.nix).ask "freePort" { name = "${host}"; }'
+    nix eval --offline --impure --file tests.nix failed      # oracles: errors, check.ok, file order, laziness ([ ] when all hold)
+    nix eval --offline --impure --file tests.nix e2e.failed  # each machine's and home's settings fingerprint vs vix
+    nix run .#sven-mcp                                   # MCP server for agents, on stdio
     ```
   '';
+  # open decisions: a static list in docs/_open.nix, since vic's notes are not part of the repo
+  open = ''
+    ## Decisions open
+
+    Each one changes a setting, a structure or an output, so it waits for vic.
+
+    ${lib.concatMapStringsSep "\n" (d: "- ${d}") (import ./_open.nix)}
+  '';
   history = ''
-    - [Ren (current)](https://github.com/vic/vix/tree/ren)
+    - [sven (current)](https://github.com/vic/vix/tree/sven): Ren rewritten in sven; Ren classes and channels are sinks
+    - [Ren](https://github.com/vic/vix/tree/ren)
     - [Den without flakes](https://github.com/vic/vix/tree/historic/den)
     - [Den with flakes + flake-parts](https://github.com/vic/vix/tree/historic/den-flake-parts)
     - [Dendritic flake-parts only](https://github.com/vic/vix/tree/historic/dendritic-flake-parts)
@@ -49,22 +70,42 @@ let
   '';
 in
 {
-  ren.aspects.readme = {
-    at = ren.system.x86_64-linux;
-    files.files.file."README.md".text = builtins.concatStringsSep "\n" [
-      intro
-      (import ./_readme-tour.nix)
-      commands
-      map'.scopes
-      (fold "Channels and class forwarding (diagrams)" map'.more)
-      (fold "Vocabulary: kinds, classes, channels, profiles" (
-        import ./_readme-vocab.nix { inherit ren vocab; }
-      ))
-      (fold "Directory structure" (import ./_readme-dirs.nix { inherit vocabDirs; }))
-      (fold "Recipes: add a host, feature, env, ssh host, secret" (import ./_readme-recipes.nix))
-      (fold "History" history)
-    ];
-    # the same graph as JSON, for tools: `nix build .#fleet-ir`
+  sven.aspects.readme = {
+    at = sven.system.x86_64-linux;
+    files =
+      { ci-jobs, ... }:
+      {
+        files.file."README.md".text = lib.concatStringsSep "\n" [
+          intro
+          (import ./_readme-tour.nix)
+          (import ./_readme-uses.nix)
+          commands
+          map'.structure
+          (import ./_readme-data.nix {
+            inherit sven lib mermaid;
+            ciJobs = ci-jobs;
+          })
+          (import ./_readme-wiring.nix {
+            inherit sven lib mermaid;
+            ciJobs = ci-jobs;
+          })
+          (import ./_readme-data-user.nix { inherit sven lib mermaid; })
+          (import ./_readme-capabilities.nix {
+            inherit sven lib mermaid;
+            engine = (import inputs.sven).lib;
+          })
+          (fold "Vocabulary: kinds, sinks, tiers, roles" (
+            import ./_readme-vocab.nix { inherit sven lib vocab; }
+          ))
+          (fold "Directory structure" (import ./_readme-dirs.nix { inherit vocabDirs; }))
+          (fold "Recipes: add a host, feature, env, ssh host, secret, port" (
+            import ./_readme-recipes.nix { inherit sven; }
+          ))
+          open
+          (fold "History" history)
+        ];
+      };
+    # the structure views as JSON, for tools: `nix build .#fleet-ir`
     packages =
       { system, ... }:
       {

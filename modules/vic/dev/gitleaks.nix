@@ -1,16 +1,16 @@
 # gitleaks: secret scanner in vic's tools, plus a flake check scanning the repo source.
-{ ren, inputs, ... }:
+{ sven, inputs, ... }:
 {
-  ren.aspects.gitleaks = {
-    at = ren.aspects.vic-full;
+  sven.aspects.gitleaks = {
+    at = sven.aspects.vic-full;
     homeManager =
       { pkgs, ... }:
       {
         home.packages = [ pkgs.gitleaks ];
       };
   };
-  ren.aspects.gitleaks-check = {
-    at = ren.system.x86_64-linux;
+  sven.aspects.gitleaks-check = {
+    at = sven.system.x86_64-linux;
     checks =
       { system, ... }:
       {

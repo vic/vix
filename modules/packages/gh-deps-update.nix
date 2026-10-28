@@ -1,8 +1,8 @@
 # gh-deps-update: nix flake update, commit and open a PR.
-{ ren, ... }:
+{ sven, ... }:
 {
-  ren.aspects.gh-deps-update = {
-    at = ren.kinds.system;
+  sven.aspects.gh-deps-update = {
+    at = sven.kinds.system;
     packages =
       { system, ... }:
       let

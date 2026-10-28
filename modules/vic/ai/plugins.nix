@@ -1,23 +1,9 @@
 # Claude Code plugin marketplaces, store-pinned: CC resolves plugins from these
 # nix-store paths instead of cloning from GitHub at runtime.
-{
-  inputs,
-  ren,
-  ...
-}:
+{ sven, inputs, lib, ... }:
 let
-  # marketplace name -> flake input (and its input url)
+  # marketplace name -> url of its flake input (vix listed this table twice, identical)
   marketplaces = {
-    superpowers-extended-cc-marketplace = "github:pcvelz/superpowers";
-    ponytail = "github:dietrichgebert/ponytail";
-    mattpocock = "github:mattpocock/skills";
-    diagram-design = "github:cathrynlavery/diagram-design";
-    ui-ux-pro-max-skill = "github:nextlevelbuilder/ui-ux-pro-max-skill";
-    claude-plugins-official = "github:anthropics/claude-plugins-official";
-    caveman = "github:JuliusBrussee/caveman";
-  };
-  # flake inputs of the marketplaces, pinned
-  pinned = {
     superpowers-extended-cc-marketplace = "github:pcvelz/superpowers";
     ponytail = "github:dietrichgebert/ponytail";
     mattpocock = "github:mattpocock/skills";
@@ -28,20 +14,14 @@ let
   };
 in
 {
-
-  ren.aspects.ai-plugins = {
-    at = ren.aspects.vic-headless;
-    flake-inputs =
-      { ... }:
-      builtins.mapAttrs (_: url: {
-        inherit url;
-        flake = false;
-      }) pinned;
+  sven.aspects.ai-plugins = {
+    at = sven.aspects.vic-headless;
+    flake-file.inputs = builtins.mapAttrs (_: url: {
+      inherit url;
+      flake = false;
+    }) marketplaces;
     homeManager =
-      { lib, pkgs, ... }:
-      let
-        srcOf = name: inputs.${name};
-      in
+      { pkgs, ... }:
       {
         programs.claude-code.settings.enabledPlugins = {
           "superpowers-extended-cc@superpowers-extended-cc-marketplace" = true;
@@ -74,9 +54,9 @@ in
                   else
                     {
                       source = "directory";
-                      path = "${srcOf name}";
+                      path = "${inputs.${name}}";
                     };
-                installLocation = "${srcOf name}";
+                installLocation = "${inputs.${name}}";
                 lastUpdated = "1970-01-01T00:00:00Z";
                 autoUpdate = false;
               }) marketplaces

@@ -1,5 +1,5 @@
 # vim mini: mini.nvim modules — the full set, LazyVim's essentials, nvim's mini.files explorer.
-{ lib, ren, ... }:
+{ sven, lib, ... }:
 let
   # module = setupOpts; commented-out ones are off on purpose.
   all = {
@@ -49,19 +49,19 @@ let
   );
 in
 {
-  ren.aspects.vim-mini = {
-    at = ren.lib.when (s: builtins.elem "mini" (s.vim.features or [ ]));
-    vim.vim.mini = enable all;
+  sven.aspects.vim-mini = {
+    at = sven.helpers.vimHas "mini";
+    nvf.vim.mini = enable all;
   };
 
-  ren.aspects.vim-mini-essentials = {
-    at = ren.lib.when (s: builtins.elem "mini-essentials" (s.vim.features or [ ]));
-    vim.vim.mini = enable { inherit (all) ai pairs icons; };
+  sven.aspects.vim-mini-essentials = {
+    at = sven.helpers.vimHas "mini-essentials";
+    nvf.vim.mini = enable { inherit (all) ai pairs icons; };
   };
 
-  ren.aspects.vim-mini-files = {
-    at = ren.lib.when (s: builtins.elem "mini-files" (s.vim.features or [ ]));
-    vim.vim = {
+  sven.aspects.vim-mini-files = {
+    at = sven.helpers.vimHas "mini-files";
+    nvf.vim = {
       mini.files = {
         enable = true;
         setupOpts.mappings = {

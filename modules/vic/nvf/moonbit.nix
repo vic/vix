@@ -1,9 +1,9 @@
 # vim moonbit: moonbit.nvim (not in nixpkgs; pinned upstream rev).
-{ ren, ... }:
+{ sven, ... }:
 {
-  ren.aspects.vim-moonbit = {
-    at = ren.lib.when (s: builtins.elem "moonbit" (s.vim.features or [ ]));
-    vim =
+  sven.aspects.vim-moonbit = {
+    at = sven.helpers.vimHas "moonbit";
+    nvf =
       { pkgs, ... }:
       {
         vim.startPlugins = [ pkgs.vimPlugins.plenary-nvim ];

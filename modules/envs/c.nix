@@ -1,15 +1,12 @@
 # envs: c tools.
-{ ren, ... }:
+{ sven, ... }:
 {
-  ren.aspects.env-c = {
-    at = ren.lib.and [
-      ren.kinds.env
-      (ren.lib.when (s: builtins.elem "c" s.env.langs))
-    ];
+  sven.aspects.env-c = {
+    at = sven.helpers.envHas "c";
     env-packages =
-      { system, ... }:
+      { env, ... }:
       let
-        p = system.legacyPackages;
+        p = env.system.legacyPackages;
       in
       [
         p.gcc

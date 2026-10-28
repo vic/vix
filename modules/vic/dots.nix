@@ -1,11 +1,7 @@
-# dots: pool of dotfiles emitted by features, linked into $HOME; live out-of-store links into the machine's vix checkout, else store copies.
-{
-  lib,
-  ren,
-  ...
-}:
+# dots: pool of dotfiles features give, linked into $HOME; live out-of-store links into the machine's vix checkout, else store copies.
+{ lib, sven, ... }:
 let
-  vix = ren.helpers;
+  inherit (sven.helpers) place;
   linker =
     checkout: config: path:
     if checkout != null then
@@ -18,30 +14,33 @@ let
 in
 {
   # absolute path of the vix checkout on this machine or home: its dotfiles link live into it (null: store copies).
-  ren.kinds.machine.checkout = vix.maybe lib.types.str;
-  ren.kinds.home.checkout = vix.maybe lib.types.str;
+  # a host or mac with users has it at the usual place (a guest has no checkout); an explicit value, null too, wins.
+  sven.kinds.machine.fields.checkout = sven.lib.derive (sven.lib.maybe lib.types.str) (
+    m: if m.kind == "guest" || m.users == [ ] then null else "/home/vic/hk/vix"
+  );
+  sven.kinds.home.fields.checkout = sven.lib.maybe lib.types.str;
 
-  # a feature emits { "<home.file key>" = "<path relative to modules/vic/dots>"; } for each dotfile it owns.
-  ren.channels.dots = {
-    fold = ren.lib.fold.attrs;
-    at = ren.kinds.user;
-    to = e: e;
+  # a feature gives { "<home.file key>" = "<path relative to modules/vic/dots>"; } for each dotfile it owns.
+  sven.kinds.user.sinks.dots = {
+    reduce = sven.lib.reduce.merge;
+    # every dots source exists in ./dots: a typo is an error record, not a dangling link
+    of = sven.helpers.attrsOf (sven.lib.is (p: builtins.pathExists (./dots + "/${p}")));
   };
 
-  ren.aspects.vic-dots = {
-    at = ren.aspects.vic-headless;
+  sven.aspects.vic-dots = {
+    at = sven.aspects.vic-headless;
     # rtk is owned by the ai modules, which this pass may not touch.
     dots.".config/rtk" = "config/rtk";
     homeManager =
       {
-        parent,
+        scope,
         dots,
         config,
         lib,
         ...
       }:
       let
-        checkout = (vix.place parent).checkout;
+        checkout = (place scope).checkout or null;
       in
       {
         home.activation.check-checkout = lib.mkIf (checkout != null) (

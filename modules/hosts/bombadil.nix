@@ -1,10 +1,9 @@
 # bombadil: the USB installer image (installer base comes from the installer role).
-{ ren, ... }:
+{ sven, ... }:
 {
-  ren.host.bombadil = {
-    checkout = "/home/vic/hk/vix";
-    system = ren.system.x86_64-linux;
-    users = [ ren.user.vic ];
+  sven.host.bombadil = {
+    system = sven.system.x86_64-linux;
+    users = [ sven.user.vic ];
     form = "iso";
     workstation = true;
     cpu = "intel";
@@ -13,11 +12,5 @@
     firmware = "all";
     desktops = [ "xfce" ];
   };
-
-  ren.aspects.bombadil = {
-    at = ren.host.bombadil;
-    includes = [
-      ren.aspects.trusted
-    ];
-  };
+  sven.aspects.trusted.at = sven.host.bombadil;
 }

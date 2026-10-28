@@ -1,15 +1,12 @@
 # envs: python tools.
-{ ren, ... }:
+{ sven, ... }:
 {
-  ren.aspects.env-python = {
-    at = ren.lib.and [
-      ren.kinds.env
-      (ren.lib.when (s: builtins.elem "python" s.env.langs))
-    ];
+  sven.aspects.env-python = {
+    at = sven.helpers.envHas "python";
     env-packages =
-      { system, ... }:
+      { env, ... }:
       let
-        p = system.legacyPackages;
+        p = env.system.legacyPackages;
       in
       [
         p.python3
