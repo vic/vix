@@ -971,11 +971,11 @@
     "sven": {
       "flake": false,
       "locked": {
-        "lastModified": 1793175446,
-        "narHash": "sha256-/zGQ/g1NGwEuKRpDkkU2semZqwgiZWlITQHEP29fMQw=",
+        "lastModified": 1793227354,
+        "narHash": "sha256-gFuqczS09PcDCUJsbvx2KImjbox24ZKJRC83U5SlgEU=",
         "owner": "vic",
         "repo": "sven",
-        "rev": "3654f970cb9c4f720216b6f89b4d994ea44ee9df",
+        "rev": "927208b3648434e943fc28f60d2d2b1097dd37f8",
         "type": "github"
       },
       "original": {
