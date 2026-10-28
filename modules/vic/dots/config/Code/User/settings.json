@@ -349,5 +349,6 @@
   "claudeCode.preferredLocation": "panel",
   "claudeCode.useTerminal": true,
   "git.enabled": false,
-  "workbench.preferredDarkColorTheme": "Palenight Operator"
+  "workbench.preferredDarkColorTheme": "Palenight Operator",
+  "jjx.showTooltips": false
 }
