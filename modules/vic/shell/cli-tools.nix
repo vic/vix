@@ -1,4 +1,4 @@
-# cli-tools: everyday command line packages and nh.
+# cli-tools: everyday command line packages, nh and zoxide.
 { yen, ... }:
 {
   yen.aspects.cli-tools = {
@@ -11,6 +11,12 @@
       { pkgs, ... }:
       {
         programs.nh.enable = true;
+        # z learns dirs; --cmd cd makes plain cd use it
+        programs.zoxide = {
+          enable = true;
+          enableFishIntegration = true;
+          options = [ "--cmd cd" ];
+        };
         home.packages = [
           pkgs.bat
           pkgs.bottom
@@ -31,9 +37,9 @@
           pkgs.tealdeer
           pkgs.television
           pkgs.tokei
+          pkgs.xh
           pkgs.yazi
           pkgs.zellij
-          pkgs.zoxide
         ];
       };
   };

@@ -21,6 +21,7 @@
             "rustfmt"
           ];
         })
+        p.bacon
         p.wasm-pack
         p.wasm-bindgen-cli
       ];
