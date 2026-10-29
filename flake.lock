@@ -529,11 +529,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792789730,
-        "narHash": "sha256-1xQrjkOCfmP8GmGj1BavHSHfpNfvaPwjHyVib5evImo=",
+        "lastModified": 1793319543,
+        "narHash": "sha256-t4eq1oX1o5zAvU48BI8zsy/Lv2hskX97LKv7U8Bc4A4=",
         "owner": "vic",
         "repo": "ircc",
-        "rev": "fe3c6577386a5374eaf2376331f2de09ed14552b",
+        "rev": "ac7ed2ab1e75b55de2d3ce61e7d2f8039f692872",
         "type": "github"
       },
       "original": {
