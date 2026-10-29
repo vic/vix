@@ -1,21 +1,33 @@
-# vic workflow hooks, verbatim scripts in ./hooks (installed at ~/.claude/hooks):
-# boot (Skill vic + HANDOFF pointer),
+# vic workflow hooks. boot, bash-guard (PreToolUse refusals + jj law) and
 # cmd-ledger (every Bash cmd + full output -> ~/.cache/claude-ledger, read by
-# vic-recall), stop-gate (ctx >=70% + stale HANDOFF blocks stop once),
-# bash-guard (PreToolUse refusals), subagent-brief (worker contract),
-# pre-compact (holds auto compaction <90%), learn-loop. omni graph refresh is a systemd user timer (tools.nix).
-{ yen, ... }:
+# vic-recall) are the Rust `vic hook boot|guard|ledger` (packages.vic-tools).
+# The rest are verbatim scripts in ./hooks (installed at ~/.claude/hooks):
+# stop-gate (ctx >=70% + stale HANDOFF blocks stop once),
+# subagent-brief (worker contract), pre-compact (holds auto compaction <90%),
+# learn-loop. omni graph refresh is a systemd user timer (tools.nix).
+{ yen, lib, ... }:
 {
   yen.aspects.ai-vic-hooks = {
     at = yen.aspects.vic-headless;
     # live link into the checkout: `vic-pm learn` appends land in the repo.
     dots.".claude/skills/vic-lessons" = "claude/skills/vic-lessons";
     homeManager =
-      { config, ... }:
+      {
+        config,
+        out,
+        pkgs,
+        ...
+      }:
       let
         hookOf = script: {
           type = "command";
           command = "bash \"${config.home.homeDirectory}/.claude/hooks/${script}\"";
+        };
+        vicTools = out.packages.${pkgs.stdenv.hostPlatform.system}.vic-tools;
+        vic = lib.getExe' vicTools "vic";
+        vicHook = args: {
+          type = "command";
+          command = "${vic} ${args}";
         };
         on = scripts: [ { hooks = map hookOf scripts; } ];
         learnLoop = mode: {
@@ -24,6 +36,7 @@
         };
       in
       {
+        home.packages = [ vicTools ];
         programs.claude-code = {
           hooksDir = ./hooks;
           rules = {
@@ -34,14 +47,14 @@
             SessionStart = [
               {
                 hooks = [
-                  (hookOf "boot.sh")
+                  (vicHook "hook boot")
                   (learnLoop "start")
                 ];
               }
               # re-inject the HANDOFF pointer after compaction
               {
                 matcher = "compact";
-                hooks = [ (hookOf "boot.sh") ];
+                hooks = [ (vicHook "hook boot") ];
               }
             ];
             SubagentStart = on [ "subagent-brief.sh" ];
@@ -50,7 +63,7 @@
             PreToolUse = [
               {
                 matcher = "Bash";
-                hooks = [ (hookOf "bash-guard.sh") ];
+                hooks = [ (vicHook "hook guard") ];
               }
               {
                 matcher = "Agent";
@@ -60,7 +73,7 @@
             PostToolUse = [
               {
                 matcher = "Bash";
-                hooks = [ (hookOf "cmd-ledger.sh") ];
+                hooks = [ (vicHook "hook ledger") ];
               }
             ];
             Stop = [

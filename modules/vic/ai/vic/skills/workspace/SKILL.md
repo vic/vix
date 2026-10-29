@@ -8,6 +8,12 @@ description: jj-workspace isolation law (ALL projects) — ANY agent dispatch th
 ## WHEN (no judgment call)
 ANY dispatch that edits repo files (rung/typesmith/hunter-prototypes/isolate-repros-in-repo/superhaiku swarm) ⟹ ISOLATE. Read-only agents (probe/reader/sweep/judge/lawyer) need none.
 
+## LOCAL REPO LAW (every repo under ~/hk, vic 2026-10-29)
+- jj ALWAYS. git-only repo ⟹ `jj git init --colocate`, no ask. Mutating git (commit/add/stash/checkout/switch/reset/rebase/merge/restore) = FORBIDDEN; jj equivalents only.
+- `vic/` (notes, status, HANDOFF, state) = own jj workspace `vic` of the SAME repo, started from `root()` (commit 000000000000), bookmark `vic`. Never on main. Create: `jj workspace add --name vic -r 'root()' vic`. Commit inside it: `jj -R vic commit -m ...` + `jj -R vic bookmark set vic -r @-`.
+- beads db lives in `vic/.beads` (tracked w/ vic/). Repo root `.beads` = symlink to `vic/.beads`, listed in `.git/info/exclude` (local, never committed).
+- Session start check: missing `.jj`, `vic/.jj`, or `vic/.beads` while `.beads` exists ⟹ fix first.
+
 ## SUPERVISOR DUTIES (caller owns ALL of this — never the agent)
 1. Create: `mkdir -p $XDG_RUNTIME_DIR/jj-ws/<repo>` then `jj workspace add $XDG_RUNTIME_DIR/jj-ws/<repo>/<name>` → that path is the workspace.
 2. Spec carries: `WORKSPACE: <abs path> — ALL file ops INSIDE it. jj/git commands FORBIDDEN (any of: commit/new/squash/describe/abandon/rebase/workspace/git *). Violating = work DISCARDED.`

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Parity oracle: bash scripts vs target/release/vic on identical inputs. Exit 0 iff 0 mismatches.
-# usage: parity.sh [guard|ledger|statusline|all]   env: VIC_BIN, CORPUS, JOBS
+# usage: parity.sh [guard|boot|ledger|statusline|all]   env: VIC_BIN, CORPUS, JOBS
 set -uo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
 ROOT=$(cd "$HERE/../../.." && pwd)               # workspace root (holds modules/ and tools/)
@@ -10,32 +10,57 @@ JOBS=${JOBS:-12}
 G=$ROOT/modules/vic/ai/vic/hooks/bash-guard.sh
 L=$ROOT/modules/vic/ai/vic/hooks/cmd-ledger.sh
 S=$ROOT/modules/vic/ai/_scripts/statusline.sh
+B=$ROOT/modules/vic/ai/vic/hooks/boot.sh
 W=$(mktemp -d)
 trap 'rm -rf "$W"' EXIT
 FAIL=0
 want=${1:-all}
 
 # ---------------------------------------------------------------- guard
+JJMSG='Refused: this repo uses jj. Use the jj equivalent (jj commit / jj new / jj squash / jj restore / jj rebase).'
 guard_chunk() { # in out
-  local in=$1 out=$2 t n=0 mm=0 rb rr l
+  local in=$1 out=$2 t n=0 mm=0 nr=0 rb rr l
   t=$(mktemp -d)
   while IFS= read -r l; do
     n=$((n + 1))
     printf '%s\n' "$l" | timeout 5 bash "$G" 2>"$t/b"; rb=$?
     printf '%s\n' "$l" | timeout 5 "$BIN" hook guard 2>"$t/r"; rr=$?
     if [ "$rb" -ne "$rr" ] || ! cmp -s "$t/b" "$t/r"; then
-      mm=$((mm + 1)); printf 'MISMATCH rb=%s rr=%s :: %s\n' "$rb" "$rr" "$l" >>"$out.mm"
+      # only allowed difference: bash allowed, rust refuses with the jj message (new git law)
+      if [ "$rb" -eq 0 ] && [ "$rr" -eq 2 ] && [ "$(cat "$t/r")" = "$JJMSG" ]; then
+        nr=$((nr + 1)); printf '%s\n' "$l" >>"$out.newref"
+      else
+        mm=$((mm + 1)); printf 'MISMATCH rb=%s rr=%s :: %s\n' "$rb" "$rr" "$l" >>"$out.mm"
+      fi
     fi
     if [ "$rb" -eq 2 ]; then head -1 "$t/b" | cut -c1-22 >>"$out.reasons"; fi
   done <"$in"
-  echo "$n $mm" >"$out.cnt"
+  echo "$n $mm $nr" >"$out.cnt"
   rm -rf "$t"
+}
+
+# explicit r2 cases: cmd cwd expected-rc
+guard_cases() {
+  local c cwd want got
+  while IFS='|' read -r c cwd want; do
+    got=$(jq -nc --arg c "$c" --arg d "$cwd" '{tool_input:{command:$c},cwd:$d}' | timeout 5 "$BIN" hook guard 2>/dev/null; echo $?)
+    if [ "$got" != "$want" ]; then echo "  CASE FAIL: '$c' cwd=$cwd want=$want got=$got"; FAIL=1; fi
+  done <<EOC
+git commit -m x|$ROOT|2
+git commit -m x|$ROOT/tools|2
+git commit -m x|/|0
+git log --oneline|$ROOT|0
+git status|$ROOT|0
+jj commit -m x|$ROOT|0
+EOC
+  echo "guard: explicit jj cases done"
 }
 
 part_guard() {
   echo "== guard"
   local d=$W/g; mkdir -p "$d"
-  head -n "${LIMIT:-1000000}" "$CORPUS" | jq -Rc '{tool_input:{command:.}}' >"$d/in"
+  guard_cases
+  head -n "${LIMIT:-1000000}" "$CORPUS" | jq -Rc --arg cwd "$ROOT" '{tool_input:{command:.},cwd:$cwd}' >"$d/in"
   # synthetic armed controls (appended; counted in total)
   for s in 'pkill -f foo' 'while pgrep -f x; do sleep 1; done' 'nix build .#x' 'sudo FOO=1 pkill --full bar'; do
     jq -nc --arg c "$s" '{tool_input:{command:$c}}' >>"$d/in"
@@ -45,14 +70,42 @@ part_guard() {
   local pids=() f
   for f in "$d"/chunk.??; do guard_chunk "$f" "$f" & pids+=($!); done
   for p in "${pids[@]}"; do wait "$p"; done
-  local total=0 mm=0 a b
-  for f in "$d"/chunk.??.cnt; do read -r a b <"$f"; total=$((total + a)); mm=$((mm + b)); done
-  echo "guard: total=$total mismatches=$mm"
+  local total=0 mm=0 nr=0 a b c
+  for f in "$d"/chunk.??.cnt; do read -r a b c <"$f"; total=$((total + a)); mm=$((mm + b)); nr=$((nr + c)); done
+  echo "guard: total=$total mismatches=$mm new-git-refusals=$nr"
+  cat "$d"/chunk.*.newref 2>/dev/null | head -3 | cut -c1-200 | sed 's/^/  new-refusal sample: /'
   cat "$d"/chunk.*.reasons 2>/dev/null | sort | uniq -c | sed 's/^/  refusals: /'
   for r in 'Refused: pkill -f' 'Refused: a pgrep -f' 'Refused: uncapped'; do
     [ "$(cat "$d"/chunk.*.reasons 2>/dev/null | grep -c "^$r")" -gt 0 ] || { echo "  NO REFUSAL SEEN for: $r"; FAIL=1; }
   done
   if [ "$mm" -ne 0 ]; then cat "$d"/chunk.*.mm | head -20; FAIL=1; fi
+}
+
+# ---------------------------------------------------------------- boot
+part_boot() {
+  echo "== boot"
+  local d=$W/b n=0 bad=0 p want got
+  mkdir -p "$d"
+  # fixtures: ok (no law line), bad (law line appended), stale handoff, no handoff, PWD fallback
+  p=$d/ok; mkdir -p "$p/.jj" "$p/vic/.jj"; echo x >"$p/vic/HANDOFF.md"
+  p=$d/stale; mkdir -p "$p/.jj" "$p/vic/.jj"; echo x >"$p/vic/HANDOFF.md"; touch -d '3 days ago' "$p/vic/HANDOFF.md"
+  p=$d/nohandoff; mkdir -p "$p/.jj" "$p/vic/.jj"
+  p=$d/bad; mkdir -p "$p/.beads"
+  p=$d/okbeads; mkdir -p "$p/.jj" "$p/vic/.jj" "$p/vic/.beads"; ln -s vic/.beads "$p/.beads"
+  for p in ok stale nohandoff bad okbeads; do
+    n=$((n + 1))
+    want=$(CLAUDE_PROJECT_DIR=$d/$p bash "$B"); got=$(CLAUDE_PROJECT_DIR=$d/$p "$BIN" hook boot)
+    # rust = bash stdout, plus exactly one REPO LAW line when the repo violates the law
+    if [ "$p" = bad ]; then
+      want="$want"$'\n'"REPO LAW: no .jj; vic/ missing or not a jj workspace (no vic/.jj); .beads is not a symlink to vic/.beads; fix per /workspace LOCAL REPO LAW"
+    fi
+    [ "$want" = "$got" ] || { bad=$((bad + 1)); echo "  BOOT MISMATCH [$p]"; diff <(echo "$want") <(echo "$got") | head -5; }
+  done
+  n=$((n + 1))
+  want=$(cd "$d/ok" && env -u CLAUDE_PROJECT_DIR bash "$B"); got=$(cd "$d/ok" && env -u CLAUDE_PROJECT_DIR "$BIN" hook boot)
+  [ "$want" = "$got" ] || { bad=$((bad + 1)); echo "  BOOT MISMATCH [pwd fallback]"; }
+  echo "boot: cases=$n mismatches=$bad"
+  [ "$bad" -eq 0 ] || FAIL=1
 }
 
 # ---------------------------------------------------------------- ledger
@@ -251,6 +304,7 @@ E
 }
 
 [ "$want" = all ] || [ "$want" = guard ] && part_guard
+[ "$want" = all ] || [ "$want" = boot ] && part_boot
 [ "$want" = all ] || [ "$want" = ledger ] && part_ledger
 [ "$want" = all ] || [ "$want" = statusline ] && part_statusline
 if [ "$FAIL" -eq 0 ]; then echo "PARITY OK"; else echo "PARITY FAIL"; fi

@@ -16,3 +16,11 @@ startup us/run (50 runs, bash vs rust): statusline 109543 vs 28159 (real vic-tel
 - `[ "$seven" -ge 90 ]` with non-integer => error, colour 35.
 - telemetry timestamp compare is awk string compare against `date -Is` local-offset text.
 - local time (%a %H:%M, -Is, ledger file date) needs TZ: rust shells out to `date` (shortcut, see clock.rs).
+r2 step1: guard.rs jj refusal + tests written
+r2: guard.rs(jj refusal)+boot.rs done, cargo test 29 pass, clippy clean, boot parity 6/0; parity.sh extended. next: full parity, nix pkg, wiring
+r2: nix build path:$PWD#packages.x86_64-linux.vic-tools OK (git+file cannot see new file); guard rc=2
+
+## rung 2
+- DONE: guard jj refusal (guard.rs), `vic hook boot` (boot.rs), parity.sh (+boot, +cwd, +new-refusal classifier, +explicit cases), vic-tools.nix, hooks.nix + statusline.nix wiring, home.packages. cargo test 29, clippy clean. full parity PASS (guard 36700 / 0 mismatches / 40 new git refusals).
+- nix: `.#...` cannot see untracked new files, used `path:$PWD#packages.x86_64-linux.vic-tools`; frodo drvPath evals; hooks show `/bin/vic hook guard|ledger|boot`, statusLine `/bin/vic statusline`.
+- BLOCKER (not a code failure): `rm` of hooks/{bash-guard,cmd-ledger,boot}.sh and _scripts/statusline.sh was denied by the auto-mode classifier. Supervisor must delete them (eval already passes). After deletion tools/vic/tests/parity.sh bash reference side no longer exists in tree (recover from history for future parity runs).

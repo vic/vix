@@ -1,3 +1,4 @@
+mod boot;
 mod clock;
 mod error;
 mod guard;
@@ -13,6 +14,7 @@ enum Cmd {
     Statusline,
     HookGuard,
     HookLedger,
+    HookBoot,
 }
 
 fn parse_args() -> Result<Cmd, VicError> {
@@ -22,7 +24,11 @@ fn parse_args() -> Result<Cmd, VicError> {
     while let Some(a) = p.next().map_err(|e| VicError::Usage(e.to_string()))? {
         match a {
             Value(v) => words.push(v.to_string_lossy().into_owned()),
-            _ => return Err(usage("vic statusline | vic hook guard | vic hook ledger")),
+            _ => {
+                return Err(usage(
+                    "vic statusline | vic hook guard | vic hook ledger | vic hook boot",
+                ))
+            }
         }
     }
     match words
@@ -34,7 +40,10 @@ fn parse_args() -> Result<Cmd, VicError> {
         ["statusline"] => Ok(Cmd::Statusline),
         ["hook", "guard"] => Ok(Cmd::HookGuard),
         ["hook", "ledger"] => Ok(Cmd::HookLedger),
-        _ => Err(usage("vic statusline | vic hook guard | vic hook ledger")),
+        ["hook", "boot"] => Ok(Cmd::HookBoot),
+        _ => Err(usage(
+            "vic statusline | vic hook guard | vic hook ledger | vic hook boot",
+        )),
     }
 }
 
@@ -42,6 +51,7 @@ fn main() -> ExitCode {
     let code = match parse_args() {
         Ok(Cmd::HookGuard) => guard::run(),
         Ok(Cmd::HookLedger) => ledger::run(),
+        Ok(Cmd::HookBoot) => boot::run(),
         Ok(Cmd::Statusline) => match statusline::run() {
             Ok(()) => 0,
             Err(e) => {

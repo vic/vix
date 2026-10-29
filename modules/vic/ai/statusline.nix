@@ -1,26 +1,16 @@
-# The Claude Code status line: one line from _scripts/statusline.sh.
+# The Claude Code status line: `vic statusline` (Rust, packages.vic-tools).
 # model+effort, ctx, 5h/7d quota, $, tokens, open PM beads, agents in flight + last subagent.
+# It calls vic-telemetry + vic-pm from PATH, as the old bash script did.
 { yen, lib, ... }:
 {
   yen.aspects.ai-statusline = {
     at = yen.aspects.vic-headless;
     homeManager =
-      { pkgs, ... }:
+      { out, pkgs, ... }:
       {
         programs.claude-code.settings.statusLine = {
           type = "command";
-          command = lib.getExe (
-            pkgs.writeShellApplication {
-              name = "statusline";
-              runtimeInputs = [
-                pkgs.jq
-                pkgs.gawk
-                pkgs.coreutils
-                pkgs.gnugrep
-              ];
-              text = builtins.readFile ./_scripts/statusline.sh;
-            }
-          );
+          command = "${lib.getExe' out.packages.${pkgs.stdenv.hostPlatform.system}.vic-tools "vic"} statusline";
           padding = 0;
         };
       };
