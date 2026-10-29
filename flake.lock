@@ -285,6 +285,28 @@
         "type": "github"
       }
     },
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "majjit",
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1786900242,
+        "narHash": "sha256-52Fj2HDnEeW13PAjZJiSuTqzDbCBKu4841O6WLJKcig=",
+        "owner": "nix-community",
+        "repo": "fenix",
+        "rev": "27a7186cfd33b512c0bfe5e60c385cb5938323fc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "fenix",
+        "type": "github"
+      }
+    },
     "files": {
       "locked": {
         "lastModified": 1780084175,
@@ -595,6 +617,27 @@
         "type": "github"
       }
     },
+    "majjit": {
+      "inputs": {
+        "fenix": "fenix",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793312754,
+        "narHash": "sha256-CxfqsdtMINfUBpZf1kGT78f8Ic1iYBkcRjTHvRPH94I=",
+        "owner": "anthrofract",
+        "repo": "majjit",
+        "rev": "0221f1bbe93aef26cf73315d806f4f448782cd00",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anthrofract",
+        "repo": "majjit",
+        "type": "github"
+      }
+    },
     "mattpocock": {
       "flake": false,
       "locked": {
@@ -865,6 +908,7 @@
         "jjui": "jjui",
         "lightjj": "lightjj",
         "llm-agents": "llm-agents",
+        "majjit": "majjit",
         "mattpocock": "mattpocock",
         "microvm": "microvm",
         "mnw": "mnw",
@@ -894,6 +938,23 @@
         "vercel-skills": "vercel-skills",
         "vscode-server": "vscode-server",
         "yen": "yen"
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786775975,
+        "narHash": "sha256-IepgRMQrv3ycKp/FRDYMErByu1kD7DH2+ZOW1z3UYWo=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "2d6e364110e162f271f9c3198722bf2e98e53088",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     },
     "rust-overlay": {

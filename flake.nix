@@ -153,6 +153,10 @@
         treefmt-nix.follows = "treefmt-nix";
       };
     };
+    majjit = {
+      url = "github:anthrofract/majjit";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     mattpocock = {
       url = "github:mattpocock/skills";
       flake = false;
@@ -220,10 +224,6 @@
       url = "github:pcvelz/superpowers";
       flake = false;
     };
-    yen = {
-      url = "github:vic/yen";
-      flake = false;
-    };
     systems.url = "github:nix-systems/default";
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
@@ -244,6 +244,10 @@
     vscode-server = {
       url = "github:nix-community/nixos-vscode-server";
       inputs.flake-parts.follows = "flake-parts";
+    };
+    yen = {
+      url = "github:vic/yen";
+      flake = false;
     };
   };
 }
