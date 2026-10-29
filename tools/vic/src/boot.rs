@@ -1,4 +1,4 @@
-//! `vic hook boot`: port of hooks/boot.sh (SessionStart) plus the LOCAL REPO LAW check.
+//! `vic hook boot`: SessionStart pointer (Skill vic + HANDOFF) plus the LOCAL REPO LAW check.
 //! Fail-open: always exit 0.
 use crate::clock;
 use std::fs;

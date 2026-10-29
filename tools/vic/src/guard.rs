@@ -1,4 +1,4 @@
-//! `vic hook guard`: port of hooks/bash-guard.sh. Exit 2 + stderr = refuse.
+//! `vic hook guard`: PreToolUse(Bash) refusals. Exit 2 + stderr = refuse.
 //! grep is line-based, so every pattern is tested per line (never across '\n').
 use crate::error::VicError;
 use crate::jq;

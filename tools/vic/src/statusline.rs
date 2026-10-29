@@ -1,4 +1,4 @@
-//! `vic statusline`: port of _scripts/statusline.sh, byte-identical output.
+//! `vic statusline`: the Claude Code status line.
 //! Quirks of the bash are copied on purpose (see tools/PROGRESS.md).
 use crate::clock;
 use crate::error::VicError;

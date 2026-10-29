@@ -1,4 +1,4 @@
-//! `vic hook ledger`: port of hooks/cmd-ledger.sh. Fail-open, zero stdout.
+//! `vic hook ledger`: PostToolUse(Bash) cmd + output ledger. Fail-open, zero stdout.
 use crate::clock;
 use crate::jq::{self, JqErr};
 use serde_json::Value;
