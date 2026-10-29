@@ -53,14 +53,11 @@ in
         map (
           s:
           lib.nameValuePair s.sopsKey (
-            lib.filterAttrs (_: v: v != null) (
-              removeAttrs s [
-                "kind"
-                "name"
-                "sopsKey"
-                "deploy"
-              ]
-            )
+            # named fields only: an instance also carries scope keys (key, path, ...)
+            lib.filterAttrs (_: v: v != null) {
+              inherit (s) format sopsFile;
+              path = s.sopsPath;
+            }
           )
         ) (lib.filter (s: s.deploy) ss)
       );

@@ -28,7 +28,7 @@ in
     sopsKey = t.str; # sops key path
     format = maybe (yen.helpers.enum [ "binary" ]);
     sopsFile = maybe t.path;
-    path = maybe t.str;
+    sopsPath = maybe t.str; # sops-nix `path`; `path` is a yen scope key
     deploy = opt t.bool true;
   };
   # an element is a list of secret refs; vic-secrets (vic/sys/secrets.nix) reads the user's

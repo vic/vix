@@ -1175,11 +1175,11 @@
     "yen": {
       "flake": false,
       "locked": {
-        "lastModified": 1793259864,
-        "narHash": "sha256-b6i+ZvJSnjt+o3gmN5j1GXKlYwO9565lrM6L4/xCnns=",
+        "lastModified": 1793327653,
+        "narHash": "sha256-DaxTi1cqF19fhpOezkQTn99Te6/ltGQkZdLhDugrDP8=",
         "owner": "vic",
         "repo": "yen",
-        "rev": "d5927650eaba61b023a8cfd07d3096d2c46b059b",
+        "rev": "cffd8764cfecdcfa42a89297ca3e3670c35518ce",
         "type": "github"
       },
       "original": {

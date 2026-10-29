@@ -1,4 +1,4 @@
-# ircc: local IRC-like chat between Claude Code sessions; package + ircc MCP server for every Claude Code session.
+# ircc: local IRC-like chat between Claude Code sessions; package + ircc MCP server. Linux only (/proc, SO_PEERCRED).
 { yen, inputs, lib, ... }:
 {
   yen.aspects.ai-ircc = {
@@ -7,7 +7,7 @@
       url = "github:vic/ircc";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    homeManager =
+    homeLinux =
       { pkgs, ... }:
       let
         ircc = (yen.helpers.perSystem pkgs inputs.ircc).packages.default;
