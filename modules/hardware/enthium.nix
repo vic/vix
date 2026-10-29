@@ -1,9 +1,9 @@
 # enthium: the Enthium keyboard layout, on hosts that list it.
-{ sven, inputs, ... }:
+{ yen, inputs, ... }:
 {
-  sven.aspects.enthium = {
-    at = sven.lib.all [
-      sven.helpers.linux
+  yen.aspects.enthium = {
+    at = yen.lib.all [
+      yen.helpers.linux
       (s: builtins.elem "enthium" s.layouts)
     ];
     flake-file.inputs.enthium = {

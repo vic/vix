@@ -1,8 +1,8 @@
 # jujutsu-ui: jj settings.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.jujutsu-ui = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.jujutsu-ui = {
+    at = yen.aspects.vic-headless;
     homeManager =
       { pkgs, ... }:
       let

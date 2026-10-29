@@ -1,11 +1,11 @@
 # vini-dashboards: loopback web dashboards on vini, reached via the vini-tunnel forwards (sys/ssh.nix). DISABLED: `at` is empty.
-{ sven, inputs, ... }:
+{ yen, inputs, ... }:
 let
   agentsview = 8080;
   omni = 8001;
 in
 {
-  sven.aspects.vic-vini-dashboards = {
+  yen.aspects.vic-vini-dashboards = {
     at = [ ];
     ports = [
       {
@@ -39,7 +39,7 @@ in
           # ~/.claude session browser; public-url is frodo's forwarded port.
           agentsview =
             service "agentsview session browser"
-              "${(sven.helpers.perSystem pkgs inputs.llm-agents).packages.agentsview}/bin/agentsview serve --host 127.0.0.1 --port ${toString agentsview} --no-browser --public-url http://127.0.0.1:${toString (10000 + agentsview)}"
+              "${(yen.helpers.perSystem pkgs inputs.llm-agents).packages.agentsview}/bin/agentsview serve --host 127.0.0.1 --port ${toString agentsview} --no-browser --public-url http://127.0.0.1:${toString (10000 + agentsview)}"
               { };
 
           omni-sqlite-web =

@@ -1,8 +1,8 @@
 # vim vcs: jj.nvim with vic's <leader>j keys, hunk.nvim diff editor.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.vim-jj = {
-    at = sven.helpers.vimHas "jj";
+  yen.aspects.vim-jj = {
+    at = yen.helpers.vimHas "jj";
     nvf =
       { pkgs, ... }:
       {
@@ -28,8 +28,8 @@
       };
   };
 
-  sven.aspects.vim-hunk = {
-    at = sven.helpers.vimHas "hunk";
+  yen.aspects.vim-hunk = {
+    at = yen.helpers.vimHas "hunk";
     nvf.vim.git.hunk-nvim.enable = true;
   };
 }

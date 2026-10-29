@@ -1,14 +1,14 @@
 # MicroVM guests: a guest runs on a host (routed tap, host nix store shared); the host gets the microvm host module.
 {
-  sven,
+  yen,
   lib,
   inputs,
   ...
 }:
 let
-  inherit (sven.lib) all has same;
+  inherit (yen.lib) all has same;
   tap = g: "vm-${g.name}";
-  guestsOf = h: lib.filterAttrs (_: g: same g.on h) sven.guest; # h: a host scope
+  guestsOf = h: lib.filterAttrs (_: g: same g.on h) yen.guest; # h: a host scope
   # the host side of its guests (gs: guest scopes): microvm host module, one routed tap each, NAT
   hostNet = gs: {
     imports = [ inputs.microvm.nixosModules.host ];
@@ -36,15 +36,15 @@ let
   };
 in
 {
-  sven.kinds.host.spawns.guest = guestsOf;
+  yen.kinds.host.spawns.guest = guestsOf;
 
-  sven.kinds.guest = {
-    fields = sven.kinds.machine.fields // {
-      on = sven.kinds.host;
+  yen.kinds.guest = {
+    fields = yen.kinds.machine.fields // {
+      on = yen.kinds.host;
       addr = lib.types.str; # host route 10.0.0.0/32 <-> addr/32 (microvm docs: routed-network.md)
       macAddress = lib.types.str;
     };
-    spawns.user = sven.helpers.usersOf; # no spawns.guest: no guest in a guest
+    spawns.user = yen.helpers.usersOf; # no spawns.guest: no guest in a guest
     sinks = {
       # its own name: the guest's nixos goes up into its host's microvm.vms
       nixos.nixos =
@@ -56,7 +56,7 @@ in
             config.imports = nixos;
           };
         };
-      inherit (sven.kinds.host.sinks)
+      inherit (yen.kinds.host.sinks)
         os
         persist
         nix-features
@@ -66,8 +66,8 @@ in
     };
   };
 
-  sven.aspects.vm = {
-    at = sven.kinds.guest;
+  yen.aspects.vm = {
+    at = yen.kinds.guest;
     flake-file.inputs.microvm = {
       url = "github:microvm-nix/microvm.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -111,19 +111,19 @@ in
       };
   };
 
-  sven.aspects.vm-host = {
+  yen.aspects.vm-host = {
     at = all [
-      sven.kinds.host
-      (has sven.kinds.guest)
+      yen.kinds.host
+      (has yen.kinds.guest)
     ];
-    # cycle form: ask the tree for this host's guest scopes (no second filter over sven.guest)
+    # cycle form: ask the tree for this host's guest scopes (no second filter over yen.guest)
     cycle =
       { tree, ... }:
       {
         tree = [
           {
             category = "guests";
-            children = sven.kinds.guest;
+            children = yen.kinds.guest;
           }
         ];
         nixos = [ (hostNet (lib.concatLists (tree.select "guests"))) ]; # one answer per request: a children answer is a list

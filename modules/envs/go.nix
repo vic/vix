@@ -1,8 +1,8 @@
 # envs: go tools.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.env-go = {
-    at = sven.helpers.envHas "go";
+  yen.aspects.env-go = {
+    at = yen.helpers.envHas "go";
     env-packages =
       { env, ... }:
       let

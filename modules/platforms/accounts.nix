@@ -1,25 +1,25 @@
 # Accounts: each user gets an account and a home on its machine; admins join wheel; the login shell is enabled.
-{ lib, sven, ... }:
+{ lib, yen, ... }:
 let
-  inherit (sven.helpers) place machines linux;
-  inherit (sven.lib) all within;
+  inherit (yen.helpers) place machines linux;
+  inherit (yen.lib) all within;
   homeOf =
     user: scope: if (place scope).system.darwin then "/Users/${user.name}" else "/home/${user.name}";
   withShell = all [
-    sven.kinds.user
+    yen.kinds.user
     (s: s.shell != null)
   ];
 in
 {
   # the machine the user is on reads it
-  sven.kinds.host.sinks.login-shells.reduce = sven.lib.reduce.set;
-  sven.kinds.mac.sinks.login-shells.reduce = sven.lib.reduce.set;
+  yen.kinds.host.sinks.login-shells.reduce = yen.lib.reduce.set;
+  yen.kinds.mac.sinks.login-shells.reduce = yen.lib.reduce.set;
   # an element is a user name
-  sven.kinds.host.sinks.primary-user.reduce = sven.lib.reduce.one;
-  sven.kinds.mac.sinks.primary-user.reduce = sven.lib.reduce.one;
+  yen.kinds.host.sinks.primary-user.reduce = yen.lib.reduce.one;
+  yen.kinds.mac.sinks.primary-user.reduce = yen.lib.reduce.one;
 
-  sven.aspects.account = {
-    at = sven.kinds.user;
+  yen.aspects.account = {
+    at = yen.kinds.user;
     account =
       { user, scope, ... }:
       {
@@ -33,16 +33,16 @@ in
         home.homeDirectory = homeOf user scope;
       };
   };
-  sven.aspects.nixos-account = {
+  yen.aspects.nixos-account = {
     at = all [
-      sven.kinds.user
+      yen.kinds.user
       (within linux)
     ];
     account.isNormalUser = true;
   };
-  sven.aspects.admin = {
+  yen.aspects.admin = {
     at = all [
-      sven.kinds.user
+      yen.kinds.user
       (within linux)
       (s: s.admin)
     ];
@@ -52,27 +52,27 @@ in
     ];
   };
   # the admin user a machine reads as its one primary user: two admins are an error record
-  sven.aspects.primary-user = {
+  yen.aspects.primary-user = {
     at = all [
-      sven.kinds.user
+      yen.kinds.user
       (s: s.admin)
-      (within sven.kinds.mac)
+      (within yen.kinds.mac)
     ];
     primary-user = { user, ... }: user.name;
   };
-  sven.aspects.primary-user-darwin = {
-    at = sven.kinds.mac;
+  yen.aspects.primary-user-darwin = {
+    at = yen.kinds.mac;
     darwin =
       { primary-user, ... }:
       lib.optionalAttrs (primary-user != null) { system.primaryUser = primary-user; };
   };
-  sven.aspects.login-shell = {
+  yen.aspects.login-shell = {
     at = withShell;
     account = { user, pkgs, ... }: { shell = pkgs.${user.shell}; };
     homeManager = { user, ... }: { programs.${user.shell}.enable = true; };
     login-shells = { user, ... }: user.shell;
   };
-  sven.aspects.login-shells = {
+  yen.aspects.login-shells = {
     at = machines;
     os = { login-shells, ... }: {
       programs = lib.genAttrs login-shells (_: {
@@ -80,8 +80,8 @@ in
       });
     };
   };
-  sven.aspects.darwin-shells = {
-    at = sven.kinds.mac;
+  yen.aspects.darwin-shells = {
+    at = yen.kinds.mac;
     darwin = { login-shells, pkgs, ... }: { environment.shells = map (s: pkgs.${s}) login-shells; };
   };
 }

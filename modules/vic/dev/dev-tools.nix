@@ -1,8 +1,8 @@
 # dev-tools: general developer command line packages.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.dev-tools = {
-    at = sven.aspects.vic-full;
+  yen.aspects.dev-tools = {
+    at = yen.aspects.vic-full;
     homeManager =
       { pkgs, ... }:
       {

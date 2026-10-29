@@ -1,9 +1,9 @@
 # installer-base: the iso image base (installer cd) plus live-session users, on iso hosts.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.installer-base = {
-    at = sven.lib.all [
-      sven.helpers.linux
+  yen.aspects.installer-base = {
+    at = yen.lib.all [
+      yen.helpers.linux
       (s: s.form == "iso")
     ];
     nixos =
@@ -32,10 +32,10 @@
   };
 
   # the live session's users: home partition by label, fixed uid.
-  sven.aspects.installer-user = {
-    at = sven.lib.all [
-      sven.kinds.user
-      (sven.lib.within sven.aspects.installer-base)
+  yen.aspects.installer-user = {
+    at = yen.lib.all [
+      yen.kinds.user
+      (yen.lib.within yen.aspects.installer-base)
     ];
     account.uid = 1000;
     os =

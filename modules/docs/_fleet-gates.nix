@@ -1,7 +1,7 @@
-# fleet gates (part of docs/_fleet-ir.nix): the routing table, the kind-level routing graph and the gate lattice, read from `sven.lib.graph` and each `at`.
-{ sven, lib }:
+# fleet gates (part of docs/_fleet-ir.nix): the routing table, the kind-level routing graph and the gate lattice, read from `yen.lib.graph` and each `at`.
+{ yen, lib }:
 let
-  g = sven.lib.graph;
+  g = yen.lib.graph;
   sorted = xs: lib.sort (a: b: a < b) (lib.unique xs);
   kindOf = lib.listToAttrs (map (s: lib.nameValuePair s.id s.kind) g.scopes);
   # `at` as refs: aspect refs, kinds, instances and fact tests, each with the operators above it
@@ -53,14 +53,14 @@ let
           ref = "fact";
         }
       ];
-  refsOf = n: walk [ ] (sven.aspects.${n}.at or [ ]);
+  refsOf = n: walk [ ] (yen.aspects.${n}.at or [ ]);
   gated = lib.concatMap (
     n:
     map (r: {
       from = r.ref;
       to = n;
     }) (lib.filter (r: r.aspect or false) (refsOf n))
-  ) (lib.attrNames sven.aspects);
+  ) (lib.attrNames yen.aspects);
   gates = sorted (map (x: x.from) gated);
   others = n: lib.filter (r: !(r.aspect or false) && r.ref != "fact") (refsOf n);
   fromAspects = lib.filter (e: lib.hasPrefix "aspect " e.origin) g.edges;

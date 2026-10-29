@@ -4,7 +4,7 @@
 # Gate and scout get no Edit, so a reviewer cannot quietly repair what it judges.
 # MCP tools are listed by name, never `mcp__<server>__*`, so nobody gets the destructive ones.
 {
-  sven,
+  yen,
   inputs,
   lib,
   ...
@@ -56,8 +56,8 @@ let
   };
 in
 {
-  sven.aspects.ai-agents = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-agents = {
+    at = yen.aspects.vic-headless;
     homeManager =
       { pkgs, ... }:
       let

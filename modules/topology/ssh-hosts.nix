@@ -1,8 +1,8 @@
 # ssh-host: data kind of ssh client hosts; each instance becomes one programs.ssh matchBlock.
-{ lib, sven, ... }:
+{ lib, yen, ... }:
 let
-  inherit (sven.lib) opt maybe is;
-  inherit (sven.helpers) listOf attrsOf;
+  inherit (yen.lib) opt maybe is;
+  inherit (yen.helpers) listOf attrsOf;
   t = lib.types;
   fwd = is (
     v:
@@ -29,10 +29,10 @@ let
         map (j: lib.last (lib.splitString "@" j)) (lib.splitString "," h.proxyJump)
       )
     )
-  ) sven.ssh-host;
+  ) yen.ssh-host;
 in
 {
-  sven.kinds.ssh-host.fields = {
+  yen.kinds.ssh-host.fields = {
     host = maybe t.str;
     hostname = maybe t.str;
     user = maybe t.str;
@@ -46,26 +46,26 @@ in
     localForwards = opt (listOf fwd) [ ];
     remoteForwards = opt (listOf fwd) [ ];
     # forward every port that vic's services on this home serve (fleet `served` sink), local = 10000 + remote
-    forwardsServedBy = maybe sven.kinds.home;
+    forwardsServedBy = maybe yen.kinds.home;
   };
 
-  sven.ssh-host.edge = {
+  yen.ssh-host.edge = {
     host = "edge";
     hostname = "192.168.192.168";
   };
-  sven.ssh-host.vini = vini // {
+  yen.ssh-host.vini = vini // {
     user = "vic";
   };
   # Same host, user and controlPath as vini: the vini-ssh master opens these forwards
   # and every later `ssh vini` reuses it. vini is the bitstream home: forward what runs there.
-  sven.ssh-host.vini-tunnel = vini // {
+  yen.ssh-host.vini-tunnel = vini // {
     user = "vic";
-    forwardsServedBy = sven.home.bitstream;
+    forwardsServedBy = yen.home.bitstream;
   };
-  sven.ssh-host.sini = vini // {
+  yen.ssh-host.sini = vini // {
     user = "sini";
   };
-  sven.ssh-host."uptermd.upterm.dev" = {
+  yen.ssh-host."uptermd.upterm.dev" = {
     forwardAgent = true;
     serverAliveInterval = 10;
     serverAliveCountMax = 6;
@@ -79,10 +79,10 @@ in
   };
 
   # a proxyJump cycle never connects: an error record at eval, before any build
-  sven.aspects.ssh-jumps = {
-    at = sven.fleet.vix;
+  yen.aspects.ssh-jumps = {
+    at = yen.fleet.vix;
     errors = map (c: "ssh: proxyJump cycle ${lib.concatStringsSep " -> " c}") (
-      sven.lib.graphs.sccs jumps
+      yen.lib.graphs.sccs jumps
     );
   };
 }

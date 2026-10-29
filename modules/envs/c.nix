@@ -1,8 +1,8 @@
 # envs: c tools.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.env-c = {
-    at = sven.helpers.envHas "c";
+  yen.aspects.env-c = {
+    at = yen.helpers.envHas "c";
     env-packages =
       { env, ... }:
       let

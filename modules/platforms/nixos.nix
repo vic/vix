@@ -1,8 +1,8 @@
 # NixOS: the host kind, the nixos sink (hosts build), `os` (fans out to nixos) and `account` (users.users entry).
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 let
-  inherit (sven.lib) within same opt;
-  # trimmed NixOS base module lists per host, for one nixpkgs rev (method: ~/hk/sven/vic/modlist-research.md)
+  inherit (yen.lib) within same opt;
+  # trimmed NixOS base module lists per host, for one nixpkgs rev (method: ~/hk/yen/vic/modlist-research.md)
   modlists = import ./_modlists.nix;
   callable = m: builtins.isFunction m || (builtins.isAttrs m && m ? __functor);
   # users.users is a shorthand submodule (config only): resolve content fns and `imports` here.
@@ -33,8 +33,8 @@ let
     };
 in
 {
-  # eval cost levers (sven fleet G:450-481): both off unless a host opts in
-  sven.kinds.machine.fields = {
+  # eval cost levers (yen fleet G:450-481): both off unless a host opts in
+  yen.kinds.machine.fields = {
     # reuse the pkgs of the first sharing host on the same channel and system (nixpkgs readOnlyPkgs)
     sharedPkgs = opt lib.types.bool false;
     # evaluate only the base NixOS modules in _modlists.nix for this host (same toplevel drvPath)
@@ -42,9 +42,9 @@ in
   };
 
   # a host on shared pkgs keeps docs off: the manual, man pages and option help differ when pkgs is shared
-  sven.aspects.shared-pkgs-no-docs = {
-    at = sven.lib.all [
-      sven.kinds.host
+  yen.aspects.shared-pkgs-no-docs = {
+    at = yen.lib.all [
+      yen.kinds.host
       (s: s.sharedPkgs)
     ];
     nixos.documentation = {
@@ -56,8 +56,8 @@ in
 
   # a group shares one nixpkgs.config: a follower whose unfree names differ from its leader's is an error record
   # shortcut: compares the `unfree` sink only, not other nixpkgs.config keys a host module sets by hand
-  sven.aspects.shared-pkgs-group = {
-    at = sven.kinds.fleet;
+  yen.aspects.shared-pkgs-group = {
+    at = yen.kinds.fleet;
     errors =
       { out, ... }:
       lib.concatLists (
@@ -70,9 +70,9 @@ in
       );
   };
 
-  sven.kinds.host = {
-    fields = sven.kinds.machine.fields;
-    spawns.user = sven.helpers.usersOf;
+  yen.kinds.host = {
+    fields = yen.kinds.machine.fields;
+    spawns.user = yen.helpers.usersOf;
     sinks = {
       nixos.out =
         {
@@ -105,7 +105,7 @@ in
             lib.attrNames (
               lib.filterAttrs (
                 _: h: h.sharedPkgs && same h.channel host.channel && same h.system host.system
-              ) sven.host
+              ) yen.host
             )
           );
           leader = lib.head group;
@@ -139,8 +139,8 @@ in
     };
   };
 
-  sven.kinds.user.sinks.account = {
-    at = within sven.helpers.machines;
+  yen.kinds.user.sinks.account = {
+    at = within yen.helpers.machines;
     os = { user, account, ... }: asUser user account;
   };
 }

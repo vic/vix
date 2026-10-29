@@ -1,14 +1,14 @@
 # autoinclude: a host with a hosts/<name>/_nixos directory gets its hardware files, disko and facter report without a line in its host file.
 {
-  sven,
+  yen,
   lib,
   inputs,
   ...
 }:
 {
-  sven.aspects.autoinclude = {
-    at = sven.lib.all [
-      sven.kinds.host
+  yen.aspects.autoinclude = {
+    at = yen.lib.all [
+      yen.kinds.host
       (s: builtins.pathExists (./. + "/${s.name}/_nixos"))
     ];
     flake-file.inputs.disko = {

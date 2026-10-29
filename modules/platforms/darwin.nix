@@ -1,9 +1,9 @@
 # nix-darwin: the mac kind and the darwin sink; os fans out to darwin.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.kinds.mac = {
-    fields = sven.kinds.machine.fields;
-    spawns.user = sven.helpers.usersOf;
+  yen.kinds.mac = {
+    fields = yen.kinds.machine.fields;
+    spawns.user = yen.helpers.usersOf;
     sinks = {
       darwin.out =
         { mac, darwin, ... }:

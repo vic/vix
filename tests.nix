@@ -1,4 +1,4 @@
-# vix-sven oracles, in the shape of sven's templates/fleet/tests.nix. Run each under the caps (timeout 300, MemoryMax=12G):
+# vix-yen oracles, in the shape of yen's templates/fleet/tests.nix. Run each under the caps (timeout 300, MemoryMax=12G):
 #   nix eval --offline --impure --file tests.nix failed        (expect [ ])
 #   nix eval --offline --impure --file tests.nix e2e.failed    (each machine's and home's settings fingerprint vs vix)
 let
@@ -7,14 +7,14 @@ let
     self = flake;
   };
   inherit (inputs.nixpkgs) lib;
-  sven = (import inputs.sven).lib;
+  yen = (import inputs.yen).lib;
   modules = (inputs.import-tree.withLib lib).leafs ./modules;
   fleet = ms: {
     imports = ms;
     _module.args = { inherit inputs lib; };
   };
-  r = sven.eval (fleet modules);
-  with' = m: sven.eval (fleet (modules ++ [ m ]));
+  r = yen.eval (fleet modules);
+  with' = m: yen.eval (fleet (modules ++ [ m ]));
   msgs = q: map (e: e.error) q.errors;
   hasMsg = q: re: lib.any (m: builtins.match re m != null) (msgs q);
   out = r.flake;
@@ -60,15 +60,15 @@ let
     no-errors = msgs r == [ ];
     check-ok = r.check.ok;
     no-undefined = r.undefined == [ ];
-    # lanes wrote vix-sven in parallel, so file order is arbitrary: reversing it changes no reduced value and no scope order
+    # lanes wrote vix-yen in parallel, so file order is arbitrary: reversing it changes no reduced value and no scope order
     # expected RED on claude-allow: `flat` keeps vix's first-seen order until vic decides V12 (sort)
     vix-permutation-stable =
       let
-        rev = sven.eval (fleet (lib.reverseList modules));
+        rev = yen.eval (fleet (lib.reverseList modules));
         j =
           q:
           builtins.toJSON (
-            map (k: sven.jsonSafe (q.reduced.${k} or null)) [
+            map (k: yen.jsonSafe (q.reduced.${k} or null)) [
               "claude-allow"
               "unfree"
               "flake-file"
@@ -83,10 +83,10 @@ let
     vix-sibling-laziness =
       let
         p = with' (
-          { sven, ... }:
+          { yen, ... }:
           {
-            sven.aspects.poison = {
-              at = sven.mac.varda;
+            yen.aspects.poison = {
+              at = yen.mac.varda;
               darwin = throw "poisoned varda";
             };
           }
@@ -108,10 +108,10 @@ let
     port-clash-fires =
       lib.elem "bad:port-clash:${frodo}:8787"
         (with' (
-          { sven, ... }:
+          { yen, ... }:
           {
-            sven.aspects.clash = {
-              at = sven.aspects.vic-headless;
+            yen.aspects.clash = {
+              at = yen.aspects.vic-headless;
               ports = [
                 {
                   port = 8787;
@@ -124,10 +124,10 @@ let
     follows-undeclared-fires =
       lib.elem "bad:follows-undeclared:no-such-input:clash"
         (with' (
-          { sven, ... }:
+          { yen, ... }:
           {
-            sven.aspects.clash = {
-              at = sven.fleet.vix;
+            yen.aspects.clash = {
+              at = yen.fleet.vix;
               flake-file.inputs.clash = {
                 url = "github:example/clash";
                 inputs.nixpkgs.follows = "no-such-input";
@@ -136,8 +136,8 @@ let
           }
         )).check.violations;
     ssh-jump-cycle-fires = hasMsg (with' {
-      sven.ssh-host.loop-a.proxyJump = "loop-b";
-      sven.ssh-host.loop-b.proxyJump = "vic@loop-a";
+      yen.ssh-host.loop-a.proxyJump = "loop-b";
+      yen.ssh-host.loop-b.proxyJump = "vic@loop-a";
     }) ".*proxyJump cycle loop-a -> loop-b.*";
   };
 

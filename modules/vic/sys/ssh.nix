@@ -1,5 +1,5 @@
 # ssh: ssh client config from the ssh-host instances, ssh-agent and the persistent vini master (linux).
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 let
   # the ports served under one home (fleet `served` entries), as local forwards: local = 10000 + remote
   servedForwards =
@@ -32,12 +32,12 @@ let
     // h.extraOptions;
 in
 {
-  sven.aspects.vic-ssh = {
-    at = sven.aspects.vic-secrets;
+  yen.aspects.vic-ssh = {
+    at = yen.aspects.vic-secrets;
     secrets = [
-      sven.secret.ssh-id-ed25519
-      sven.secret.ssh-conf
-      sven.secret.ssh-localhost-run
+      yen.secret.ssh-id-ed25519
+      yen.secret.ssh-conf
+      yen.secret.ssh-localhost-run
     ];
 
     homeManager =
@@ -50,7 +50,7 @@ in
           enable = true;
           enableDefaultConfig = false;
           includes = [
-            "~/.config/sops-nix/secrets/${sven.secret.ssh-conf.sopsKey}"
+            "~/.config/sops-nix/secrets/${yen.secret.ssh-conf.sopsKey}"
             "~/.ssh/config.local"
           ];
           settings = {
@@ -63,7 +63,7 @@ in
           }
           // lib.mapAttrs (
             _: h: lib.filterAttrs (_: v: v != null && v != [ ] && v != { }) (directive served h)
-          ) sven.ssh-host;
+          ) yen.ssh-host;
         };
       };
 

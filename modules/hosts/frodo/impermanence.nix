@@ -1,6 +1,6 @@
 # frodo impermanence: system state persisted in /nix/persist, btrfs root rolled back each cold boot (design: vic/pm/notes/impermanence-design.md). /home is never wiped.
 {
-  sven,
+  yen,
   lib,
   inputs,
   ...
@@ -9,11 +9,11 @@ let
   # disko partition `root` of disk `main`; NVMe names swap between boots, so never /dev/nvmeX.
   dev = "/dev/disk/by-partlabel/disk-main-root";
   devUnit = "dev-disk-by\\x2dpartlabel-disk\\x2dmain\\x2droot.device";
-  inherit (sven.lib) all within;
+  inherit (yen.lib) all within;
 in
 {
-  sven.aspects.frodo-impermanence = {
-    at = sven.host.frodo;
+  yen.aspects.frodo-impermanence = {
+    at = yen.host.frodo;
     flake-file.inputs.impermanence = {
       url = "github:nix-community/impermanence";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -50,8 +50,8 @@ in
         host.impermanence.wipeRoot && !host.impermanence.enable
       ) "frodo: impermanence.wipeRoot needs impermanence.enable"
       ++ lib.optional (
-        host.impermanence.wipeRoot && !(sven.secret ? vic-password)
-      ) "frodo: impermanence.wipeRoot needs sven.secret.vic-password";
+        host.impermanence.wipeRoot && !(yen.secret ? vic-password)
+      ) "frodo: impermanence.wipeRoot needs yen.secret.vic-password";
     # gated on the host value (not mkIf): with both gates off this is an empty module.
     nixos =
       { host, ... }:
@@ -69,8 +69,8 @@ in
               message = "frodo: impermanence.wipeRoot needs impermanence.enable, else all system state is deleted on boot.";
             }
             {
-              assertion = sven.secret ? vic-password;
-              message = "frodo: impermanence.wipeRoot rebuilds /etc/shadow each boot, so vic's password must come from nix. Declare sven.secret.vic-password first: see `## PASSWORD (vic runs first)` in modules/vic/ai/vic/pm/notes/impermanence-design.md.";
+              assertion = yen.secret ? vic-password;
+              message = "frodo: impermanence.wipeRoot rebuilds /etc/shadow each boot, so vic's password must come from nix. Declare yen.secret.vic-password first: see `## PASSWORD (vic runs first)` in modules/vic/ai/vic/pm/notes/impermanence-design.md.";
             }
           ];
 
@@ -128,32 +128,32 @@ in
   };
 
   # wipeRoot rebuilds /etc/shadow each boot: the password comes from sops, read at the user scope.
-  sven.aspects.frodo-wipe-root = {
+  yen.aspects.frodo-wipe-root = {
     at = all [
-      sven.host.frodo
+      yen.host.frodo
       (s: s.impermanence.wipeRoot)
     ];
-    secrets = lib.optional (sven.secret ? vic-password) sven.secret.vic-password;
+    secrets = lib.optional (yen.secret ? vic-password) yen.secret.vic-password;
   };
 
-  sven.aspects.frodo-wipe-user = {
+  yen.aspects.frodo-wipe-user = {
     at = all [
-      sven.kinds.user
-      (within sven.host.frodo)
-      (_: sven.host.frodo.impermanence.wipeRoot)
+      yen.kinds.user
+      (within yen.host.frodo)
+      (_: yen.host.frodo.impermanence.wipeRoot)
     ];
     account =
       { config, ... }:
-      lib.optionalAttrs (sven.secret ? vic-password) {
-        hashedPasswordFile = config.sops.secrets.${sven.secret.vic-password.sopsKey}.path;
+      lib.optionalAttrs (yen.secret ? vic-password) {
+        hashedPasswordFile = config.sops.secrets.${yen.secret.vic-password.sopsKey}.path;
       };
     os =
       { user, ... }:
       {
         sops.age.keyFile = "/home/${user.name}/.config/sops/age/keys.txt";
       }
-      // lib.optionalAttrs (sven.secret ? vic-password) {
-        sops.secrets.${sven.secret.vic-password.sopsKey}.neededForUsers = true;
+      // lib.optionalAttrs (yen.secret ? vic-password) {
+        sops.secrets.${yen.secret.vic-password.sopsKey}.neededForUsers = true;
       };
   };
 }

@@ -1,8 +1,8 @@
 # Agent CLIs from numtide/llm-agents.nix, with their Claude Code wiring.
-{ sven, inputs, lib, ... }:
+{ yen, inputs, lib, ... }:
 {
-  sven.aspects.ai-tools = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-tools = {
+    at = yen.aspects.vic-headless;
     claude-allow = [
       "Bash(br *)"
       "Bash(codegraph *)"
@@ -16,7 +16,7 @@
     homeManager =
       { pkgs, ... }:
       let
-        llm = (sven.helpers.perSystem pkgs inputs.llm-agents).packages;
+        llm = (yen.helpers.perSystem pkgs inputs.llm-agents).packages;
 
         calldiff = pkgs.writeShellApplication {
           name = "calldiff";

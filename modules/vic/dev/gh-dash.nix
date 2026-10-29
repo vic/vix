@@ -1,8 +1,8 @@
 # gh-dash: GitHub PR and issue dashboard.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.gh-dash = {
-    at = sven.aspects.vic-full;
+  yen.aspects.gh-dash = {
+    at = yen.aspects.vic-full;
     homeManager.programs.gh-dash.enable = true;
   };
 }

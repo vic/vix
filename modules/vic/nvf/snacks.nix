@@ -1,13 +1,13 @@
 # vim snacks: snacks.nvim, vic's header, picker keymaps, and the nvim profile's dashboard + toggles.
-{ sven, ... }:
+{ yen, ... }:
 let
   on = {
     enabled = true;
   };
 in
 {
-  sven.aspects.vim-snacks = {
-    at = sven.helpers.vimHas "snacks";
+  yen.aspects.vim-snacks = {
+    at = yen.helpers.vimHas "snacks";
     nvf.vim.utility.snacks-nvim = {
       enable = true;
       setupOpts = {
@@ -29,18 +29,18 @@ in
     };
   };
 
-  sven.aspects.vim-snacks-header = {
-    at = sven.helpers.vimHas "snacks-header";
+  yen.aspects.vim-snacks-header = {
+    at = yen.helpers.vimHas "snacks-header";
     nvf.vim.utility.snacks-nvim.setupOpts.dashboard.preset.header = builtins.readFile ./header.txt;
   };
 
-  sven.aspects.vim-snacks-keys = {
-    at = sven.helpers.vimHas "snacks-keys";
+  yen.aspects.vim-snacks-keys = {
+    at = yen.helpers.vimHas "snacks-keys";
     nvf = import ./_keys.nix;
   };
 
-  sven.aspects.vim-snacks-extras = {
-    at = sven.helpers.vimHas "snacks-extras";
+  yen.aspects.vim-snacks-extras = {
+    at = yen.helpers.vimHas "snacks-extras";
     nvf =
       { lib, ... }:
       {

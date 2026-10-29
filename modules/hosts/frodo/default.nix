@@ -1,9 +1,9 @@
 # frodo: vic's laptop. A workstation (bootable), mac keys, laptop; hardware via autoinclude; apps and desktop in session.nix.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.host.frodo = {
-    system = sven.system.x86_64-linux;
-    users = [ sven.user.vic ];
+  yen.host.frodo = {
+    system = yen.system.x86_64-linux;
+    users = [ yen.user.vic ];
     form = "laptop";
     workstation = true; # bootable gives boot, network, locale, bluetooth and pipewire
     keyboard = "macos";
@@ -17,10 +17,10 @@
       wipeRoot = false;
     };
   };
-  sven.aspects.trusted.at = sven.host.frodo;
+  yen.aspects.trusted.at = yen.host.frodo;
 
-  sven.aspects.frodo-base = {
-    at = sven.host.frodo;
+  yen.aspects.frodo-base = {
+    at = yen.host.frodo;
     nixos = {
       nixpkgs.config.allowUnfree = true;
       system.stateVersion = "26.11";

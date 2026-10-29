@@ -1,8 +1,8 @@
 # jujutsu-revsets: jj settings.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.jujutsu-revsets = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.jujutsu-revsets = {
+    at = yen.aspects.vic-headless;
     homeManager.programs.jujutsu.settings = {
       revset-aliases = {
         "trunk()" = "main@origin";

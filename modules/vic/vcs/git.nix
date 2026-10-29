@@ -1,9 +1,9 @@
 # git: identity from the user binding, ssh signing, difftastic, delta pager.
 # The git-ignores sink (any feature emits the paths it wants git to ignore; git writes them once) is declared in topology/people.nix.
-{ sven, inputs, ... }:
+{ yen, inputs, ... }:
 {
-  sven.aspects.git = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.git = {
+    at = yen.aspects.vic-headless;
     flake-file.inputs.nix-wrapper-modules = {
       url = "github:nix-community/nix-wrapper-modules";
       inputs.nixpkgs.follows = "nixpkgs";

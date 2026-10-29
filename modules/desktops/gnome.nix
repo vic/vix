@@ -1,9 +1,9 @@
 # gnome-desktop: GDM and GNOME, on hosts that list gnome.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.gnome-desktop = {
-    at = sven.lib.all [
-      sven.helpers.linux
+  yen.aspects.gnome-desktop = {
+    at = yen.lib.all [
+      yen.helpers.linux
       (s: builtins.elem "gnome" s.desktops)
     ];
     nixos = {

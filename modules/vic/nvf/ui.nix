@@ -1,29 +1,29 @@
 # vim ui: bars, columns, file tree, terminal, cmdline/messages UI.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.vim-bufferline = {
-    at = sven.helpers.vimHas "bufferline";
+  yen.aspects.vim-bufferline = {
+    at = yen.helpers.vimHas "bufferline";
     nvf.vim.tabline.nvimBufferline.enable = true;
   };
 
-  sven.aspects.vim-dropbar = {
-    at = sven.helpers.vimHas "dropbar";
+  yen.aspects.vim-dropbar = {
+    at = yen.helpers.vimHas "dropbar";
     nvf.vim.ui.dropbar-nvim.enable = true;
   };
 
-  sven.aspects.vim-lualine = {
-    at = sven.helpers.vimHas "lualine";
+  yen.aspects.vim-lualine = {
+    at = yen.helpers.vimHas "lualine";
     nvf.vim.statusline.lualine.enable = true;
   };
 
-  sven.aspects.vim-smartcolumn = {
-    at = sven.helpers.vimHas "smartcolumn";
+  yen.aspects.vim-smartcolumn = {
+    at = yen.helpers.vimHas "smartcolumn";
     nvf.vim.ui.smartcolumn.enable = true;
   };
 
-  sven.aspects.vim-scope = {
-    at = sven.helpers.vimHas "scope";
-    unfree = sven.helpers.allowUnfree [ "scope.nvim" ]; # no license upstream
+  yen.aspects.vim-scope = {
+    at = yen.helpers.vimHas "scope";
+    unfree = yen.helpers.allowUnfree [ "scope.nvim" ]; # no license upstream
     nvf =
       { pkgs, ... }:
       {
@@ -34,18 +34,18 @@
       };
   };
 
-  sven.aspects.vim-neo-tree = {
-    at = sven.helpers.vimHas "neo-tree";
+  yen.aspects.vim-neo-tree = {
+    at = yen.helpers.vimHas "neo-tree";
     nvf.vim.filetree.neo-tree.enable = true;
   };
 
-  sven.aspects.vim-toggleterm = {
-    at = sven.helpers.vimHas "toggleterm";
+  yen.aspects.vim-toggleterm = {
+    at = yen.helpers.vimHas "toggleterm";
     nvf.vim.terminal.toggleterm.enable = true;
   };
 
-  sven.aspects.vim-noice = {
-    at = sven.helpers.vimHas "noice";
+  yen.aspects.vim-noice = {
+    at = yen.helpers.vimHas "noice";
     nvf.vim.ui.noice.enable = true;
   };
 }

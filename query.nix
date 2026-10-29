@@ -1,4 +1,4 @@
-# The fleet as sven queries, outside the flake: the same module flake.nix gives mkFlake.
+# The fleet as yen queries, outside the flake: the same module flake.nix gives mkFlake.
 # Run: nix eval --impure --json --file query.nix check.violations
 let
   flake = builtins.getFlake "path:${toString ./.}";
@@ -6,7 +6,7 @@ let
     self = flake;
   };
 in
-(import inputs.sven).lib.eval {
+(import inputs.yen).lib.eval {
   imports = [ (inputs.import-tree ./modules) ];
   _module.args = {
     inherit inputs;

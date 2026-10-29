@@ -4,7 +4,7 @@
 # It also writes ~/.headroom/subscription_state.json, which budget.sh reads.
 # The upstream plugin is deliberately NOT installed: its hook writes an absolute
 # store path into settings.local.json that goes stale on every rebuild.
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 let
   headroom = pkgs: pkgs.callPackage ./_pkgs/headroom-ai.nix { };
   port = 8787;
@@ -28,8 +28,8 @@ let
   };
 in
 {
-  sven.aspects.ai-headroom = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-headroom = {
+    at = yen.aspects.vic-headless;
     claude-allow = [ "Bash(headroom *)" ];
     ports = [
       {

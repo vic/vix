@@ -1,9 +1,9 @@
 # smaug: macbook workstation with nvidia.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.host.smaug = {
-    system = sven.system.x86_64-linux;
-    users = [ sven.user.vic ];
+  yen.host.smaug = {
+    system = yen.system.x86_64-linux;
+    users = [ yen.user.vic ];
     workstation = true;
     cpu = "intel";
     gpu = "nvidia";
@@ -12,6 +12,6 @@
     firmware = "all";
     desktops = [ "xfce" ];
   };
-  sven.aspects.trusted.at = sven.host.smaug;
+  yen.aspects.trusted.at = yen.host.smaug;
 
 }

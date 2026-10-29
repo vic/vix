@@ -26,7 +26,7 @@ let
 in
 ''
   import-tree loads every `.nix` file under `modules/`. Paths with `/_` are skipped (data files, payload).
-  Dir names are for humans only. sven does not read them.
+  Dir names are for humans only. yen does not read them.
 
   ${table "modules/" ./.. vocabDirs.top}
 

@@ -1,18 +1,18 @@
-# emacs: every sven.emacs distribution as packages, fish functions, install activation, daemon and dots.
+# emacs: every yen.emacs distribution as packages, fish functions, install activation, daemon and dots.
 {
-  sven,
+  yen,
   inputs,
   lib,
   ...
 }:
 let
-  dists = lib.attrValues sven.emacs;
+  dists = lib.attrValues yen.emacs;
 in
 {
-  sven.aspects.vic-emacs = {
-    at = sven.aspects.vic-gui;
+  yen.aspects.vic-emacs = {
+    at = yen.aspects.vic-gui;
     dots = lib.mapAttrs' (n: e: lib.nameValuePair ".config/${n}" e.configDots) (
-      lib.filterAttrs (_: e: e.configDots != null) sven.emacs
+      lib.filterAttrs (_: e: e.configDots != null) yen.emacs
     );
     flake-file.inputs = {
       SPC = {
@@ -69,7 +69,7 @@ in
           lib.concatMap (
             e:
             lib.optional (e.wrapper != null) (
-              (sven.helpers.perSystem pkgs inputs.${e.wrapper}).packages.${e.wrapper}.override {
+              (yen.helpers.perSystem pkgs inputs.${e.wrapper}).packages.${e.wrapper}.override {
                 emacs = emacsPkg;
               }
             )
@@ -85,7 +85,7 @@ in
             before = [ ];
             data = "run ${lib.getExe (install n e)}\n";
           }
-        ) (lib.filterAttrs (_: e: e.bootstrap != null) sven.emacs);
+        ) (lib.filterAttrs (_: e: e.bootstrap != null) yen.emacs);
       };
   };
 }

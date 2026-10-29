@@ -1,20 +1,20 @@
 # secrets: sops-nix home secrets (the emitted ones), templates and the ssh identity links.
 # The aspect and its `at` are in roles/tiers.nix; this file adds its content.
-{ sven, inputs, ... }:
+{ yen, inputs, ... }:
 {
-  sven.aspects.vic-secrets = {
+  yen.aspects.vic-secrets = {
     flake-file.inputs.sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     secrets = [
-      sven.secret.hello
-      sven.secret.groq-api-key
-      sven.secret.openrouter-api-key
-      sven.secret.gemini-eco-key
-      sven.secret.copilot-api-key
-      sven.secret.anthropic-api-key
-      sven.secret.edge-token
+      yen.secret.hello
+      yen.secret.groq-api-key
+      yen.secret.openrouter-api-key
+      yen.secret.gemini-eco-key
+      yen.secret.copilot-api-key
+      yen.secret.anthropic-api-key
+      yen.secret.edge-token
     ];
     homeManager =
       {
@@ -54,7 +54,7 @@
           age.generateKey = false;
           defaultSopsFile = ../secrets.yaml;
           validateSopsFiles = true;
-          secrets = sven.helpers.sopsSecrets secrets;
+          secrets = yen.helpers.sopsSecrets secrets;
           templates = {
             "hello.toml".content = ''
               hello = "Wooo ${config.sops.placeholder.hello} Hoo";

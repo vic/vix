@@ -1,9 +1,9 @@
 # Laptop baseline. Ideas from sini core/{systemd,perf,nix,system,network}.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.laptop = {
-    at = sven.lib.all [
-      sven.helpers.linux
+  yen.aspects.laptop = {
+    at = yen.lib.all [
+      yen.helpers.linux
       (s: s.form == "laptop")
     ];
     nixos =

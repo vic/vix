@@ -1,5 +1,5 @@
 # Formatter: treefmt per system as `formatter.<sys>` and the `checks.<sys>.fmt` check.
-{ sven, inputs, ... }:
+{ yen, inputs, ... }:
 let
   treefmt =
     system:
@@ -29,8 +29,8 @@ let
     };
 in
 {
-  sven.aspects.formatter = {
-    at = sven.kinds.system;
+  yen.aspects.formatter = {
+    at = yen.kinds.system;
     flake-file.inputs.treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";

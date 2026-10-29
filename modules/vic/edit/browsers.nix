@@ -1,10 +1,10 @@
 # browsers: browsers and the fish helpers that open nixos search pages.
-{ sven, inputs, ... }:
+{ yen, inputs, ... }:
 {
-  sven.aspects.vic-browsers = {
-    at = sven.lib.all [
-      sven.aspects.vic-full
-      sven.aspects.vic-gui
+  yen.aspects.vic-browsers = {
+    at = yen.lib.all [
+      yen.aspects.vic-full
+      yen.aspects.vic-gui
     ];
     flake-file.inputs = {
       helium = {
@@ -34,7 +34,7 @@
           pkgs.chromium
           pkgs.librewolf
           pkgs.qutebrowser
-          (sven.helpers.perSystem pkgs inputs.helium).packages.default
+          (yen.helpers.perSystem pkgs inputs.helium).packages.default
         ];
       };
   };

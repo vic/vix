@@ -1,12 +1,12 @@
 # nvidia: proprietary driver, nouveau blacklisted, on nvidia hosts.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.nvidia = {
-    at = sven.lib.all [
-      sven.helpers.linux
+  yen.aspects.nvidia = {
+    at = yen.lib.all [
+      yen.helpers.linux
       (s: s.gpu == "nvidia")
     ];
-    unfree = sven.helpers.allowUnfree [
+    unfree = yen.helpers.allowUnfree [
       "nvidia-x11"
       "nvidia-settings"
       "nvidia-kernel-modules"

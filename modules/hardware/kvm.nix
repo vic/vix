@@ -1,9 +1,9 @@
 # kvm: AMD or Intel virtualization and microcode, on hosts with that cpu.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.kvm-amd = {
-    at = sven.lib.all [
-      sven.helpers.linux
+  yen.aspects.kvm-amd = {
+    at = yen.lib.all [
+      yen.helpers.linux
       (s: s.cpu == "amd")
     ];
     nixos =
@@ -14,9 +14,9 @@
       };
   };
 
-  sven.aspects.kvm-intel = {
-    at = sven.lib.all [
-      sven.helpers.linux
+  yen.aspects.kvm-intel = {
+    at = yen.lib.all [
+      yen.helpers.linux
       (s: s.cpu == "intel")
     ];
     nixos =

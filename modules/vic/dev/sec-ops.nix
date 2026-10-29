@@ -1,10 +1,10 @@
 # sec-ops: sops helper scripts on trusted full homes.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.sec-ops = {
-    at = sven.lib.all [
-      sven.aspects.vic-full
-      sven.aspects.vic-secrets
+  yen.aspects.sec-ops = {
+    at = yen.lib.all [
+      yen.aspects.vic-full
+      yen.aspects.vic-secrets
     ];
     homeManager =
       { out, pkgs, ... }:

@@ -1,9 +1,9 @@
 # Role wsl: a NixOS-WSL machine (form = wsl); its admin user is the default user.
-{ inputs, sven, ... }:
+{ inputs, yen, ... }:
 {
-  sven.aspects.wsl = {
-    at = sven.lib.all [
-      sven.helpers.linux
+  yen.aspects.wsl = {
+    at = yen.lib.all [
+      yen.helpers.linux
       (s: s.form == "wsl")
     ];
     flake-file.inputs.nixos-wsl = {
@@ -21,11 +21,11 @@
       };
   };
 
-  sven.aspects.wsl-user = {
-    at = sven.lib.all [
-      sven.kinds.user
+  yen.aspects.wsl-user = {
+    at = yen.lib.all [
+      yen.kinds.user
       (s: s.admin)
-      (sven.lib.within sven.aspects.wsl)
+      (yen.lib.within yen.aspects.wsl)
     ];
     primary-user = { user, ... }: user.name;
   };

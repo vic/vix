@@ -1,13 +1,13 @@
 # no-gui: flake checks no-gui-<user>@<place> fail when a headless home (standalone or guest) installs a gui .desktop entry.
-{ sven, ... }:
+{ yen, ... }:
 let
-  inherit (sven.lib) all not within;
+  inherit (yen.lib) all not within;
   headless =
     kind:
     all [
-      sven.kinds.user
+      yen.kinds.user
       (within kind)
-      (not sven.aspects.on-graphical)
+      (not yen.aspects.on-graphical)
     ];
   # every share/applications/*.desktop in the home path must be a terminal app.
   check = system: name: homePath: {
@@ -22,8 +22,8 @@ let
   };
 in
 {
-  sven.aspects.no-gui-home = {
-    at = headless sven.kinds.home;
+  yen.aspects.no-gui-home = {
+    at = headless yen.kinds.home;
     checks =
       {
         user,
@@ -34,8 +34,8 @@ in
       check home.system "${user.name}@${home.name}"
         out.homeConfigurations."${user.name}@${home.name}".config.home.path;
   };
-  sven.aspects.no-gui-guest = {
-    at = headless sven.kinds.guest;
+  yen.aspects.no-gui-guest = {
+    at = headless yen.kinds.guest;
     checks =
       {
         user,

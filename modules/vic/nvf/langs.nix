@@ -1,8 +1,8 @@
 # vim langs: lsp + treesitter, languages (rust via rustaceanvim), completion, format, lint, diagnostics list.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.vim-lsp = {
-    at = sven.helpers.vimHas "lsp";
+  yen.aspects.vim-lsp = {
+    at = yen.helpers.vimHas "lsp";
     nvf.vim = {
       lsp.enable = true;
       treesitter.enable = true;
@@ -10,18 +10,18 @@
     };
   };
 
-  sven.aspects.vim-lua = {
-    at = sven.helpers.vimHas "lua";
+  yen.aspects.vim-lua = {
+    at = yen.helpers.vimHas "lua";
     nvf.vim.languages.lua.enable = true;
   };
 
-  sven.aspects.vim-go = {
-    at = sven.helpers.vimHas "go";
+  yen.aspects.vim-go = {
+    at = yen.helpers.vimHas "go";
     nvf.vim.languages.go.enable = true;
   };
 
-  sven.aspects.vim-rust = {
-    at = sven.helpers.vimHas "rust";
+  yen.aspects.vim-rust = {
+    at = yen.helpers.vimHas "rust";
     nvf.vim = {
       languages.rust = {
         enable = true;
@@ -41,8 +41,8 @@
     };
   };
 
-  sven.aspects.vim-blink = {
-    at = sven.helpers.vimHas "blink";
+  yen.aspects.vim-blink = {
+    at = yen.helpers.vimHas "blink";
     nvf.vim.autocomplete.blink-cmp = {
       enable = true;
       friendly-snippets.enable = true;
@@ -59,18 +59,18 @@
     };
   };
 
-  sven.aspects.vim-conform = {
-    at = sven.helpers.vimHas "conform";
+  yen.aspects.vim-conform = {
+    at = yen.helpers.vimHas "conform";
     nvf.vim.formatter.conform-nvim.enable = true;
   };
 
-  sven.aspects.vim-nvim-lint = {
-    at = sven.helpers.vimHas "nvim-lint";
+  yen.aspects.vim-nvim-lint = {
+    at = yen.helpers.vimHas "nvim-lint";
     nvf.vim.diagnostics.nvim-lint.enable = true;
   };
 
-  sven.aspects.vim-trouble = {
-    at = sven.helpers.vimHas "trouble";
+  yen.aspects.vim-trouble = {
+    at = yen.helpers.vimHas "trouble";
     nvf.vim.lsp.trouble.enable = true;
   };
 }

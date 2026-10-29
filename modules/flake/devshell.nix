@@ -1,5 +1,5 @@
 # devshell: the vix maintainer shell (devShells.<sys>.default), a numtide/devshell with fmt/ci and host/-hm commands.
-{ sven, inputs, ... }:
+{ yen, inputs, ... }:
 let
   cmd = name: help: command: { inherit name help command; };
   # first arg is the nh action; switch/boot ask before activating
@@ -42,8 +42,8 @@ let
   ];
 in
 {
-  sven.aspects.maintainer-shell = {
-    at = sven.kinds.system;
+  yen.aspects.maintainer-shell = {
+    at = yen.kinds.system;
     checks =
       { system, out, ... }:
       {

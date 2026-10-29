@@ -1,7 +1,7 @@
 # vic's own Claude Code tooling, ported verbatim from frodo ~/.claude:
 # vic-* subagents (tiered haiku/sonnet/opus), vic skills, global CLAUDE.md.
 # Copies live beside this file; edit them here, never in ~/.claude.
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 let
   byName = dir: f: lib.mapAttrs' f (builtins.readDir dir);
   # `tools:` is a closed allowlist; quipu is mandatory, so every agent gets it.
@@ -11,8 +11,8 @@ let
     builtins.replaceStrings [ "\ntools: " ] [ "\ntools: ${quipuTools}, " ] (builtins.readFile file);
 in
 {
-  sven.aspects.ai-vic-agents = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-vic-agents = {
+    at = yen.aspects.vic-headless;
     homeManager = {
       programs.claude-code = {
         agents = byName ./agents (

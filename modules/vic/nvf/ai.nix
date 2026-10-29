@@ -1,8 +1,8 @@
 # vim ai: avante, codecompanion, copilot (as a blink source), CopilotChat.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.vim-avante = {
-    at = sven.helpers.vimHas "avante";
+  yen.aspects.vim-avante = {
+    at = yen.helpers.vimHas "avante";
     nvf.vim = {
       assistant.avante-nvim.enable = true;
       # avante's rockspec deps; nvf's avante module omits them (require "avante" fails without)
@@ -13,15 +13,15 @@
     };
   };
 
-  sven.aspects.vim-codecompanion = {
-    at = sven.helpers.vimHas "codecompanion";
+  yen.aspects.vim-codecompanion = {
+    at = yen.helpers.vimHas "codecompanion";
     # shortcut: nvf's action_palette.provider enum has no "snacks" (old config used it); default kept.
     nvf.vim.assistant.codecompanion-nvim.enable = true;
   };
 
-  sven.aspects.vim-copilot = {
-    at = sven.helpers.vimHas "copilot";
-    unfree = sven.helpers.allowUnfree [ "copilot-language-server" ];
+  yen.aspects.vim-copilot = {
+    at = yen.helpers.vimHas "copilot";
+    unfree = yen.helpers.allowUnfree [ "copilot-language-server" ];
     nvf =
       { pkgs, ... }:
       {
@@ -42,9 +42,9 @@
       };
   };
 
-  sven.aspects.vim-copilot-chat = {
-    at = sven.helpers.vimHas "copilot-chat";
-    unfree = sven.helpers.allowUnfree [ "copilot-language-server" ]; # via copilot-lua
+  yen.aspects.vim-copilot-chat = {
+    at = yen.helpers.vimHas "copilot-chat";
+    unfree = yen.helpers.allowUnfree [ "copilot-language-server" ]; # via copilot-lua
     nvf =
       { pkgs, ... }:
       {

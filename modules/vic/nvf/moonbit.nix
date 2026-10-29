@@ -1,8 +1,8 @@
 # vim moonbit: moonbit.nvim (not in nixpkgs; pinned upstream rev).
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.vim-moonbit = {
-    at = sven.helpers.vimHas "moonbit";
+  yen.aspects.vim-moonbit = {
+    at = yen.helpers.vimHas "moonbit";
     nvf =
       { pkgs, ... }:
       {

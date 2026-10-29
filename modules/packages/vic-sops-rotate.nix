@@ -1,17 +1,17 @@
 # vic-sops-rotate: rotate every vic secret file.
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 let
   # secrets.yaml and the file of every secret instance
   files = [
     "modules/vic/secrets.yaml"
   ]
   ++ map (s: "modules/vic/secrets/${baseNameOf s.sopsFile}") (
-    lib.filter (s: s.sopsFile != null) (lib.attrValues sven.secret)
+    lib.filter (s: s.sopsFile != null) (lib.attrValues yen.secret)
   );
 in
 {
-  sven.aspects.vic-sops-rotate = {
-    at = sven.kinds.system;
+  yen.aspects.vic-sops-rotate = {
+    at = yen.kinds.system;
     packages =
       { system, ... }:
       {

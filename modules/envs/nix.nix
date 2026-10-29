@@ -1,8 +1,8 @@
 # envs: nix tools.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.env-nix = {
-    at = sven.helpers.envHas "nix";
+  yen.aspects.env-nix = {
+    at = yen.helpers.envHas "nix";
     env-packages =
       { env, ... }:
       let

@@ -1,49 +1,49 @@
 # vix
 
-Vic's machines, homes and dev envs in [sven](https://github.com/vic/sven): a real-world sven fleet.
+Vic's machines, homes and dev envs in [yen](https://github.com/vic/yen): a real-world yen fleet.
 9 NixOS hosts, 2 macs, 2 standalone homes, 6 dev envs and 5 neovim profiles, from one tree of plain Nix files.
 Every table and diagram below is computed from the fleet when this file is written.
 
 Generated file: edit `modules/docs/`, then run `nix run .#write-files`.
 
-## A tour of sven, in vix
+## A tour of yen, in vix
 
-sven has four words: kinds, scopes, aspects, sinks. Each row links to the line in vix that uses a construct.
+yen has four words: kinds, scopes, aspects, sinks. Each row links to the line in vix that uses a construct.
 
-| sven | in vix |
+| yen | in vix |
 | --- | --- |
-| `sven.kinds.<k>`: typed data | [`host`](modules/platforms/nixos.nix#L73), [`guest`](modules/platforms/microvm.nix#L41), [`mac`](modules/platforms/darwin.nix#L4), [`home`](modules/platforms/home-manager.nix#L28), [`user`](modules/topology/people.nix#L23), [`env`](modules/envs/env.nix#L31), [`vim`](modules/editors/vim.nix#L23) |
+| `yen.kinds.<k>`: typed data | [`host`](modules/platforms/nixos.nix#L73), [`guest`](modules/platforms/microvm.nix#L41), [`mac`](modules/platforms/darwin.nix#L4), [`home`](modules/platforms/home-manager.nix#L28), [`user`](modules/topology/people.nix#L23), [`env`](modules/envs/env.nix#L31), [`vim`](modules/editors/vim.nix#L23) |
 | fields and types | [`a ref field`](modules/topology/machine.nix#L38), [`opt (a default)`](modules/topology/machine.nix#L39), [`maybe (null)`](modules/topology/machine.nix#L47), [`listOf, attrsOf, enum`](modules/helpers.nix#L11), [`is (any check)`](modules/topology/ssh-hosts.nix#L7), [`shared fields`](modules/platforms/nixos.nix#L74) |
 | `derive`: a default computed from the instance | [`checkout: from kind and users`](modules/vic/dots.nix#L18), [`a system's runner: from the machines on it`](modules/flake/ci.nix#L43) |
-| `sven.<k>.<name>`: an instance | [`sven.host.frodo`](modules/hosts/frodo/default.nix#L4), [`sven.home.bitstream`](modules/hosts/home-bitstream.nix#L4), [`sven.user.vic`](modules/topology/people.nix#L38), [`sven.env.rustenv`](modules/envs/envs.nix#L5), [`sven.vim.neovim`](modules/vic/nvf/profiles.nix#L3) |
+| `yen.<k>.<name>`: an instance | [`yen.host.frodo`](modules/hosts/frodo/default.nix#L4), [`yen.home.bitstream`](modules/hosts/home-bitstream.nix#L4), [`yen.user.vic`](modules/topology/people.nix#L38), [`yen.env.rustenv`](modules/envs/envs.nix#L5), [`yen.vim.neovim`](modules/vic/nvf/profiles.nix#L3) |
 | data kinds: instances no `spawns` reaches | [`channel`](modules/topology/channel.nix#L17), [`secret`](modules/topology/secrets.nix#L27), [`a secret only tools read`](modules/topology/secrets.nix#L19), [`ssh-host`](modules/topology/ssh-hosts.nix#L35), [`emacs`](modules/editors/emacs.nix#L14), [`workspace`](modules/topology/workspaces.nix#L9) |
 | `spawns`: the scope tree | [`fleet → system, host, mac, home`](modules/topology/fleet.nix#L13), [`host → user`](modules/platforms/nixos.nix#L75), [`host → guest`](modules/platforms/microvm.nix#L39), [`system → vim`](modules/editors/vim.nix#L22), [`user → env`](modules/envs/env.nix#L21) |
-| `sven.aspects.<a>`: one feature | [`git`](modules/vic/vcs/git.nix#L5), [`kvm-amd`](modules/hardware/kvm.nix#L4), [`hostname`](modules/topology/machine.nix#L65) |
+| `yen.aspects.<a>`: one feature | [`git`](modules/vic/vcs/git.nix#L5), [`kvm-amd`](modules/hardware/kvm.nix#L4), [`hostname`](modules/topology/machine.nix#L65) |
 | `at`: where an aspect is active | [`an instance`](modules/hosts/frodo/impermanence.nix#L16), [`a kind`](modules/flake/ci.nix#L67), [`an aspect`](modules/vic/vcs/git.nix#L6), [`a list: any`](modules/roles/roles.nix#L19), [`from many files: a union`](modules/hosts/frodo/default.nix#L20), [`nowhere`](modules/vic/rdesk.nix#L5) |
 | roles from data: a fact test, no host file names them | [`ci-runner: a ghRunner label`](modules/hosts/ci-runner.nix#L7), [`installer: form iso`](modules/roles/roles.nix#L29), [`wsl: form wsl`](modules/forms/wsl.nix#L7), [`autoinclude: a hosts/<name>/_nixos dir`](modules/hosts/autoinclude.nix#L12) |
 | `all`, `not`, `within`, `has`, `same`, fact tests | [`all [ vic-headless (not (within installer)) ]`](modules/roles/tiers.nix#L14), [`has guest`](modules/platforms/microvm.nix#L117), [`s: s.cpu == "amd"`](modules/hardware/kvm.nix#L7), [`same g.on h`](modules/platforms/microvm.nix#L11) |
 | sinks and their reduce | [`merge`](modules/topology/fleet.nix#L19), [`set`](modules/platforms/accounts.nix#L15), [`list (the default)`](modules/platforms/nixos.nix#L77), [`one: one formatter per system`](modules/flake/outputs.nix#L32), [`one: one admin per mac`](modules/platforms/accounts.nix#L18), [`entries: each value with its giver`](modules/platforms/ports.nix#L8), [`own reduce: flat (unique concat)`](modules/helpers.nix#L42), [`own reduce: persist (path union)`](modules/platforms/impermanence.nix#L11) |
 | typed sinks: `of` checks each element | [`a list of secret refs`](modules/topology/secrets.nix#L37), [`a dots path that exists`](modules/vic/dots.nix#L27), [`{ port; what; }`](modules/platforms/ports.nix#L9) |
 | forwards: a sink key names another sink | [`os → nixos`](modules/platforms/nixos.nix#L138), [`guest nixos → host nixos`](modules/platforms/microvm.nix#L50), [`account → os`](modules/platforms/nixos.nix#L144), [`homeManager → os`](modules/platforms/home-manager.nix#L56), [`persist → nixos`](modules/platforms/impermanence.nix#L26), [`host secrets → nixos (sops-nix)`](modules/topology/secrets.nix#L40), [`env-packages → homeManager`](modules/envs/env.nix#L42), [`nvf → packages`](modules/editors/vim.nix#L31), [`user unfree → machine unfree`](modules/nix/unfree.nix#L18) |
-| `out`: flake outputs | [`nixosConfigurations.<host>`](modules/platforms/nixos.nix#L125), [`ci.matrix`](modules/flake/outputs.nix#L16), [`rdfPack`](modules/agent/rdf.nix#L12), [`sven.flake`](modules/topology/fleet.nix#L22) |
+| `out`: flake outputs | [`nixosConfigurations.<host>`](modules/platforms/nixos.nix#L125), [`ci.matrix`](modules/flake/outputs.nix#L16), [`rdfPack`](modules/agent/rdf.nix#L12), [`yen.flake`](modules/topology/fleet.nix#L22) |
 | the `out` arg: an element reads the flake outputs, not `inputs.self` | [`vic-edge wraps out.packages`](modules/packages/vic-edge.nix#L7), [`ci.yml from out.checks and out.ci.matrix`](modules/flake/ci-workflow.nix#L128) |
 | a sink `at`: who may receive | [`homeLinux on linux`](modules/platforms/home-manager.nix#L77), [`account on machines`](modules/platforms/nixos.nix#L143) |
 | walls: a sink with no keys keeps elements at its scope | [`git-ignores`](modules/topology/people.nix#L33), [`nix-features`](modules/nix/features.nix#L12), [`ports (to served)`](modules/platforms/ports.nix#L18) |
 | args: a kind, a sink, `scope` | [`{ host, ... }`](modules/flake/ci.nix#L62), [`{ env, env-packages, ... }`](modules/envs/env.nix#L42), [`{ scope, ... }`](modules/topology/machine.nix#L67), [`{ primary-user, ... }`](modules/forms/wsl.nix#L16) |
 | errors as data: an `errors` key gives error records, no throw | [`a secret file no instance owns`](modules/topology/secrets.nix#L52), [`a proxyJump cycle`](modules/topology/ssh-hosts.nix#L82), [`0 or 2+ runners on a system`](modules/flake/ci.nix#L47), [`frodo wipeRoot guards`](modules/hosts/frodo/impermanence.nix#L47), [``one` with two admins`](modules/platforms/accounts.nix#L54) |
-| `sven.helpers`: shared values | [`helpers`](modules/helpers.nix#L7), [`place`](modules/helpers.nix#L24), [`sopsSecrets`](modules/helpers.nix#L50) |
+| `yen.helpers`: shared values | [`helpers`](modules/helpers.nix#L7), [`place`](modules/helpers.nix#L24), [`sopsSecrets`](modules/helpers.nix#L50) |
 | flake-file: inputs per aspect | [`vix-flake`](modules/flake/flake-file.nix#L31), [`env-rust`](modules/envs/rust.nix#L6) |
 | files: generated repo files | [`the files sink`](modules/flake/files.nix#L8), [`this README`](modules/docs/readme.nix#L78), [`ci.yml`](modules/flake/ci-workflow.nix#L130) |
-| graphs (`sven.lib.graphs`) | [`sccs: ssh jumps`](modules/topology/ssh-hosts.nix#L85), [`transpose, nodesOf: flake follows`](modules/agent/invariants.nix#L123) |
+| graphs (`yen.lib.graphs`) | [`sccs: ssh jumps`](modules/topology/ssh-hosts.nix#L85), [`transpose, nodesOf: flake follows`](modules/agent/invariants.nix#L123) |
 | invariants: Datalog over the facts | [`invariants`](modules/agent/invariants.nix#L40), [`runners-no-users`](modules/agent/invariants.nix#L58), [`unique-port`](modules/agent/invariants.nix#L87), [`follows-declared`](modules/agent/invariants.nix#L116) |
 | stored queries and krn synthesis | [`stored queries`](modules/agent/queries.nix#L34), [`portsOf`](modules/agent/queries.nix#L69), [`unfreeOn`](modules/agent/queries.nix#L51), [`freePort: a krn finite domain`](modules/agent/synthesis.nix#L13), [`a `ports` element`](modules/vic/ai/headroom.nix#L34) |
 | trust labels and the knowledge pack | [`labels by path`](modules/agent/labels.nix#L4), [`rdf share (sha256)`](modules/agent/rdf.nix#L13), [`SHACL shapes`](modules/agent/rdf.nix#L20) |
 | stage and change programs | [`a change program`](modules/docs/_readme-recipes.nix#L7), [`stage a change`](mcp/test.sh#L34), [`dry-run a program`](mcp/test.sh#L61), [`the MCP app`](modules/agent/mcp.nix#L5) |
 | tests.nix: oracles over the eval result | [`file order: reversed modules, same values`](tests.nix#L65), [`laziness: a broken mac never reaches frodo`](tests.nix#L83), [`negative controls`](tests.nix#L108), [`e2e: settings fingerprint vs vix`](tests.nix#L51) |
 
-## How vix uses sven
+## How vix uses yen
 
-Each row is one sven capability: what it is, and the vix configuration it carries. The links point at the line.
+Each row is one yen capability: what it is, and the vix configuration it carries. The links point at the line.
 
 | Capability | What it is | How vix uses it | Where |
 | --- | --- | --- | --- |
@@ -59,7 +59,7 @@ Each row is one sven capability: what it is, and the vix configuration it carrie
 | `entries` reduce | Each value comes with the scope that gave it. | Ports go up to the fleet `served` sink with their scope. The vini tunnel forwards what runs on bitstream. | [`served`](modules/platforms/ports.nix#L22), [`tunnel forwards`](modules/vic/sys/ssh.nix#L29) |
 | Forwards | A sink key feeds another sink, at the receiver. | A user's ports feed the fleet. A guest's NixOS goes into its host's `microvm.vms`. | [`ports to served`](modules/platforms/ports.nix#L19), [`guest to host`](modules/platforms/microvm.nix#L53) |
 | The cycle form | A component that asks the tree for data and gives 0 to n elements. | The microvm host asks for its guest scopes and gives one network setup for them. | [`vm-host`](modules/platforms/microvm.nix#L126) |
-| The `out` arg | An element reads the flake outputs lazily. | Release images, the CI workflow and the claude MCP entry read built outputs, not `inputs.self`. | [`release images`](modules/packages/release-images.nix#L9), [`sven-mcp in claude`](modules/agent/mcp.nix#L44) |
+| The `out` arg | An element reads the flake outputs lazily. | Release images, the CI workflow and the claude MCP entry read built outputs, not `inputs.self`. | [`release images`](modules/packages/release-images.nix#L9), [`yen-mcp in claude`](modules/agent/mcp.nix#L44) |
 | Errors as data | An aspect key `errors` gives error records. Evaluation continues. | frodo's wipeRoot guards, secret files that no instance owns, CI runner labels, sharedPkgs groups. | [`secret-files`](modules/topology/secrets.nix#L52), [`runner labels`](modules/flake/ci.nix#L47), [`shared pkgs`](modules/platforms/nixos.nix#L59) |
 | Autoinclude | Files found by path become modules: no line in the host file. | `hosts/<name>/_nixos` holds each machine's hardware, disko and facter report. | [`autoinclude`](modules/hosts/autoinclude.nix#L12) |
 | Exports | A scope outside any machine sends its content to a flake output. | `homeModules.vic`: vic's headless home for other flakes. | [`homeModules.vic`](modules/platforms/exports.nix#L14) |
@@ -72,8 +72,8 @@ Each row is one sven capability: what it is, and the vix configuration it carrie
 | Knowledge pack | The eval result as N-Triples with a sha256, and SHACL shapes. | `out.rdfPack` for quipu, one snapshot per revision. | [`rdfPack`](modules/agent/rdf.nix#L12) |
 | Infra checks | Facts from fleet data, compared with each built system. | Hostname, keyd, nvidia, enthium and persisted directories, per host. | [`infra`](modules/checks/infra.nix#L44) |
 | Eval cost levers | Shared pkgs per channel and system; a trimmed NixOS module list. | Ready for every host, off on all: enabling them needs the drvPath oracles on each host. | [`sharedPkgs`](modules/platforms/nixos.nix#L39), [`docs off`](modules/platforms/nixos.nix#L45) |
-| MCP server | Agents ask the fleet over stdio JSON-RPC. | vic's claude sessions have the `sven` MCP server for this fleet. | [`claude entry`](modules/agent/mcp.nix#L34) |
-| CI gate | One eval per PR: no error records, invariants ok, no undefined aspect. | The `sven-gate` job of the generated workflow. | [`sven-gate`](modules/flake/ci-workflow.nix#L108) |
+| MCP server | Agents ask the fleet over stdio JSON-RPC. | vic's claude sessions have the `yen` MCP server for this fleet. | [`claude entry`](modules/agent/mcp.nix#L34) |
+| CI gate | One eval per PR: no error records, invariants ok, no undefined aspect. | The `yen-gate` job of the generated workflow. | [`yen-gate`](modules/flake/ci-workflow.nix#L108) |
 | Tests | Checks over the eval result itself. | File order changes no result; a broken varda never stops frodo. | [`file order`](tests.nix#L65) |
 
 ## Commands
@@ -91,12 +91,12 @@ nix eval --impure --json --expr '(import ./query.nix).ask "aspectsOn" { name = "
 nix eval --impure --json --expr '(import ./query.nix).ask "freePort" { name = "annatar"; }'
 nix eval --offline --impure --file tests.nix failed      # oracles: errors, check.ok, file order, laziness ([ ] when all hold)
 nix eval --offline --impure --file tests.nix e2e.failed  # each machine's and home's settings fingerprint vs vix
-nix run .#sven-mcp                                   # MCP server for agents, on stdio
+nix run .#yen-mcp                                   # MCP server for agents, on stdio
 ```
 
 ## Fleet map
 
-Generated from `sven.lib.graph`: every scope under its parent. Machines and homes sit in the system they build for.
+Generated from `yen.lib.graph`: every scope under its parent. Machines and homes sit in the system they build for.
 `[host]` `(mac)` `[[guest]]` `[/home/]` `((user))`. JSON of every view: `nix build .#fleet-ir`.
 
 ```mermaid
@@ -568,7 +568,7 @@ flowchart LR
 | `primary-user` |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | `primary-user-darwin` |  |  |  |  |  |  |  |  |  |  |  |  |  | x | x |
 | `sec-ops` |  | x |  |  | x |  |  | x | x | x | x | x |  |  | x |
-| `sven-mcp-claude` | x | x |  | x | x | x | x | x | x | x | x | x |  |  | x |
+| `yen-mcp-claude` | x | x |  | x | x | x | x | x | x | x | x | x |  |  | x |
 | `sysctl` |  | x | x | x | x | x | x | x | x |  | x | x | x |  |  |
 | `terminals` |  | x |  |  | x |  |  | x | x | x | x | x |  |  | x |
 | `unfree` | x | x | x | x | x | x | x | x | x | x | x | x | x | x | x |
@@ -628,7 +628,7 @@ flowchart LR
 | `vic-nix-index` | `nix-index-database` |
 | `vic-secrets` | `sops-nix` |
 | `vim-inputs` | `mnw`, `nvf` |
-| `vix-flake` | `flake-file`, `import-tree`, `sven` |
+| `vix-flake` | `flake-file`, `import-tree`, `yen` |
 | `vm` | `microvm` |
 | `wsl` | `nixos-wsl` |
 
@@ -640,7 +640,7 @@ flowchart LR
 | `ubuntu-24.04-arm` | `aarch64-linux` | `bill` |  |
 | `ubuntu-latest` | `x86_64-linux` | `annatar`, `bombadil`, `devshell-fullenv-x86_64-linux`, `devshell-goenv-x86_64-linux`, `devshell-nixenv-x86_64-linux`, `devshell-nodeenv-x86_64-linux`, `devshell-pyenv-x86_64-linux`, `devshell-rustenv-x86_64-linux`, `frodo`, `mordor`, `nargun`, `nienna`, `smaug`, `tom`, `vic@bitstream`, `vic@nargun` |  |
 
-**ssh hosts and jumps** (`sven.ssh-host`, by Host match name). Jump cycles: none.
+**ssh hosts and jumps** (`yen.ssh-host`, by Host match name). Jump cycles: none.
 
 ```mermaid
 flowchart LR
@@ -1030,7 +1030,7 @@ A kind with 0 scopes is data: nothing spawns it.
 
 ## Capability index
 
-**Invariants** (`sven.invariants`, Datalog over the fleet's facts). The result is a query on the eval result, not
+**Invariants** (`yen.invariants`, Datalog over the fleet's facts). The result is a query on the eval result, not
 readable inside the fleet: `nix eval --impure --json --file query.nix check.violations` (`[ ]` when every one holds).
 
 | Invariant | File |
@@ -1043,7 +1043,7 @@ readable inside the fleet: `nix eval --impure --json --file query.nix check.viol
 | `unique-local-forward` | `modules/agent/invariants.nix` |
 | `unique-port` | `modules/agent/invariants.nix` |
 
-**Stored queries** (`r.ask name args`, or the MCP tool `sven_ask`):
+**Stored queries** (`r.ask name args`, or the MCP tool `yen_ask`):
 
 | Query | Required | Optional | File |
 |---|---|---|---|
@@ -1055,25 +1055,25 @@ readable inside the fleet: `nix eval --impure --json --file query.nix check.viol
 | `unfreeOn` | `name` |  | `modules/agent/queries.nix` |
 | `whoInstalls` | `pkg` |  | `modules/agent/queries.nix` |
 
-**MCP tools** (14, `mcp/sven-mcp.sh`): `sven_ask`, `sven_check`, `sven_context`, `sven_declared_in`, `sven_errors`, `sven_explain`, `sven_export`, `sven_impact`, `sven_labels`, `sven_program`, `sven_queries`, `sven_schema`, `sven_stage`, `sven_why_not`.
+**MCP tools** (14, `mcp/yen-mcp.sh`): `yen_ask`, `yen_check`, `yen_context`, `yen_declared_in`, `yen_errors`, `yen_explain`, `yen_export`, `yen_impact`, `yen_labels`, `yen_program`, `yen_queries`, `yen_schema`, `yen_stage`, `yen_why_not`.
 
 ```mermaid
 flowchart LR
-  n254d290cd5[("sven-mcp (nix run .#sven-mcp)")]
-  n72ed07ef7a("sven_ask")
-  n36a3b0f723("sven_check")
-  n5b32d793d2("sven_context")
-  nfd53204477("sven_declared_in")
-  n4ff85900f3("sven_errors")
-  n37ebbed2c7("sven_explain")
-  nadee744105("sven_export")
-  n6863971d9d("sven_impact")
-  nb0733c534d("sven_labels")
-  nd3c588724a("sven_program")
-  nb8b859f378("sven_queries")
-  n75d0bcd916("sven_schema")
-  n75cc57565d("sven_stage")
-  n0c5c6359b4("sven_why_not")
+  n254d290cd5[("yen-mcp (nix run .#yen-mcp)")]
+  n72ed07ef7a("yen_ask")
+  n36a3b0f723("yen_check")
+  n5b32d793d2("yen_context")
+  nfd53204477("yen_declared_in")
+  n4ff85900f3("yen_errors")
+  n37ebbed2c7("yen_explain")
+  nadee744105("yen_export")
+  n6863971d9d("yen_impact")
+  nb0733c534d("yen_labels")
+  nd3c588724a("yen_program")
+  nb8b859f378("yen_queries")
+  n75d0bcd916("yen_schema")
+  n75cc57565d("yen_stage")
+  n0c5c6359b4("yen_why_not")
   n254d290cd5 --> n72ed07ef7a
   n254d290cd5 --> n36a3b0f723
   n254d290cd5 --> n5b32d793d2
@@ -1090,12 +1090,12 @@ flowchart LR
   n254d290cd5 --> n0c5c6359b4
 ```
 
-**Trust labels** (`sven.labels`, by file path prefix). An agent edits under a low-trust prefix;
+**Trust labels** (`yen.labels`, by file path prefix). An agent edits under a low-trust prefix;
 `(import ./query.nix).floor 3` lists every element its aspects route.
 
 | Prefix | Trust | Aspects |
 |---|---|---|
-| `agent/` | 1 | 3: `mcp-app`, `rdf-pack`, `sven-mcp-claude` |
+| `agent/` | 1 | 3: `mcp-app`, `rdf-pack`, `yen-mcp-claude` |
 | `modules/` | 3 | 180 |
 | `vic/ai/` | 2 | 21 |
 
@@ -1104,9 +1104,9 @@ as sorted N-Triples (the same in every file order), and SHACL shapes from the sc
 
 **Queries on an eval result** (`r = import ./query.nix`): `active`, `ask`, `check`, `context`, `data`, `declaredIn`, `errors`, `explain`, `facts`, `flake`, `floor`, `graph`, `impact`, `labels`, `queries`, `reduced`, `root`, `schema`, `scopes`, `undefined`.
 
-**Engine library** (`sven.lib`): `agent`, `allowed`, `asOf`, `derive`, `diffData`, `eval`, `grant`, `history`, `is`, `jsonSafe`, `maybe`, `mkFlake`, `narrow`, `opt`, `stage`, `validAt`, `without`.
-Reduce strategies: `entries`, `list`, `merge`, `one`, `set`. Change programs (`sven.lib.program`): `dryRun`, `opErrors`, `render`, `toModule`, `validate`.
-Graphs (`sven.lib.graphs`): `cycles`, `fromEdges`, `layers`, `nodesOf`, `paths`, `reach`, `reachers`, `sccs`, `shortest`, `topo`, `transpose`, `uniq'`.
+**Engine library** (`yen.lib`): `agent`, `allowed`, `asOf`, `derive`, `diffData`, `eval`, `grant`, `history`, `is`, `jsonSafe`, `maybe`, `mkFlake`, `narrow`, `opt`, `stage`, `validAt`, `without`.
+Reduce strategies: `entries`, `list`, `merge`, `one`, `set`. Change programs (`yen.lib.program`): `dryRun`, `opErrors`, `render`, `toModule`, `validate`.
+Graphs (`yen.lib.graphs`): `cycles`, `fromEdges`, `layers`, `nodesOf`, `paths`, `reach`, `reachers`, `sccs`, `shortest`, `topo`, `transpose`, `uniq'`.
 
 **The cycle form** (`cycle = { tree, ... }: …`): `vm-host`.
 
@@ -1114,7 +1114,7 @@ Graphs (`sven.lib.graphs`): `cycles`, `fromEdges`, `layers`, `nodesOf`, `paths`,
 
 ### Kinds: one scope per instance when some `spawns` reaches the kind
 
-| kind | what it is | instances (`sven.<kind>.<name>`) |
+| kind | what it is | instances (`yen.<kind>.<name>`) |
 | --- | --- | --- |
 | `channel` | data: the nixpkgs, home-manager and nix-darwin pins a machine builds with | unstable |
 | `emacs` | data: an emacs distribution | doom, spc |
@@ -1171,7 +1171,7 @@ An element goes to the nearest ancestor-or-self scope that has the sink. A sink 
 | `homeLinux` | `user` | `list` | `homeManager` | homeManager on linux only |
 | `nvf` | `vim` | `list` | `packages` | an nvf module of a vim profile |
 
-### vic profiles: tiers gate features (`at = sven.aspects.vic-<tier>`); roles come from facts or host files
+### vic profiles: tiers gate features (`at = yen.aspects.vic-<tier>`); roles come from facts or host files
 
 | name | active |
 | --- | --- |
@@ -1188,7 +1188,7 @@ An element goes to the nearest ancestor-or-self scope that has the sink. A sink 
 | role `on-trusted` | a user within `trusted`, no untrusted guest between |
 | role `trusted` | a host file adds itself: holds vic's secrets |
 
-204 aspects live under `modules/`; `sven.aspects.<name>` each.
+204 aspects live under `modules/`; `yen.aspects.<name>` each.
 Active nowhere (empty `at`, or a marker no scope matches): `frodo-wipe-root`, `frodo-wipe-user`, `gnome-desktop`, `laptop-thermald`, `shared-pkgs-no-docs`, `vic-rdesk`, `vic-vini-dashboards`, `vix-rdesk`.
 
 </details>
@@ -1196,7 +1196,7 @@ Active nowhere (empty `at`, or a marker no scope matches): `frodo-wipe-root`, `f
 <details><summary>Directory structure</summary>
 
 import-tree loads every `.nix` file under `modules/`. Paths with `/_` are skipped (data files, payload).
-Dir names are for humans only. sven does not read them.
+Dir names are for humans only. yen does not read them.
 
 | dir | purpose |
 | --- | --- |
@@ -1238,41 +1238,41 @@ Inside `modules/vic/`:
 **Add a host**: facts only; hardware and desktop aspects key on them (`modules/hosts/<name>.nix`).
 Hardware files in `modules/hosts/<name>/_nixos/` load by autoinclude; `ghRunner = "<label>";` makes the host a bare CI runner.
 ```nix
-sven.host.elrond = {
-  system = sven.system.x86_64-linux;
-  users = [ sven.user.vic ];
+yen.host.elrond = {
+  system = yen.system.x86_64-linux;
+  users = [ yen.user.vic ];
   workstation = true;
   cpu = "amd";
   desktops = [ "kde" "niri" ];
 };
-sven.aspects.trusted.at = sven.host.elrond;
+yen.aspects.trusted.at = yen.host.elrond;
 ```
 The same host as a change program an agent can dry-run (errors, invariant violations, diff) before it writes a file.
 Users stay in the host file: a program value is not a list of refs.
 ```sh
-echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"sven_program","arguments":{"program":[{"fields":{"cpu":"amd","system":{"ref":{"kind":"system","name":"x86_64-linux"}},"workstation":true},"kind":"host","name":"elrond","op":"new"},{"op":"set","path":["host","elrond","desktops"],"value":["kde","niri"]},{"aspect":"trusted","kind":"host","name":"elrond","op":"place"}]}}}' | nix run .#sven-mcp
+echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"yen_program","arguments":{"program":[{"fields":{"cpu":"amd","system":{"ref":{"kind":"system","name":"x86_64-linux"}},"workstation":true},"kind":"host","name":"elrond","op":"new"},{"op":"set","path":["host","elrond","desktops"],"value":["kde","niri"]},{"aspect":"trusted","kind":"host","name":"elrond","op":"place"}]}}}' | nix run .#yen-mcp
 ```
 
 **Add a user feature**: one aspect, gated by a tier (`modules/vic/<area>/<name>.nix`).
 ```nix
-sven.aspects.dev-tools = {
-  at = sven.aspects.vic-full;
+yen.aspects.dev-tools = {
+  at = yen.aspects.vic-full;
   homeManager = { pkgs, ... }: { home.packages = [ pkgs.gh pkgs.jq ]; };
 };
 ```
 
-**Add a dev env**: an instance, then list it on a machine or home (`envs = [ sven.env.goenv ];`).
+**Add a dev env**: an instance, then list it on a machine or home (`envs = [ yen.env.goenv ];`).
 ```nix
-sven.env.goenv.langs = [ "go" ];
-sven.aspects.env-go = {
-  at = sven.helpers.envHas "go";
+yen.env.goenv.langs = [ "go" ];
+yen.aspects.env-go = {
+  at = yen.helpers.envHas "go";
   env-packages = { env, ... }: [ env.system.legacyPackages.go ];
 };
 ```
 
 **Add an ssh host**: one instance becomes one `programs.ssh` matchBlock (`modules/topology/ssh-hosts.nix`).
 ```nix
-sven.ssh-host.edge = {
+yen.ssh-host.edge = {
   host = "edge";
   hostname = "192.168.192.168";
 };
@@ -1281,16 +1281,16 @@ sven.ssh-host.edge = {
 **Add a secret**: declare it, then give it from the feature that reads it (a user's or a host's `secrets` sink).
 A file in `modules/vic/secrets/` that no instance owns is an error record; `deploy = false` keeps a file off every machine.
 ```nix
-sven.secret.groq-api-key.sopsKey = "groq_api_key"; # modules/topology/secrets.nix
-sven.aspects.my-feature.secrets = [ sven.secret.groq-api-key ];
+yen.secret.groq-api-key.sopsKey = "groq_api_key"; # modules/topology/secrets.nix
+yen.aspects.my-feature.secrets = [ yen.secret.groq-api-key ];
 ```
 
 **Add a port**: ask for a free one, then give it on the `ports` sink next to the setting that reads it.
 A second service on the same port of one machine is a unique-port violation.
 ```nix
 # (import ./query.nix).ask "freePort" { name = "frodo"; }   =>   { port = 8000; used = [ ... ]; }
-sven.aspects.my-service = {
-  at = sven.aspects.vic-headless;
+yen.aspects.my-service = {
+  at = yen.aspects.vic-headless;
   ports = [ { port = 8000; what = "my-service"; } ];
 };
 ```
@@ -1307,7 +1307,7 @@ Each one changes a setting, a structure or an output, so it waits for vic.
 
 <details><summary>History</summary>
 
-- [sven (current)](https://github.com/vic/vix/tree/sven): Ren rewritten in sven; Ren classes and channels are sinks
+- [yen (current)](https://github.com/vic/vix/tree/yen): Ren rewritten in yen; Ren classes and channels are sinks
 - [Ren](https://github.com/vic/vix/tree/ren)
 - [Den without flakes](https://github.com/vic/vix/tree/historic/den)
 - [Den with flakes + flake-parts](https://github.com/vic/vix/tree/historic/den-flake-parts)

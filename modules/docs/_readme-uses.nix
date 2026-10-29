@@ -1,4 +1,4 @@
-# readme: how vix uses each sven capability. One row each: what it is, what vix does with it, a checked link.
+# readme: how vix uses each yen capability. One row each: what it is, what vix does with it, a checked link.
 let
   inherit (import ./_src.nix) src top;
   row =
@@ -6,9 +6,9 @@ let
     "| ${what} | ${is} | ${how} | ${builtins.concatStringsSep ", " links} |";
 in
 ''
-  ## How vix uses sven
+  ## How vix uses yen
 
-  Each row is one sven capability: what it is, and the vix configuration it carries. The links point at the line.
+  Each row is one yen capability: what it is, and the vix configuration it carries. The links point at the line.
 
   | Capability | What it is | How vix uses it | Where |
   | --- | --- | --- | --- |
@@ -21,23 +21,23 @@ in
       "A field default that the instance computes from itself. An explicit value wins."
       "`checkout` for every machine with users. `cpu` and `gpu` from the facter report. The CI runner label of each system."
       [
-        (src "vic/dots.nix" "sven.kinds.machine.fields.checkout = sven.lib.derive" "checkout")
+        (src "vic/dots.nix" "yen.kinds.machine.fields.checkout = yen.lib.derive" "checkout")
         (src "topology/machine.nix" "cpu = derive" "cpu from facter")
-        (src "flake/ci.nix" "sven.kinds.system.fields.runner = derive" "runner")
+        (src "flake/ci.nix" "yen.kinds.system.fields.runner = derive" "runner")
       ]
     )
     (row "Data kinds" "A kind that no kind spawns. Its instances have no scope; refs to them work."
       "Secrets, ssh hosts, workspaces and channels are data that aspects read."
       [
-        (src "topology/secrets.nix" "sven.kinds.secret.fields" "secret")
-        (src "topology/workspaces.nix" "sven.kinds.workspace.fields" "workspace")
+        (src "topology/secrets.nix" "yen.kinds.secret.fields" "secret")
+        (src "topology/workspaces.nix" "yen.kinds.workspace.fields" "workspace")
       ]
     )
     (row "Structure from data (`spawns`)" "A scope's children come from a function of the data."
       "Each workspace becomes a microvm guest on frodo. Home nargun lives under host nargun."
       [
-        (src "topology/workspaces.nix" "sven.guest = lib.mapAttrs" "guests from workspaces")
-        (src "platforms/home-manager.nix" "sven.kinds.host.spawns.home" "home on host")
+        (src "topology/workspaces.nix" "yen.guest = lib.mapAttrs" "guests from workspaces")
+        (src "platforms/home-manager.nix" "yen.kinds.host.spawns.home" "home on host")
       ]
     )
     (row "Walls" "A sink with no keys. Elements stop there and go no higher."
@@ -71,7 +71,7 @@ in
     (row "`entries` reduce" "Each value comes with the scope that gave it."
       "Ports go up to the fleet `served` sink with their scope. The vini tunnel forwards what runs on bitstream."
       [
-        (src "platforms/ports.nix" "sven.kinds.fleet.sinks.served.reduce" "served")
+        (src "platforms/ports.nix" "yen.kinds.fleet.sinks.served.reduce" "served")
         (src "vic/sys/ssh.nix" "forwardsServedBy" "tunnel forwards")
       ]
     )
@@ -84,13 +84,13 @@ in
     )
     (row "The cycle form" "A component that asks the tree for data and gives 0 to n elements."
       "The microvm host asks for its guest scopes and gives one network setup for them."
-      [ (src "platforms/microvm.nix" "children = sven.kinds.guest" "vm-host") ]
+      [ (src "platforms/microvm.nix" "children = yen.kinds.guest" "vm-host") ]
     )
     (row "The `out` arg" "An element reads the flake outputs lazily."
       "Release images, the CI workflow and the claude MCP entry read built outputs, not `inputs.self`."
       [
         (src "packages/release-images.nix" "out.nixosConfigurations.bombadil" "release images")
-        (src "agent/mcp.nix" "out.apps." "sven-mcp in claude")
+        (src "agent/mcp.nix" "out.apps." "yen-mcp in claude")
       ]
     )
     (row "Errors as data" "An aspect key `errors` gives error records. Evaluation continues."
@@ -138,7 +138,7 @@ in
     )
     (row "Trust labels" "Content gets the trust of the files that declare it."
       "Files that agents write get a lower trust, so their routed elements are easy to list."
-      [ (src "agent/labels.nix" "sven.labels" "labels") ]
+      [ (src "agent/labels.nix" "yen.labels" "labels") ]
     )
     (row "Knowledge pack" "The eval result as N-Triples with a sha256, and SHACL shapes."
       "`out.rdfPack` for quipu, one snapshot per revision."
@@ -146,7 +146,7 @@ in
     )
     (row "Infra checks" "Facts from fleet data, compared with each built system."
       "Hostname, keyd, nvidia, enthium and persisted directories, per host."
-      [ (src "checks/infra.nix" "sven.aspects.infra-facts" "infra") ]
+      [ (src "checks/infra.nix" "yen.aspects.infra-facts" "infra") ]
     )
     (row "Eval cost levers" "Shared pkgs per channel and system; a trimmed NixOS module list."
       "Ready for every host, off on all: enabling them needs the drvPath oracles on each host."
@@ -156,12 +156,12 @@ in
       ]
     )
     (row "MCP server" "Agents ask the fleet over stdio JSON-RPC."
-      "vic's claude sessions have the `sven` MCP server for this fleet."
-      [ (src "agent/mcp.nix" "sven-mcp-claude" "claude entry") ]
+      "vic's claude sessions have the `yen` MCP server for this fleet."
+      [ (src "agent/mcp.nix" "yen-mcp-claude" "claude entry") ]
     )
     (row "CI gate" "One eval per PR: no error records, invariants ok, no undefined aspect."
-      "The `sven-gate` job of the generated workflow."
-      [ (src "flake/ci-workflow.nix" "sven-gate" "sven-gate") ]
+      "The `yen-gate` job of the generated workflow."
+      [ (src "flake/ci-workflow.nix" "yen-gate" "yen-gate") ]
     )
     (row "Tests" "Checks over the eval result itself."
       "File order changes no result; a broken varda never stops frodo."

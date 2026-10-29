@@ -1,8 +1,8 @@
 # hk-clean-builds / hk-prune-ws: free disk under ~/hk.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.hk-clean = {
-    at = sven.aspects.vic-full;
+  yen.aspects.hk-clean = {
+    at = yen.aspects.vic-full;
     homeManager =
       { pkgs, ... }:
       let

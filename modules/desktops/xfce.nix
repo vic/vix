@@ -1,9 +1,9 @@
 # xfce-desktop: XFCE session, on hosts that list xfce.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.xfce-desktop = {
-    at = sven.lib.all [
-      sven.helpers.linux
+  yen.aspects.xfce-desktop = {
+    at = yen.lib.all [
+      yen.helpers.linux
       (s: builtins.elem "xfce" s.desktops)
     ];
     nixos =

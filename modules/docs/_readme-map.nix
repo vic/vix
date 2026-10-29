@@ -61,7 +61,7 @@ in
   structure = ''
     ## Fleet map
 
-    Generated from `sven.lib.graph`: every scope under its parent. Machines and homes sit in the system they build for.
+    Generated from `yen.lib.graph`: every scope under its parent. Machines and homes sit in the system they build for.
     `[host]` `(mac)` `[[guest]]` `[/home/]` `((user))`. JSON of every view: `nix build .#fleet-ir`.
 
     ${mermaid ir.fleetMap}

@@ -1,9 +1,9 @@
 # vic's frodo settings.json preferences: rank 1 on the `claude` sink, so they
 # win over claude.nix (rank 0) per key.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.ai-vic-settings = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-vic-settings = {
+    at = yen.aspects.vic-headless;
     # home-manager serves its mcpServers as the `hm` plugin, hence the prefix.
     claude-allow = map (t: "mcp__plugin_hm_codegraph__codegraph_${t}") [
       "search"

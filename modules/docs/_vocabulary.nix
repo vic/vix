@@ -1,4 +1,4 @@
-# vocabulary: one line per sven name; README tables fail to eval when a live name has no line here, or a line names nothing.
+# vocabulary: one line per yen name; README tables fail to eval when a live name has no line here, or a line names nothing.
 {
   kinds = {
     fleet = "root scope; it spawns every system, host, mac and home";

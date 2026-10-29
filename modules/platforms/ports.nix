@@ -2,22 +2,22 @@
 # The unique-port invariant and the portsOf and freePort queries read it. A user's ports also go up to
 # the fleet `served` sink with their scope, so an ssh tunnel forwards what runs on the far end (vic/sys/ssh.nix).
 # An element is a list (one aspect can open many ports): `ports = [ { port = 8787; what = "headroom"; } ];`
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 let
   sink = {
-    reduce = sven.lib.reduce.entries;
-    of = sven.helpers.listOf (
-      sven.lib.is (p: lib.isInt (p.port or null) && lib.isString (p.what or null))
+    reduce = yen.lib.reduce.entries;
+    of = yen.helpers.listOf (
+      yen.lib.is (p: lib.isInt (p.port or null) && lib.isString (p.what or null))
     );
   };
 in
 {
-  sven.kinds.host.sinks.ports = sink;
-  sven.kinds.guest.sinks.ports = sink;
-  sven.kinds.mac.sinks.ports = sink;
-  sven.kinds.user.sinks.ports = sink // {
+  yen.kinds.host.sinks.ports = sink;
+  yen.kinds.guest.sinks.ports = sink;
+  yen.kinds.mac.sinks.ports = sink;
+  yen.kinds.user.sinks.ports = sink // {
     served = { ports, ... }: lib.concatMap (e: e.value) ports;
   };
   # entries: each value comes with the user scope that serves it
-  sven.kinds.fleet.sinks.served.reduce = sven.lib.reduce.entries;
+  yen.kinds.fleet.sinks.served.reduce = yen.lib.reduce.entries;
 }

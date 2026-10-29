@@ -1,9 +1,9 @@
 # darwin-base: trackpad and keyboard defaults, nix-darwin tools, on workstation macs.
-{ sven, inputs, ... }:
+{ yen, inputs, ... }:
 {
-  sven.aspects.darwin-base = {
-    at = sven.lib.all [
-      sven.kinds.mac
+  yen.aspects.darwin-base = {
+    at = yen.lib.all [
+      yen.kinds.mac
       (s: s.workstation)
     ];
     darwin =

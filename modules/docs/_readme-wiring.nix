@@ -1,13 +1,13 @@
-# readme wiring (a fn of sven, lib, mermaid and the ci-jobs value): ports per scope, CI runners per system, flake input follows.
+# readme wiring (a fn of yen, lib, mermaid and the ci-jobs value): ports per scope, CI runners per system, flake input follows.
 {
-  sven,
+  yen,
   lib,
   mermaid,
   ciJobs,
 }:
 let
-  g = sven.lib.graph;
-  G = sven.lib.graphs;
+  g = yen.lib.graph;
+  G = yen.lib.graphs;
   sorted = xs: lib.sort (a: b: a < b) (lib.unique xs);
   code = xs: lib.concatMapStringsSep ", " (x: "`${x}`") (sorted xs);
   kindOf = lib.listToAttrs (map (s: lib.nameValuePair s.id s.kind) g.scopes);
@@ -30,7 +30,7 @@ let
   portsOf =
     n:
     let
-      v = sven.aspects.${n}.ports or [ ];
+      v = yen.aspects.${n}.ports or [ ];
     in
     if lib.isList v then v else [ ];
   given = lib.filter (e: e.sink == "ports" && lib.hasPrefix "aspect " e.origin) g.edges;
@@ -63,12 +63,12 @@ let
     );
   };
   # aspects with ports that route nowhere (empty `at`, or no scope matches)
-  idle = lib.filter (n: sven.aspects.${n} ? ports && !lib.any (e: aspectOf e == n) given) (
-    lib.attrNames sven.aspects
+  idle = lib.filter (n: yen.aspects.${n} ? ports && !lib.any (e: aspectOf e == n) given) (
+    lib.attrNames yen.aspects
   );
 
   # CI: each system's runner label is derived from the one machine on it with `ghRunner`; `ciBroken` lets a job fail
-  machines = lib.concatMap (k: lib.attrValues (sven.${k} or { })) [
+  machines = lib.concatMap (k: lib.attrValues (yen.${k} or { })) [
     "host"
     "guest"
     "mac"
@@ -81,10 +81,10 @@ let
       map (s: {
         id = "sys:${s}";
         label = "${s} · runs-on ${
-          if sven.system.${s}.runner == null then "none" else sven.system.${s}.runner
+          if yen.system.${s}.runner == null then "none" else yen.system.${s}.runner
         } · ${toString (lib.length (jobsOn s))} jobs";
         kind = "system";
-      }) (lib.attrNames sven.system)
+      }) (lib.attrNames yen.system)
       ++ map (m: {
         id = "m:${m.kind}:${m.name}";
         label =
@@ -106,12 +106,12 @@ let
   inputsOf =
     n:
     let
-      f = sven.aspects.${n}.flake-file or null;
+      f = yen.aspects.${n}.flake-file or null;
     in
     if lib.isAttrs f && lib.isAttrs (f.inputs or null) then f.inputs else { };
   inputs = lib.filterAttrs (_: lib.isAttrs) (
     lib.foldl' (a: n: a // inputsOf n) { } (
-      lib.filter (n: sven.lib.schema.aspects.${n}.activeAt > 0) (lib.attrNames sven.aspects)
+      lib.filter (n: yen.lib.schema.aspects.${n}.activeAt > 0) (lib.attrNames yen.aspects)
     )
   );
   follows =

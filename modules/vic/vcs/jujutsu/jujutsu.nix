@@ -1,5 +1,5 @@
 # jujutsu: identity, ssh signing, jjui wrappers.
-{ sven, inputs, ... }:
+{ yen, inputs, ... }:
 let
   # ask for the ssh key password if it is not loaded, before the tui
   wrapped =
@@ -14,8 +14,8 @@ let
     };
 in
 {
-  sven.aspects.jujutsu = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.jujutsu = {
+    at = yen.aspects.vic-headless;
     dots.".config/jjui" = "config/jjui";
     flake-file.inputs = {
       jjui = {
@@ -41,8 +41,8 @@ in
         ...
       }:
       let
-        jjui = (sven.helpers.perSystem pkgs inputs.jjui).packages.jjui;
-        majjit = (sven.helpers.perSystem pkgs inputs.jjui).packages.jjui;
+        jjui = (yen.helpers.perSystem pkgs inputs.jjui).packages.jjui;
+        majjit = (yen.helpers.perSystem pkgs inputs.jjui).packages.jjui;
       in
       {
         home.packages = [

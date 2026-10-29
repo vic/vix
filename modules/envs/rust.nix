@@ -1,8 +1,8 @@
 # envs: rust tools (rust-overlay stable toolchain).
-{ sven, inputs, ... }:
+{ yen, inputs, ... }:
 {
-  sven.aspects.env-rust = {
-    at = sven.helpers.envHas "rust";
+  yen.aspects.env-rust = {
+    at = yen.helpers.envHas "rust";
     flake-file.inputs.rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";

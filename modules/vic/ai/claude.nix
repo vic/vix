@@ -4,7 +4,7 @@
 # settings.json keys that need no pkgs are layers on the `claude` sink: a higher
 # rank wins per key, equal ranks must agree (rank 0 here, rank 1 vic/settings.nix).
 {
-  sven,
+  yen,
   inputs,
   lib,
   ...
@@ -44,7 +44,7 @@ let
   };
 in
 {
-  sven.kinds.user.sinks.claude = {
+  yen.kinds.user.sinks.claude = {
     reduce = layers;
     homeManager =
       { claude, ... }:
@@ -53,8 +53,8 @@ in
       };
   };
 
-  sven.aspects.ai-claude = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-claude = {
+    at = yen.aspects.vic-headless;
     git-ignores = [ ".claude" ];
     claude =
       { claude-allow, ... }:
@@ -96,7 +96,7 @@ in
 
         programs.claude-code = {
           enable = true;
-          package = (sven.helpers.perSystem pkgs inputs.llm-agents).packages.claude-code;
+          package = (yen.helpers.perSystem pkgs inputs.llm-agents).packages.claude-code;
           enableMcpIntegration = true;
 
           lspServers.nix = {

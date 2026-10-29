@@ -1,8 +1,8 @@
 # envs: python tools.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.env-python = {
-    at = sven.helpers.envHas "python";
+  yen.aspects.env-python = {
+    at = yen.helpers.envHas "python";
     env-packages =
       { env, ... }:
       let

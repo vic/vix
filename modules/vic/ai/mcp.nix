@@ -1,7 +1,7 @@
 # Local stdio MCP servers for code discovery, spawned per session by Claude Code.
 # (codegraph lives in tools.nix beside its CLI; headroom in headroom.nix.)
 {
-  sven,
+  yen,
   inputs,
   lib,
   ...
@@ -34,8 +34,8 @@ let
   '';
 in
 {
-  sven.aspects.ai-mcp = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-mcp = {
+    at = yen.aspects.vic-headless;
     claude-allow = kb.tools;
     git-ignores = [
       ".serena"

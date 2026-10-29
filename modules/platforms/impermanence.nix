@@ -1,7 +1,7 @@
 # impermanence: features give the system paths they own on the `persist` sink; a host with `impermanence.enable` bind-mounts them from /nix/persist.
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 let
-  inherit (sven.lib) opt;
+  inherit (yen.lib) opt;
   # sini helpers/mergePersist: unique union of the entries { directories; files; }
   merge = es: {
     directories = lib.unique (builtins.concatMap (e: e.directories or [ ]) es);
@@ -17,13 +17,13 @@ let
 in
 {
   # both gates default off: `enable` = binds only (nothing deleted), `wipeRoot` = initrd root rollback.
-  sven.kinds.machine.fields.impermanence = {
+  yen.kinds.machine.fields.impermanence = {
     enable = opt lib.types.bool false;
     wipeRoot = opt lib.types.bool false;
   };
 
   # user and feature entries reach the host (a guest keeps its own: platforms/microvm.nix)
-  sven.kinds.host.sinks.persist = {
+  yen.kinds.host.sinks.persist = {
     inherit reduce;
     nixos =
       { scope, persist, ... }:

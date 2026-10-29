@@ -1,7 +1,7 @@
 # infra checks: facts that host data states, compared with each realized NixOS config (fleet flake/infra.nix).
 # `checks.x86_64-linux.infra-<host>` fails with the facts that do not hold, so a host never drifts from its data.
 {
-  sven,
+  yen,
   lib,
   inputs,
   ...
@@ -29,8 +29,8 @@ let
   fact = path: eq: { inherit path eq; };
 in
 {
-  sven.kinds.fleet.sinks.infra = {
-    reduce = sven.lib.reduce.merge;
+  yen.kinds.fleet.sinks.infra = {
+    reduce = yen.lib.reduce.merge;
     out =
       { infra, out, ... }:
       {
@@ -41,8 +41,8 @@ in
       };
   };
 
-  sven.aspects.infra-facts = {
-    at = sven.kinds.host;
+  yen.aspects.infra-facts = {
+    at = yen.kinds.host;
     infra =
       {
         host,

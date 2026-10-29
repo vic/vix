@@ -1,8 +1,8 @@
-# fleet ir (a fn of sven and lib): nodes + edges of the structure views, from `sven.lib.graph` and kind and sink declarations.
+# fleet ir (a fn of yen and lib): nodes + edges of the structure views, from `yen.lib.graph` and kind and sink declarations.
 # A node is { id; label; kind; group }, an edge { from; to; label; live }. `_readme-map.nix` renders each view.
-{ sven, lib }:
+{ yen, lib }:
 let
-  g = sven.lib.graph;
+  g = yen.lib.graph;
   sorted = xs: lib.sort (a: b: a < b) (lib.unique xs);
   names = v: if lib.isAttrs v then lib.attrNames v else [ ];
   byId = lib.listToAttrs (map (s: lib.nameValuePair s.id s) g.scopes);
@@ -19,7 +19,7 @@ let
   groupOf =
     s:
     if lib.elem s.kind places then
-      "${root.id}/system:${sven.${s.kind}.${s.name}.system.name}"
+      "${root.id}/system:${yen.${s.kind}.${s.name}.system.name}"
     else if
       s.kind == "user" && byId ? ${parentOf s.id} && lib.elem byId.${parentOf s.id}.kind places
     then
@@ -48,13 +48,13 @@ let
         name = n;
         decl = if lib.isAttrs v then v else { };
       }) (d.sinks or { })
-    ) sven.kinds
+    ) yen.kinds
   );
   receiversOf =
     sink:
     sorted (map (e: lib.last (lib.splitString ":" e.to)) (lib.filter (e: e.sink == sink) g.edges));
 in
-import ./_fleet-gates.nix { inherit sven lib; }
+import ./_fleet-gates.nix { inherit yen lib; }
 // {
   fleetMap = {
     nodes = map (s: {
@@ -91,7 +91,7 @@ import ./_fleet-gates.nix { inherit sven lib; }
       id = "k:${k}";
       label = k;
       kind = "kind";
-    }) (lib.attrNames sven.kinds);
+    }) (lib.attrNames yen.kinds);
     edges = lib.concatLists (
       lib.mapAttrsToList (
         k: d:
@@ -110,7 +110,7 @@ import ./_fleet-gates.nix { inherit sven lib; }
             }
           ) (d.fields or { })
         )
-      ) sven.kinds
+      ) yen.kinds
     );
   };
 

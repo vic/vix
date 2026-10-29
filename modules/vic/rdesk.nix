@@ -1,9 +1,9 @@
 # rdesk: remote desktop tools. DISABLED (as in the old tree): `at` is empty, active nowhere.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.vic-rdesk = {
+  yen.aspects.vic-rdesk = {
     at = [ ];
-    unfree = sven.helpers.allowUnfree [ "anydesk" ];
+    unfree = yen.helpers.allowUnfree [ "anydesk" ];
 
     homeManager =
       { out, pkgs, ... }:

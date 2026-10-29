@@ -1,8 +1,8 @@
 # cli-tools: everyday command line packages and nh.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.cli-tools = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.cli-tools = {
+    at = yen.aspects.vic-headless;
     dots = {
       ".config/btop" = "config/btop";
       ".config/bottom" = "config/bottom";

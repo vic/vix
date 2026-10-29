@@ -1,11 +1,11 @@
 # People: the user kind (identity, login shell, admin), vic, and the user pools that features fill.
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 let
-  inherit (sven.lib) opt maybe reduce;
+  inherit (yen.lib) opt maybe reduce;
   # an element is a list of strings; the reader gets them unique, first-seen order
   list = {
-    reduce = sven.helpers.flat;
-    of = sven.helpers.listOf lib.types.str;
+    reduce = yen.helpers.flat;
+    of = yen.helpers.listOf lib.types.str;
   };
   # same elements, sorted: permission rules read the same whatever order the files load in
   sorted = {
@@ -20,7 +20,7 @@ let
   };
 in
 {
-  sven.kinds.user = {
+  yen.kinds.user = {
     fields = {
       fullName = lib.types.str;
       email = lib.types.str;
@@ -35,7 +35,7 @@ in
     };
   };
 
-  sven.user.vic = {
+  yen.user.vic = {
     fullName = "Victor Borja";
     email = "vborja@apache.org";
     shell = "fish";

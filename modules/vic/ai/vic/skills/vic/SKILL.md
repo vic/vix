@@ -172,7 +172,7 @@ Shell = fish. Heredocs DON'T WORK. NEVER `cat`, NEVER python, NEVER `git`.
 - CVMN spk in saved text.
 
 #### 🔬 QUIPU STORE = WHAT WORKS (measured 2026-10-28, v0.16.2, 4152 entities, 35986 facts)
-Re-measure on version change: `quipu_version` + `quipu_stats`. Design/thesis: `~/hk/sven/vic/quipu-lessons.md`.
+Re-measure on version change: `quipu_version` + `quipu_stats`. Design/thesis: `~/hk/yen/vic/quipu-lessons.md`.
 
 | tool | state | use |
 |---|---|---|

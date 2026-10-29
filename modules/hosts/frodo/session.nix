@@ -1,8 +1,8 @@
 # frodo session: apps and desktop of vic's laptop (audio comes from bootable).
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.frodo-apps = {
-    at = sven.host.frodo;
+  yen.aspects.frodo-apps = {
+    at = yen.host.frodo;
     nixos =
       { lib, pkgs, ... }:
       {
@@ -34,8 +34,8 @@
       };
   };
 
-  sven.aspects.frodo-desktop = {
-    at = sven.host.frodo;
+  yen.aspects.frodo-desktop = {
+    at = yen.host.frodo;
     nixos = {
       services.displayManager.autoLogin.enable = true;
       # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
@@ -45,10 +45,10 @@
   };
 
   # vic's laptop packages and autologin: written for the user scope, not for the literal "vic".
-  sven.aspects.frodo-user = {
-    at = sven.lib.all [
-      sven.kinds.user
-      (sven.lib.within sven.host.frodo)
+  yen.aspects.frodo-user = {
+    at = yen.lib.all [
+      yen.kinds.user
+      (yen.lib.within yen.host.frodo)
     ];
     account =
       { user, pkgs, ... }:

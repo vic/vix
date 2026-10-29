@@ -1,9 +1,9 @@
 # Niri session: the compositor, its helpers, and the keyring it expects.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.niri-desktop = {
-    at = sven.lib.all [
-      sven.helpers.linux
+  yen.aspects.niri-desktop = {
+    at = yen.lib.all [
+      yen.helpers.linux
       (s: builtins.elem "niri" s.desktops)
     ];
     nixos =
@@ -24,8 +24,8 @@
   };
 
   # vic's niri and noctalia configs: on every desktop he uses (old vix linked them everywhere).
-  sven.aspects.vic-niri = {
-    at = sven.aspects.vic-gui;
+  yen.aspects.vic-niri = {
+    at = yen.aspects.vic-gui;
     dots = {
       ".config/niri" = "config/niri";
       ".config/noctalia" = "config/noctalia";

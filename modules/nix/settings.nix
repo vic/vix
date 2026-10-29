@@ -1,14 +1,14 @@
 # nix-settings: cachix substitutes, flakes, trusted users, weekly gc, on workstations and wsl (nixos and darwin).
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.nix-settings = {
+  yen.aspects.nix-settings = {
     at = [
-      (sven.lib.all [
-        sven.helpers.linux
+      (yen.lib.all [
+        yen.helpers.linux
         (s: s.workstation || s.form == "wsl")
       ])
-      (sven.lib.all [
-        sven.kinds.mac
+      (yen.lib.all [
+        yen.kinds.mac
         (s: s.workstation)
       ])
     ];
@@ -40,8 +40,8 @@
   };
 
   # every machine, laptops and servers too
-  sven.aspects.nix-tuning = {
-    at = sven.helpers.machines;
+  yen.aspects.nix-tuning = {
+    at = yen.helpers.machines;
     os.nix.settings = {
       min-free = 128 * 1024 * 1024; # gc starts when a build leaves less free
       max-free = 1024 * 1024 * 1024; # and frees up to this much

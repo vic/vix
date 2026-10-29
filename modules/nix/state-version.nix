@@ -1,19 +1,19 @@
 # State versions: defaults every os and home config starts from (a host may set its own).
-{ sven, ... }:
+{ yen, ... }:
 let
   default = path: v: { lib, ... }: lib.setAttrByPath path (lib.mkDefault v);
 in
 {
-  sven.aspects.nixos-state = {
-    at = sven.helpers.linux;
+  yen.aspects.nixos-state = {
+    at = yen.helpers.linux;
     nixos = default [ "system" "stateVersion" ] "25.05";
   };
-  sven.aspects.darwin-state = {
-    at = sven.kinds.mac;
+  yen.aspects.darwin-state = {
+    at = yen.kinds.mac;
     darwin = default [ "system" "stateVersion" ] 6;
   };
-  sven.aspects.home-state = {
-    at = sven.kinds.user;
+  yen.aspects.home-state = {
+    at = yen.kinds.user;
     homeManager = default [ "home" "stateVersion" ] "25.05";
   };
 }

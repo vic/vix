@@ -1,8 +1,8 @@
 # release images: bootable ISO (bombadil) and WSL tarball (annatar), read back from the flake's own configs.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.release-images = {
-    at = sven.system.x86_64-linux;
+  yen.aspects.release-images = {
+    at = yen.system.x86_64-linux;
     packages =
       { out, ... }:
       {

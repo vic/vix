@@ -1,9 +1,9 @@
 # macos-keys: keyd remap to macOS-style keys, on hosts with keyboard = macos.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.macos-keys = {
-    at = sven.lib.all [
-      sven.helpers.linux
+  yen.aspects.macos-keys = {
+    at = yen.lib.all [
+      yen.helpers.linux
       (s: s.keyboard == "macos")
     ];
     nixos =

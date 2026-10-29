@@ -1,32 +1,32 @@
 # Workspaces: one per purpose; each becomes an isolated claude guest (microvm) on its host.
 # Guests come from this data: ids follow the sorted workspace names, so addr and mac never collide.
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 let
-  names = lib.attrNames sven.workspace; # sorted
+  names = lib.attrNames yen.workspace; # sorted
   index = n: lib.lists.findFirstIndex (x: x == n) 0 names;
 in
 {
-  sven.kinds.workspace.fields = {
+  yen.kinds.workspace.fields = {
     repo = lib.types.str; # host path, shared into its guest at the same path
-    on = sven.lib.opt sven.kinds.host sven.host.frodo;
+    on = yen.lib.opt yen.kinds.host yen.host.frodo;
   };
-  sven.kinds.guest.fields.workspace = sven.lib.maybe sven.kinds.workspace;
+  yen.kinds.guest.fields.workspace = yen.lib.maybe yen.kinds.workspace;
 
-  sven.workspace.gen.repo = "/home/vic/hk/gen";
-  sven.workspace.dnx.repo = "/home/vic/hk/dnx";
+  yen.workspace.gen.repo = "/home/vic/hk/gen";
+  yen.workspace.dnx.repo = "/home/vic/hk/dnx";
 
-  sven.guest = lib.mapAttrs (n: w: {
+  yen.guest = lib.mapAttrs (n: w: {
     inherit (w) on;
     system = w.on.system;
-    users = [ sven.user.vic ];
+    users = [ yen.user.vic ];
     workspace = w;
     addr = "10.0.0.${toString (2 + index n)}";
     macAddress = "02:00:00:00:00:${lib.fixedWidthString 2 "0" (toString (1 + index n))}";
-  }) sven.workspace;
+  }) yen.workspace;
 
-  sven.aspects.workspace-share = {
-    at = sven.lib.all [
-      sven.kinds.guest
+  yen.aspects.workspace-share = {
+    at = yen.lib.all [
+      yen.kinds.guest
       (s: s.workspace != null)
     ];
     nixos =

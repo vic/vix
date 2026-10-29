@@ -1,14 +1,14 @@
 # vim: editor profiles below each system, each an nvf config the `nvf` sink builds into packages.<profile>.
 {
-  sven,
+  yen,
   lib,
   inputs,
   ...
 }:
 let
-  inherit (sven.lib) opt maybe;
-  inherit (sven.helpers) listOf enum;
-  # every feature an aspect can gate on: `at = sven.helpers.vimHas "snacks";`
+  inherit (yen.lib) opt maybe;
+  inherit (yen.helpers) listOf enum;
+  # every feature an aspect can gate on: `at = yen.helpers.vimHas "snacks";`
   features = builtins.filter (w: builtins.isString w && w != "") (
     builtins.split "[[:space:]]+" ''
       avante blink bufferline codecompanion conform copilot copilot-chat dropbar flash globals
@@ -19,8 +19,8 @@ let
   );
 in
 {
-  sven.kinds.system.spawns.vim = _: sven.vim; # one profile scope per system
-  sven.kinds.vim = {
+  yen.kinds.system.spawns.vim = _: yen.vim; # one profile scope per system
+  yen.kinds.vim = {
     fields = {
       features = opt (listOf (enum features)) [ ];
       theme = maybe lib.types.str; # a colorscheme name
@@ -37,7 +37,7 @@ in
         ...
       }:
       let
-        # a profile's aspects may allow unfree plugin deps (`unfree = sven.helpers.allowUnfree [ .. ];`)
+        # a profile's aspects may allow unfree plugin deps (`unfree = yen.helpers.allowUnfree [ .. ];`)
         pkgs =
           if unfree == { } then
             system.legacyPackages
@@ -66,13 +66,13 @@ in
   };
 
   # a sink with no elements has no receiver, so no forward: a bare profile (vscode-vim) still builds
-  sven.aspects.vim-profile = {
-    at = sven.kinds.vim;
+  yen.aspects.vim-profile = {
+    at = yen.kinds.vim;
     nvf = { };
   };
 
-  sven.aspects.vim-inputs = {
-    at = sven.fleet.vix;
+  yen.aspects.vim-inputs = {
+    at = yen.fleet.vix;
     flake-file.inputs = {
       nvf = {
         url = "github:notashelf/nvf";

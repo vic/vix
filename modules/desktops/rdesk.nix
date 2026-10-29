@@ -7,7 +7,7 @@ let
   ];
 in
 {
-  sven.aspects.vix-rdesk = {
+  yen.aspects.vix-rdesk = {
     ports = map (port: {
       inherit port;
       what = "rdesk";

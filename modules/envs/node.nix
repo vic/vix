@@ -1,8 +1,8 @@
 # envs: node tools.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.env-node = {
-    at = sven.helpers.envHas "node";
+  yen.aspects.env-node = {
+    at = yen.helpers.envHas "node";
     env-packages =
       { env, ... }:
       let

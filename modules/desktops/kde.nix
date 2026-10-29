@@ -1,9 +1,9 @@
 # kde-desktop: Plasma 6 on SDDM wayland, with avahi, on hosts that list kde.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.kde-desktop = {
-    at = sven.lib.all [
-      sven.helpers.linux
+  yen.aspects.kde-desktop = {
+    at = yen.lib.all [
+      yen.helpers.linux
       (s: builtins.elem "kde" s.desktops)
     ];
     nixos =

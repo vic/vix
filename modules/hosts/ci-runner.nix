@@ -1,9 +1,9 @@
 # ci-runner: a machine with a GitHub runner label (ghRunner) is a bare CI runner, no users; ci.yml and the invariants read the same datum.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.ci-runner = {
-    at = sven.lib.all [
-      sven.helpers.machines
+  yen.aspects.ci-runner = {
+    at = yen.lib.all [
+      yen.helpers.machines
       (s: s.ghRunner != null)
     ];
     nixos = {

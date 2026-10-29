@@ -1,8 +1,8 @@
 # nix-daemon: builds live in a memory-capped slice and die first under pressure; gc runs idle.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.nix-daemon-containment = {
-    at = sven.kinds.host;
+  yen.aspects.nix-daemon-containment = {
+    at = yen.kinds.host;
     nixos = {
       systemd.slices.nix-daemon.sliceConfig = {
         MemoryHigh = "60%";

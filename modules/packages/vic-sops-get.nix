@@ -1,8 +1,8 @@
 # vic-sops-get: decrypt vic secrets with sops, optionally derive an age key.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.vic-sops-get = {
-    at = sven.kinds.system;
+  yen.aspects.vic-sops-get = {
+    at = yen.kinds.system;
     packages =
       { system, ... }:
       let

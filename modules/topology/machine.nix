@@ -1,8 +1,8 @@
 # Machines: the data kind host, guest and mac copy their fields from, with typed facts hardware aspects key on.
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 let
-  inherit (sven.lib) opt maybe derive;
-  inherit (sven.helpers) listOf enum;
+  inherit (yen.lib) opt maybe derive;
+  inherit (yen.helpers) listOf enum;
   # the nixos-facter report of a host with hosts/<name>/_nixos/facter.json (null otherwise)
   facter =
     m:
@@ -34,10 +34,10 @@ let
       null;
 in
 {
-  sven.kinds.machine.fields = {
-    system = sven.kinds.system;
-    channel = opt sven.kinds.channel sven.channel.unstable;
-    users = opt (listOf sven.kinds.user) [ ];
+  yen.kinds.machine.fields = {
+    system = yen.kinds.system;
+    channel = opt yen.kinds.channel yen.channel.unstable;
+    users = opt (listOf yen.kinds.user) [ ];
     # a facter report decides when the host file does not say (an explicit value, null too, wins)
     cpu = derive (maybe (enum [
       "amd"
@@ -62,8 +62,8 @@ in
     layouts = opt (listOf (enum [ "enthium" ])) [ ];
   };
 
-  sven.aspects.hostname = {
-    at = sven.helpers.machines;
+  yen.aspects.hostname = {
+    at = yen.helpers.machines;
     os = { scope, ... }: { networking.hostName = scope.name; };
   };
 }

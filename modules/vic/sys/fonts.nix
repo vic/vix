@@ -1,10 +1,10 @@
 # fonts: nerd fonts in the user's account packages (machines only, not standalone homes).
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.vic-fonts = {
-    at = sven.lib.all [
-      sven.aspects.vic-headless
-      (sven.lib.within sven.helpers.machines) # account lands on nixos and darwin users
+  yen.aspects.vic-fonts = {
+    at = yen.lib.all [
+      yen.aspects.vic-headless
+      (yen.lib.within yen.helpers.machines) # account lands on nixos and darwin users
     ];
     account =
       { pkgs, ... }:

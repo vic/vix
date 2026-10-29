@@ -1,11 +1,11 @@
-# readme user data (a fn of sven, lib and mermaid): secrets and their consumers, vim profiles, envs, dotfiles.
+# readme user data (a fn of yen, lib and mermaid): secrets and their consumers, vim profiles, envs, dotfiles.
 {
-  sven,
+  yen,
   lib,
   mermaid,
 }:
 let
-  g = sven.lib.graph;
+  g = yen.lib.graph;
   sorted = xs: lib.sort (a: b: a < b) (lib.unique xs);
   code = xs: lib.concatMapStringsSep ", " (x: "`${x}`") (sorted xs);
   row = cells: "| ${lib.concatStringsSep " | " cells} |";
@@ -36,9 +36,9 @@ let
   # the secrets plan: sops file -> secret -> the aspect that gives it on a `secrets` sink -> where it lands (a user's
   # place, or a host). A `deploy = false` secret reaches no machine: only vic-sops-get and vic-sops-rotate read it.
   fileOf = s: if s.sopsFile == null then "secrets.yaml" else "secrets/${baseNameOf s.sopsFile}";
-  declared = lib.attrValues sven.secret;
+  declared = lib.attrValues yen.secret;
   asks = lib.genAttrs (sorted (map aspectOf (given "secrets"))) (
-    a: map (s: s.name) (lib.filter lib.isAttrs (lib.toList (value [ ] sven.aspects.${a}.secrets)))
+    a: map (s: s.name) (lib.filter lib.isAttrs (lib.toList (value [ ] yen.aspects.${a}.secrets)))
   );
   asked = lib.concatLists (lib.attrValues asks);
   # a user's secrets land on its place; a host's on the host
@@ -102,22 +102,22 @@ let
   # deployable, yet no aspect gives it
   unasked = map (s: s.name) (lib.filter (s: s.deploy && !lib.elem s.name asked) declared);
 
-  vims = lib.attrNames sven.vim;
+  vims = lib.attrNames yen.vim;
   vim = table ([ "feature" ] ++ vims) (
     [
       (
         [ "theme" ]
-        ++ map (v: lib.optionalString (sven.vim.${v}.theme != null) "`${sven.vim.${v}.theme}`") vims
+        ++ map (v: lib.optionalString (yen.vim.${v}.theme != null) "`${yen.vim.${v}.theme}`") vims
       )
       (
         [ "gui, aliases" ]
         ++ map (
-          v: lib.concatStringsSep " " (lib.optional sven.vim.${v}.gui "gui" ++ sven.vim.${v}.aliases)
+          v: lib.concatStringsSep " " (lib.optional yen.vim.${v}.gui "gui" ++ yen.vim.${v}.aliases)
         ) vims
       )
     ]
-    ++ map (f: [ "`${f}`" ] ++ map (v: mark (lib.elem f sven.vim.${v}.features)) vims) (
-      sorted (lib.concatMap (v: sven.vim.${v}.features) vims)
+    ++ map (f: [ "`${f}`" ] ++ map (v: mark (lib.elem f yen.vim.${v}.features)) vims) (
+      sorted (lib.concatMap (v: yen.vim.${v}.features) vims)
     )
   );
 
@@ -127,13 +127,13 @@ let
   envPkgs =
     e: a:
     let
-      f = sven.aspects.${a}.env-packages;
+      f = yen.aspects.${a}.env-packages;
     in
     map lib.getName (
       if lib.isFunction f then
         f {
-          env = sven.env.${e} // {
-            system = sven.system.x86_64-linux;
+          env = yen.env.${e} // {
+            system = yen.system.x86_64-linux;
           };
         }
       else
@@ -142,10 +142,10 @@ let
   env = table [ "env" "langs" "aspects" "packages" ] (
     map (e: [
       "`${e}`"
-      (code sven.env.${e}.langs)
+      (code yen.env.${e}.langs)
       (code (envAspects e))
       (code (lib.concatMap (envPkgs e) (envAspects e)))
-    ]) (lib.attrNames sven.env)
+    ]) (lib.attrNames yen.env)
   );
 
   dots = table [ "home path" "modules/vic/dots/" "aspect" ] (
@@ -155,7 +155,7 @@ let
         "`${t}`"
         "`${s}`"
         "`${a}`"
-      ]) (value { } sven.aspects.${a}.dots)
+      ]) (value { } yen.aspects.${a}.dots)
     ) (sorted (map aspectOf (given "dots")))
   );
 in

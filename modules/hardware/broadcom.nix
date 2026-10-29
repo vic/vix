@@ -1,12 +1,12 @@
 # wl-broadcom: Broadcom STA wifi driver, on hosts with broadcom wifi.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.wl-broadcom = {
-    at = sven.lib.all [
-      sven.helpers.linux
+  yen.aspects.wl-broadcom = {
+    at = yen.lib.all [
+      yen.helpers.linux
       (s: s.wifi == "broadcom")
     ];
-    unfree = sven.helpers.allowUnfree [ "broadcom-sta" ];
+    unfree = yen.helpers.allowUnfree [ "broadcom-sta" ];
     nixos =
       { lib, config, ... }:
       {

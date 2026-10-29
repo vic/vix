@@ -1,8 +1,8 @@
 # CI workflow: .github/workflows/ci.yml generated from the `ci-jobs` and `checks` sinks (one matrix job per runner).
-{ sven, ... }:
+{ yen, ... }:
 let
   yaml = import ./_yaml.nix;
-  runnerOf = system: sven.system.${system}.runner;
+  runnerOf = system: yen.system.${system}.runner;
   # generated files (README, ci.yml) are checked on every PR event, so they are never stale
   isFiles = j: builtins.match "check-files/.*" j.name != null;
   setup = [
@@ -86,7 +86,7 @@ let
           "synchronize"
         ];
         pull_request_review.types = [ "submitted" ];
-        push.branches = [ "sven" ];
+        push.branches = [ "yen" ];
       };
       concurrency = {
         group = "\${{ github.workflow }}-\${{ github.ref }}";
@@ -104,9 +104,9 @@ let
         )
         // {
           build-files = job "true" (runnerOf "x86_64-linux") files;
-          # sven gate: one eval, so every PR event runs it: no error records, invariants ok, no undefined aspect
-          sven-gate = {
-            name = "sven gate";
+          # yen gate: one eval, so every PR event runs it: no error records, invariants ok, no undefined aspect
+          yen-gate = {
+            name = "yen gate";
             runs-on = runnerOf "x86_64-linux";
             steps = setup ++ [
               {
@@ -122,8 +122,8 @@ let
     };
 in
 {
-  sven.aspects.ci-workflow = {
-    at = sven.system.x86_64-linux;
+  yen.aspects.ci-workflow = {
+    at = yen.system.x86_64-linux;
     files =
       { out, ... }:
       {

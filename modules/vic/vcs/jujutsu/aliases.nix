@@ -1,8 +1,8 @@
 # jujutsu-aliases: jj settings.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.jujutsu-aliases = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.jujutsu-aliases = {
+    at = yen.aspects.vic-headless;
     homeManager.programs.jujutsu.settings.aliases = {
       tug = [
         "bookmark"

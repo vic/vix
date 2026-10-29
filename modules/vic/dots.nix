@@ -1,7 +1,7 @@
 # dots: pool of dotfiles features give, linked into $HOME; live out-of-store links into the machine's vix checkout, else store copies.
-{ lib, sven, ... }:
+{ lib, yen, ... }:
 let
-  inherit (sven.helpers) place;
+  inherit (yen.helpers) place;
   linker =
     checkout: config: path:
     if checkout != null then
@@ -15,20 +15,20 @@ in
 {
   # absolute path of the vix checkout on this machine or home: its dotfiles link live into it (null: store copies).
   # a host or mac with users has it at the usual place (a guest has no checkout); an explicit value, null too, wins.
-  sven.kinds.machine.fields.checkout = sven.lib.derive (sven.lib.maybe lib.types.str) (
+  yen.kinds.machine.fields.checkout = yen.lib.derive (yen.lib.maybe lib.types.str) (
     m: if m.kind == "guest" || m.users == [ ] then null else "/home/vic/hk/vix"
   );
-  sven.kinds.home.fields.checkout = sven.lib.maybe lib.types.str;
+  yen.kinds.home.fields.checkout = yen.lib.maybe lib.types.str;
 
   # a feature gives { "<home.file key>" = "<path relative to modules/vic/dots>"; } for each dotfile it owns.
-  sven.kinds.user.sinks.dots = {
-    reduce = sven.lib.reduce.merge;
+  yen.kinds.user.sinks.dots = {
+    reduce = yen.lib.reduce.merge;
     # every dots source exists in ./dots: a typo is an error record, not a dangling link
-    of = sven.helpers.attrsOf (sven.lib.is (p: builtins.pathExists (./dots + "/${p}")));
+    of = yen.helpers.attrsOf (yen.lib.is (p: builtins.pathExists (./dots + "/${p}")));
   };
 
-  sven.aspects.vic-dots = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.vic-dots = {
+    at = yen.aspects.vic-headless;
     # rtk is owned by the ai modules, which this pass may not touch.
     dots.".config/rtk" = "config/rtk";
     homeManager =

@@ -1,9 +1,9 @@
 # nargun: workstation with KDE and niri.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.host.nargun = {
-    system = sven.system.x86_64-linux;
-    users = [ sven.user.vic ];
+  yen.host.nargun = {
+    system = yen.system.x86_64-linux;
+    users = [ yen.user.vic ];
     workstation = true;
     cpu = "amd";
     keyboard = "macos";
@@ -14,6 +14,6 @@
     ];
     layouts = [ "enthium" ];
   };
-  sven.aspects.trusted.at = sven.host.nargun;
+  yen.aspects.trusted.at = yen.host.nargun;
 
 }

@@ -1,6 +1,6 @@
 # Claude Code plugin marketplaces, store-pinned: CC resolves plugins from these
 # nix-store paths instead of cloning from GitHub at runtime.
-{ sven, inputs, lib, ... }:
+{ yen, inputs, lib, ... }:
 let
   # marketplace name -> url of its flake input (vix listed this table twice, identical)
   marketplaces = {
@@ -14,8 +14,8 @@ let
   };
 in
 {
-  sven.aspects.ai-plugins = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-plugins = {
+    at = yen.aspects.vic-headless;
     flake-file.inputs = builtins.mapAttrs (_: url: {
       inherit url;
       flake = false;

@@ -1,18 +1,18 @@
 # vim plugins: plain plugins on the runtime path (lazy.nvim, tv.nvim, tv.vim).
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.vim-lazy = {
-    at = sven.helpers.vimHas "lazy";
+  yen.aspects.vim-lazy = {
+    at = yen.helpers.vimHas "lazy";
     nvf = { pkgs, ... }: { vim.startPlugins = [ pkgs.vimPlugins.lazy-nvim ]; };
   };
 
-  sven.aspects.vim-tv = {
-    at = sven.helpers.vimHas "tv";
+  yen.aspects.vim-tv = {
+    at = yen.helpers.vimHas "tv";
     nvf = { pkgs, ... }: { vim.startPlugins = [ pkgs.vimPlugins.tv-nvim ]; };
   };
 
-  sven.aspects.vim-tv-vim = {
-    at = sven.helpers.vimHas "tv-vim";
+  yen.aspects.vim-tv-vim = {
+    at = yen.helpers.vimHas "tv-vim";
     nvf =
       { pkgs, ... }:
       {

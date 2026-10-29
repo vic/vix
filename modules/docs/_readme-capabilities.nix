@@ -1,13 +1,13 @@
-# readme capabilities (a fn of sven, lib, mermaid and the engine lib): counts, invariants, stored queries, MCP tools, library index.
+# readme capabilities (a fn of yen, lib, mermaid and the engine lib): counts, invariants, stored queries, MCP tools, library index.
 # Nothing is listed by hand, so nothing goes missing.
 {
-  sven,
+  yen,
   lib,
   mermaid,
   engine,
 }:
 let
-  g = sven.lib.graph;
+  g = yen.lib.graph;
   sorted = xs: lib.sort (a: b: a < b) (lib.unique xs);
   code = xs: lib.concatMapStringsSep ", " (x: "`${x}`") (sorted xs);
   names = v: if lib.isAttrs v then lib.attrNames v else [ ];
@@ -19,11 +19,11 @@ let
       m = builtins.match ".*/(modules/.*)" f;
     in
     if m == null then baseNameOf f else lib.head m;
-  files = path: lib.concatMapStringsSep ", " (f: "`${rel f}`") (sven.lib.declaredIn path);
+  files = path: lib.concatMapStringsSep ", " (f: "`${rel f}`") (yen.lib.declaredIn path);
   kindRow =
     k:
     let
-      d = sven.kinds.${k};
+      d = yen.kinds.${k};
     in
     "| `${k}` | ${code (names (d.fields or { }))} | ${code (names (d.spawns or { }))} | ${code (names (d.sinks or { }))} | ${
       toString (lib.length (lib.filter (s: s.kind == k) g.scopes))
@@ -39,7 +39,7 @@ let
   queryRow =
     n:
     let
-      fa = builtins.functionArgs sven.queries.${n};
+      fa = builtins.functionArgs yen.queries.${n};
       ps = lib.filter (a: a != "r") (lib.attrNames fa);
     in
     "| `${n}` | ${code (lib.filter (a: !fa.${a}) ps)} | ${code (lib.filter (a: fa.${a}) ps)} | ${
@@ -51,9 +51,9 @@ let
   mcpTools = sorted (
     lib.filter lib.isString (
       lib.flatten (
-        map (l: builtins.match ".*\"name\":\"(sven_[a-z_]+)\".*" l) (
+        map (l: builtins.match ".*\"name\":\"(yen_[a-z_]+)\".*" l) (
           lib.splitString "\n" (
-            builtins.replaceStrings [ "{" ] [ "\n{" ] (builtins.readFile ../../mcp/sven-mcp.sh)
+            builtins.replaceStrings [ "{" ] [ "\n{" ] (builtins.readFile ../../mcp/yen-mcp.sh)
           )
         )
       )
@@ -63,7 +63,7 @@ let
     nodes = [
       {
         id = "srv";
-        label = "sven-mcp (nix run .#sven-mcp)";
+        label = "yen-mcp (nix run .#yen-mcp)";
         kind = "output";
       }
     ]
@@ -77,26 +77,26 @@ let
       to = "t:${t}";
     }) mcpTools;
   };
-  # aspects by the label prefix they got (sven.lib.labels: the lowest trust over the aspect's files)
+  # aspects by the label prefix they got (yen.lib.labels: the lowest trust over the aspect's files)
   labelRow =
     p: l:
     let
-      ns = lib.attrNames (lib.filterAttrs (_: x: x.prefix == p) sven.lib.labels);
+      ns = lib.attrNames (lib.filterAttrs (_: x: x.prefix == p) yen.lib.labels);
     in
     "| `${p}` | ${toString l.trust} | ${toString (lib.length ns)}${
       lib.optionalString (lib.length ns <= 8) ": ${code ns}"
     } |";
-  cycles = lib.attrNames (lib.filterAttrs (_: a: a.cycle) sven.lib.schema.aspects);
+  cycles = lib.attrNames (lib.filterAttrs (_: a: a.cycle) yen.lib.schema.aspects);
 in
 ''
   ## Counts
 
-  ${toString (lib.length g.scopes)} scopes, ${toString (lib.length (lib.attrNames sven.kinds))} kinds, ${toString (lib.length (lib.attrNames sven.aspects))} aspects, ${toString (lib.length g.edges)} routed elements.
+  ${toString (lib.length g.scopes)} scopes, ${toString (lib.length (lib.attrNames yen.kinds))} kinds, ${toString (lib.length (lib.attrNames yen.aspects))} aspects, ${toString (lib.length g.edges)} routed elements.
   A kind with 0 scopes is data: nothing spawns it.
 
   | Kind | Fields | Spawns | Sinks | Scopes |
   |---|---|---|---|---|
-  ${lib.concatMapStringsSep "\n" kindRow (lib.attrNames sven.kinds)}
+  ${lib.concatMapStringsSep "\n" kindRow (lib.attrNames yen.kinds)}
 
   | Sink | Given at | Received at | Elements |
   |---|---|---|---|
@@ -104,7 +104,7 @@ in
 
   ## Capability index
 
-  **Invariants** (`sven.invariants`, Datalog over the fleet's facts). The result is a query on the eval result, not
+  **Invariants** (`yen.invariants`, Datalog over the fleet's facts). The result is a query on the eval result, not
   readable inside the fleet: `nix eval --impure --json --file query.nix check.violations` (`[ ]` when every one holds).
 
   | Invariant | File |
@@ -117,31 +117,31 @@ in
         n
       ]
     } |"
-  ) (lib.attrNames sven.invariants)}
+  ) (lib.attrNames yen.invariants)}
 
-  **Stored queries** (`r.ask name args`, or the MCP tool `sven_ask`):
+  **Stored queries** (`r.ask name args`, or the MCP tool `yen_ask`):
 
   | Query | Required | Optional | File |
   |---|---|---|---|
-  ${lib.concatMapStringsSep "\n" queryRow (sorted (lib.attrNames sven.queries))}
+  ${lib.concatMapStringsSep "\n" queryRow (sorted (lib.attrNames yen.queries))}
 
-  **MCP tools** (${toString (lib.length mcpTools)}, `mcp/sven-mcp.sh`): ${code mcpTools}.
+  **MCP tools** (${toString (lib.length mcpTools)}, `mcp/yen-mcp.sh`): ${code mcpTools}.
 
   ${mermaid mcpView}
 
-  **Trust labels** (`sven.labels`, by file path prefix). An agent edits under a low-trust prefix;
+  **Trust labels** (`yen.labels`, by file path prefix). An agent edits under a low-trust prefix;
   `(import ./query.nix).floor 3` lists every element its aspects route.
 
   | Prefix | Trust | Aspects |
   |---|---|---|
-  ${lib.concatStringsSep "\n" (lib.mapAttrsToList labelRow sven.labelTable)}
+  ${lib.concatStringsSep "\n" (lib.mapAttrsToList labelRow yen.labelTable)}
 
   **Knowledge pack** (`out.rdfPack`, [agent/rdf.nix](modules/agent/rdf.nix)): the sha256 and count of the routing graph
   as sorted N-Triples (the same in every file order), and SHACL shapes from the schema: `nix eval --json .#rdfPack.sha256`.
 
   **Queries on an eval result** (`r = import ./query.nix`): ${
     code (
-      sven.lib.schema.queries
+      yen.lib.schema.queries
       ++ [
         "context"
         "explain"
@@ -156,7 +156,7 @@ in
     )
   }.
 
-  **Engine library** (`sven.lib`): ${
+  **Engine library** (`yen.lib`): ${
     code (
       lib.filter (
         n:
@@ -173,8 +173,8 @@ in
       ) (lib.attrNames engine)
     )
   }.
-  Reduce strategies: ${code (lib.attrNames engine.reduce)}. Change programs (`sven.lib.program`): ${code (lib.attrNames engine.program)}.
-  Graphs (`sven.lib.graphs`): ${code (lib.attrNames engine.graphs)}.
+  Reduce strategies: ${code (lib.attrNames engine.reduce)}. Change programs (`yen.lib.program`): ${code (lib.attrNames engine.program)}.
+  Graphs (`yen.lib.graphs`): ${code (lib.attrNames engine.graphs)}.
 
   **The cycle form** (`cycle = { tree, ... }: …`): ${
     if cycles == [ ] then

@@ -1,8 +1,8 @@
 # bert: CI runner mac, no users (the runner content is the ci-runner aspect).
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.mac.bert = {
-    system = sven.system.aarch64-darwin;
+  yen.mac.bert = {
+    system = yen.system.aarch64-darwin;
     ghRunner = "macos-latest";
   };
 }

@@ -1,27 +1,27 @@
 # emacs: data kind describing an emacs distribution (no scopes) and its instances.
 {
-  sven,
+  yen,
   lib,
   inputs,
   ...
 }:
 let
-  inherit (sven.lib) opt maybe;
+  inherit (yen.lib) opt maybe;
   t = lib.types;
   doomRev = inputs.doom-emacs.rev;
 in
 {
-  sven.kinds.emacs.fields = {
+  yen.kinds.emacs.fields = {
     initDir = maybe t.str; # --init-directory of the daemon
     daemon = opt t.bool false; # this distribution runs as the emacs service
     configDots = maybe t.str; # dots source linked at ~/.config/<name>
     wrapper = maybe t.str; # flake input whose package of the same name wraps our emacs
     bootstrap = maybe t.str; # activation script text; installed as <name>-install
-    bins = opt (sven.helpers.attrsOf t.str) { }; # shell scripts put on PATH
-    fish = opt (sven.helpers.attrsOf t.str) { }; # fish function bodies
+    bins = opt (yen.helpers.attrsOf t.str) { }; # shell scripts put on PATH
+    fish = opt (yen.helpers.attrsOf t.str) { }; # fish function bodies
   };
 
-  sven.emacs.spc = {
+  yen.emacs.spc = {
     wrapper = "SPC";
     fish = {
       mg = "spc u SPC gg -r \"$PWD\" RET";
@@ -30,7 +30,7 @@ in
     };
   };
 
-  sven.emacs.doom = {
+  yen.emacs.doom = {
     initDir = "~/.config/emacs";
     daemon = true;
     configDots = "config/doom";
@@ -65,8 +65,8 @@ in
     '';
   };
 
-  sven.aspects.emacs-inputs = {
-    at = sven.fleet.vix;
+  yen.aspects.emacs-inputs = {
+    at = yen.fleet.vix;
     flake-file.inputs.doom-emacs = {
       url = "github:doomemacs/doomemacs";
       flake = false;

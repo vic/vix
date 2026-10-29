@@ -1,15 +1,15 @@
 # home-manager: the homeManager sink (users on hosts, guests, macs and standalone homes), its platform sub-sinks,
 # the standalone home kind, and the hm module on machines that have users.
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 let
-  inherit (sven.lib)
+  inherit (yen.lib)
     all
     within
     has
     opt
     ;
-  inherit (sven.helpers) place linux;
-  user = sven.kinds.user;
+  inherit (yen.helpers) place linux;
+  user = yen.kinds.user;
   # a user on a darwin (or linux) machine or home
   onDarwin =
     d:
@@ -25,13 +25,13 @@ let
     ];
 in
 {
-  sven.kinds.home = {
+  yen.kinds.home = {
     fields = {
       user = user;
-      system = sven.kinds.system;
-      channel = opt sven.kinds.channel sven.channel.unstable;
+      system = yen.kinds.system;
+      channel = opt yen.kinds.channel yen.channel.unstable;
       # the host this home lives on (Den #739): it reads the host's data, and builds its own homeConfigurations
-      on = sven.lib.maybe sven.kinds.host;
+      on = yen.lib.maybe yen.kinds.host;
     };
     spawns.user = s: { ${s.user.name} = s.user; };
     # walls: a home's users never write the system of a host above it (a sink with no keys stops elements)
@@ -47,12 +47,12 @@ in
       "unfree"
     ] (_: { });
   };
-  sven.kinds.host.spawns.home =
-    s: lib.filterAttrs (_: h: h.on != null && sven.lib.same h.on s) sven.home;
+  yen.kinds.host.spawns.home =
+    s: lib.filterAttrs (_: h: h.on != null && yen.lib.same h.on s) yen.home;
 
-  sven.kinds.user.sinks = {
+  yen.kinds.user.sinks = {
     homeManager = {
-      at = within sven.helpers.places;
+      at = within yen.helpers.places;
       os = { user, homeManager, ... }: { home-manager.users.${user.name}.imports = homeManager; };
       # the same modules also build standalone as `homeConfigurations."<user>@<place>"` (not on macs)
       out =
@@ -66,38 +66,38 @@ in
           p = place scope;
         in
         # a declared home owns its name: host nargun's user would clash with home nargun (vix: fold conflict)
-        lib.optionalAttrs (p.kind == "home" || p.kind != "mac" && !(sven.home ? ${p.name})) {
+        lib.optionalAttrs (p.kind == "home" || p.kind != "mac" && !(yen.home ? ${p.name})) {
           homeConfigurations."${user.name}@${p.name}" = p.channel.home-manager.lib.homeManagerConfiguration {
-            pkgs = sven.helpers.pkgsOf p;
+            pkgs = yen.helpers.pkgsOf p;
             modules = homeManager;
           };
         };
     };
     homeLinux = {
-      at = sven.aspects.on-linux;
+      at = yen.aspects.on-linux;
       homeManager = { homeLinux, ... }: { imports = homeLinux; };
     };
     homeDarwin = {
-      at = sven.aspects.on-darwin;
+      at = yen.aspects.on-darwin;
       homeManager = { homeDarwin, ... }: { imports = homeDarwin; };
     };
   };
 
-  sven.aspects.hm-nixos = {
+  yen.aspects.hm-nixos = {
     at = all [
       linux
       (has user)
     ];
     nixos = { scope, ... }: { imports = [ scope.channel.home-manager.nixosModules.home-manager ]; };
   };
-  sven.aspects.hm-darwin = {
+  yen.aspects.hm-darwin = {
     at = all [
-      sven.kinds.mac
+      yen.kinds.mac
       (has user)
     ];
     darwin = { mac, ... }: { imports = [ mac.channel.home-manager.darwinModules.home-manager ]; };
   };
 
-  sven.aspects.on-linux.at = onDarwin false;
-  sven.aspects.on-darwin.at = onDarwin true;
+  yen.aspects.on-linux.at = onDarwin false;
+  yen.aspects.on-darwin.at = onDarwin true;
 }

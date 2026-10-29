@@ -1,7 +1,7 @@
-# readme: README.md generated from live sven data, written by `nix run .#write-files`.
+# readme: README.md generated from live yen data, written by `nix run .#write-files`.
 {
   lib,
-  sven,
+  yen,
   inputs,
   ...
 }:
@@ -9,7 +9,7 @@ let
   # README parts: plain `_` files (import-tree skips them)
   vocab = import ./_vocabulary.nix;
   vocabDirs = import ./_vocabulary-dirs.nix;
-  ir = import ./_fleet-ir.nix { inherit sven lib; };
+  ir = import ./_fleet-ir.nix { inherit yen lib; };
   map' = import ./_readme-map.nix { inherit lib ir; };
   inherit (map') mermaid;
   # collapsed section; the blank line after </summary> lets GitHub render the markdown inside
@@ -19,13 +19,13 @@ let
     ${body}
     </details>
   '';
-  host = lib.head (lib.attrNames (lib.filterAttrs (_: h: h.users != [ ]) sven.host));
-  home = lib.head (lib.attrValues sven.home);
+  host = lib.head (lib.attrNames (lib.filterAttrs (_: h: h.users != [ ]) yen.host));
+  home = lib.head (lib.attrValues yen.home);
   intro = ''
     # vix
 
-    Vic's machines, homes and dev envs in [sven](https://github.com/vic/sven): a real-world sven fleet.
-    ${toString (lib.length (lib.attrNames sven.host))} NixOS hosts, ${toString (lib.length (lib.attrNames sven.mac))} macs, ${toString (lib.length (lib.attrNames sven.home))} standalone homes, ${toString (lib.length (lib.attrNames sven.env))} dev envs and ${toString (lib.length (lib.attrNames sven.vim))} neovim profiles, from one tree of plain Nix files.
+    Vic's machines, homes and dev envs in [yen](https://github.com/vic/yen): a real-world yen fleet.
+    ${toString (lib.length (lib.attrNames yen.host))} NixOS hosts, ${toString (lib.length (lib.attrNames yen.mac))} macs, ${toString (lib.length (lib.attrNames yen.home))} standalone homes, ${toString (lib.length (lib.attrNames yen.env))} dev envs and ${toString (lib.length (lib.attrNames yen.vim))} neovim profiles, from one tree of plain Nix files.
     Every table and diagram below is computed from the fleet when this file is written.
 
     Generated file: edit `modules/docs/`, then run `nix run .#write-files`.
@@ -46,7 +46,7 @@ let
     nix eval --impure --json --expr '(import ./query.nix).ask "freePort" { name = "${host}"; }'
     nix eval --offline --impure --file tests.nix failed      # oracles: errors, check.ok, file order, laziness ([ ] when all hold)
     nix eval --offline --impure --file tests.nix e2e.failed  # each machine's and home's settings fingerprint vs vix
-    nix run .#sven-mcp                                   # MCP server for agents, on stdio
+    nix run .#yen-mcp                                   # MCP server for agents, on stdio
     ```
   '';
   # open decisions: a static list in docs/_open.nix, since vic's notes are not part of the repo
@@ -58,7 +58,7 @@ let
     ${lib.concatMapStringsSep "\n" (d: "- ${d}") (import ./_open.nix)}
   '';
   history = ''
-    - [sven (current)](https://github.com/vic/vix/tree/sven): Ren rewritten in sven; Ren classes and channels are sinks
+    - [yen (current)](https://github.com/vic/vix/tree/yen): Ren rewritten in yen; Ren classes and channels are sinks
     - [Ren](https://github.com/vic/vix/tree/ren)
     - [Den without flakes](https://github.com/vic/vix/tree/historic/den)
     - [Den with flakes + flake-parts](https://github.com/vic/vix/tree/historic/den-flake-parts)
@@ -70,8 +70,8 @@ let
   '';
 in
 {
-  sven.aspects.readme = {
-    at = sven.system.x86_64-linux;
+  yen.aspects.readme = {
+    at = yen.system.x86_64-linux;
     files =
       { ci-jobs, ... }:
       {
@@ -82,24 +82,24 @@ in
           commands
           map'.structure
           (import ./_readme-data.nix {
-            inherit sven lib mermaid;
+            inherit yen lib mermaid;
             ciJobs = ci-jobs;
           })
           (import ./_readme-wiring.nix {
-            inherit sven lib mermaid;
+            inherit yen lib mermaid;
             ciJobs = ci-jobs;
           })
-          (import ./_readme-data-user.nix { inherit sven lib mermaid; })
+          (import ./_readme-data-user.nix { inherit yen lib mermaid; })
           (import ./_readme-capabilities.nix {
-            inherit sven lib mermaid;
-            engine = (import inputs.sven).lib;
+            inherit yen lib mermaid;
+            engine = (import inputs.yen).lib;
           })
           (fold "Vocabulary: kinds, sinks, tiers, roles" (
-            import ./_readme-vocab.nix { inherit sven lib vocab; }
+            import ./_readme-vocab.nix { inherit yen lib vocab; }
           ))
           (fold "Directory structure" (import ./_readme-dirs.nix { inherit vocabDirs; }))
           (fold "Recipes: add a host, feature, env, ssh host, secret, port" (
-            import ./_readme-recipes.nix { inherit sven; }
+            import ./_readme-recipes.nix { inherit yen; }
           ))
           open
           (fold "History" history)

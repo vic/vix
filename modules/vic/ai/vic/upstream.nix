@@ -2,7 +2,7 @@
 # skills from seflless/deepwiki and vercel-labs/skills, and npm CLIs run via npx
 # at the versions that were installed in ~/node_modules (same pattern as calldiff
 # in ../tools.nix). lightjj: ../lightjj.nix; notebooklm-mcp: ../browser-tools.nix.
-{ sven, inputs, lib, ... }:
+{ yen, inputs, lib, ... }:
 let
   # bin name -> npm package spec providing it
   npx = {
@@ -16,8 +16,8 @@ let
   binOf = name: if name == "oldw" then "deepwiki" else name;
 in
 {
-  sven.aspects.ai-vic-upstream = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-vic-upstream = {
+    at = yen.aspects.vic-headless;
     flake-file.inputs = {
       deepwiki-skill = {
         url = "github:seflless/deepwiki";

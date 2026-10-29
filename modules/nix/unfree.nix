@@ -1,7 +1,7 @@
 # Unfree: any scope allows unfree packages by name; each machine and home config accepts what its subtree allows.
-{ sven, ... }:
+{ yen, ... }:
 let
-  inherit (sven.lib.reduce) merge;
+  inherit (yen.lib.reduce) merge;
   accept =
     { unfree, lib, ... }:
     lib.mkIf (unfree != { }) {
@@ -9,19 +9,19 @@ let
     };
 in
 {
-  sven.kinds.host.sinks.unfree.reduce = merge;
-  sven.kinds.mac.sinks.unfree.reduce = merge;
-  sven.kinds.vim.sinks.unfree.reduce = merge; # a vim profile's plugins (editors/vim.nix)
-  sven.kinds.user.sinks.unfree = {
+  yen.kinds.host.sinks.unfree.reduce = merge;
+  yen.kinds.mac.sinks.unfree.reduce = merge;
+  yen.kinds.vim.sinks.unfree.reduce = merge; # a vim profile's plugins (editors/vim.nix)
+  yen.kinds.user.sinks.unfree = {
     reduce = merge;
     # its own name: a user's names also reach the machine above it. `user` keeps one element per user.
     unfree = { user, unfree, ... }: unfree;
   };
 
-  sven.aspects.unfree = {
+  yen.aspects.unfree = {
     at = [
-      sven.helpers.machines
-      sven.kinds.user
+      yen.helpers.machines
+      yen.kinds.user
     ];
     os = accept;
     homeManager = accept;

@@ -1,11 +1,11 @@
 # varda: mac.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.mac.varda = {
-    system = sven.system.aarch64-darwin;
-    users = [ sven.user.vic ];
+  yen.mac.varda = {
+    system = yen.system.aarch64-darwin;
+    users = [ yen.user.vic ];
     workstation = true;
     ciBroken = "openspec"; # its ci job may fail
   };
-  sven.aspects.trusted.at = sven.mac.varda;
+  yen.aspects.trusted.at = yen.mac.varda;
 }

@@ -887,13 +887,13 @@
         "rust-overlay": "rust-overlay",
         "sops-nix": "sops-nix",
         "superpowers-extended-cc-marketplace": "superpowers-extended-cc-marketplace",
-        "sven": "sven",
         "systems": "systems_2",
         "treefmt-nix": "treefmt-nix",
         "trix": "trix",
         "ui-ux-pro-max-skill": "ui-ux-pro-max-skill",
         "vercel-skills": "vercel-skills",
-        "vscode-server": "vscode-server"
+        "vscode-server": "vscode-server",
+        "yen": "yen"
       }
     },
     "rust-overlay": {
@@ -965,22 +965,6 @@
       "original": {
         "owner": "pcvelz",
         "repo": "superpowers",
-        "type": "github"
-      }
-    },
-    "sven": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1793227354,
-        "narHash": "sha256-gFuqczS09PcDCUJsbvx2KImjbox24ZKJRC83U5SlgEU=",
-        "owner": "vic",
-        "repo": "sven",
-        "rev": "927208b3648434e943fc28f60d2d2b1097dd37f8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "vic",
-        "repo": "sven",
         "type": "github"
       }
     },
@@ -1103,6 +1087,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "nixos-vscode-server",
+        "type": "github"
+      }
+    },
+    "yen": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793259864,
+        "narHash": "sha256-b6i+ZvJSnjt+o3gmN5j1GXKlYwO9565lrM6L4/xCnns=",
+        "owner": "vic",
+        "repo": "yen",
+        "rev": "d5927650eaba61b023a8cfd07d3096d2c46b059b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vic",
+        "repo": "yen",
         "type": "github"
       }
     }

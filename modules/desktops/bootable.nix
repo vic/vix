@@ -1,9 +1,9 @@
 # bootable: systemd-boot, networkmanager, locale, bluetooth and pipewire, on workstation hosts.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.bootable = {
-    at = sven.lib.all [
-      sven.helpers.linux
+  yen.aspects.bootable = {
+    at = yen.lib.all [
+      yen.helpers.linux
       (s: s.workstation)
     ];
     nixos =

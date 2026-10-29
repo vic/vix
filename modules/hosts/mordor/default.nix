@@ -1,14 +1,14 @@
 # mordor: workstation with an nvidia card.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.host.mordor = {
-    system = sven.system.x86_64-linux;
-    users = [ sven.user.vic ];
+  yen.host.mordor = {
+    system = yen.system.x86_64-linux;
+    users = [ yen.user.vic ];
     workstation = true;
     cpu = "amd";
     gpu = "nvidia";
     desktops = [ "xfce" ];
   };
-  sven.aspects.trusted.at = sven.host.mordor;
+  yen.aspects.trusted.at = yen.host.mordor;
 
 }

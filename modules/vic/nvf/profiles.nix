@@ -1,6 +1,6 @@
 # vim profiles: vic's editors, one nvf config each (feature aspects live beside this file).
 {
-  sven.vim.neovim = {
+  yen.vim.neovim = {
     theme = "catppuccin-frappe";
     gui = true;
     features = [
@@ -16,7 +16,7 @@
     ];
   };
 
-  sven.vim.nvim = {
+  yen.vim.nvim = {
     theme = "base24-rebecca";
     gui = true;
     aliases = [
@@ -43,7 +43,7 @@
   };
 
   # AstroNvim recreated from its features (no distro core).
-  sven.vim.astrovim = {
+  yen.vim.astrovim = {
     theme = "astrodark";
     gui = true;
     features = [
@@ -66,7 +66,7 @@
   };
 
   # LazyVim recreated from its features (no distro core).
-  sven.vim.lazyvim = {
+  yen.vim.lazyvim = {
     theme = "tokyonight";
     gui = true;
     features = [
@@ -87,5 +87,5 @@
     ];
   };
 
-  sven.vim.vscode-vim = { }; # bare nvim for vscode-neovim
+  yen.vim.vscode-vim = { }; # bare nvim for vscode-neovim
 }

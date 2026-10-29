@@ -1,15 +1,15 @@
 # annatar: WSL host.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.host.annatar = {
-    system = sven.system.x86_64-linux;
-    users = [ sven.user.vic ];
+  yen.host.annatar = {
+    system = yen.system.x86_64-linux;
+    users = [ yen.user.vic ];
     form = "wsl";
   };
-  sven.aspects.trusted.at = sven.host.annatar;
+  yen.aspects.trusted.at = yen.host.annatar;
 
-  sven.aspects.annatar-distro = {
-    at = sven.host.annatar;
+  yen.aspects.annatar-distro = {
+    at = yen.host.annatar;
     nixos = {
       fileSystems."/".device = "/dev/noroot";
       fileSystems."/".fsType = "auto";

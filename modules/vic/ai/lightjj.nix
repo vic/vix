@@ -1,12 +1,12 @@
 # lightjj: browser UI for jj, served from wherever the repo lives (also headless vini).
-{ sven, inputs, ... }:
+{ yen, inputs, ... }:
 let
-  lightjj = pkgs: (sven.helpers.perSystem pkgs inputs.lightjj).packages.default;
+  lightjj = pkgs: (yen.helpers.perSystem pkgs inputs.lightjj).packages.default;
   port = 8765;
 in
 {
-  sven.aspects.ai-lightjj = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-lightjj = {
+    at = yen.aspects.vic-headless;
     ports = [
       {
         inherit port;

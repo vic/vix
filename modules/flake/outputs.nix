@@ -1,10 +1,10 @@
 # Flake output sinks: checks and the CI matrix on the root; packages, devShells and formatter per system.
-{ sven, ... }:
+{ yen, ... }:
 let
-  inherit (sven.lib.reduce) merge one;
+  inherit (yen.lib.reduce) merge one;
 in
 {
-  sven.kinds.fleet.sinks = {
+  yen.kinds.fleet.sinks = {
     # an element is { <system>.<name> = drv; }; any scope gives it
     checks = {
       reduce = merge;
@@ -18,7 +18,7 @@ in
   };
 
   # a system, or a scope below it (a vim profile, an env), gives { <name> = drv; }
-  sven.kinds.system.sinks = {
+  yen.kinds.system.sinks = {
     packages = {
       reduce = merge;
       out = { system, packages, ... }: { packages.${system.name} = packages; };

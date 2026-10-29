@@ -1,10 +1,10 @@
 # terminals: terminal emulators on graphical full homes.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.terminals = {
-    at = sven.lib.all [
-      sven.aspects.vic-full
-      sven.aspects.vic-gui
+  yen.aspects.terminals = {
+    at = yen.lib.all [
+      yen.aspects.vic-full
+      yen.aspects.vic-gui
     ];
     dots = {
       ".config/wezterm" = "config/wezterm";

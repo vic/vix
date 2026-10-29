@@ -1,6 +1,6 @@
 # Plain (non-plugin) Claude Code skills: the local ones under ./skills, plus
 # gstack and task-observer from upstream.
-{ sven, inputs, lib, ... }:
+{ yen, inputs, lib, ... }:
 let
   # every subdirectory holding a SKILL.md, by name
   skillDirs =
@@ -12,8 +12,8 @@ let
     );
 in
 {
-  sven.aspects.ai-skills = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-skills = {
+    at = yen.aspects.vic-headless;
     flake-file.inputs = {
       genie-agent = {
         url = "github:sini/genie-agent";

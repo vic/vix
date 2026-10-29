@@ -4,10 +4,10 @@
 # vic-recall), stop-gate (ctx >=70% + stale HANDOFF blocks stop once),
 # bash-guard (PreToolUse refusals), subagent-brief (worker contract),
 # pre-compact (holds auto compaction <90%), learn-loop. omni graph refresh is a systemd user timer (tools.nix).
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.ai-vic-hooks = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-vic-hooks = {
+    at = yen.aspects.vic-headless;
     # live link into the checkout: `vic-pm learn` appends land in the repo.
     dots.".claude/skills/vic-lessons" = "claude/skills/vic-lessons";
     homeManager =

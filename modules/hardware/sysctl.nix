@@ -1,8 +1,8 @@
 # sysctl: inotify limits, bbr + fq, zram-friendly vm settings; on every nixos host.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.sysctl = {
-    at = sven.helpers.linux;
+  yen.aspects.sysctl = {
+    at = yen.helpers.linux;
     nixos =
       { config, lib, ... }:
       {

@@ -5,7 +5,7 @@
 # - portsOf { name }      the ports (`ports` sink) of a machine or home and of its users, each with its receiver scope id
 # - featuresOf { vim }    a vim profile's features, and the aspects that give it nvf modules (x86_64-linux)
 # - inputsOf { aspect }   the flake inputs an aspect declares on the flake-file sink
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 let
   places = [
     "host"
@@ -31,14 +31,14 @@ let
   aspectOf = e: lib.head (lib.splitString "#" (lib.removePrefix "aspect " e.origin));
 in
 {
-  sven.queries = {
+  yen.queries = {
     aspectsOn =
       { name, r }:
       let
         ids = under r name;
       in
       if ids == [ ] then noPlace r name else lib.genAttrs ids (activeAt r);
-    # shortcut: a text match over the aspect's files, so every aspect of a matching file is listed; upgrade when sven
+    # shortcut: a text match over the aspect's files, so every aspect of a matching file is listed; upgrade when yen
     # records element origins inside module values.
     whoInstalls =
       { pkg, r }:
@@ -79,11 +79,11 @@ in
         ) ids;
     featuresOf =
       { vim, r }:
-      if !(sven.vim ? ${vim}) then
-        unknown "vim profile" vim (lib.attrNames sven.vim)
+      if !(yen.vim ? ${vim}) then
+        unknown "vim profile" vim (lib.attrNames yen.vim)
       else
         {
-          inherit (sven.vim.${vim})
+          inherit (yen.vim.${vim})
             features
             theme
             gui
@@ -99,11 +99,11 @@ in
         };
     inputsOf =
       { aspect, r }:
-      if !(sven.aspects ? ${aspect}) then
+      if !(yen.aspects ? ${aspect}) then
         unknown "aspect" aspect (lib.attrNames r.active)
       else
         let
-          f = sven.aspects.${aspect}.flake-file or { };
+          f = yen.aspects.${aspect}.flake-file or { };
         in
         if lib.isAttrs f then f.inputs or { } else { };
   };

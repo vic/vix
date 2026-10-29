@@ -1,10 +1,10 @@
 # herdr: terminal multiplexer for coding agents (numtide/llm-agents.nix).
 # Declarative equivalent of `herdr integration install claude` (v10), which
 # cannot edit the home-manager owned settings.json.
-{ sven, inputs, lib, ... }:
+{ yen, inputs, lib, ... }:
 {
-  sven.aspects.ai-herdr = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-herdr = {
+    at = yen.aspects.vic-headless;
     flake-file.inputs = {
       llm-agents = {
         url = "github:numtide/llm-agents.nix";
@@ -37,7 +37,7 @@
     homeManager =
       { pkgs, ... }:
       let
-        herdr = (sven.helpers.perSystem pkgs inputs.llm-agents).packages.herdr;
+        herdr = (yen.helpers.perSystem pkgs inputs.llm-agents).packages.herdr;
 
         # upstream hook silently exits 0 when python3 is not on PATH
         hook = pkgs.writeShellScript "herdr-agent-state" ''

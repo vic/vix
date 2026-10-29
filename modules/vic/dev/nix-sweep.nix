@@ -1,8 +1,8 @@
 # nix-sweep: garbage collection of old generations and gc roots.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.nix-sweep = {
-    at = sven.aspects.vic-full;
+  yen.aspects.nix-sweep = {
+    at = yen.aspects.vic-full;
     homeManager =
       { pkgs, ... }:
       {

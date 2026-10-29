@@ -1,8 +1,8 @@
 # claude permissions: the base rules every claude session allows (features add their own).
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.ai-claude-allow = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-claude-allow = {
+    at = yen.aspects.vic-headless;
     claude-allow = [
       # Edit(**) covers Write/MultiEdit/NotebookEdit; Read(**) covers Grep/Glob
       "Read(**)"

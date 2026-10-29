@@ -1,9 +1,9 @@
 # The Claude Code status line: one line from _scripts/statusline.sh.
 # model+effort, ctx, 5h/7d quota, $, tokens, open PM beads, agents in flight + last subagent.
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 {
-  sven.aspects.ai-statusline = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-statusline = {
+    at = yen.aspects.vic-headless;
     homeManager =
       { pkgs, ... }:
       {

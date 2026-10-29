@@ -1,9 +1,9 @@
 # claude-session-send / claude-usage-limit: helper scripts from
 # https://gist.github.com/Smolevich/5d8a0619f840d66f7fca64205ef047e7 (MIT, stdlib python).
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.ai-claude-session-tools = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-claude-session-tools = {
+    at = yen.aspects.vic-headless;
     homeManager =
       { pkgs, ... }:
       let

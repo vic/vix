@@ -1,7 +1,7 @@
 # vix invariants: Datalog rules over the fleet's facts (`kind:K:ID`, `has:ASPECT:ID`, `edge:SINK:FROM:TO`).
 # A true `bad:` atom is a violation. An agent reads `nix eval --impure --json --file query.nix check.violations`
-# before and after a change; `stage` and `sven_program` refuse a change that adds one.
-{ sven, lib, ... }:
+# before and after a change; `stage` and `yen_program` refuse a change that adds one.
+{ yen, lib, ... }:
 let
   # users with their place (machine or home) as parent
   users = scopes: lib.filter (s: s.kind == "user" && s.parent != null) scopes;
@@ -12,14 +12,14 @@ let
         host = n;
         port = toString f.bind.port;
       }) h.localForwards
-    ) sven.ssh-host
+    ) yen.ssh-host
   );
   on = active: n: lib.any lib.id (lib.attrValues active.${n});
   # shortcut: reads the aspect's declared `ports` list, so a function element is skipped; upgrade when invariants see `reduced`
   portsOf =
     n:
     let
-      v = sven.aspects.${n}.ports or [ ];
+      v = yen.aspects.${n}.ports or [ ];
     in
     if lib.isList v then v else [ ];
   # the inputs an input follows: the first path segment of its own and each nested `follows` ("" follows nothing)
@@ -32,12 +32,12 @@ let
   inputsOf =
     n:
     let
-      f = sven.aspects.${n}.flake-file or { };
+      f = yen.aspects.${n}.flake-file or { };
     in
     if lib.isAttrs f then f.inputs or { } else { };
 in
 {
-  sven.invariants = {
+  yen.invariants = {
     # a gui feature lands only on a user whose machine or home is graphical
     gui-needs-graphical =
       { scopes, ... }:
@@ -81,7 +81,7 @@ in
           lib.optional (lib.length ns > 1) {
             head = "bad:guest-addr-clash:${addr}:${lib.concatStringsSep "," ns}";
           }
-        ) (lib.groupBy (n: sven.guest.${n}.addr) (lib.attrNames sven.guest))
+        ) (lib.groupBy (n: yen.guest.${n}.addr) (lib.attrNames yen.guest))
       );
     # no two services of one machine or home (or of its users) listen on the same port (the `ports` sink)
     unique-port =
@@ -92,7 +92,7 @@ in
         owner =
           id:
           let
-            p = sven.helpers.place byId.${id};
+            p = yen.helpers.place byId.${id};
           in
           if p == null then id else p.id;
         given = lib.concatMap (
@@ -117,13 +117,13 @@ in
       { active, ... }:
       let
         inputs = lib.filterAttrs (_: lib.isAttrs) (
-          lib.foldl' (a: n: a // inputsOf n) { } (lib.filter (on active) (lib.attrNames sven.aspects))
+          lib.foldl' (a: n: a // inputsOf n) { } (lib.filter (on active) (lib.attrNames yen.aspects))
         );
         succ = lib.mapAttrs (_: follows) inputs;
-        by = sven.lib.graphs.transpose succ;
+        by = yen.lib.graphs.transpose succ;
       in
       map (t: { head = "bad:follows-undeclared:${t}:${lib.concatStringsSep "," by.${t}}"; }) (
-        lib.subtractLists (lib.attrNames inputs) (sven.lib.graphs.nodesOf succ)
+        lib.subtractLists (lib.attrNames inputs) (yen.lib.graphs.nodesOf succ)
       );
   };
 }

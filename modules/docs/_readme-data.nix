@@ -1,12 +1,12 @@
-# readme data (a fn of sven, lib, mermaid and the ci-jobs value): machine-side tables and diagrams of vix's data and routed elements.
+# readme data (a fn of yen, lib, mermaid and the ci-jobs value): machine-side tables and diagrams of vix's data and routed elements.
 {
-  sven,
+  yen,
   lib,
   mermaid,
   ciJobs,
 }:
 let
-  g = sven.lib.graph;
+  g = yen.lib.graph;
   sorted = xs: lib.sort (a: b: a < b) (lib.unique xs);
   code = xs: lib.concatMapStringsSep ", " (x: "`${x}`") (sorted xs);
   row = cells: "| ${lib.concatStringsSep " | " cells} |";
@@ -60,7 +60,7 @@ let
         f = a.flake-file or null;
       in
       if lib.isAttrs f && f ? inputs then lib.attrNames f.inputs else [ ]
-    ) sven.aspects
+    ) yen.aspects
   );
 
   ci = table [ "runner" "system" "jobs" "may fail" ] (
@@ -74,7 +74,7 @@ let
 
   # ssh: by Host match name, each host to every hop of its proxyJump (user@ dropped), as topology/ssh-hosts.nix
   nameOf = n: h: if h.host != null then h.host else n;
-  hosts = lib.mapAttrs' (n: h: lib.nameValuePair (nameOf n h) h) sven.ssh-host;
+  hosts = lib.mapAttrs' (n: h: lib.nameValuePair (nameOf n h) h) yen.ssh-host;
   jumps = lib.mapAttrs (
     _: h:
     lib.optionals (h.proxyJump != null) (
@@ -86,7 +86,7 @@ let
       id = "ssh:${n}";
       label = if (hosts.${n}.hostname or null) == null then n else "${n} · ${hosts.${n}.hostname}";
       kind = if hosts ? ${n} then "host" else "output";
-    }) (sven.lib.graphs.nodesOf jumps);
+    }) (yen.lib.graphs.nodesOf jumps);
     edges = lib.concatLists (
       lib.mapAttrsToList (
         n:
@@ -99,7 +99,7 @@ let
     );
   };
   # a jump cycle never connects: the ssh-jumps aspect gives an error record for each
-  jumpCycles = map (lib.concatStringsSep " -> ") (sven.lib.graphs.sccs jumps);
+  jumpCycles = map (lib.concatStringsSep " -> ") (yen.lib.graphs.sccs jumps);
 in
 ''
   ## Fleet data
@@ -123,7 +123,7 @@ in
 
   ${ci}
 
-  **ssh hosts and jumps** (`sven.ssh-host`, by Host match name). Jump cycles: ${
+  **ssh hosts and jumps** (`yen.ssh-host`, by Host match name). Jump cycles: ${
     if jumpCycles == [ ] then "none" else code jumpCycles
   }.
 

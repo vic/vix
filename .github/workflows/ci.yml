@@ -356,8 +356,8 @@ jobs:
             name: "check-platform-packages-varda-x86_64-linux"
             runner: "ubuntu-latest"
             system: "x86_64-linux"
-  sven-gate:
-    name: "sven gate"
+  yen-gate:
+    name: "yen gate"
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v6"
@@ -381,7 +381,7 @@ on:
       - "submitted"
   push:
     branches:
-      - "sven"
+      - "yen"
   workflow_dispatch: {}
 permissions:
   contents: "read"

@@ -1,12 +1,12 @@
-# readme vocabulary (a fn of sven, lib and vocab): markdown tables rendered from live sven names, each checked against docs/_vocabulary.nix.
+# readme vocabulary (a fn of yen, lib and vocab): markdown tables rendered from live yen names, each checked against docs/_vocabulary.nix.
 {
-  sven,
+  yen,
   lib,
   vocab,
 }:
 let
   described = import ./_described.nix "_vocabulary.nix";
-  schema = sven.lib.schema;
+  schema = yen.lib.schema;
   row = cells: "| ${lib.concatStringsSep " | " cells} |";
   # one row of cells per name, under a header row
   table =
@@ -25,7 +25,7 @@ let
   instances =
     k:
     let
-      ns = lib.attrNames (sven.${k} or { });
+      ns = lib.attrNames (yen.${k} or { });
     in
     if ns == [ ] then "- (abstract)" else lib.concatStringsSep ", " ns;
   # every (kind, sink) declaration, from the schema: reduce name, the sinks it feeds, `out`, a sink `at`
@@ -50,7 +50,7 @@ let
     (codes (lib.concatMap (d: d.feeds ++ lib.optional d.out "out") (on n)))
     vocab.sinks.${n}
   ];
-  live = what: lib.filter (n: sven.aspects ? ${n}) (lib.attrNames vocab.${what}); # aspects: stale lines only
+  live = what: lib.filter (n: yen.aspects ? ${n}) (lib.attrNames vocab.${what}); # aspects: stale lines only
   profiles =
     map (t: [
       (code t)
@@ -65,11 +65,11 @@ in
 ''
   ### Kinds: one scope per instance when some `spawns` reaches the kind
 
-  ${table [ "kind" "what it is" "instances (`sven.<kind>.<name>`)" ] (k: [
+  ${table [ "kind" "what it is" "instances (`yen.<kind>.<name>`)" ] (k: [
     (code k)
     vocab.kinds.${k}
     (instances k)
-  ]) (described "kinds" (lib.attrNames sven.kinds) vocab.kinds)}
+  ]) (described "kinds" (lib.attrNames yen.kinds) vocab.kinds)}
 
   ### Sinks: where an aspect key sends its element
 
@@ -79,10 +79,10 @@ in
     described "sinks" (lib.unique (map (d: d.name) decls)) vocab.sinks
   )}
 
-  ### vic profiles: tiers gate features (`at = sven.aspects.vic-<tier>`); roles come from facts or host files
+  ### vic profiles: tiers gate features (`at = yen.aspects.vic-<tier>`); roles come from facts or host files
 
   ${table [ "name" "active" ] (p: p) profiles}
 
-  ${toString (lib.length (lib.attrNames sven.aspects))} aspects live under `modules/`; `sven.aspects.<name>` each.
+  ${toString (lib.length (lib.attrNames yen.aspects))} aspects live under `modules/`; `yen.aspects.<name>` each.
   Active nowhere (empty `at`, or a marker no scope matches): ${codes inactive}.
 ''

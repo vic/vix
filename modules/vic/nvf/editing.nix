@@ -1,8 +1,8 @@
 # vim editing: editor options/tools, keymap help, motions, search-replace, sessions, todos.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.vim-globals = {
-    at = sven.helpers.vimHas "globals";
+  yen.aspects.vim-globals = {
+    at = yen.helpers.vimHas "globals";
     nvf =
       { pkgs, ... }:
       {
@@ -23,8 +23,8 @@
       };
   };
 
-  sven.aspects.vim-which-key = {
-    at = sven.helpers.vimHas "which-key";
+  yen.aspects.vim-which-key = {
+    at = yen.helpers.vimHas "which-key";
     nvf.vim.binds.whichKey = {
       enable = true;
       setupOpts = {
@@ -38,23 +38,23 @@
     };
   };
 
-  sven.aspects.vim-flash = {
-    at = sven.helpers.vimHas "flash";
+  yen.aspects.vim-flash = {
+    at = yen.helpers.vimHas "flash";
     nvf.vim.utility.motion.flash-nvim.enable = true;
   };
 
-  sven.aspects.vim-grug-far = {
-    at = sven.helpers.vimHas "grug-far";
+  yen.aspects.vim-grug-far = {
+    at = yen.helpers.vimHas "grug-far";
     nvf.vim.utility.grug-far-nvim.enable = true;
   };
 
-  sven.aspects.vim-todo-comments = {
-    at = sven.helpers.vimHas "todo-comments";
+  yen.aspects.vim-todo-comments = {
+    at = yen.helpers.vimHas "todo-comments";
     nvf.vim.notes.todo-comments.enable = true;
   };
 
-  sven.aspects.vim-persistence = {
-    at = sven.helpers.vimHas "persistence";
+  yen.aspects.vim-persistence = {
+    at = yen.helpers.vimHas "persistence";
     nvf =
       { pkgs, ... }:
       {
@@ -65,8 +65,8 @@
       };
   };
 
-  sven.aspects.vim-haunt = {
-    at = sven.helpers.vimHas "haunt";
+  yen.aspects.vim-haunt = {
+    at = yen.helpers.vimHas "haunt";
     nvf =
       { pkgs, ... }:
       {

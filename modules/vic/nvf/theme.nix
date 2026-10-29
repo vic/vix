@@ -1,5 +1,5 @@
 # vim theme: a profile's `theme` colorscheme, with the plugin that ships it (keyed by the name's first word).
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 let
   themes = p: {
     catppuccin.plugin = p.catppuccin-nvim;
@@ -14,9 +14,9 @@ let
   themeFor = p: name: (themes p).${builtins.head (lib.splitString "-" name)};
 in
 {
-  sven.aspects.vim-theme = {
-    at = sven.lib.all [
-      sven.kinds.vim
+  yen.aspects.vim-theme = {
+    at = yen.lib.all [
+      yen.kinds.vim
       (s: s.theme != null)
     ];
     nvf =

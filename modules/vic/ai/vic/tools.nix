@@ -4,14 +4,14 @@
 #   at ~/.claude/omni.db, never in the store)
 # - deepwiki MCP + REPL (./dw, vendored from github:vic/dw incl. unpushed repl.js)
 # - notebooklm MCP (npx, unpinned as on frodo) + notebooklm-pack
-{ sven, inputs, lib, ... }:
+{ yen, inputs, lib, ... }:
 let
   node = pkgs: lib.getExe pkgs.nodejs_24; # omni needs builtin node:sqlite
   claudeDir = config: "${config.home.homeDirectory}/.claude";
 in
 {
-  sven.aspects.ai-vic-tools = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-vic-tools = {
+    at = yen.aspects.vic-headless;
     flake-file.inputs = {
       notebooklm-pack = {
         url = "github:meta-introspector/notebooklm-pack";
@@ -40,7 +40,7 @@ in
           vicBin
           deepwiki
           pkgs.ccusage
-          (sven.helpers.perSystem pkgs inputs.notebooklm-pack).packages.default
+          (yen.helpers.perSystem pkgs inputs.notebooklm-pack).packages.default
         ];
 
         # Same path as before: omni's own docs point here.

@@ -1,12 +1,12 @@
 # flake-file: each aspect declares the inputs it uses on the `flake-file` sink; write-flake writes flake.nix from them.
-{ sven, inputs, ... }:
+{ yen, inputs, ... }:
 let
   pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
 in
 {
   # on the root: an aspect at any scope reaches it
-  sven.kinds.fleet.sinks.flake-file = {
-    reduce = sven.lib.reduce.merge;
+  yen.kinds.fleet.sinks.flake-file = {
+    reduce = yen.lib.reduce.merge;
     out =
       { flake-file, ... }:
       let
@@ -28,17 +28,17 @@ in
       };
   };
 
-  sven.aspects.vix-flake = {
-    at = sven.fleet.vix;
+  yen.aspects.vix-flake = {
+    at = yen.fleet.vix;
     flake-file = {
-      description = "Vic's Nix Environment, powered by sven";
+      description = "Vic's Nix Environment, powered by yen";
       nixConfig = {
         extra-trusted-public-keys = [ "vix.cachix.org-1:hP/Lpdsi1dB3AxK9o6coWh+xHzvAc4ztdDYuG7lC6dI=" ];
         extra-substituters = [ "https://vix.cachix.org" ];
       };
       outputs = ''
         inputs:
-        (import inputs.sven).lib.mkFlake {
+        (import inputs.yen).lib.mkFlake {
           imports = [ (inputs.import-tree ./modules) ];
           _module.args = {
             inherit inputs;
@@ -51,8 +51,8 @@ in
         # Regenerate: nix build .#write-flake && ./result/bin/write-flake
       '';
       inputs = {
-        sven = {
-          url = "github:vic/sven";
+        yen = {
+          url = "github:vic/yen";
           flake = false;
         };
         import-tree.url = "github:vic/import-tree";

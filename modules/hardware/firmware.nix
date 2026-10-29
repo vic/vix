@@ -1,9 +1,9 @@
 # all-firmware: redistributable and non-free firmware, on hosts with firmware = all.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.all-firmware = {
-    at = sven.lib.all [
-      sven.helpers.linux
+  yen.aspects.all-firmware = {
+    at = yen.lib.all [
+      yen.helpers.linux
       (s: s.firmware == "all")
     ];
     nixos = {

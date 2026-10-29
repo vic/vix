@@ -1,5 +1,5 @@
 # tests: pure-eval assertions over the built configs, each a flake check (empty problem list => ok).
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 let
   vicHome = c: lib.attrByPath [ "home-manager" "users" "vic" ] { home.packages = [ ]; } c.config;
   hasPkg = name: ps: builtins.any (p: lib.getName p == name) ps;
@@ -37,12 +37,12 @@ let
         ++ lib.optional (nargun.home.sessionVariables.NH_FILE == null) "NH_FILE unset";
       darwin-iterm2 = lib.optional (!hasPkg "iterm2" varda.home.packages) "iterm2 missing";
     }
-    // platforms sven.host out.nixosConfigurations
-    // platforms sven.mac out.darwinConfigurations;
+    // platforms yen.host out.nixosConfigurations
+    // platforms yen.mac out.darwinConfigurations;
 in
 {
-  sven.aspects.config-tests = {
-    at = sven.system.x86_64-linux;
+  yen.aspects.config-tests = {
+    at = yen.system.x86_64-linux;
     checks =
       { system, out, ... }:
       {

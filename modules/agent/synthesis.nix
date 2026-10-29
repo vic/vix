@@ -1,14 +1,14 @@
 # Synthesis an agent can call (a stored query, so `ask` and the MCP server reach it): krn finds a value that meets the constraints.
 # - freePort { name }   the lowest port in 8000..8999 that no service of the machine or home, or of its users, uses (`ports` sink)
-{ sven, lib, ... }:
+{ yen, lib, ... }:
 let
-  K = sven.lib.krn;
+  K = yen.lib.krn;
 in
 {
-  sven.queries.freePort =
+  yen.queries.freePort =
     { name, r }:
     let
-      ps = sven.queries.portsOf { inherit name r; };
+      ps = yen.queries.portsOf { inherit name r; };
       used = map (p: p.port) ps;
       a = K.run 1 (q: [ (K.infd [ q ] 8000 8999) ] ++ map (K.neqfd q) used ++ [ (K.label [ q ]) ]);
     in

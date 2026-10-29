@@ -1,9 +1,9 @@
 # AI: unfree agent CLIs and the extra agent packages on linux homes.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.ai-ai = {
-    at = sven.aspects.vic-headless;
-    unfree = sven.helpers.allowUnfree [
+  yen.aspects.ai-ai = {
+    at = yen.aspects.vic-headless;
+    unfree = yen.helpers.allowUnfree [
       "copilot-language-server"
       "claude"
       "github-copilot-cli"

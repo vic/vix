@@ -1,13 +1,13 @@
 # editors: gui editors, vscode vim hook, vscode-server and the unfree editors.
 {
-  sven,
+  yen,
   inputs,
   lib,
   ...
 }:
 {
-  sven.aspects.vic-vscode-server = {
-    at = sven.aspects.vic-editors; # an include in Ren: active wherever vic-editors is
+  yen.aspects.vic-vscode-server = {
+    at = yen.aspects.vic-editors; # an include in Ren: active wherever vic-editors is
     homeManager =
       { pkgs, ... }:
       {
@@ -24,10 +24,10 @@
       };
   };
 
-  sven.aspects.vic-editors = {
-    at = sven.lib.all [
-      sven.aspects.vic-full
-      sven.aspects.vic-gui
+  yen.aspects.vic-editors = {
+    at = yen.lib.all [
+      yen.aspects.vic-full
+      yen.aspects.vic-gui
     ];
     flake-file.inputs = {
       vscode-server = {
@@ -51,11 +51,11 @@
         ".config/Cursor/User/keybindings.json" = "config/Code/User/keybindings.json";
       }
       # extension lists exist for Linux only: no darwin link to a missing file
-      // lib.optionalAttrs (!(sven.helpers.place scope).system.darwin) {
+      // lib.optionalAttrs (!(yen.helpers.place scope).system.darwin) {
         ".vscode/extensions/extensions.json" = "vscode/extensions/extensions-Linux.json";
         ".cursor/extensions/extensions.json" = "cursor/extensions/extensions-Linux.json";
       };
-    unfree = sven.helpers.allowUnfree [
+    unfree = yen.helpers.allowUnfree [
       "cursor"
       "vscode"
     ];

@@ -1,15 +1,15 @@
 # nienna: Intel macbook workstation.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.host.nienna = {
-    system = sven.system.x86_64-linux;
-    users = [ sven.user.vic ];
+  yen.host.nienna = {
+    system = yen.system.x86_64-linux;
+    users = [ yen.user.vic ];
     workstation = true;
     cpu = "intel";
     wifi = "broadcom";
     keyboard = "macos";
     desktops = [ "xfce" ];
   };
-  sven.aspects.trusted.at = sven.host.nienna;
+  yen.aspects.trusted.at = yen.host.nienna;
 
 }

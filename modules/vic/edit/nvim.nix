@@ -1,12 +1,12 @@
 # nvim: vic's vim profiles (editors/vim.nix, vic/nvf) on PATH; neovide `<name>-gui` wrappers on the desktop.
-{ sven, ... }:
+{ yen, ... }:
 let
-  profiles = builtins.attrNames sven.vim;
+  profiles = builtins.attrNames yen.vim;
   own = out: pkgs: out.packages.${pkgs.stdenv.hostPlatform.system}; # this flake's packages (vim profiles)
 in
 {
-  sven.aspects.vic-nvim = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.vic-nvim = {
+    at = yen.aspects.vic-headless;
     homeManager =
       { out, pkgs, ... }:
       {
@@ -15,8 +15,8 @@ in
       };
   };
 
-  sven.aspects.vic-nvim-gui = {
-    at = sven.aspects.vic-gui;
+  yen.aspects.vic-nvim-gui = {
+    at = yen.aspects.vic-gui;
     homeManager =
       { out, pkgs, ... }:
       {

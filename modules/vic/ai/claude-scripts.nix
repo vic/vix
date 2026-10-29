@@ -1,8 +1,8 @@
 # Claude Code hooks (direnv snapshot, budget gate, subagent-stop) and the scripts they run, under ~/.claude.
-{ sven, ... }:
+{ yen, ... }:
 {
-  sven.aspects.ai-claude-scripts = {
-    at = sven.aspects.vic-headless;
+  yen.aspects.ai-claude-scripts = {
+    at = yen.aspects.vic-headless;
     homeManager =
       { config, ... }:
       let
