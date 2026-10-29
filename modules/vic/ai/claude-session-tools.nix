@@ -1,5 +1,5 @@
-# claude-session-send / claude-usage-limit: helper scripts from
-# https://gist.github.com/Smolevich/5d8a0619f840d66f7fca64205ef047e7 (MIT, stdlib python).
+# claude-usage-limit: helper script from
+# https://gist.github.com/Smolevich/5d8a0619f840d66f7fca64205ef047e7 (MIT, stdlib python). Session messaging lives in ircc.
 { yen, ... }:
 {
   yen.aspects.ai-claude-session-tools = {
@@ -15,7 +15,6 @@
       in
       {
         home.packages = [
-          (py "claude-session-send" ./_scripts/claude_session_send.py)
           (py "claude-usage-limit" ./_scripts/claude_usage_limit.py)
         ];
       };
