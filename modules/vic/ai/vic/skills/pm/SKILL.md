@@ -86,6 +86,7 @@ BURN: fable≈2×opus≈4×sonnet≈8×haiku. **Vic says "use highest" ⟹ DO SO
 NEVER IMPLEMENT ANY NEW FEATURE unless you have a quorum of expert voices (according to project vision/kind/features) validated it.
 
 Per /supervisor + /dispatch. Each spawn carries:
+0. 🥧 PIE (/pie): brief order P (goal+why) → I (inputs, output shape, oracle, who talks to whom) → E (agent/tier) last. Overloaded agent ⟹ restructure (split, rewire, entry/exit stable), not bigger model.
 1. 🎯 OBJECTIVE ORACLE (failing test / checkable output = judge, NOT prose) + negative control.
 2. 🔗 SRC CITES (file:line / paper:line + quote) + ROOT CAUSE + NO-REDESIGN-W/O-ASK.
 3. 🧾 EVIDENCE demand (paste cmd+output / trace) + CHECKPOINT @ each step.

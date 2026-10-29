@@ -9,7 +9,7 @@ description: THE haiku-fleet composition (ALL projects) — compile→isolate→
 Fleet SURPASSES fable on: units/hour (10+ vs ~2), corpus coverage, cost/accepted-unit (~1/10), drift-immunity (units too small to drift). Fable keeps: derivation, design, law interpretation, root-cause verdicts. Pipeline VALVE escalates exactly those — superhaiku makes the expensive models do ONLY what only they can do. That division IS surpassing.
 
 ## PIPELINE (5 stages, fixed)
-1. **COMPILE** (supervisor or vic-planner CHECKLIST MODE — intelligence spent ONCE): task → DAG of micro-units, each: scope ≤2 files · checklist steps w/ CHECK+EXPECT · ORACLE (runnable) + NEG control · dep edges. Unit not checkable ⟹ it stays OUT of the swarm (high-tier lane).
+1. **COMPILE** (supervisor or vic-planner CHECKLIST MODE — intelligence spent ONCE): task → DAG of micro-units (P goal+why · I output shape+oracle · E agent last, per /pie), each: scope ≤2 files · checklist steps w/ CHECK+EXPECT · ORACLE (runnable) + NEG control · dep edges. Unit not checkable ⟹ it stays OUT of the swarm (high-tier lane).
 2. **ISOLATE** (/workspace): plain-jj workspace (`jj workspace add`, see /workspace) `u<N>a<k>` per attempt — k workspaces per unit for k-shot.
 3. **SWARM**: k×vic-superhaiku per unit, ALL parallel across independent DAG nodes (≤15). Prompt ≤2K tokens: unit spec + workspace path + attempt-index k (vary approach hint by k).
 4. **JUDGE**: vic-judge runs unit ORACLE on each attempt's workspace → first passer per unit. 0 passers after k → ONE recompile of THAT unit (tighter spec) → still 0 ⟹ VALVE: unit escalates one tier w/ all failures attached. NEVER round 3 at haiku.

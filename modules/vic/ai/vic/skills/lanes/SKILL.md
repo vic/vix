@@ -11,6 +11,8 @@ Subagents CANNOT spawn subagents. 1 level: supervisor → workers. Bigger fan-ou
 ## THE 7 LANES (coding = ONE of seven)
 BUILD (vic-rung/typesmith) · VERIFY (vic-reviewer+probe on LAST deliverable while next builds) · SOUNDNESS (vic-lawyer audits in parallel; blocks LAND not BUILD) · RECON (vic-reader/sweep PREFETCH next task's inputs during current) · PLAN (vic-planner drafts next spec skeleton) · HYGIENE (vic-scribe: HANDOFF/state/tracks/playbooks/telemetry — always-on) · MEASURE (vic-probe benches, disjoint from BUILD's deps only).
 
+PIE (/pie): draw I first (who hands what to whom), then assign lanes. Lane agent overloaded ⟹ split + rewire (fan-out + one combine), entry/exit stable, NOT a bigger model.
+
 ## SATURATION PROTOCOL
 1. Dispatch primary → IMMEDIATELY spawn RECON+PLAN for 1-2 tasks AHEAD (same message, parallel calls / background).
 2. Deliverable lands → VERIFY lane on it; do NOT wait — start next BUILD (verify-fail = revert one rung, cheap).

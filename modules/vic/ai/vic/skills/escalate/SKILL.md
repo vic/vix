@@ -10,7 +10,7 @@ description: Escalation protocol (ALL projects) — when to STOP and route up: 3
 2. UNDERSPEC: no law/doc anchor licenses the behavior either way (vic-lawyer verdict). NEVER guess semantics — candidate "fixes" at underspec boundaries have diverged BOTH directions (receipt). Route: lawyer → vic-derive/fable.
 3. VIC-ONLY GATES — no model decides: new dep (incl dev-dep) · encoding/representation change · law-doc DEPARTURE · scope swap/redesign · commit · delete corpus/docs.
 4. INVALID-DATA SMELL: patching a bug types should prevent → stop, route typesmith pipeline (write-site enforcement), not more ifs.
-5. TIER BREACH: task needs tier above plan (sonnet hitting design freedom, opus hitting derivation) → re-partition, don't push wrong tier harder.
+5. TIER BREACH: task needs tier above plan (sonnet hitting design freedom, opus hitting derivation) → re-partition, don't push wrong tier harder. PIE (/pie): overload = restructure move (split element, rewire, entry/exit stable); changing the consumer contract (I) = VIC-GATE.
 
 ## NOTE FORMAT (this IS the deliverable; to <proj>/vic/notes-style file)
 `# ESCALATE: <one-line question>` + BLOCKED + TRIED (attempt·tier·falsification evidence) + RULED OUT (dead paths + receipts) + ANCHORS CHECKED (each insufficient-because) + NEEDED (derivation X | vic ruling a/b/c | tier Y w/ input Z) + STATE (repro paths, probe files, VCS state — resumable cold).

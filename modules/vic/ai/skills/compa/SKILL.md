@@ -60,6 +60,8 @@ resumes on the next message, with its history.
 
 ## Spec rules (what makes haiku succeed)
 
+- **PIE order (`/pie`).** Open each task with P (goal and why), then I (files, output, oracle), and name the coder (E) last. Do not change the user-facing contract unasked.
+
 - **One concern per task.** Split big work into steps that each end green:
   data/storage, then backend, then UI, then key bindings. A step adds a thing
   standalone with tests; the next step wires it in.

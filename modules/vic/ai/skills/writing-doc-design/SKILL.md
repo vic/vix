@@ -135,6 +135,8 @@ would surprise a reader.
 8. Implementation history: A lightweight changelog: created, revised, accepted.
    Append-only.
 
+Design order (`/pie`). State the purpose first (Summary, Motivation), then the interactions (contract, oracle, who calls whom, under Design Details), then the elements (modules, agents, tiers). A change to the consumer contract needs explicit approval.
+
 ## Doc frontmatter
 
 A trimmed version of the KEP `kep.yaml` metadata, drop kep-number, SIGs,
@@ -223,3 +225,4 @@ supersedes: [] # docs this replaces
 - At least one honest Drawback.
 - No emojis, no marketing adjectives, no rhetorical flourishes.
 - Destination decided (see Where the doc lands) and stated.
+- No element chosen before purpose and consumer contract are stated (`/pie`).

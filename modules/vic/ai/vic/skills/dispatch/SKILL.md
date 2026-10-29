@@ -25,6 +25,7 @@ WORKSPACE GATE (/workspace): repo-editing dispatch ⟹ `jj workspace add` FIRST 
 ENSEMBLE DOWNGRADE (/ensemble): output mechanically checkable ⟹ k×haiku (vic-chain) + vic-judge filter REPLACES sonnet/opus — 5×haiku ≈ 0.6×sonnet. Checklist-compiled chains (vic-planner CHECKLIST MODE → vic-chain) = haiku executes what only sonnet+ survived before. Verify ≈ generate (proof/design) ⟹ NO ensemble, real tier.
 
 ## SPEC SKELETON (every dispatch ≥sonnet; missing piece = agent SPEC-GAPs back)
+PIE ORDER (/pie): P (goal + why, consumer side) → I (inputs, output shape, oracle, who reports to whom) → E (agent/model/effort) LAST. Brief w/o output shape = SPEC GAP. Agent overloaded (ctx >70%, 3 fails) ⟹ restructure move (split element, rewire, entry/exit stable), NOT a bigger model.
 SCOPE exact + NOT-SCOPE · ORACLE (runnable failing test) + NEG CONTROL (mutant must REJECT) · LAW cite + quote (vic-law) · PRE-DEBUNKED dead leads w/ kill receipts · EVIDENCE demanded (pastes per checkpoint; report file appended per step) · HONESTY (numbers verbatim if slower/negative; honest negative = success) · BUDGET (n attempts; 3 fails ⟹ stop + /escalate note).
 
 ## LIFECYCLE

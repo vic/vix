@@ -34,6 +34,8 @@ Why: in MAST, specification failures (FM-1.1 to FM-1.5) add up to 44.2% of failu
 
 Scrum master vs planner: the scrum master owns what, how much, how long and how measured. The planner owns how, exactly.
 
+PIE (/pie): the lead states P (goal + why) and I (who hands what to whom, oracle) before it picks members (E). An overloaded member is split and rewired with entry and exit unchanged, not given a bigger model.
+
 Evidence limits:
 - Human mob evidence is experience reports and small qualitative studies, with no controlled trials ([Ståhl & Mårtensson](https://danielstahl.co/wp-content/uploads/2021/05/mob-programming.pdf)).
 - MAS fail 41% to 86.7% of the time across 7 open-source systems (MAST §1, Fig. 5). Roles alone are not enough; the gate and exact specs carry the load.

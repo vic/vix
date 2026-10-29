@@ -23,4 +23,5 @@ Haiku fails long chains, nails single steps. COMPILE the chain once (sonnet vic-
 - Oracle runs OUTSIDE the generator (vic-judge / harness) — self-graded haiku = theater.
 - 2 ensemble rounds fail oracle → STOP, tier up w/ failures attached (spec problem or genuine hardness — don't burn round 3).
 - Telemetry both paths (vic-telemetry) — ensemble must PROVE cheaper per accepted unit or routing reverts.
+- PIE (/pie): ensemble = an E pick. State P + I (oracle, output shape) first; fan-out+judge is a restructure move that keeps entry/exit stable.
 - NEVER ensemble: soundness arguments, root-cause verdicts, design choices, law interpretation (wrongness not mechanically catchable).

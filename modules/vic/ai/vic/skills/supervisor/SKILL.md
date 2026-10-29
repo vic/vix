@@ -34,6 +34,8 @@ DESIGN IS YOURS. ROOT-CAUSE IS YOURS. The agent IMPLEMENTS a confirmed spec — 
 ```
 If you have not CONFIRMED the root cause + the fix design FIRST-HAND, you may NOT dispatch an implementation agent. Dispatching to "figure out X" = the agent re-derives cold, hallucinates, and wanders. (Real cost this session: one agent spent 22 min exploring a code path the goal never even executes, shipped 0.)
 
+PIE (/pie): design Purpose → Interactions → Elements. Spec = P (goal+why) · I (inputs, output shape, oracle) · E (agent/tier) LAST. Reject own spec if E chosen before P, or consumer contract changed unasked.
+
 ## 🔒 BEFORE DISPATCH — HARD GATES (all must pass)
 
 1. 🩺 **ROOT CONFIRMED FIRST-HAND.** Reproduce + trace the ACTUAL execution path yourself before writing the spec. NO dispatching on a hypothesis. An unconfirmed root → the agent implements the wrong thing, perfectly.
