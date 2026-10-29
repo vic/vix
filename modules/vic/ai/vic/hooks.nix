@@ -37,6 +37,18 @@
       in
       {
         home.packages = [ vicTools ];
+        # shortcut: sessions started before the Rust port still call these paths; drop once none run.
+        home.file = lib.mapAttrs' (
+          script: sub:
+          lib.nameValuePair ".claude/hooks/${script}" {
+            executable = true;
+            text = "#!/bin/sh\nexec ${vic} hook ${sub}\n";
+          }
+        ) {
+          "bash-guard.sh" = "guard";
+          "cmd-ledger.sh" = "ledger";
+          "boot.sh" = "boot";
+        };
         programs.claude-code = {
           hooksDir = ./hooks;
           rules = {
