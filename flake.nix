@@ -104,6 +104,10 @@
       url = "github:sini/genie-agent";
       flake = false;
     };
+    gojo = {
+      url = "github:hackrdotsh/gojo";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     gstack = {
       url = "github:garrytan/gstack";
       flake = false;

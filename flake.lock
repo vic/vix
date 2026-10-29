@@ -407,6 +407,26 @@
         "type": "github"
       }
     },
+    "gojo": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792484115,
+        "narHash": "sha256-2R2zM41bJbk0yI1RN3nUv/mH+BvT/2uKtOfIW2AoIRE=",
+        "owner": "hackrdotsh",
+        "repo": "gojo",
+        "rev": "2d22a49462546d3b60c4543472de86e5f5196c5f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hackrdotsh",
+        "repo": "gojo",
+        "type": "github"
+      }
+    },
     "gstack": {
       "flake": false,
       "locked": {
@@ -899,6 +919,7 @@
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "genie-agent": "genie-agent",
+        "gojo": "gojo",
         "gstack": "gstack",
         "helium": "helium",
         "home-manager": "home-manager",

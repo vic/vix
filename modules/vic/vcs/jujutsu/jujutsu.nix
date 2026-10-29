@@ -1,4 +1,4 @@
-# jujutsu: identity, ssh signing, jjui + majjit wrappers.
+# jujutsu: identity, ssh signing, jjui, majjit, gojo wrappers.
 { yen, inputs, ... }:
 let
   # ask for the ssh key password if it is not loaded, before the tui
@@ -27,6 +27,10 @@ in
         url = "github:anthrofract/majjit";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+      gojo = {
+        url = "github:hackrdotsh/gojo";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
       flake-parts = {
         url = "github:hercules-ci/flake-parts";
         inputs.nixpkgs-lib.follows = "nixpkgs-lib";
@@ -47,11 +51,13 @@ in
       let
         jjui = (yen.helpers.perSystem pkgs inputs.jjui).packages.jjui;
         majjit = (yen.helpers.perSystem pkgs inputs.majjit).packages.majjit;
+        gojo = (yen.helpers.perSystem pkgs inputs.gojo).packages.default;
       in
       {
         home.packages = [
           (wrapped pkgs "jjui" jjui)
           (wrapped pkgs "majjit" majjit)
+          (wrapped pkgs "gojo" gojo)
           (inputs.nix-wrapper-modules.wrappers.jujutsu.wrap {
             inherit pkgs;
             settings = config.programs.jujutsu.settings;
