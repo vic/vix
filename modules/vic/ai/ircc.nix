@@ -1,5 +1,5 @@
-# ircc: local IRC-like chat between Claude Code sessions on this machine.
-{ yen, inputs, ... }:
+# ircc: local IRC-like chat between Claude Code sessions; package + ircc MCP server for every Claude Code session.
+{ yen, inputs, lib, ... }:
 {
   yen.aspects.ai-ircc = {
     at = yen.aspects.vic-headless;
@@ -9,8 +9,16 @@
     };
     homeManager =
       { pkgs, ... }:
+      let
+        ircc = (yen.helpers.perSystem pkgs inputs.ircc).packages.default;
+      in
       {
-        home.packages = [ (yen.helpers.perSystem pkgs inputs.ircc).packages.default ];
+        home.packages = [ ircc ];
+        programs.claude-code.mcpServers.ircc = {
+          type = "stdio";
+          command = lib.getExe' ircc "ircc";
+          args = [ "mcp" ];
+        };
       };
   };
 }
