@@ -56,7 +56,7 @@ let
     nodes = [
       {
         id = "srv";
-        label = "yen-mcp (nix run .#yen-mcp)";
+        label = "yen-mcp (nix run github:vic/yen?dir=mcp)";
         kind = "output";
       }
     ]

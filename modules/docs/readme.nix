@@ -46,7 +46,7 @@ let
     nix eval --impure --json --expr '(import ./query.nix).ask "freePort" { name = "${host}"; }'
     nix eval --offline --impure --file tests.nix failed      # oracles: errors, check.ok, file order, laziness ([ ] when all hold)
     nix eval --offline --impure --file tests.nix e2e.failed  # each machine's and home's settings fingerprint vs vix
-    nix run .#yen-mcp                                   # MCP server for agents, on stdio
+    nix run github:vic/yen?dir=mcp                      # yen's MCP server for agents, on stdio
     ```
   '';
   # open decisions: a static list in docs/_open.nix, since vic's notes are not part of the repo

@@ -183,9 +183,6 @@ in
     ])
     (row "stage and change programs" [
       (src "docs/_readme-recipes.nix" "op = \"new\"" "a change program")
-      (top "mcp/test.sh" "call yen_stage" "stage a change")
-      (top "mcp/test.sh" "call yen_program" "dry-run a program")
-      (src "agent/mcp.nix" "yen.aspects.mcp-app = {" "the MCP app")
     ])
     (row "tests.nix: oracles over the eval result" [
       (top "tests.nix" "vix-permutation-stable =" "file order: reversed modules, same values")

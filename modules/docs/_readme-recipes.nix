@@ -58,7 +58,7 @@ in
   The same host as a change program an agent can dry-run (errors, invariant violations, diff) before it writes a file.
   Users stay in the host file: a program value is not a list of refs.
   ```sh
-  echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"yen_program","arguments":{"program":${json}}}}' | nix run .#yen-mcp
+  echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"yen_program","arguments":{"program":${json}}}}' | nix run github:vic/yen?dir=mcp
   ```
 
   **Add a user feature**: one aspect, gated by a tier (`modules/vic/<area>/<name>.nix`).

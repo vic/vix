@@ -53,6 +53,7 @@ in
           // {
             gstack = "${inputs.gstack}";
             task-observer = "${inputs.one-skill-to-rule-them-all}";
+            yen-mcp = "${inputs.yen}/.claude/skills/yen-mcp"; # teaches the yen_* tools; from the yen repository, at the locked rev
             quipu = "${inputs.quipu}/skills/quipu";
             quipu-embedded-artifacts = "${inputs.quipu}/skills/quipu-embedded-artifacts";
             # upstream has no SKILL.md: frontmatter + local deltas + upstream index become one

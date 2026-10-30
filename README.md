@@ -38,7 +38,7 @@ yen has four words: kinds, scopes, aspects, sinks. Each row links to the line in
 | invariants: Datalog over the facts | [`invariants`](modules/agent/invariants.nix#L77), [`runners-no-users`](modules/agent/invariants.nix#L103), [`unique-port`](modules/agent/invariants.nix#L140), [`follows-declared`](modules/agent/invariants.nix#L173) |
 | stored queries and krn synthesis | [`stored queries`](modules/agent/queries.nix#L34), [`portsOf`](modules/agent/queries.nix#L71), [`unfreeOn`](modules/agent/queries.nix#L53), [`freePort: a krn finite domain`](modules/agent/synthesis.nix#L13), [`a `ports` element`](modules/vic/ai/headroom.nix#L34) |
 | trust labels and the knowledge pack | [`labels by path`](modules/agent/labels.nix#L4), [`rdf share (sha256)`](modules/agent/rdf.nix#L13), [`SHACL shapes`](modules/agent/rdf.nix#L20) |
-| stage and change programs | [`a change program`](modules/docs/_readme-recipes.nix#L7), [`stage a change`](mcp/test.sh#L36), [`dry-run a program`](mcp/test.sh#L63), [`the MCP app`](modules/agent/mcp.nix#L8) |
+| stage and change programs | [`a change program`](modules/docs/_readme-recipes.nix#L7) |
 | tests.nix: oracles over the eval result | [`file order: reversed modules, same values`](tests.nix#L65), [`laziness: a broken mac never reaches frodo`](tests.nix#L83), [`negative controls`](tests.nix#L108), [`e2e: settings fingerprint vs vix`](tests.nix#L51) |
 
 ## How vix uses yen
@@ -59,7 +59,7 @@ Each row is one yen capability: what it is, and the vix configuration it carries
 | `entries` reduce | Each value comes with the scope that gave it. | Ports go up to the fleet `served` sink with their scope. The vini tunnel forwards what runs on bitstream. | [`served`](modules/platforms/ports.nix#L22), [`tunnel forwards`](modules/vic/sys/ssh.nix#L29) |
 | Forwards | A sink key feeds another sink, at the receiver. | A user's ports feed the fleet. A guest's NixOS goes into its host's `microvm.vms`. | [`ports to served`](modules/platforms/ports.nix#L19), [`guest to host`](modules/platforms/microvm.nix#L53) |
 | The cycle form | A component that asks the tree for data and gives 0 to n elements. | The microvm host asks for its guest scopes and gives one network setup for them. | [`vm-host`](modules/platforms/microvm.nix#L126) |
-| The `out` arg | An element reads the flake outputs lazily. | Release images, the CI workflow and the claude MCP entry read built outputs, not `inputs.self`. | [`release images`](modules/packages/release-images.nix#L9), [`yen-mcp in claude`](modules/agent/mcp.nix#L36) |
+| The `out` arg | An element reads the flake outputs lazily. | Release images and the CI workflow read built outputs, not `inputs.self`. | [`release images`](modules/packages/release-images.nix#L9) |
 | Errors as data | An aspect key `errors` gives error records. Evaluation continues. | frodo's wipeRoot guards, secret files that no instance owns, CI runner labels, sharedPkgs groups. | [`secret-files`](modules/topology/secrets.nix#L52), [`runner labels`](modules/flake/ci.nix#L47), [`shared pkgs`](modules/platforms/nixos.nix#L59) |
 | Autoinclude | Files found by path become modules: no line in the host file. | `hosts/<name>/_nixos` holds each machine's hardware, disko and facter report. | [`autoinclude`](modules/hosts/autoinclude.nix#L12) |
 | Exports | A scope outside any machine sends its content to a flake output. | `homeModules.vic`: vic's headless home for other flakes. | [`homeModules.vic`](modules/platforms/exports.nix#L13) |
@@ -72,7 +72,7 @@ Each row is one yen capability: what it is, and the vix configuration it carries
 | Knowledge pack | The eval result as N-Triples with a sha256, and SHACL shapes. | `out.rdfPack` for quipu, one snapshot per revision. | [`rdfPack`](modules/agent/rdf.nix#L12) |
 | Infra checks | Facts from fleet data, compared with each built system. | Hostname, keyd, nvidia, enthium and persisted directories, per host. | [`infra`](modules/checks/infra.nix#L44) |
 | Eval cost levers | Shared pkgs per channel and system; a trimmed NixOS module list. | Ready for every host, off on all: enabling them needs the drvPath oracles on each host. | [`sharedPkgs`](modules/platforms/nixos.nix#L39), [`docs off`](modules/platforms/nixos.nix#L45) |
-| MCP server | Agents ask the fleet over stdio JSON-RPC. | vic's claude sessions have the `yen` MCP server for this fleet. | [`claude entry`](modules/agent/mcp.nix#L26) |
+| MCP server | Agents ask the fleet over stdio JSON-RPC. | vic's claude sessions have the `yen` MCP server for this fleet. | [`claude entry`](modules/agent/mcp.nix#L7) |
 | CI gate | One eval per PR: no error records, invariants ok, no undefined aspect. | The `yen-gate` job of the generated workflow. | [`yen-gate`](modules/flake/ci-workflow.nix#L102) |
 | Tests | Checks over the eval result itself. | File order changes no result; a broken varda never stops frodo. | [`file order`](tests.nix#L65) |
 
@@ -91,7 +91,7 @@ nix eval --impure --json --expr '(import ./query.nix).ask "aspectsOn" { name = "
 nix eval --impure --json --expr '(import ./query.nix).ask "freePort" { name = "annatar"; }'
 nix eval --offline --impure --file tests.nix failed      # oracles: errors, check.ok, file order, laziness ([ ] when all hold)
 nix eval --offline --impure --file tests.nix e2e.failed  # each machine's and home's settings fingerprint vs vix
-nix run .#yen-mcp                                   # MCP server for agents, on stdio
+nix run github:vic/yen?dir=mcp                      # yen's MCP server for agents, on stdio
 ```
 
 ## Fleet map
@@ -395,11 +395,11 @@ flowchart LR
 | `caches` | 2 | fleet, host, mac | 9 |
 | `darwin` | 6 | mac | 9 |
 | `infra` | 1 | fleet | 9 |
-| `out` | 2 | fleet | 4 |
 | `formatter` | 1 | system | 3 |
 | `files` | 2 | fleet | 2 |
 | `homeDarwin` | 2 | user | 2 |
 | `primary-user` | 2 | host, mac | 2 |
+| `out` | 1 | fleet | 1 |
 | `persist` | 1 | host | 1 |
 
 <details><summary>Routing by kind: giving kind, sink, receiving kind (edge label: elements)</summary>
@@ -477,7 +477,6 @@ flowchart LR
   n0953dd6b11 -->|"2"| n4f878ac061
   n0953dd6b11 -->|"6"| nd64b44e53d
   n0953dd6b11 -->|"3"| n39dd8b6d0b
-  n0953dd6b11 -->|"3"| ndc260b07ca
   n0953dd6b11 -->|"20"| nf50db05372
   naf777705f2 -->|"57"| nfecafea4bf
   naf777705f2 -->|"3"| nfa311da127
@@ -535,7 +534,7 @@ flowchart LR
   n110eb86866 -->|"2"| nd265c5f895
   n110eb86866 -->|"68"| n91a43a88c2
   n110eb86866 -->|"13"| n25061baf77
-  ndc260b07ca -->|"4"| n0d07ea97e1
+  ndc260b07ca -->|"1"| n0d07ea97e1
   nf50db05372 -->|"20"| n0953dd6b11
   n0a8627788a -->|"1"| n91a43a88c2
   n5636a72f85 -->|"26"| naf777705f2
@@ -1049,7 +1048,7 @@ flowchart LR
 
 ## Counts
 
-66 scopes, 16 kinds, 206 aspects, 2072 routed elements.
+66 scopes, 16 kinds, 205 aspects, 2069 routed elements.
 A kind with 0 scopes is data: nothing spawns it.
 
 | Kind | Fields | Spawns | Sinks | Scopes |
@@ -1097,7 +1096,7 @@ A kind with 0 scopes is data: nothing spawns it.
 | `nixos` | `guest`, `host` | `guest`, `host` | 118 |
 | `nvf` | `vim` | `vim` | 186 |
 | `os` | `guest`, `host`, `mac`, `user` | `guest`, `home`, `host`, `mac` | 130 |
-| `out` | `export`, `fleet`, `host`, `mac`, `system`, `user` | `fleet` | 42 |
+| `out` | `export`, `fleet`, `host`, `mac`, `system`, `user` | `fleet` | 39 |
 | `packages` | `system`, `vim` | `system` | 35 |
 | `persist` | `host` | `host` | 1 |
 | `ports` | `user` | `user` | 26 |
@@ -1137,7 +1136,7 @@ readable inside the fleet: `nix eval --impure --json --file query.nix check.viol
 
 ```mermaid
 flowchart LR
-  n254d290cd5[("yen-mcp (nix run .#yen-mcp)")]
+  n254d290cd5[("yen-mcp (nix run github:vic/yen?dir=mcp)")]
   nf3ef81de2f("yen_ask")
   nf54195a4ac("yen_check")
   n6a59d997e4("yen_context")
@@ -1173,7 +1172,7 @@ flowchart LR
 
 | Prefix | Trust | Aspects |
 |---|---|---|
-| `agent/` | 1 | 3: `mcp-app`, `rdf-pack`, `yen-mcp-claude` |
+| `agent/` | 1 | 2: `rdf-pack`, `yen-mcp-claude` |
 | `modules/` | 3 | 182 |
 | `vic/ai/` | 2 | 21 |
 
@@ -1267,7 +1266,7 @@ An element goes to the nearest ancestor-or-self scope that has the sink. A sink 
 | role `on-trusted` | a user within `trusted`, no untrusted guest between |
 | role `trusted` | a host file adds itself: holds vic's secrets |
 
-206 aspects live under `modules/`; `yen.aspects.<name>` each.
+205 aspects live under `modules/`; `yen.aspects.<name>` each.
 Active nowhere (empty `at`, or a marker no scope matches): `frodo-wipe-root`, `frodo-wipe-user`, `gnome-desktop`, `laptop-thermald`, `shared-pkgs-no-docs`, `vic-rdesk`, `vic-vini-dashboards`, `vix-rdesk`.
 
 </details>
@@ -1329,7 +1328,7 @@ yen.aspects.trusted.at = yen.host.elrond;
 The same host as a change program an agent can dry-run (errors, invariant violations, diff) before it writes a file.
 Users stay in the host file: a program value is not a list of refs.
 ```sh
-echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"yen_program","arguments":{"program":[{"fields":{"cpu":"amd","system":{"ref":{"kind":"system","name":"x86_64-linux"}},"workstation":true},"kind":"host","name":"elrond","op":"new"},{"op":"set","path":["host","elrond","desktops"],"value":["kde","niri"]},{"aspect":"trusted","kind":"host","name":"elrond","op":"place"}]}}}' | nix run .#yen-mcp
+echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"yen_program","arguments":{"program":[{"fields":{"cpu":"amd","system":{"ref":{"kind":"system","name":"x86_64-linux"}},"workstation":true},"kind":"host","name":"elrond","op":"new"},{"op":"set","path":["host","elrond","desktops"],"value":["kde","niri"]},{"aspect":"trusted","kind":"host","name":"elrond","op":"place"}]}}}' | nix run github:vic/yen?dir=mcp
 ```
 
 **Add a user feature**: one aspect, gated by a tier (`modules/vic/<area>/<name>.nix`).

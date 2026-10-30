@@ -87,10 +87,9 @@ in
       [ (src "platforms/microvm.nix" "children = yen.kinds.guest" "vm-host") ]
     )
     (row "The `out` arg" "An element reads the flake outputs lazily."
-      "Release images, the CI workflow and the claude MCP entry read built outputs, not `inputs.self`."
+      "Release images and the CI workflow read built outputs, not `inputs.self`."
       [
         (src "packages/release-images.nix" "out.nixosConfigurations.bombadil" "release images")
-        (src "agent/mcp.nix" "out.apps." "yen-mcp in claude")
       ]
     )
     (row "Errors as data" "An aspect key `errors` gives error records. Evaluation continues."
