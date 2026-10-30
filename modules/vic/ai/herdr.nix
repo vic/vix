@@ -1,7 +1,12 @@
 # herdr: terminal multiplexer for coding agents (numtide/llm-agents.nix).
 # Declarative equivalent of `herdr integration install claude` (v10), which
 # cannot edit the home-manager owned settings.json.
-{ yen, inputs, lib, ... }:
+{
+  yen,
+  inputs,
+  lib,
+  ...
+}:
 {
   yen.aspects.ai-herdr = {
     at = yen.aspects.vic-headless;
@@ -47,6 +52,20 @@
       in
       {
         home.packages = [ herdr ];
+
+        # read-only: change the theme or a key here, not in herdr's settings screen (`prefix+,`). `herdr config check` validates it.
+        xdg.configFile."herdr/config.toml" = {
+          force = true; # replaces the file herdr wrote on first run
+          source = (pkgs.formats.toml { }).generate "herdr-config.toml" {
+            onboarding = false;
+            ui.toast.delivery = "terminal";
+            theme = {
+              name = "dracula";
+              auto_switch = false;
+            };
+            keys = import ./_herdr-keys.nix;
+          };
+        };
 
         programs.claude-code = {
           skills.herdr = "${herdr.src}/skills/herdr";
