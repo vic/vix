@@ -82,10 +82,6 @@
 - MCP tools deferred: subagent must ToolSearch-select schema; frontmatter grant alone insufficient · n=1 · src:misc/verified-findings.md
 - test frontmatter change on ONE agent first; bad syntax can blank all tools · n=1 · src:misc/verified-findings.md
 
-## omni
-- omni_recall at task start; omni_dispatches runaway flag shows burn · n=1 · src:misc/improvements.md
-- incremental ingest + INSERT-OR-IGNORE left new column all-0; full rebuild fixes · n=1 · src:misc/state.md
-
 ## deepwiki / research
 - read paper summaries inline, no agent for it · n=1 · src:pnx/RULINGS.md
 - design from current impls + recent work, not old thesis alone · n=1 · src:pnx/RULINGS.md

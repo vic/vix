@@ -2,7 +2,7 @@
 # vic-pm br <args> | learn <vic|pm|skills|traps> "<lesson>" | where
 # PM's persistent experience, kept in the vix repo (survives hardware moves):
 #   $VIC_PM_DIR/.beads/      PM beads (br, prefix pm): learnings + optimization tasks
-#   $VIC_PM_DIR/quipu/ omni/ notes/   exports written by PM agents (quipu/omni are MCP-only)
+#   $VIC_PM_DIR/quipu/ notes/   exports written by PM agents (quipu is MCP-only)
 # br      = br pinned to the PM beads, from any cwd
 # learn   = append-only lesson into the vic-lessons skill (live-linked into the repo; dedup)
 set -eu

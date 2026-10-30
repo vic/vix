@@ -4,7 +4,7 @@
 # The rest are verbatim scripts in ./hooks (installed at ~/.claude/hooks):
 # stop-gate (ctx >=70% + stale HANDOFF blocks stop once),
 # subagent-brief (worker contract), pre-compact (holds auto compaction <90%),
-# learn-loop. omni graph refresh is a systemd user timer (tools.nix).
+# learn-loop.
 { yen, lib, ... }:
 {
   yen.aspects.ai-vic-hooks = {

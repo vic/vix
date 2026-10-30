@@ -14,7 +14,7 @@
 - fable/xhigh 529 x3 burned ~17 min; fall back to opus after 2 strikes · n=2 · src:viejo/state.md, otro/state.md
 - escalate opus -> fable only after 3 fails on same hunt · n=1 · src:dnx/effort.md
 - supervisor inline only for shared contracts (design, kernel, ports); tightly coupled FE stays supervisor-owned · n=1 · src:rev/state.md
-- skill x model: pm/vic skill on haiku ~170-180 out/turn vs opus ~1100-1500/turn (observed, 0 errs both) · n=1 · src:omni/lessons.tsv
+- skill x model: pm/vic skill on haiku ~170-180 out/turn vs opus ~1100-1500/turn (observed, 0 errs both) · n=1
 - tier map that worked: recon haiku readers, design opus, impl rung sonnet, verify sonnet, cite judges haiku x5 · n=3 · src:rev/state.md, pnx/state.md, misc/state.md
 
 ## TIME GATE + PARTITION

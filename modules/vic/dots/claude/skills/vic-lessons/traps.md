@@ -1,8 +1,8 @@
 # tool traps · fix (harvested 2026-10-21)
 
 ## jj
-- land agent ws from default ws -> EMPTY commits (ws never snapshotted) · `jj st` INSIDE ws, check `jj diff -r @ --stat` non-empty, then land · n=5 · src:dnx3/discipline.md, genie/HANDOFF.md, quipu/ledger, denren/HANDOFF.md, omni/lessons.tsv
-- `jj workspace forget` before snapshot abandons work · snapshot first; recover via `jj op restore` + cp from ws dir · n=3 · src:denren/HANDOFF.md, quipu/ledger, omni/lessons.tsv
+- land agent ws from default ws -> EMPTY commits (ws never snapshotted) · `jj st` INSIDE ws, check `jj diff -r @ --stat` non-empty, then land · n=5 · src:dnx3/discipline.md, genie/HANDOFF.md, quipu/ledger, denren/HANDOFF.md
+- `jj workspace forget` before snapshot abandons work · snapshot first; recover via `jj op restore` + cp from ws dir · n=3 · src:denren/HANDOFF.md, quipu/ledger
 - `jj describe -R <sibling ws>` does not snapshot it -> empty commit · run jj inside that ws dir · n=2 · src:dnx3/state.md, otro/HANDOFF.md
 - `jj abandon @` after edits drops them · `jj st` + `jj diff` first; recover `jj op restore <op>` · n=1 · src:quipu/ledger
 - main moves between sessions; stale base lands reverts · `jj log main` + rebase onto tip, verify diff stat (reverts = stale) · n=3 · src:viejo/state.md, otro/state.md, dnx/jj-land-dance.md
