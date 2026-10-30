@@ -16,7 +16,6 @@
   "editor.cursorBlinking": "smooth",
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.fontFamily": "'Victor Mono'",
-  "editor.fontSize": 23,
   "editor.inlayHints.enabled": "offUnlessPressed",
   "editor.inlineSuggest.edits.showCollapsed": true,
   "editor.minimap.autohide": "scroll",
@@ -349,6 +348,6 @@
   "claudeCode.preferredLocation": "panel",
   "claudeCode.useTerminal": true,
   "git.enabled": false,
-  "workbench.preferredDarkColorTheme": "Palenight Operator",
+  "workbench.preferredDarkColorTheme": "Visual Studio Dark",
   "jjx.showTooltips": false
 }

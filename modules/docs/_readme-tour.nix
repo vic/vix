@@ -91,7 +91,7 @@ in
       (src "platforms/accounts.nix" "primary-user.reduce = yen.lib.reduce.one;" "one: one admin per mac")
       (src "platforms/ports.nix" "reduce = yen.lib.reduce.entries;" "entries: each value with its giver")
       (src "topology/secrets.nix" "reduce = yen.lib.reduce.flat;" "flat: join list elements")
-      (src "platforms/impermanence.nix" "name = \"persist\";" "own reduce: persist (path union)")
+      (src "platforms/impermanence.nix" "nixos.persist {" "nixos.persist: path union, hideMounts")
     ])
     (row "typed sinks: `of` checks each element" [
       (src "topology/secrets.nix" "of = yen.lib.listOf yen.kinds.secret;" "a list of secret refs")
@@ -107,7 +107,7 @@ in
       (src "platforms/home-manager.nix" "os = yen.lib.batteries.home-manager.into-host"
         "homeManager → os"
       )
-      (src "platforms/impermanence.nix" "yen.kinds.host.sinks.persist = {" "persist → nixos")
+      (src "platforms/impermanence.nix" "yen.kinds.host.sinks.persist.nixos =" "persist → nixos")
       (src "topology/secrets.nix" "yen.kinds.host.sinks.secrets = {" "host secrets → nixos (sops-nix)")
       (src "envs/env.nix" "sinks.env-packages.homeManager" "env-packages → homeManager")
       (src "editors/vim.nix" "sinks.nvf.packages" "nvf → packages")

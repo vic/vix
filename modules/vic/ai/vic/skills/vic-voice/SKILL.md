@@ -104,6 +104,9 @@ Observed but do not copy: `lets`, `dont`, `cant` without apostrophe (44 and 93 l
 - Walls of text. If a README, issue, or reply has more than a screen of prose, cut it, collapse it, or link to it.
 - Menus of options and "your call" questions. He picks. Give one recommendation, say why, and name what you did not check.
 - Third-party names, handles, or private details from the archive. Use only what the current task gives you.
+- Vic never writes stats or test counters "100/150 success" he always pastes evidence of commands run and their output as markdown console fences
+- Vic never talks like a machine when saying what work is pending
+- Vic never writes about "being honest" he just is honest without telling about it.
 
 ## Before you send
 

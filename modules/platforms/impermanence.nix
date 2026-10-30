@@ -2,17 +2,10 @@
 { yen, lib, ... }:
 let
   inherit (yen.lib) opt;
-  # sini helpers/mergePersist: unique union of the entries { directories; files; }
-  merge = es: {
-    directories = lib.unique (builtins.concatMap (e: e.directories or [ ]) es);
-    files = lib.unique (builtins.concatMap (e: e.files or [ ]) es);
-  };
-  reduce = {
-    name = "persist";
-    __functor = _: es: {
-      value = merge (map (e: e.value) es);
-      errors = [ ];
-    };
+  persist = yen.lib.batteries.nixos.persist {
+    from = yen.kinds.host.sinks.persist;
+    root = "/nix/persist";
+    hideMounts = true;
   };
 in
 {
@@ -23,14 +16,6 @@ in
   };
 
   # user and feature entries reach the host (a guest keeps its own: platforms/microvm.nix)
-  yen.kinds.host.sinks.persist = {
-    inherit reduce;
-    nixos =
-      { scope, persist, ... }:
-      lib.optionalAttrs scope.impermanence.enable {
-        environment.persistence."/nix/persist" = persist // {
-          hideMounts = true;
-        };
-      };
-  };
+  yen.kinds.host.sinks.persist.nixos =
+    { scope, sinks, ... }@args: lib.optionalAttrs scope.impermanence.enable (persist args);
 }

@@ -46,9 +46,13 @@ in
     infra =
       {
         host,
-        persist ? { },
+        persist ? [ ],
         ...
       }:
+      let
+        # the persist elements are a path or { directories; files }
+        persistDirs = lib.concatMap (e: if lib.isString e then [ e ] else e.directories or [ ]) persist;
+      in
       {
         ${host.name} = {
           hostname = fact [ "networking" "hostName" ] host.name;
@@ -83,7 +87,7 @@ in
                 has = d;
                 via = x: x.directory or x;
               }
-            ) (persist.directories or [ ])
+            ) persistDirs
           )
         );
       };
