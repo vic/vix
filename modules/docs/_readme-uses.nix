@@ -107,7 +107,7 @@ in
     )
     (row "Exports" "A scope outside any machine sends its content to a flake output."
       "`homeModules.vic`: vic's headless home for other flakes."
-      [ (src "platforms/exports.nix" "homeModules.\${export.name}" "homeModules.vic") ]
+      [ (src "platforms/exports.nix" "output = \"homeModules\";" "homeModules.vic") ]
     )
     (row "Flake inputs per aspect" "Each aspect declares the inputs it uses. `flake.nix` is generated."
       "microvm, disko, impermanence, sops-nix and the skill inputs live with their users."

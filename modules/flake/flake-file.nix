@@ -32,10 +32,7 @@ in
     at = yen.fleet.vix;
     flake-file = {
       description = "Vic's Nix Environment, powered by yen";
-      nixConfig = {
-        extra-trusted-public-keys = [ "vix.cachix.org-1:hP/Lpdsi1dB3AxK9o6coWh+xHzvAc4ztdDYuG7lC6dI=" ];
-        extra-substituters = [ "https://vix.cachix.org" ];
-      };
+      # nixConfig: the fleet `caches` sink (nix/settings.nix)
       outputs = ''
         inputs:
         (import inputs.yen).lib.mkFlake {

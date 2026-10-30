@@ -1,59 +1,38 @@
-# readme map (a fn of lib and ir): one thin mermaid emitter for every view, and the structure diagrams of docs/_fleet-ir.nix.
-{ lib, ir }:
+# readme map (a fn of lib, yen and ir): one fenced mermaid emitter for every view, and the structure diagrams of docs/_fleet-ir.nix.
+{
+  lib,
+  yen,
+  ir,
+}:
 let
-  # md5 ids: any label is safe, and the same scope gets the same id in every view
-  node = id: "n${builtins.substring 0 10 (builtins.hashString "md5" id)}";
-  q = l: ''"${lib.replaceStrings [ "\"" ] [ "'" ] l}"'';
-  shape = {
-    mac = l: "(${q l})";
-    guest = l: "[[${q l}]]";
-    home = l: "[/${q l}/]";
-    user = l: "((${q l}))";
-    sink = l: "(${q l})";
-    output = l: "[(${q l})]";
-    ref = l: "{{${q l}}}";
-    secret = l: "{{${q l}}}";
-  };
-  box = n: node n.id + (shape.${n.kind} or (l: "[${q l}]")) n.label;
+  inherit (yen.lib.batteries.mermaid) flowchart shapes;
   # a node other nodes name as their group renders as a subgraph around them
   mermaid =
     view:
-    let
-      inside = p: lib.filter (n: (n.group or null) == p.id) view.nodes;
-      isGroup = n: lib.any (m: (m.group or null) == n.id) view.nodes;
-      draw =
-        n:
-        if isGroup n then
-          [ "  subgraph ${node n.id} [${q n.label}]" ] ++ map (m: "    ${box m}") (inside n) ++ [ "  end" ]
-        else
-          [ "  ${box n}" ];
-      edge =
-        e:
-        "  ${node e.from} ${if e.live or true then "-->" else "-.->"}${
-            if (e.label or "") == "" then "" else "|${q e.label}|"
-          } ${node e.to}";
-    in
-    lib.concatStringsSep "\n" (
-      [
-        "```mermaid"
-        "flowchart LR"
-      ]
-      ++ lib.concatMap draw (lib.filter (n: (n.group or null) == null) view.nodes)
-      ++ map edge view.edges
-      ++ [ "```" ]
-    );
+    "```mermaid\n"
+    + flowchart {
+      shapes = {
+        mac = shapes.round;
+        guest = shapes.subroutine;
+        home = shapes.parallelogram;
+        user = shapes.circle;
+        sink = shapes.round;
+        output = shapes.cylinder;
+        ref = shapes.hexagon;
+        secret = shapes.hexagon;
+      };
+    } view
+    + "\n```";
   # one markdown row per sink, most routed elements first
   routingTable =
     rows:
-    lib.concatStringsSep "\n" (
-      [
-        "| Sink | Given by (aspects) | Received at | Elements |"
-        "|---|---|---|---|"
-      ]
-      ++ map (
-        r:
-        "| `${r.sink}` | ${toString r.aspects} | ${lib.concatStringsSep ", " r.receivedAt} | ${toString r.elements} |"
-      ) rows
+    yen.lib.batteries.docs.table [ "Sink" "Given by (aspects)" "Received at" "Elements" ] (
+      map (r: [
+        "`${r.sink}`"
+        (toString r.aspects)
+        (lib.concatStringsSep ", " r.receivedAt)
+        (toString r.elements)
+      ]) rows
     );
 in
 {

@@ -1,10 +1,9 @@
-# fleet ir (a fn of yen and lib): nodes + edges of the structure views, from `yen.lib.graph` and kind and sink declarations.
+# fleet ir (a fn of yen and lib): nodes + edges of the structure views, from `yen.lib.graph`, the kinds and the schema.
 # A node is { id; label; kind; group }, an edge { from; to; label; live }. `_readme-map.nix` renders each view.
 { yen, lib }:
 let
+  inherit (yen.lib.batteries) mermaid;
   g = yen.lib.graph;
-  sorted = xs: lib.sort (a: b: a < b) (lib.unique xs);
-  names = v: if lib.isAttrs v then lib.attrNames v else [ ];
   byId = lib.listToAttrs (map (s: lib.nameValuePair s.id s) g.scopes);
   parentOf = id: lib.concatStringsSep "/" (lib.init (lib.splitString "/" id));
   root = lib.findFirst (s: s.kind == "fleet") null g.scopes;
@@ -26,130 +25,36 @@ let
       groupOf byId.${parentOf s.id}
     else
       null;
-  drawn = lib.filter (
-    s:
-    !lib.elem s.kind [
-      "vim"
-      "env"
-    ]
-  ) g.scopes;
-  # the sink a key names: everything in a sink declaration but these is a forward
-  meta = [
-    "reduce"
-    "of"
-    "at"
-    "out"
-  ];
-  sinkDecls = lib.concatLists (
-    lib.mapAttrsToList (
-      k: d:
-      lib.mapAttrsToList (n: v: {
-        kind = k;
-        name = n;
-        decl = if lib.isAttrs v then v else { };
-      }) (d.sinks or { })
-    ) yen.kinds
-  );
-  receiversOf =
-    sink:
-    sorted (map (e: lib.last (lib.splitString ":" e.to)) (lib.filter (e: e.sink == sink) g.edges));
 in
 import ./_fleet-gates.nix { inherit yen lib; }
 // {
-  fleetMap = {
-    nodes = map (s: {
-      inherit (s) id kind;
-      label =
-        if s.kind == "system" then
-          "${s.name} · ${toString (lib.length (under s "vim"))} vim, ${toString (lib.length (under s "env"))} env"
-        else
-          s.name;
-      group = groupOf s;
-    }) drawn;
+  fleetMap = mermaid.scopes {
+    keep =
+      s:
+      !lib.elem s.kind [
+        "vim"
+        "env"
+      ];
+    label =
+      s:
+      if s.kind == "system" then
+        "${s.name} · ${toString (lib.length (under s "vim"))} vim, ${toString (lib.length (under s "env"))} env"
+      else
+        s.name;
+    group = groupOf;
     # grouped machines and homes need no edge from the fleet; users and guests keep the edge from their parent
-    edges =
-      map
-        (s: {
-          from = parentOf s.id;
-          to = s.id;
-        })
-        (
-          lib.filter (
-            s:
-            s.id != root.id && groupOf s == null
-            || lib.elem s.kind [
-              "user"
-              "guest"
-            ]
-          ) drawn
-        );
-  };
+    edge =
+      s:
+      groupOf s == null
+      || lib.elem s.kind [
+        "user"
+        "guest"
+      ];
+  } g;
 
   # solid = `spawns` (parent kind to child kind), dotted = a field that is a ref to another kind
-  kindTree = {
-    nodes = map (k: {
-      id = "k:${k}";
-      label = k;
-      kind = "kind";
-    }) (lib.attrNames yen.kinds);
-    edges = lib.concatLists (
-      lib.mapAttrsToList (
-        k: d:
-        map (c: {
-          from = "k:${k}";
-          to = "k:${c}";
-        }) (names (d.spawns or { }))
-        ++ lib.concatLists (
-          lib.mapAttrsToList (
-            f: t:
-            lib.optional (lib.isAttrs t && t ? __kind) {
-              from = "k:${k}";
-              to = "k:${t.__kind}";
-              label = f;
-              live = false;
-            }
-          ) (d.fields or { })
-        )
-      ) yen.kinds
-    );
-  };
+  kindTree = mermaid.kinds yen.kinds;
 
   # dashed: a sink key that feeds another sink (label: the kind); solid: `out`, labelled with its receivers
-  forwards = {
-    nodes =
-      map
-        (n: {
-          id = "sink:${n}";
-          label = n;
-          kind = "sink";
-        })
-        (
-          sorted (
-            map (d: d.name) sinkDecls ++ lib.concatMap (d: lib.subtractLists meta (names d.decl)) sinkDecls
-          )
-        )
-      ++ [
-        {
-          id = "flake";
-          label = "flake outputs";
-          kind = "output";
-        }
-      ];
-    edges = lib.unique (
-      lib.concatMap (
-        d:
-        map (t: {
-          from = "sink:${d.name}";
-          to = "sink:${t}";
-          label = d.kind;
-          live = false;
-        }) (lib.subtractLists meta (names d.decl))
-        ++ lib.optional (d.decl ? out) {
-          from = "sink:${d.name}";
-          to = "flake";
-          label = lib.concatStringsSep ", " (lib.take 6 (receiversOf d.name));
-        }
-      ) sinkDecls
-    );
-  };
+  forwards = mermaid.sinks yen.lib;
 }

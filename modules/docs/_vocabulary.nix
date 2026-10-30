@@ -38,6 +38,7 @@
     homeDarwin = "homeManager on darwin only";
     unfree = "unfree package names the machine, home or vim profile allows";
     nix-features = "each machine's `nix.settings.experimental-features`";
+    caches = "cachix caches: a machine's `nix.settings` substituters and keys, the fleet's flake.nix `nixConfig`";
     login-shells = "login shells of the users; the machine enables `programs.<shell>`";
     persist = "paths impermanence keeps on the host";
     ports = "`{ port; what; }` a machine's or a user's service listens on: for unique-port, portsOf and freePort; a user's go up to `served`";

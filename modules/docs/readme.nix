@@ -10,7 +10,7 @@ let
   vocab = import ./_vocabulary.nix;
   vocabDirs = import ./_vocabulary-dirs.nix;
   ir = import ./_fleet-ir.nix { inherit yen lib; };
-  map' = import ./_readme-map.nix { inherit lib ir; };
+  map' = import ./_readme-map.nix { inherit lib yen ir; };
   inherit (map') mermaid;
   # collapsed section; the blank line after </summary> lets GitHub render the markdown inside
   fold = summary: body: ''
@@ -97,7 +97,7 @@ in
           (fold "Vocabulary: kinds, sinks, tiers, roles" (
             import ./_readme-vocab.nix { inherit yen lib vocab; }
           ))
-          (fold "Directory structure" (import ./_readme-dirs.nix { inherit vocabDirs; }))
+          (fold "Directory structure" (import ./_readme-dirs.nix { inherit yen vocabDirs; }))
           (fold "Recipes: add a host, feature, env, ssh host, secret, port" (
             import ./_readme-recipes.nix { inherit yen; }
           ))

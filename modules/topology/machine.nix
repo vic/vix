@@ -64,6 +64,6 @@ in
 
   yen.aspects.hostname = {
     at = yen.helpers.machines;
-    os = { scope, ... }: { networking.hostName = scope.name; };
+    os = yen.lib.batteries.nixos.hostname;
   };
 }

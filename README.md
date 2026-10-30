@@ -26,14 +26,14 @@ yen has four words: kinds, scopes, aspects, sinks. Each row links to the line in
 | typed sinks: `of` checks each element | [`a list of secret refs`](modules/topology/secrets.nix#L37), [`a dots path that exists`](modules/vic/dots.nix#L27), [`{ port; what; }`](modules/platforms/ports.nix#L9) |
 | forwards: a sink key names another sink | [`os → nixos`](modules/platforms/nixos.nix#L138), [`guest nixos → host nixos`](modules/platforms/microvm.nix#L50), [`account → os`](modules/platforms/nixos.nix#L144), [`homeManager → os`](modules/platforms/home-manager.nix#L56), [`persist → nixos`](modules/platforms/impermanence.nix#L26), [`host secrets → nixos (sops-nix)`](modules/topology/secrets.nix#L40), [`env-packages → homeManager`](modules/envs/env.nix#L42), [`nvf → packages`](modules/editors/vim.nix#L31), [`user unfree → machine unfree`](modules/nix/unfree.nix#L18) |
 | `out`: flake outputs | [`nixosConfigurations.<host>`](modules/platforms/nixos.nix#L125), [`ci.matrix`](modules/flake/outputs.nix#L16), [`rdfPack`](modules/agent/rdf.nix#L12), [`yen.flake`](modules/topology/fleet.nix#L22) |
-| the `out` arg: an element reads the flake outputs, not `inputs.self` | [`vic-edge wraps out.packages`](modules/packages/vic-edge.nix#L7), [`ci.yml from out.checks and out.ci.matrix`](modules/flake/ci-workflow.nix#L128) |
+| the `out` arg: an element reads the flake outputs, not `inputs.self` | [`vic-edge wraps out.packages`](modules/packages/vic-edge.nix#L7), [`ci.yml from out.checks and out.ci.matrix`](modules/flake/ci-workflow.nix#L122) |
 | a sink `at`: who may receive | [`homeLinux on linux`](modules/platforms/home-manager.nix#L77), [`account on machines`](modules/platforms/nixos.nix#L143) |
 | walls: a sink with no keys keeps elements at its scope | [`git-ignores`](modules/topology/people.nix#L33), [`nix-features`](modules/nix/features.nix#L12), [`ports (to served)`](modules/platforms/ports.nix#L18) |
-| args: a kind, a sink, `scope` | [`{ host, ... }`](modules/flake/ci.nix#L62), [`{ env, env-packages, ... }`](modules/envs/env.nix#L42), [`{ scope, ... }`](modules/topology/machine.nix#L67), [`{ primary-user, ... }`](modules/forms/wsl.nix#L16) |
+| args: a kind, a sink, `scope` | [`{ host, ... }`](modules/flake/ci.nix#L62), [`{ env, env-packages, ... }`](modules/envs/env.nix#L42), [`{ scope, ... }`](modules/platforms/home-manager.nix#L91), [`{ primary-user, ... }`](modules/forms/wsl.nix#L16) |
 | errors as data: an `errors` key gives error records, no throw | [`a secret file no instance owns`](modules/topology/secrets.nix#L52), [`a proxyJump cycle`](modules/topology/ssh-hosts.nix#L82), [`0 or 2+ runners on a system`](modules/flake/ci.nix#L47), [`frodo wipeRoot guards`](modules/hosts/frodo/impermanence.nix#L47), [``one` with two admins`](modules/platforms/accounts.nix#L54) |
 | `yen.helpers`: shared values | [`helpers`](modules/helpers.nix#L7), [`place`](modules/helpers.nix#L24), [`sopsSecrets`](modules/helpers.nix#L50) |
 | flake-file: inputs per aspect | [`vix-flake`](modules/flake/flake-file.nix#L31), [`env-rust`](modules/envs/rust.nix#L6) |
-| files: generated repo files | [`the files sink`](modules/flake/files.nix#L8), [`this README`](modules/docs/readme.nix#L78), [`ci.yml`](modules/flake/ci-workflow.nix#L130) |
+| files: generated repo files | [`the files sink`](modules/flake/files.nix#L5), [`this README`](modules/docs/readme.nix#L78), [`ci.yml`](modules/flake/ci-workflow.nix#L124) |
 | graphs (`yen.lib.graphs`) | [`sccs: ssh jumps`](modules/topology/ssh-hosts.nix#L85), [`transpose, nodesOf: flake follows`](modules/agent/invariants.nix#L123) |
 | invariants: Datalog over the facts | [`invariants`](modules/agent/invariants.nix#L40), [`runners-no-users`](modules/agent/invariants.nix#L58), [`unique-port`](modules/agent/invariants.nix#L87), [`follows-declared`](modules/agent/invariants.nix#L116) |
 | stored queries and krn synthesis | [`stored queries`](modules/agent/queries.nix#L34), [`portsOf`](modules/agent/queries.nix#L69), [`unfreeOn`](modules/agent/queries.nix#L51), [`freePort: a krn finite domain`](modules/agent/synthesis.nix#L13), [`a `ports` element`](modules/vic/ai/headroom.nix#L34) |
@@ -62,7 +62,7 @@ Each row is one yen capability: what it is, and the vix configuration it carries
 | The `out` arg | An element reads the flake outputs lazily. | Release images, the CI workflow and the claude MCP entry read built outputs, not `inputs.self`. | [`release images`](modules/packages/release-images.nix#L9), [`yen-mcp in claude`](modules/agent/mcp.nix#L44) |
 | Errors as data | An aspect key `errors` gives error records. Evaluation continues. | frodo's wipeRoot guards, secret files that no instance owns, CI runner labels, sharedPkgs groups. | [`secret-files`](modules/topology/secrets.nix#L52), [`runner labels`](modules/flake/ci.nix#L47), [`shared pkgs`](modules/platforms/nixos.nix#L59) |
 | Autoinclude | Files found by path become modules: no line in the host file. | `hosts/<name>/_nixos` holds each machine's hardware, disko and facter report. | [`autoinclude`](modules/hosts/autoinclude.nix#L12) |
-| Exports | A scope outside any machine sends its content to a flake output. | `homeModules.vic`: vic's headless home for other flakes. | [`homeModules.vic`](modules/platforms/exports.nix#L14) |
+| Exports | A scope outside any machine sends its content to a flake output. | `homeModules.vic`: vic's headless home for other flakes. | [`homeModules.vic`](modules/platforms/exports.nix#L13) |
 | Flake inputs per aspect | Each aspect declares the inputs it uses. `flake.nix` is generated. | microvm, disko, impermanence, sops-nix and the skill inputs live with their users. | [`microvm input`](modules/platforms/microvm.nix#L71) |
 | Generated files | The `files` sink writes files and checks that they are current. | README.md and the CI workflow. | [`ci.yml`](modules/flake/ci-workflow.nix#L1) |
 | Invariants | Datalog rules over the fleet's facts. A true `bad:` atom is a violation. | Guest addresses and service ports are unique, every `follows` names a declared input, runners have no users. | [`unique-guest-addr`](modules/agent/invariants.nix#L76), [`follows-declared`](modules/agent/invariants.nix#L116) |
@@ -73,7 +73,7 @@ Each row is one yen capability: what it is, and the vix configuration it carries
 | Infra checks | Facts from fleet data, compared with each built system. | Hostname, keyd, nvidia, enthium and persisted directories, per host. | [`infra`](modules/checks/infra.nix#L44) |
 | Eval cost levers | Shared pkgs per channel and system; a trimmed NixOS module list. | Ready for every host, off on all: enabling them needs the drvPath oracles on each host. | [`sharedPkgs`](modules/platforms/nixos.nix#L39), [`docs off`](modules/platforms/nixos.nix#L45) |
 | MCP server | Agents ask the fleet over stdio JSON-RPC. | vic's claude sessions have the `yen` MCP server for this fleet. | [`claude entry`](modules/agent/mcp.nix#L34) |
-| CI gate | One eval per PR: no error records, invariants ok, no undefined aspect. | The `yen-gate` job of the generated workflow. | [`yen-gate`](modules/flake/ci-workflow.nix#L108) |
+| CI gate | One eval per PR: no error records, invariants ok, no undefined aspect. | The `yen-gate` job of the generated workflow. | [`yen-gate`](modules/flake/ci-workflow.nix#L102) |
 | Tests | Checks over the eval result itself. | File order changes no result; a broken varda never stops frodo. | [`file order`](tests.nix#L65) |
 
 ## Commands
@@ -189,8 +189,10 @@ flowchart LR
   n8df93cc983 -.->|"channel"| n827e34afc1
   n8df93cc983 -.->|"on"| n91a43a88c2
   n8df93cc983 -.->|"system"| n0953dd6b11
+  n8df93cc983 -.->|"workspace"| n188f8ca258
   nd265c5f895 --> naf777705f2
   nd265c5f895 -.->|"channel"| n827e34afc1
+  nd265c5f895 -.->|"on"| n91a43a88c2
   nd265c5f895 -.->|"system"| n0953dd6b11
   nd265c5f895 -.->|"user"| naf777705f2
   n91a43a88c2 --> n8df93cc983
@@ -203,6 +205,7 @@ flowchart LR
   n25061baf77 -.->|"system"| n0953dd6b11
   n5e4f590e9f -.->|"channel"| n827e34afc1
   n5e4f590e9f -.->|"system"| n0953dd6b11
+  nd392af8b39 -.->|"forwardsServedBy"| nd265c5f895
   n0953dd6b11 --> nfffdcd721b
   n0953dd6b11 --> ne5b792c758
   naf777705f2 --> nfffdcd721b
@@ -215,6 +218,7 @@ A solid edge is `out`, labelled with the receivers that build a flake output.
 ```mermaid
 flowchart LR
   ncc24ba33bb("account")
+  n136fe03a6b("caches")
   n427fbcd67e("checks")
   n485f073170("ci-jobs")
   ndf6c3caaba("claude")
@@ -248,18 +252,22 @@ flowchart LR
   n4218c12206[("flake outputs")]
   nf4212291b1 -.->|"env"| n105bdfb4bb
   n105bdfb4bb -->|"vic"| n4218c12206
+  n136fe03a6b -.->|"fleet"| n632ce41da4
   n427fbcd67e -->|"vix"| n4218c12206
   n485f073170 -->|"vix"| n4218c12206
   n5d2b151b79 -->|"vix"| n4218c12206
   n632ce41da4 -->|"vix"| n4218c12206
   nb1ac840462 -->|"vix"| n4218c12206
+  n136fe03a6b -.->|"guest"| na38fcc0344
   na788f0f454 -.->|"guest"| na788f0f454
   na38fcc0344 -.->|"guest"| na788f0f454
   n9608c364fa -.->|"guest"| na788f0f454
-  na788f0f454 -->|"annatar, bill, bombadil, dnx, frodo, gen"| n4218c12206
+  n136fe03a6b -.->|"host"| na38fcc0344
+  na788f0f454 -->|"annatar, bill, bombadil, dnx, frodo, gen, +5"| n4218c12206
   na38fcc0344 -.->|"host"| na788f0f454
   n9608c364fa -.->|"host"| na788f0f454
   n7bec19a8d7 -.->|"host"| na788f0f454
+  n136fe03a6b -.->|"mac"| na38fcc0344
   na4a7496f4e -->|"bert, varda"| n4218c12206
   na38fcc0344 -.->|"mac"| na4a7496f4e
   n51a9bdc0dd -->|"aarch64-darwin, aarch64-linux, x86_64-linux"| n4218c12206
@@ -280,24 +288,81 @@ A dashed edge is under a `not`. The count is the aspects that name the gate.
 
 ```mermaid
 flowchart LR
-  n4acd136661["laptop · 1 gated"]
+  n377af21273["graphical · 2 gated"]
+  n62d07aff29["installer · 1 gated"]
+  n489f1a3a7d["installer-base · 1 gated"]
+  n4acd136661["laptop · 2 gated"]
+  n89bdb1eb07["on-graphical · 3 gated"]
+  ne40bbc70fd["on-trusted · 1 gated"]
+  nd00631bc9e["trusted · 2 gated"]
   nb8a30fbac2["vic-editors · 1 gated"]
-  n2eac2f0a06["vic-full · 5 gated"]
-  n67fc7dd90e["vic-gui · 5 gated"]
-  n130a7d4796["vic-headless · 36 gated"]
-  n5504f43c35["vic-secrets · 1 gated"]
+  n2eac2f0a06["vic-full · 9 gated"]
+  n67fc7dd90e["vic-gui · 8 gated"]
+  n130a7d4796["vic-headless · 40 gated"]
+  n5504f43c35["vic-secrets · 2 gated"]
+  nfd885d7cc3["wsl · 1 gated"]
+  n5bda577d20{{"home:nargun"}}
+  n10ce26b672{{"host:annatar"}}
+  nd742cd629a{{"host:bombadil"}}
+  n7337c9f8ea{{"host:frodo"}}
+  n1f78aba788{{"host:mordor"}}
+  nb8b5780427{{"host:nargun"}}
+  ndcd47d0930{{"host:nienna"}}
+  n3b8bd95985{{"host:smaug"}}
+  n596880b4b3{{"kind guest"}}
+  n8605f65baa{{"kind host"}}
+  n3035c9d5f5{{"kind mac"}}
+  n2986fe4f7b{{"kind user"}}
+  necdfc4a2eb{{"mac:varda"}}
   nc23988abcb{{"user:vic"}}
+  ne34e0a57d0{{"fact test"}}
+  ne8e4c026ed{{"fact test"}}
+  nb3b6c0d23e{{"fact test"}}
   n3475f654b5{{"fact test"}}
-  n0986dbdf58{{"fact test"}}
-  nf40735cd8c{{"fact test"}}
-  n9b1e1ac5b3{{"fact test"}}
-  n4aac55af95{{"fact test"}}
+  n5ed268c2e8{{"fact test"}}
+  n5bda577d20 --> n377af21273
+  n8605f65baa --> n377af21273
+  n596880b4b3 --> n377af21273
+  ne34e0a57d0 --> n377af21273
+  n3035c9d5f5 --> n377af21273
+  n8605f65baa --> n62d07aff29
+  n596880b4b3 --> n62d07aff29
+  ne8e4c026ed --> n62d07aff29
+  n8605f65baa --> n489f1a3a7d
+  n596880b4b3 --> n489f1a3a7d
+  nb3b6c0d23e --> n489f1a3a7d
+  n8605f65baa --> n4acd136661
+  n596880b4b3 --> n4acd136661
   n3475f654b5 --> n4acd136661
-  n0986dbdf58 --> nb8a30fbac2
-  nf40735cd8c --> n2eac2f0a06
-  n9b1e1ac5b3 --> n67fc7dd90e
+  n2986fe4f7b --> n89bdb1eb07
+  n377af21273 -->|"within"| n89bdb1eb07
+  n596880b4b3 -.->|"not within"| n89bdb1eb07
+  n377af21273 -.->|"not within not"| n89bdb1eb07
+  n2986fe4f7b --> ne40bbc70fd
+  nd00631bc9e -->|"within"| ne40bbc70fd
+  n596880b4b3 -.->|"not within"| ne40bbc70fd
+  nd00631bc9e -.->|"not within not"| ne40bbc70fd
+  n10ce26b672 --> nd00631bc9e
+  nd742cd629a --> nd00631bc9e
+  n7337c9f8ea --> nd00631bc9e
+  n5bda577d20 --> nd00631bc9e
+  n1f78aba788 --> nd00631bc9e
+  nb8b5780427 --> nd00631bc9e
+  ndcd47d0930 --> nd00631bc9e
+  n3b8bd95985 --> nd00631bc9e
+  necdfc4a2eb --> nd00631bc9e
+  n2eac2f0a06 --> nb8a30fbac2
+  n67fc7dd90e --> nb8a30fbac2
+  n130a7d4796 --> n2eac2f0a06
+  n62d07aff29 -.->|"not within"| n2eac2f0a06
+  n130a7d4796 --> n67fc7dd90e
+  n89bdb1eb07 --> n67fc7dd90e
   nc23988abcb --> n130a7d4796
-  n4aac55af95 --> n5504f43c35
+  n130a7d4796 --> n5504f43c35
+  ne40bbc70fd --> n5504f43c35
+  n8605f65baa --> nfd885d7cc3
+  n596880b4b3 --> nfd885d7cc3
+  n5ed268c2e8 --> nfd885d7cc3
 ```
 
 **Routing**: where aspect elements go, per sink. "Given by" counts the aspects that give to the sink;
@@ -305,14 +370,14 @@ flowchart LR
 
 | Sink | Given by (aspects) | Received at | Elements |
 |---|---|---|---|
-| `homeManager` | 52 | export, user | 614 |
+| `homeManager` | 51 | export, user | 601 |
 | `flake-file` | 29 | fleet | 222 |
 | `nvf` | 42 | vim | 186 |
 | `dots` | 10 | user | 108 |
 | `nixos` | 30 | guest, host | 104 |
 | `os` | 9 | guest, home, host, mac | 99 |
 | `claude-allow` | 7 | user | 91 |
-| `homeLinux` | 8 | user | 78 |
+| `homeLinux` | 9 | user | 89 |
 | `git-ignores` | 5 | user | 65 |
 | `account` | 7 | user | 57 |
 | `env-packages` | 6 | env | 36 |
@@ -321,12 +386,13 @@ flowchart LR
 | `ports` | 2 | user | 26 |
 | `devshells` | 2 | system | 21 |
 | `fish-functions` | 2 | user | 21 |
+| `packages` | 8 | system | 20 |
 | `ci-jobs` | 4 | fleet | 19 |
 | `secrets` | 2 | user | 18 |
-| `packages` | 7 | system | 17 |
 | `nix-features` | 1 | guest, host, mac | 13 |
 | `login-shells` | 1 | guest, home, host, mac | 12 |
 | `checks` | 6 | fleet | 11 |
+| `caches` | 2 | fleet, host, mac | 9 |
 | `darwin` | 6 | mac | 9 |
 | `infra` | 1 | fleet | 9 |
 | `out` | 2 | fleet | 4 |
@@ -351,6 +417,7 @@ flowchart LR
   naf777705f2(("user"))
   ne5b792c758["vim"]
   nfecafea4bf("account")
+  n597869ba2d("caches")
   nfa311da127("checks")
   naaeec8610e("ci-jobs")
   n01da8a8a21("claude")
@@ -384,12 +451,14 @@ flowchart LR
   nfffdcd721b -->|"18"| nb6e3584ffe
   nfffdcd721b -->|"36"| n48083e3642
   nfffdcd721b -->|"24"| nd64b44e53d
+  n0d07ea97e1 -->|"1"| n597869ba2d
   n0d07ea97e1 -->|"5"| nd64b44e53d
   n0d07ea97e1 -->|"1"| ndc260b07ca
   n8df93cc983 -->|"2"| nd64b44e53d
   n8df93cc983 -->|"2"| n9a8813de3c
   n8df93cc983 -->|"12"| n011dfa1a2c
   n8df93cc983 -->|"12"| n110eb86866
+  n91a43a88c2 -->|"7"| n597869ba2d
   n91a43a88c2 -->|"9"| naaeec8610e
   n91a43a88c2 -->|"8"| nd64b44e53d
   n91a43a88c2 -->|"9"| n2f24ae0bfb
@@ -398,6 +467,7 @@ flowchart LR
   n91a43a88c2 -->|"59"| n110eb86866
   n91a43a88c2 -->|"1"| n0a8627788a
   n91a43a88c2 -->|"5"| n39bc59f1cc
+  n25061baf77 -->|"1"| n597869ba2d
   n25061baf77 -->|"2"| naaeec8610e
   n25061baf77 -->|"9"| n9f31ba8689
   n25061baf77 -->|"2"| n9a8813de3c
@@ -408,7 +478,7 @@ flowchart LR
   n0953dd6b11 -->|"6"| nd64b44e53d
   n0953dd6b11 -->|"3"| n39dd8b6d0b
   n0953dd6b11 -->|"3"| ndc260b07ca
-  n0953dd6b11 -->|"17"| nf50db05372
+  n0953dd6b11 -->|"20"| nf50db05372
   naf777705f2 -->|"57"| nfecafea4bf
   naf777705f2 -->|"3"| nfa311da127
   naf777705f2 -->|"2"| naaeec8610e
@@ -419,8 +489,8 @@ flowchart LR
   naf777705f2 -->|"177"| nd64b44e53d
   naf777705f2 -->|"65"| n18666276f9
   naf777705f2 -->|"2"| n560bb3f3fc
-  naf777705f2 -->|"78"| n2136d398cb
-  naf777705f2 -->|"614"| ne21a86cbf3
+  naf777705f2 -->|"89"| n2136d398cb
+  naf777705f2 -->|"601"| ne21a86cbf3
   naf777705f2 -->|"12"| nba6d62a856
   naf777705f2 -->|"16"| n110eb86866
   naf777705f2 -->|"26"| n5636a72f85
@@ -430,6 +500,9 @@ flowchart LR
   ne5b792c758 -->|"186"| n8f39acf8bc
   ne5b792c758 -->|"9"| n39bc59f1cc
   nfecafea4bf -->|"57"| naf777705f2
+  n597869ba2d -->|"1"| n0d07ea97e1
+  n597869ba2d -->|"7"| n91a43a88c2
+  n597869ba2d -->|"1"| n25061baf77
   nfa311da127 -->|"11"| n0d07ea97e1
   naaeec8610e -->|"19"| n0d07ea97e1
   n609b49e5e3 -->|"91"| naf777705f2
@@ -444,9 +517,9 @@ flowchart LR
   n39dd8b6d0b -->|"3"| n0953dd6b11
   n18666276f9 -->|"65"| naf777705f2
   n560bb3f3fc -->|"2"| naf777705f2
-  n2136d398cb -->|"78"| naf777705f2
-  ne21a86cbf3 -->|"41"| ne09dd078b0
-  ne21a86cbf3 -->|"573"| naf777705f2
+  n2136d398cb -->|"89"| naf777705f2
+  ne21a86cbf3 -->|"40"| ne09dd078b0
+  ne21a86cbf3 -->|"561"| naf777705f2
   n2f24ae0bfb -->|"9"| n0d07ea97e1
   nba6d62a856 -->|"2"| n8df93cc983
   nba6d62a856 -->|"2"| nd265c5f895
@@ -463,7 +536,7 @@ flowchart LR
   n110eb86866 -->|"68"| n91a43a88c2
   n110eb86866 -->|"13"| n25061baf77
   ndc260b07ca -->|"4"| n0d07ea97e1
-  nf50db05372 -->|"17"| n0953dd6b11
+  nf50db05372 -->|"20"| n0953dd6b11
   n0a8627788a -->|"1"| n91a43a88c2
   n5636a72f85 -->|"26"| naf777705f2
   n85d14325e8 -->|"1"| n91a43a88c2
@@ -481,7 +554,7 @@ flowchart LR
 <details><summary>Aspects by machine and home (an aspect that gave an element there or to a user below)</summary>
 
 | aspect | bitstream | annatar | bill | bombadil | frodo | dnx | gen | mordor | nargun | nargun | nienna | smaug | tom | bert | varda |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | `account` | x | x |  | x | x | x | x | x | x | x | x | x |  |  | x |
 | `admin` |  | x |  | x | x | x | x | x | x | x | x | x |  |  |  |
 | `ai-agents` | x | x |  | x | x | x | x | x | x | x | x | x |  |  | x |
@@ -568,7 +641,6 @@ flowchart LR
 | `primary-user` |  |  |  |  |  |  |  |  |  |  |  |  |  |  | x |
 | `primary-user-darwin` |  |  |  |  |  |  |  |  |  |  |  |  |  | x | x |
 | `sec-ops` |  | x |  |  | x |  |  | x | x | x | x | x |  |  | x |
-| `yen-mcp-claude` | x | x |  | x | x | x | x | x | x | x | x | x |  |  | x |
 | `sysctl` |  | x | x | x | x | x | x | x | x |  | x | x | x |  |  |
 | `terminals` |  | x |  |  | x |  |  | x | x | x | x | x |  |  | x |
 | `unfree` | x | x | x | x | x | x | x | x | x | x | x | x | x | x | x |
@@ -595,13 +667,14 @@ flowchart LR
 | `wsl` |  | x |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | `wsl-user` |  | x |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | `xfce-desktop` |  |  |  | x | x |  |  | x | x |  | x | x |  |  |  |
+| `yen-mcp-claude` | x | x |  | x | x | x | x | x | x | x | x | x |  |  | x |
 
 </details>
 
 **Flake inputs by aspect** (the `flake-file` sink writes flake.nix from them):
 
 | aspect | inputs |
-| --- | --- |
+|---|---|
 | `ai-herdr` | `bun2nix`, `flake-parts`, `llm-agents`, `nix-systems`, `nixpkgs-lib`, `systems` |
 | `ai-ircc` | `ircc` |
 | `ai-lightjj` | `lightjj` |
@@ -620,7 +693,7 @@ flowchart LR
 | `formatter` | `treefmt-nix` |
 | `frodo-impermanence` | `impermanence` |
 | `git` | `nix-wrapper-modules` |
-| `jujutsu` | `flake-parts`, `jjui`, `nix-wrapper-modules`, `nixpkgs-lib` |
+| `jujutsu` | `flake-parts`, `gojo`, `jjui`, `majjit`, `nix-wrapper-modules`, `nixpkgs-lib` |
 | `nix-tools` | `trix` |
 | `vic-browsers` | `flake-utils`, `helium`, `nixpkgs-darwin` |
 | `vic-editors` | `flake-parts`, `nixpkgs-lib`, `vscode-server` |
@@ -635,7 +708,7 @@ flowchart LR
 **CI jobs by runner** (`nix eval --json .#ci.matrix`; ci.yml also runs one job per `checks.<sys>.<name>`):
 
 | runner | system | jobs | may fail |
-| --- | --- | --- | --- |
+|---|---|---|---|
 | `macos-latest` | `aarch64-darwin` | `bert`, `varda` | `varda` |
 | `ubuntu-24.04-arm` | `aarch64-linux` | `bill` |  |
 | `ubuntu-latest` | `x86_64-linux` | `annatar`, `bombadil`, `devshell-fullenv-x86_64-linux`, `devshell-goenv-x86_64-linux`, `devshell-nixenv-x86_64-linux`, `devshell-nodeenv-x86_64-linux`, `devshell-pyenv-x86_64-linux`, `devshell-rustenv-x86_64-linux`, `frodo`, `mordor`, `nargun`, `nienna`, `smaug`, `tom`, `vic@bitstream`, `vic@nargun` |  |
@@ -720,7 +793,7 @@ flowchart LR
   n37e2b269f8 -.->|"may fail"| n83e49c5b41
 ```
 
-<details><summary>Flake input follows (26 of 54 inputs follow another)</summary>
+<details><summary>Flake input follows (28 of 56 inputs follow another)</summary>
 
 Follows targets flake.nix does not declare (the follows-declared invariant): none.
 
@@ -735,6 +808,7 @@ flowchart LR
   n1161ece077["devshell"]
   n01ef5fa359["flake-parts · 4 follow"]
   nc84fd7ddd5["flake-utils · 2 follow"]
+  nd15d13c0a8["gojo"]
   n620b6c2a6c["helium"]
   n806b9d82d0["home-manager · 1 follow"]
   n22d6f8566c["impermanence"]
@@ -742,13 +816,14 @@ flowchart LR
   n82a85e43a7["jjui"]
   nd9cb64d9f8["lightjj"]
   n56d13e8ca9["llm-agents"]
+  n53dd74a4f5["majjit"]
   nb9d5327945["microvm"]
   ned26e59807["mnw · 1 follow"]
   nc629217bae["nix-index-database"]
   n8e95a6029c["nix-systems · 1 follow"]
   nd698d91bfb["nix-wrapper-modules"]
   n6085c65368["nixos-wsl"]
-  n413353722a["nixpkgs · 24 follow"]
+  n413353722a["nixpkgs · 26 follow"]
   n03e01a895f["nixpkgs-darwin · 1 follow"]
   n0c993f1146["nixpkgs-lib · 1 follow"]
   n5a5cfc2d7e["notebooklm-pack"]
@@ -773,6 +848,7 @@ flowchart LR
   n1fc9ef0e47 --> n413353722a
   n1161ece077 --> n413353722a
   n01ef5fa359 --> n0c993f1146
+  nd15d13c0a8 --> n413353722a
   n620b6c2a6c --> n413353722a
   n620b6c2a6c --> n03e01a895f
   n620b6c2a6c --> nc84fd7ddd5
@@ -788,6 +864,7 @@ flowchart LR
   n56d13e8ca9 --> n413353722a
   n56d13e8ca9 --> n834ba7a430
   n56d13e8ca9 --> n8b19eb8204
+  n53dd74a4f5 --> n413353722a
   nb9d5327945 --> n413353722a
   nc629217bae --> n413353722a
   nd698d91bfb --> n413353722a
@@ -899,7 +976,7 @@ flowchart LR
 <details><summary>vim profiles by feature, envs by lang and package, dotfiles</summary>
 
 | feature | astrovim | lazyvim | neovim | nvim | vscode-vim |
-| --- | --- | --- | --- | --- | --- |
+|---|---|---|---|---|---|
 | theme | `astrodark` | `tokyonight` | `catppuccin-frappe` | `base24-rebecca` |  |
 | gui, aliases | gui | gui | gui | gui vi vim |  |
 | `avante` | x |  |  |  |  |
@@ -944,16 +1021,16 @@ flowchart LR
 | `which-key` | x | x | x | x |  |
 
 | env | langs | aspects | packages |
-| --- | --- | --- | --- |
-| `fullenv` | `c`, `go`, `nix`, `node`, `python`, `rust` | `env-c`, `env-go`, `env-nix`, `env-node`, `env-python`, `env-rust` | `bun`, `cachix`, `deadnix`, `gcc-wrapper`, `gnumake`, `go`, `gopls`, `just`, `nh`, `nil`, `nix-unit`, `nixd`, `nixfmt`, `nodejs`, `npins`, `pkg-config-wrapper`, `pnpm`, `python3`, `rust-default`, `statix`, `typescript`, `uv`, `wasm-bindgen-cli`, `wasm-pack`, `yarn` |
+|---|---|---|---|
+| `fullenv` | `c`, `go`, `nix`, `node`, `python`, `rust` | `env-c`, `env-go`, `env-nix`, `env-node`, `env-python`, `env-rust` | `bacon`, `bun`, `cachix`, `deadnix`, `gcc-wrapper`, `gnumake`, `go`, `gopls`, `just`, `nh`, `nil`, `nix-unit`, `nixd`, `nixfmt`, `nodejs`, `npins`, `pkg-config-wrapper`, `pnpm`, `python3`, `rust-default`, `statix`, `typescript`, `uv`, `wasm-bindgen-cli`, `wasm-pack`, `yarn` |
 | `goenv` | `go` | `env-go` | `go`, `gopls` |
 | `nixenv` | `nix` | `env-nix` | `cachix`, `deadnix`, `just`, `nh`, `nil`, `nix-unit`, `nixd`, `nixfmt`, `npins`, `statix` |
 | `nodeenv` | `node` | `env-node` | `bun`, `nodejs`, `pnpm`, `typescript`, `yarn` |
 | `pyenv` | `python` | `env-python` | `python3`, `uv` |
-| `rustenv` | `c`, `rust` | `env-c`, `env-rust` | `gcc-wrapper`, `gnumake`, `pkg-config-wrapper`, `rust-default`, `wasm-bindgen-cli`, `wasm-pack` |
+| `rustenv` | `c`, `rust` | `env-c`, `env-rust` | `bacon`, `gcc-wrapper`, `gnumake`, `pkg-config-wrapper`, `rust-default`, `wasm-bindgen-cli`, `wasm-pack` |
 
 | home path | modules/vic/dots/ | aspect |
-| --- | --- | --- |
+|---|---|---|
 | `.claude/skills/vic-lessons` | `claude/skills/vic-lessons` | `ai-vic-hooks` |
 | `.config/bottom` | `config/bottom` | `cli-tools` |
 | `.config/btop` | `config/btop` | `cli-tools` |
@@ -972,7 +1049,7 @@ flowchart LR
 
 ## Counts
 
-66 scopes, 16 kinds, 204 aspects, 2053 routed elements.
+66 scopes, 16 kinds, 206 aspects, 2072 routed elements.
 A kind with 0 scopes is data: nothing spawns it.
 
 | Kind | Fields | Spawns | Sinks | Scopes |
@@ -981,13 +1058,13 @@ A kind with 0 scopes is data: nothing spawns it.
 | `emacs` | `bins`, `bootstrap`, `configDots`, `daemon`, `fish`, `initDir`, `wrapper` |  |  | 0 |
 | `env` | `langs` |  | `env-packages` | 18 |
 | `export` | `user` | `user` | `homeManager` | 1 |
-| `fleet` |  | `export`, `home`, `host`, `mac`, `system` | `checks`, `ci-jobs`, `files`, `flake-file`, `infra`, `out`, `served` | 1 |
-| `guest` | `addr`, `channel`, `checkout`, `ciBroken`, `cpu`, `desktops`, `envs`, `firmware`, `form`, `ghRunner`, `gpu`, `impermanence`, `keyboard`, `layouts`, `macAddress`, `on`, `sharedPkgs`, `system`, `trimmedModules`, `users`, `wifi`, `workspace`, `workstation` | `user` | `login-shells`, `nix-features`, `nixos`, `os`, `persist`, `ports`, `unfree` | 2 |
+| `fleet` |  | `export`, `home`, `host`, `mac`, `system` | `caches`, `checks`, `ci-jobs`, `files`, `flake-file`, `infra`, `out`, `served` | 1 |
+| `guest` | `addr`, `channel`, `checkout`, `ciBroken`, `cpu`, `desktops`, `envs`, `firmware`, `form`, `ghRunner`, `gpu`, `impermanence`, `keyboard`, `layouts`, `macAddress`, `on`, `sharedPkgs`, `system`, `trimmedModules`, `users`, `wifi`, `workspace`, `workstation` | `user` | `caches`, `login-shells`, `nix-features`, `nixos`, `os`, `persist`, `ports`, `unfree` | 2 |
 | `home` | `channel`, `checkout`, `ciBroken`, `envs`, `ghRunner`, `on`, `system`, `user` | `user` | `login-shells`, `nix-features`, `nixos`, `os`, `persist`, `ports`, `primary-user`, `secrets`, `unfree` | 2 |
-| `host` | `channel`, `checkout`, `ciBroken`, `cpu`, `desktops`, `envs`, `firmware`, `form`, `ghRunner`, `gpu`, `impermanence`, `keyboard`, `layouts`, `sharedPkgs`, `system`, `trimmedModules`, `users`, `wifi`, `workstation` | `guest`, `home`, `user` | `login-shells`, `nix-features`, `nixos`, `os`, `persist`, `ports`, `primary-user`, `secrets`, `unfree` | 9 |
-| `mac` | `channel`, `checkout`, `ciBroken`, `cpu`, `desktops`, `envs`, `firmware`, `form`, `ghRunner`, `gpu`, `impermanence`, `keyboard`, `layouts`, `sharedPkgs`, `system`, `trimmedModules`, `users`, `wifi`, `workstation` | `user` | `darwin`, `login-shells`, `nix-features`, `os`, `ports`, `primary-user`, `unfree` | 2 |
+| `host` | `channel`, `checkout`, `ciBroken`, `cpu`, `desktops`, `envs`, `firmware`, `form`, `ghRunner`, `gpu`, `impermanence`, `keyboard`, `layouts`, `sharedPkgs`, `system`, `trimmedModules`, `users`, `wifi`, `workstation` | `guest`, `home`, `user` | `caches`, `login-shells`, `nix-features`, `nixos`, `os`, `persist`, `ports`, `primary-user`, `secrets`, `unfree` | 9 |
+| `mac` | `channel`, `checkout`, `ciBroken`, `cpu`, `desktops`, `envs`, `firmware`, `form`, `ghRunner`, `gpu`, `impermanence`, `keyboard`, `layouts`, `sharedPkgs`, `system`, `trimmedModules`, `users`, `wifi`, `workstation` | `user` | `caches`, `darwin`, `login-shells`, `nix-features`, `os`, `ports`, `primary-user`, `unfree` | 2 |
 | `machine` | `channel`, `checkout`, `ciBroken`, `cpu`, `desktops`, `envs`, `firmware`, `form`, `ghRunner`, `gpu`, `impermanence`, `keyboard`, `layouts`, `sharedPkgs`, `system`, `trimmedModules`, `users`, `wifi`, `workstation` |  |  | 0 |
-| `secret` | `deploy`, `format`, `path`, `sopsFile`, `sopsKey` |  |  | 0 |
+| `secret` | `deploy`, `format`, `sopsFile`, `sopsKey`, `sopsPath` |  |  | 0 |
 | `ssh-host` | `controlPersist`, `extraOptions`, `forwardAgent`, `forwardsServedBy`, `host`, `hostname`, `localForwards`, `proxyJump`, `remoteForwards`, `serverAliveCountMax`, `serverAliveInterval`, `setEnv`, `user` |  |  | 0 |
 | `system` | `darwin`, `legacyPackages`, `runner` | `env`, `vim` | `devshells`, `formatter`, `packages` | 3 |
 | `user` | `admin`, `email`, `fullName`, `shell` | `env` | `account`, `claude`, `claude-allow`, `dots`, `fish-functions`, `git-ignores`, `homeDarwin`, `homeLinux`, `homeManager`, `ports`, `secrets`, `unfree` | 13 |
@@ -997,6 +1074,7 @@ A kind with 0 scopes is data: nothing spawns it.
 | Sink | Given at | Received at | Elements |
 |---|---|---|---|
 | `account` | `user` | `user` | 57 |
+| `caches` | `fleet`, `host`, `mac` | `fleet`, `host`, `mac` | 9 |
 | `checks` | `system`, `user` | `fleet` | 11 |
 | `ci-jobs` | `env`, `host`, `mac`, `user` | `fleet` | 19 |
 | `claude` | `user` | `user` | 26 |
@@ -1007,20 +1085,20 @@ A kind with 0 scopes is data: nothing spawns it.
 | `env-packages` | `env` | `env` | 36 |
 | `files` | `system` | `fleet` | 2 |
 | `fish-functions` | `user` | `user` | 21 |
-| `flake-file` | `env`, `fleet`, `guest`, `host`, `system`, `user` | `fleet` | 222 |
+| `flake-file` | `env`, `fleet`, `guest`, `host`, `system`, `user` | `fleet` | 223 |
 | `formatter` | `system` | `system` | 3 |
 | `git-ignores` | `user` | `user` | 65 |
 | `homeDarwin` | `user` | `user` | 2 |
-| `homeLinux` | `user` | `user` | 78 |
-| `homeManager` | `user` | `export`, `user` | 639 |
+| `homeLinux` | `user` | `user` | 89 |
+| `homeManager` | `user` | `export`, `user` | 626 |
 | `infra` | `host` | `fleet` | 9 |
 | `login-shells` | `user` | `guest`, `home`, `host`, `mac` | 12 |
 | `nix-features` | `guest`, `host`, `mac` | `guest`, `host`, `mac` | 13 |
 | `nixos` | `guest`, `host` | `guest`, `host` | 118 |
 | `nvf` | `vim` | `vim` | 186 |
-| `os` | `guest`, `host`, `mac`, `user` | `guest`, `home`, `host`, `mac` | 122 |
+| `os` | `guest`, `host`, `mac`, `user` | `guest`, `home`, `host`, `mac` | 130 |
 | `out` | `export`, `fleet`, `host`, `mac`, `system`, `user` | `fleet` | 42 |
-| `packages` | `system`, `vim` | `system` | 32 |
+| `packages` | `system`, `vim` | `system` | 35 |
 | `persist` | `host` | `host` | 1 |
 | `ports` | `user` | `user` | 26 |
 | `primary-user` | `user` | `host`, `mac` | 2 |
@@ -1060,34 +1138,34 @@ readable inside the fleet: `nix eval --impure --json --file query.nix check.viol
 ```mermaid
 flowchart LR
   n254d290cd5[("yen-mcp (nix run .#yen-mcp)")]
-  n72ed07ef7a("yen_ask")
-  n36a3b0f723("yen_check")
-  n5b32d793d2("yen_context")
-  nfd53204477("yen_declared_in")
-  n4ff85900f3("yen_errors")
-  n37ebbed2c7("yen_explain")
-  nadee744105("yen_export")
-  n6863971d9d("yen_impact")
-  nb0733c534d("yen_labels")
-  nd3c588724a("yen_program")
-  nb8b859f378("yen_queries")
-  n75d0bcd916("yen_schema")
-  n75cc57565d("yen_stage")
-  n0c5c6359b4("yen_why_not")
-  n254d290cd5 --> n72ed07ef7a
-  n254d290cd5 --> n36a3b0f723
-  n254d290cd5 --> n5b32d793d2
-  n254d290cd5 --> nfd53204477
-  n254d290cd5 --> n4ff85900f3
-  n254d290cd5 --> n37ebbed2c7
-  n254d290cd5 --> nadee744105
-  n254d290cd5 --> n6863971d9d
-  n254d290cd5 --> nb0733c534d
-  n254d290cd5 --> nd3c588724a
-  n254d290cd5 --> nb8b859f378
-  n254d290cd5 --> n75d0bcd916
-  n254d290cd5 --> n75cc57565d
-  n254d290cd5 --> n0c5c6359b4
+  nf3ef81de2f("yen_ask")
+  nf54195a4ac("yen_check")
+  n6a59d997e4("yen_context")
+  n66ec653a2d("yen_declared_in")
+  nffe30fe478("yen_errors")
+  n6df3350afa("yen_explain")
+  n724e51eaa4("yen_export")
+  nec98de0ce9("yen_impact")
+  na6be3937d8("yen_labels")
+  n1b9c14e078("yen_program")
+  ncc44a3e3ff("yen_queries")
+  n7aa4e78a07("yen_schema")
+  n07a598af03("yen_stage")
+  n53cf4e0ffd("yen_why_not")
+  n254d290cd5 --> nf3ef81de2f
+  n254d290cd5 --> nf54195a4ac
+  n254d290cd5 --> n6a59d997e4
+  n254d290cd5 --> n66ec653a2d
+  n254d290cd5 --> nffe30fe478
+  n254d290cd5 --> n6df3350afa
+  n254d290cd5 --> n724e51eaa4
+  n254d290cd5 --> nec98de0ce9
+  n254d290cd5 --> na6be3937d8
+  n254d290cd5 --> n1b9c14e078
+  n254d290cd5 --> ncc44a3e3ff
+  n254d290cd5 --> n7aa4e78a07
+  n254d290cd5 --> n07a598af03
+  n254d290cd5 --> n53cf4e0ffd
 ```
 
 **Trust labels** (`yen.labels`, by file path prefix). An agent edits under a low-trust prefix;
@@ -1096,7 +1174,7 @@ flowchart LR
 | Prefix | Trust | Aspects |
 |---|---|---|
 | `agent/` | 1 | 3: `mcp-app`, `rdf-pack`, `yen-mcp-claude` |
-| `modules/` | 3 | 180 |
+| `modules/` | 3 | 182 |
 | `vic/ai/` | 2 | 21 |
 
 **Knowledge pack** (`out.rdfPack`, [agent/rdf.nix](modules/agent/rdf.nix)): the sha256 and count of the routing graph
@@ -1104,7 +1182,7 @@ as sorted N-Triples (the same in every file order), and SHACL shapes from the sc
 
 **Queries on an eval result** (`r = import ./query.nix`): `active`, `ask`, `check`, `context`, `data`, `declaredIn`, `errors`, `explain`, `facts`, `flake`, `floor`, `graph`, `impact`, `labels`, `queries`, `reduced`, `root`, `schema`, `scopes`, `undefined`.
 
-**Engine library** (`yen.lib`): `agent`, `allowed`, `asOf`, `derive`, `diffData`, `eval`, `grant`, `history`, `is`, `jsonSafe`, `maybe`, `mkFlake`, `narrow`, `opt`, `stage`, `validAt`, `without`.
+**Engine library** (`yen.lib`): `agent`, `allowed`, `asOf`, `batteries`, `derive`, `diffData`, `eval`, `grant`, `history`, `is`, `jsonSafe`, `maybe`, `mkFlake`, `narrow`, `opt`, `stage`, `validAt`, `without`.
 Reduce strategies: `entries`, `list`, `merge`, `one`, `set`. Change programs (`yen.lib.program`): `dryRun`, `opErrors`, `render`, `toModule`, `validate`.
 Graphs (`yen.lib.graphs`): `cycles`, `fromEdges`, `layers`, `nodesOf`, `paths`, `reach`, `reachers`, `sccs`, `shortest`, `topo`, `transpose`, `uniq'`.
 
@@ -1115,7 +1193,7 @@ Graphs (`yen.lib.graphs`): `cycles`, `fromEdges`, `layers`, `nodesOf`, `paths`, 
 ### Kinds: one scope per instance when some `spawns` reaches the kind
 
 | kind | what it is | instances (`yen.<kind>.<name>`) |
-| --- | --- | --- |
+|---|---|---|
 | `channel` | data: the nixpkgs, home-manager and nix-darwin pins a machine builds with | unstable |
 | `emacs` | data: an emacs distribution | doom, spc |
 | `env` | a dev environment: langs become a devshell and user packages | fullenv, goenv, nixenv, nodeenv, pyenv, rustenv |
@@ -1138,9 +1216,10 @@ Graphs (`yen.lib.graphs`): `cycles`, `fromEdges`, `layers`, `nodesOf`, `paths`, 
 An element goes to the nearest ancestor-or-self scope that has the sink. A sink key that names another sink forwards the reduced value to it.
 
 | sink | on | reduce | forwards to | what |
-| --- | --- | --- | --- | --- |
+|---|---|---|---|---|
 | `env-packages` | `env` | `list` | `homeManager` | tools of an env's langs: its devshell, and the home of a user whose machine lists it |
 | `homeManager` | `export`, `user` | `list` | `os`, `out` | a home-manager module: on a machine, or `homeConfigurations."<user>@<place>"` |
+| `caches` | `fleet`, `guest`, `host`, `mac` | `flat` | `flake-file`, `os` | cachix caches: a machine's `nix.settings` substituters and keys, the fleet's flake.nix `nixConfig` |
 | `checks` | `fleet` | `merge` | `out` | `checks.<sys>.<name>`: fmt, README, flake.nix, no-gui, config tests |
 | `ci-jobs` | `fleet` | `merge` | `out` | one GitHub build job per buildable host, mac, home and linux devshell |
 | `files` | `fleet` | `list` | `out` | repo files (this README, ci.yml) built by sini/files |
@@ -1174,7 +1253,7 @@ An element goes to the nearest ancestor-or-self scope that has the sink. A sink 
 ### vic profiles: tiers gate features (`at = yen.aspects.vic-<tier>`); roles come from facts or host files
 
 | name | active |
-| --- | --- |
+|---|---|
 | `vic-full` | not on iso images (not within `installer`) |
 | `vic-gui` | `on-graphical`: every gui program lives here |
 | `vic-headless` | everywhere vic lives: terminal tools only (homes, guests, servers) |
@@ -1188,7 +1267,7 @@ An element goes to the nearest ancestor-or-self scope that has the sink. A sink 
 | role `on-trusted` | a user within `trusted`, no untrusted guest between |
 | role `trusted` | a host file adds itself: holds vic's secrets |
 
-204 aspects live under `modules/`; `yen.aspects.<name>` each.
+206 aspects live under `modules/`; `yen.aspects.<name>` each.
 Active nowhere (empty `at`, or a marker no scope matches): `frodo-wipe-root`, `frodo-wipe-user`, `gnome-desktop`, `laptop-thermald`, `shared-pkgs-no-docs`, `vic-rdesk`, `vic-vini-dashboards`, `vix-rdesk`.
 
 </details>
@@ -1199,7 +1278,7 @@ import-tree loads every `.nix` file under `modules/`. Paths with `/_` are skippe
 Dir names are for humans only. yen does not read them.
 
 | dir | purpose |
-| --- | --- |
+|---|---|
 | `modules/agent/` | invariants, stored queries, krn synthesis, trust labels, the rdf pack and the MCP app for agents |
 | `modules/checks/` | flake checks over the built configs: platform packages, no gui on headless homes |
 | `modules/desktops/` | desktop sessions (gnome, kde, niri, xfce), remote desktop, darwin defaults |
@@ -1220,7 +1299,7 @@ Dir names are for humans only. yen does not read them.
 Inside `modules/vic/`:
 
 | dir | purpose |
-| --- | --- |
+|---|---|
 | `modules/vic/ai/` | claude, agents, mcp servers, skills |
 | `modules/vic/dev/` | dev tools and security ops |
 | `modules/vic/dots/` | dotfiles linked into $HOME |

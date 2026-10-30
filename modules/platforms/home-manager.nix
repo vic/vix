@@ -53,7 +53,7 @@ in
   yen.kinds.user.sinks = {
     homeManager = {
       at = within yen.helpers.places;
-      os = { user, homeManager, ... }: { home-manager.users.${user.name}.imports = homeManager; };
+      os = yen.lib.batteries.home-manager.into-host { from = yen.kinds.user.sinks.homeManager; };
       # the same modules also build standalone as `homeConfigurations."<user>@<place>"` (not on macs)
       out =
         {

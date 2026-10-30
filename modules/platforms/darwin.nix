@@ -5,14 +5,11 @@
     fields = yen.kinds.machine.fields;
     spawns.user = yen.helpers.usersOf;
     sinks = {
-      darwin.out =
-        { mac, darwin, ... }:
-        {
-          darwinConfigurations.${mac.name} = mac.channel.darwin.lib.darwinSystem {
-            system = mac.system.name;
-            modules = darwin;
-          };
-        };
+      darwin.out = yen.lib.batteries.darwin.system {
+        from = yen.kinds.mac.sinks.darwin;
+        darwinSystem = m: m.channel.darwin.lib.darwinSystem;
+        system = m: m.system.name;
+      };
       os.darwin = { os, ... }: { imports = os; };
     };
   };

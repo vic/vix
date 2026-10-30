@@ -106,7 +106,7 @@ in
       (src "platforms/nixos.nix" "os.nixos = " "os → nixos")
       (src "platforms/microvm.nix" "nixos.nixos =" "guest nixos → host nixos")
       (src "platforms/nixos.nix" "os = { user, account" "account → os")
-      (src "platforms/home-manager.nix" "os = { user, homeManager" "homeManager → os")
+      (src "platforms/home-manager.nix" "os = yen.lib.batteries.home-manager.into-host" "homeManager → os")
       (src "platforms/impermanence.nix" "yen.kinds.host.sinks.persist = {" "persist → nixos")
       (src "topology/secrets.nix" "yen.kinds.host.sinks.secrets = {" "host secrets → nixos (sops-nix)")
       (src "envs/env.nix" "sinks.env-packages.homeManager" "env-packages → homeManager")
@@ -135,7 +135,7 @@ in
     (row "args: a kind, a sink, `scope`" [
       (src "flake/ci.nix" "{ host, ... }:" "{ host, ... }")
       (src "envs/env.nix" "{ env, env-packages, ... }:" "{ env, env-packages, ... }")
-      (src "topology/machine.nix" "os = { scope, ... }" "{ scope, ... }")
+      (src "platforms/home-manager.nix" "nixos = { scope, ... }" "{ scope, ... }")
       (src "forms/wsl.nix" "{ primary-user, ... }:" "{ primary-user, ... }")
     ])
     (row "errors as data: an `errors` key gives error records, no throw" [

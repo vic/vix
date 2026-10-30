@@ -9,18 +9,7 @@ let
   g = yen.lib.graph;
   sorted = xs: lib.sort (a: b: a < b) (lib.unique xs);
   code = xs: lib.concatMapStringsSep ", " (x: "`${x}`") (sorted xs);
-  row = cells: "| ${lib.concatStringsSep " | " cells} |";
-  table =
-    head: rows:
-    lib.concatStringsSep "\n" (
-      map row (
-        [
-          head
-          (map (_: "---") head)
-        ]
-        ++ rows
-      )
-    );
+  inherit (yen.lib.batteries.docs) table;
   aspectOf = e: lib.removePrefix "aspect " e.origin;
 
   # aspects giving elements at a place or below it (its users)

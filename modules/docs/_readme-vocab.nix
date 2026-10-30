@@ -7,19 +7,8 @@
 let
   described = import ./_described.nix "_vocabulary.nix";
   schema = yen.lib.schema;
-  row = cells: "| ${lib.concatStringsSep " | " cells} |";
   # one row of cells per name, under a header row
-  table =
-    head: cells: names:
-    lib.concatStringsSep "\n" (
-      map row (
-        [
-          head
-          (map (_: "---") head)
-        ]
-        ++ map cells names
-      )
-    );
+  table = head: cells: names: yen.lib.batteries.docs.table head (map cells names);
   code = n: "`${n}`";
   codes = xs: lib.concatMapStringsSep ", " code (lib.sort (a: b: a < b) (lib.unique xs));
   instances =
@@ -47,7 +36,7 @@ let
     (code n)
     (codes (map (d: d.kind) (on n)))
     (codes (map (d: d.reduce) (on n)))
-    (codes (lib.concatMap (d: d.feeds ++ lib.optional d.out "out") (on n)))
+    (codes (lib.concatMap (d: d.feeds) (on n))) # yen cffd8764: `out` is in feeds
     vocab.sinks.${n}
   ];
   live = what: lib.filter (n: yen.aspects ? ${n}) (lib.attrNames vocab.${what}); # aspects: stale lines only

@@ -8,11 +8,10 @@
     fields.user = yen.kinds.user;
     spawns.user = s: { ${s.user.name} = s.user; };
     # the user's own homeManager sink holds only within a machine or home, so here its elements come up to this one
-    sinks.homeManager.out =
-      { export, homeManager, ... }:
-      {
-        homeModules.${export.name}.imports = homeManager;
-      };
+    sinks.homeManager.out = yen.lib.batteries.exports.modules {
+      from = yen.kinds.export.sinks.homeManager;
+      output = "homeModules";
+    };
   };
   yen.export.vic.user = yen.user.vic;
 }

@@ -1,9 +1,8 @@
-# readme dirs (a fn of vocabDirs): live table of modules/ and modules/vic/ directories, checked against docs/_vocabulary-dirs.nix.
-{ vocabDirs }:
+# readme dirs (a fn of yen and vocabDirs): live table of modules/ and modules/vic/ directories, checked against docs/_vocabulary-dirs.nix.
+{ yen, vocabDirs }:
 let
   inherit (builtins)
     attrNames
-    concatStringsSep
     filter
     readDir
     ;
@@ -16,12 +15,11 @@ let
   described = import ./_described.nix "_vocabulary-dirs.nix";
   table =
     prefix: p: lines:
-    concatStringsSep "\n" (
-      [
-        "| dir | purpose |"
-        "| --- | --- |"
-      ]
-      ++ map (n: "| `${prefix}${n}/` | ${lines.${n}} |") (described prefix (dirsOf p) lines)
+    yen.lib.batteries.docs.table [ "dir" "purpose" ] (
+      map (n: [
+        "`${prefix}${n}/`"
+        lines.${n}
+      ]) (described prefix (dirsOf p) lines)
     );
 in
 ''
