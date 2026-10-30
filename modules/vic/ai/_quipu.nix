@@ -1,14 +1,12 @@
 # quipu is the agentic knowledge base. Shared by mcp.nix (hooks, permissions)
 # and both agent sets, so every agent gets the same mandate and the same tools.
 let
-  # Reads plus additive writes. Retract, set, freeze, merge, schema and ontology
+  # Reads plus additive writes. search, search_nodes, search_facts and hybrid_search
+  # are left out: measured broken on this store (0 hits, timeout, no embeddings).
+  # Retract, set, freeze, merge, schema and ontology
   # changes stay out: those rewrite what other agents recorded.
   names = [
     "context"
-    "search"
-    "search_nodes"
-    "search_facts"
-    "hybrid_search"
     "unified_search"
     "query"
     "ask"

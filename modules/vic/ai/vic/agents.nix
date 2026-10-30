@@ -5,10 +5,14 @@
 let
   byName = dir: f: lib.mapAttrs' f (builtins.readDir dir);
   # `tools:` is a closed allowlist; quipu is mandatory, so every agent gets it.
+  # `skills:` preloads vic-stack into every agent (structural, not hope).
   quipuTools = lib.concatStringsSep ", " (import ../_quipu.nix).tools;
   withQuipu =
     file:
-    builtins.replaceStrings [ "\ntools: " ] [ "\ntools: ${quipuTools}, " ] (builtins.readFile file);
+    builtins.replaceStrings
+      [ "\ntools: " "\nskills: " ]
+      [ "\ntools: ${quipuTools}, " "\nskills: vic-stack, " ]
+      (builtins.readFile file);
 in
 {
   yen.aspects.ai-vic-agents = {

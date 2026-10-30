@@ -4,7 +4,7 @@ This directory is the `vic.ai` aspect of the vx den (`vic` is the local den
 namespace). It carries the AI tooling from `sini/nix-config`
 (`modules/den/aspects/applications/dev/ai`), cut down to what you can run on
 your own machine, plus vic's own tooling from frodo (vic-* agents, vic skills,
-workflow hooks, omni, deepwiki, notebooklm, lightjj) under `vic/`. See §10.
+workflow hooks, omni (removed), deepwiki, notebooklm, lightjj) under `vic/`. See §10.
 It was first assembled as a standalone flake (`tmp/sai`) and then moved here.
 
 `den.aspects.vic` includes `vic.ai`. Its `homeManager` class reaches a host
@@ -212,11 +212,11 @@ Two rules apply:
 | file           | carries                                                                                                                                                                                         | was                                                       |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
 | `agents.nix`   | 16 `vic-*` subagents from `agents/` (haiku: probe, reader, sweep, scribe, chain, judge, superhaiku; sonnet: rung, isolate, reviewer, planner; opus: hunter, typesmith, lawyer, perf; xhigh: derive) | `~/.claude/agents/`                                       |
-|                | vic's 23 skills from `skills/` (vic, supervisor, dispatch, oracle, probes, lanes, ledger, handoff, ensemble, superhaiku, omni, br, kata, ned, dnet, zen, …)                                      | `~/.claude/skills/`, `~/.agents/skills/`                  |
+|                | vic's 23 skills from `skills/` (vic, supervisor, dispatch, oracle, probes, lanes, ledger, handoff, ensemble, superhaiku, omni (removed), br, kata, ned, dnet, zen, …)                                      | `~/.claude/skills/`, `~/.agents/skills/`                  |
 |                | global `CLAUDE.md` + `RTK.md` from `memory/`                                                                                                                                                    | `~/.claude/`                                              |
-| `hooks.nix`    | `vic hook boot` (SessionStart), `vic hook guard` (PreToolUse Bash), `vic hook ledger` (PostToolUse Bash), `stop-gate.sh` (Stop); omni-ingest is a systemd user timer in tools.nix                                                         | `~/.claude/hooks/`                                        |
+| `hooks.nix`    | `vic hook boot` (SessionStart), `vic hook guard` (PreToolUse Bash), `vic hook ledger` (PostToolUse Bash), `stop-gate.sh` (Stop); omni-ingest (removed) is a systemd user timer in tools.nix                                                         | `~/.claude/hooks/`                                        |
 | `tools.nix`    | `vic-run`, `vic-recall`, `vic-mine`, `vic-telemetry`, `vic-law`, `vic-gc`, `vic-ws` from `bin/`                                                                                                  | `~/bin/`                                                  |
-|                | omni (`omni/`, installed at `~/.claude/omni`) + its MCP. The DB stays at `~/.claude/omni.db`                                                                                                    | `~/.claude/omni/`                                         |
+|                | omni (removed) (`omni/`, installed at `~/.claude/omni`) + its MCP. The DB stays at `~/.claude/omni.db`                                                                                                    | `~/.claude/omni/`                                         |
 |                | deepwiki MCP + `deepwiki` REPL (`dw/`, copied because `repl.js` has changes not pushed to `github:vic/dw`)                                                                                      | `~/hk/dw/`                                                |
 |                | notebooklm MCP (`npx notebooklm-mcp@latest`) and `notebooklm-pack` (`github:meta-introspector/notebooklm-pack`)                                                                                 | `~/.claude.json`, `~/bin/`                                |
 | `upstream.nix` | skills from source: `deepwiki` (`seflless/deepwiki`), `find-skills` (`vercel-labs/skills`), `lightjj` (`chronologos/lightjj` v1.27.0, `cmd/lightjj/SKILL.md`)                                    | `~/.agents/skills/`, `~/.claude/skills/lightjj`           |
@@ -243,14 +243,8 @@ Changes to sini's files, all additions:
 
 Changes to vic's files:
 
-- **omni follows `autoMemoryDirectory`.** `omni_learn` used to write memories
-  only to `~/.claude/projects/<slug>/memory/`. sini's `claude.nix` sets
-  `autoMemoryDirectory = "~/.claude/memory"`, so Claude Code would not read
-  those files. `omni/lib/writeback.js` now reads `autoMemoryDirectory` from
-  `settings.json` (absolute or `~/`) and falls back to the per-project
-  directory. Test: case G in `omni/lib/writeback.test.mjs`. omni ingest reads
-  only transcripts (`~/.claude/projects/**/*.jsonl`), so the setting does not
-  affect it.
+- **omni is removed (vic ruling).** Use quipu and `vic-mine` (skill
+  `vic-stack`). The old `autoMemoryDirectory` writeback fix is moot.
 - codegraph: frodo had `@colbymchenry/codegraph@0.7.11` from vic's fork
   (`vic/codegraph`, commit `fb413c9`, which adds Nix support). sini's
   `tools.nix` installs `codegraph` 1.6.2 from llm-agents, and that version
@@ -263,20 +257,20 @@ Changes to vic's files:
    not manage. Move these aside first (or set a home-manager backup
    extension): `~/.claude/{settings.json,CLAUDE.md,RTK.md}`,
    `~/.claude/agents/vic-*.md`, `~/.claude/skills/*` (except `synced/`),
-   `~/.claude/hooks/*.sh`, `~/.claude/omni/`,
+   `~/.claude/hooks/*.sh`, `~/.claude/omni/` (removed),
    `~/.claude/plugins/known_marketplaces.json`.
 2. **Duplicate MCP servers.** `~/.claude.json` has user-scope entries for
-   `codegraph`, `deepwiki`, `notebooklm`, `serena` and `omni`. vic.ai serves
+   `codegraph`, `deepwiki`, `notebooklm`, `serena` and `omni` (removed). vic.ai serves
    the same servers through the home-manager plugin. Remove the old entries
    with `claude mcp remove -s user <name>`.
 3. **MCP tool names change.** home-manager serves its servers as the `hm`
    plugin, so tools become `mcp__plugin_hm_<server>__<tool>` (for example
-   `mcp__plugin_hm_omni__omni_recall`). The permissions in `settings.nix` use
+   `mcp__plugin_hm_quipu__quipu_ask`). The permissions in `settings.nix` use
    the new names. The skills and `CLAUDE.md` still show the old names
-   (`mcp__omni__…`, `codegraph_*`).
+   (`mcp__omni__…` (removed), `codegraph_*`).
 4. **Memory location.** sini's `autoMemoryDirectory = "~/.claude/memory"`
    replaces the per-project `~/.claude/projects/<project>/memory/`. Move the
-   existing memories there, or change the setting. omni follows either value.
+   existing memories there, or change the setting. omni (removed) followed either value.
 5. `claude-code` is now in two places: `users.users.vic.packages`
    (`modules/users/vic/includes.nix`, unchanged) and
    `programs.claude-code.package`. Both are the llm-agents build.
@@ -287,7 +281,7 @@ Changes to vic's files:
 | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | `~/.claude/skills/synced/`                              | Claude Code syncs these from claude.ai itself.                                                         |
 | project MCPs in `~/.claude.json` (`~/hk/dnet`: `firefox`, `nb`) | Project scope. home-manager does not manage `~/.claude.json`. They stay in that file.         |
-| data: `omni.db`, `~/.cache/claude-ledger`, `projects/`, `telemetry/` | State, not tooling. It stays in place.                                                         |
+| data: `omni.db` (removed), `~/.cache/claude-ledger`, `projects/`, `telemetry/` | State, not tooling. It stays in place.                                                         |
 | caveman statusline badge                                | It was never configured on frodo. vic.ai has ccstatusline.                                             |
 
 ---
@@ -328,9 +322,9 @@ modules/users/vic/
     └── vic/             vic's tooling (§10)
         ├── agents.nix   vic-* agents, vic skills, CLAUDE.md + RTK.md
         ├── hooks.nix    boot / cmd-ledger / stop-gate
-        ├── tools.nix    vic-* CLIs, omni, deepwiki, notebooklm
+        ├── tools.nix    vic-* CLIs, omni (removed), deepwiki, notebooklm
         ├── upstream.nix skills from source, lightjj, npx CLIs
         ├── settings.nix vic's settings.json preferences
         ├── caveman-ultra.patch
-        └── agents/ skills/ hooks/ bin/ memory/ omni/ dw/   vic's own files
+        └── agents/ skills/ hooks/ bin/ memory/ omni/ (removed) dw/   vic's own files
 ```

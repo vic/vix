@@ -4,6 +4,7 @@ description: Playbook system (ALL projects) — frozen expert procedures in <pro
 ---
 
 # PLAYBOOK LAW (vic, global) CVMN — expensive insight runs ONCE, then becomes cheap procedure.
+STACK: /vic-stack — recall quipu evidence before freezing a playbook; record the frozen playbook path in quipu.
 
 ## WHY (the haiku→fable lever)
 Smart-model value = decisions. Playbook PRE-MAKES them: which files, oracle shape, traps, order. Remainder = mechanical ⟹ cheap tier executes near-expert. Receipts: frozen procedure ⟹ 8× first-run-green; spec-quality bought tier-downgrades repeatedly.

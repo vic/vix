@@ -4,6 +4,7 @@ description: Model×effort dispatch law (ALL projects). Use BEFORE spawning any 
 ---
 
 # DISPATCH LAW (vic, global) CVMN
+STACK: /vic-stack — every brief tells the agent to recall in quipu first and save verified results; for another project ask its session via ircc before dispatching recon.
 
 ## LABEL LAW (visibility @ Claude Code UI — EVERY spawn, no exception)
 Agent-tool `description` + Workflow `label` MUST start `<model>/<effort>:` — exactly one of `haiku/low:` `sonnet/med:` `opus/high:` `fable/xhigh:` — then 3-5 word task. Ex: `description: "haiku/low: gate census 61t"` · `label: "haiku/low:u3a1"`. Spawn w/o tier-prefix = re-dispatch. Purpose: vic reads burn at a glance in the task tree; telemetry rows match labels.

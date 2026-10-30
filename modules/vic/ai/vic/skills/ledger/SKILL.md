@@ -4,6 +4,7 @@ description: Knowledge-preservation law (ALL projects) — command ledger (recal
 ---
 
 # LEDGER LAW (vic, global) CVMN — knowledge is constructed; re-running/re-thinking the known = #2 burn after fat context.
+STACK: /vic-stack — `vic-recall` for commands, `vic-mine` for past transcripts, quipu label-prefix scan for verified facts; save verified results to quipu.
 
 ## COMMAND LEDGER (automatic — global cmd-ledger hook logs EVERY Bash cmd + FULL output)
 ~/.cache/claude-ledger/<project-key>/bash-YYYYMMDD.jsonl (ts+sid+cmd+out60K+err). Outside repos ⟹ no VCS churn.

@@ -46,6 +46,7 @@ Use the type-system to ensure invalid-data is not able to be represented. **THIS
 - `/elt` = load ./vic docs
 - `/<project>` = proj skill if exists
 - `/supervisor` = subagent work
+- `/vic-stack` = mandatory stack (quipu, ircc, vic CLI, shadow)
 - `/br` = ALWAYs activate beads skill for issue tracker. ALL rungs and tasks should be managed as tasks/epics on beads
 
 ### ⚡ CORE

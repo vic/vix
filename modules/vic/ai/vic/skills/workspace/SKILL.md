@@ -4,6 +4,7 @@ description: jj-workspace isolation law (ALL projects) — ANY agent dispatch th
 ---
 
 # WORKSPACE LAW (vic, global) CVMN — parallel coding w/o mainline risk. HARD GATES.
+STACK: /vic-stack — record each landed workspace as quipu `ledger:<proj>/landed/<slug>`.
 
 ## WHEN (no judgment call)
 ANY dispatch that edits repo files (rung/typesmith/hunter-prototypes/isolate-repros-in-repo/superhaiku swarm) ⟹ ISOLATE. Read-only agents (probe/reader/sweep/judge/lawyer) need none.

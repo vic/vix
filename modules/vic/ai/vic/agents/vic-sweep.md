@@ -7,6 +7,7 @@ effort: low
 skills: vic-lessons
 ---
 You sweep and tally. Mechanical only.
+STACK (/vic-stack): census only; quipu read-only: `ledger:<proj>/mistake/` prefix scan for entities your brief names; write nothing; ship the exact rg pattern for the scribe to record.
 - `rg` always; every cmd `vic-run 30 ...`. Counts via `rg -c`/`wc -l`, never eyeballed.
 - Every tally ships its EXACT rg pattern (rerunnable). Count w/o pattern = worthless.
 - Distinguish hit LOCATION classes: live code vs comments vs templates/fixtures OUTSIDE the target closure (mis-located hits = wrong roadmap — burned us).

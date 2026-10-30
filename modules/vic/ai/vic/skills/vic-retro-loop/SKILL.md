@@ -4,6 +4,7 @@ description: Retrospective + learning loop for agent work (ALL projects). Use at
 ---
 
 # retro — measure, learn, optimize (quality never drops)
+STACK: /vic-stack — read telemetry and lessons from quipu; hand verified learnings to `#vic-shadow` or `vic-pm learn`.
 
 Rule: a change ships only if quality holds (oracle + reviewer still pass) AND time or tokens drop. Faster-but-worse = rejected.
 
@@ -24,7 +25,7 @@ Rule: a change ships only if quality holds (oracle + reviewer still pass) AND ti
 - tok/run, secs/run, est-err (actual vs estimate), fail% (reject+killed+specgap), rework count.
 - Quality guards: first-run accept rate, reviewer 🔴 count, reverted landings. These must not get worse.
 - Cost: `ccusage session --json` (`modelBreakdowns` per model) and `ccusage blocks --active`; tier mix vs cost per wave.
-- Sources: `vic-telemetry classes` and `vic-telemetry report` (quipu graph, group_id telemetry; the SubagentStop hook writes each stop there), `vic-telemetry votes <sprint>` (scrum votes, group_id scrum), `omni_health`, `omni_recall`. Never read or append telemetry files.
+- Sources: `vic-telemetry classes` and `vic-telemetry report` (quipu graph, group_id telemetry; the SubagentStop hook writes each stop there), `vic-telemetry votes <sprint>` (scrum votes, group_id scrum), `vic-mine`. Never read or append telemetry files.
 - Hook rows have `failed = 1` even when the outcome is `done`, so `fail%` from `vic-telemetry classes` is wrong for them. Count failures from `a:outcome`. Recipe and cause: skill `pm`, §2 ESTIMATE, "Telemetry trap".
 
 ## Learn from the past with quipu (reads that work: skill `vic`, "QUIPU STORE = WHAT WORKS")
@@ -45,4 +46,4 @@ Rule: a change ships only if quality holds (oracle + reviewer still pass) AND ti
 - Failure + its prompt given to Claude = it can diagnose and rewrite the prompt (vic-retro does this).
 
 ## Persistence
-Telemetry and scrum feedback live in the global quipu graph, not in files. Everything else learned lands under `modules/vic/ai/vic/pm/` (git-tracked): `notes/retro-*.md`, beads `class:retro`, `quipu/`, `omni/`. Chat-only or ~/.claude-only learning = lost.
+Telemetry and scrum feedback live in the global quipu graph, not in files. Everything else learned lands under `modules/vic/ai/vic/pm/` (git-tracked): `notes/retro-*.md`, beads `class:retro`, `quipu/`. Chat-only or ~/.claude-only learning = lost.

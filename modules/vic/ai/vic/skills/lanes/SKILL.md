@@ -4,6 +4,7 @@ description: Never-stall parallelism law (ALL projects) — TIME = binding const
 ---
 
 # LANES LAW (vic, global) CVMN — supervisor waiting on one agent w/ empty lanes = time crime.
+STACK: /vic-stack — the RECON lane also runs quipu recall and ircc asks while BUILD runs.
 
 ## NESTING TRUTH
 Subagents CANNOT spawn subagents. 1 level: supervisor → workers. Bigger fan-out = Workflow tool. Worker needing delegation = partition error — re-split at supervisor.

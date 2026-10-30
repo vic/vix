@@ -4,6 +4,7 @@ description: Escalation protocol (ALL projects) — when to STOP and route up: 3
 ---
 
 # ESCALATION LAW (vic, global) CVMN
+STACK: /vic-stack — save the escalation note as quipu mistake or evidence and ircc_msg the owning session; peers advise, only vic lines decide.
 
 ## TRIGGERS (any one ⟹ stop the line NOW)
 1. 3 FAILS same target → escalation note. Receipts: 4 expert sessions thrashed one root; 13-session saga was an ORDER bug. "1 more try" after 2 fails = banned rationalization.

@@ -4,6 +4,7 @@ description: PIE design law (ALL projects) — Purpose, then Interactions, then 
 ---
 
 # PIE LAW (vic, global) CVMN
+STACK: /vic-stack — at P recall quipu decisions and ask the owning session via ircc before choosing elements.
 
 Src: Damian Płaza, "Composing a PIE", talesfrom.dev/blog/composing-a-pie (2025-05-24).
 Core: "A system's capability to fulfill its Purpose emerges from Interactions between Elements."

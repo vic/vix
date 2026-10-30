@@ -9,6 +9,7 @@ allowed-tools: Bash(calldiff:*) Read Glob
 ---
 
 # calldiff
+STACK: /vic-stack — recall quipu evidence on the area first; record call-path findings that matter as quipu evidence.
 
 `calldiff` parses a repository with tree-sitter and prints who calls whom, as a
 tree. `calldiff diff` prints the same tree twice over and marks what one git

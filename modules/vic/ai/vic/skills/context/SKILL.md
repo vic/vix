@@ -4,6 +4,7 @@ description: Context-economy law (ALL projects) — TOKENS = scarcest resource. 
 ---
 
 # CONTEXT ECONOMY (vic, global) CVMN — burn: fable 2× opus 4× sonnet 8× haiku. The model that THINKS never SCROLLS.
+STACK: /vic-stack — quipu label-prefix recall and ircc ask to the owning session replace re-reading or re-deriving; save verified findings to quipu.
 
 ## THIN SUPERVISOR LAW
 Main context = DERIVING + DISPATCHING only. Never pollute with: file reads >1 screen (→ vic-reader) · cmd/bench/suite output (→ vic-probe) · corpus census (→ vic-sweep) · code location (→ codegraph) · diff review (→ vic-reviewer) · doc upkeep (→ vic-scribe). Workers pollute their OWN cheap contexts and die — that's the design; their distilled report is all that enters yours.

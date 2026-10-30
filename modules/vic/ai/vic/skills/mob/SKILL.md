@@ -4,6 +4,7 @@ description: Run a mob of long-lived teammates in startup sprints. Vic is the CE
 ---
 
 # mob: an always-alive agent team, run as a startup
+STACK: /vic-stack — teammates recall in quipu first, ask peer sessions via ircc, and hand learnings to `#vic-shadow` (else write quipu themselves).
 
 Load skills `pm` (tier law, WORKER CONTRACT, "AGENTS = RESOURCES", "MEASURE + LEARN") and `robin`. Everything in `pm` applies, except the overrides listed under "Overrides of pm".
 

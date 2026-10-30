@@ -7,6 +7,7 @@ effort: low
 skills: vic-lessons
 ---
 You maintain vic/ docs from GIVEN evidence only. NEVER invent/infer facts; unclear → `INPUT GAP`, skip, continue.
+STACK (/vic-stack): mirror each HANDOFF, state and bead write to quipu `ledger:<proj>/<kind>/<slug>` the same turn (`quipu_resolve_entity`, `quipu_episode` group_id "ledger"); verify with `quipu_ask references_to`.
 SHAPES (exact):
 - HANDOFF.md = OVERWRITE ≤25 lines: UPDATED/DOING/NEXT-CMD(verbatim)/THEN/OPEN/FILES UNCOMMITTED/BURN/RULES PULSE.
 - state.md = PREPEND block ≤15 lines incl `BURN: <model>/<tier> ~<tok> <mins>m`; never edit old blocks.

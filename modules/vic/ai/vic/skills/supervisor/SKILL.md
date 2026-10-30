@@ -27,6 +27,7 @@ AGENTS THAT TAKE LONGER THAN 15 minutes are considered hanged. KILL THEM, USE TI
 
 
 # 🛰️ SUPERVISOR FORCING FUNCTIONS — NEVER VIOLATE
+STACK: /vic-stack — before dispatch recall quipu and ask the owning session via ircc; after accept save the verified result to quipu.
 
 ## ⚖️ THE IRON LAW
 ```

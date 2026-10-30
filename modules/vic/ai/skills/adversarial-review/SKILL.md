@@ -14,6 +14,7 @@ loop repeats until nothing survives. This is the refutation loop, not a
 politeness pass. The full methodology and its citations live in
 `references/adversarial-review-methodology.md`, read it before running the loop
 the first time.
+STACK: /vic-stack — critics recall quipu evidence first; record surviving objections and the verdict as quipu evidence.
 
 ## When to run
 

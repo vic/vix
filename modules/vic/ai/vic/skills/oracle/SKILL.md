@@ -4,6 +4,7 @@ description: Oracle-first discipline (ALL projects). Use BEFORE writing any spec
 ---
 
 # ORACLE LAW (vic, global) CVMN — receipts: 8× first-run-green in one session w/ this; every trap below burned us once.
+STACK: /vic-stack — recall quipu evidence for the same claim first; record oracle and negative-control result as quipu evidence.
 
 ## SHAPES (strongest first)
 1. TWO INDEPENDENT PATHS AGREE (neither can cheat the other) — strongest.

@@ -4,6 +4,7 @@ description: Solo work law (ALL projects). Use when told to work alone, or when 
 ---
 
 # solo
+STACK: /vic-stack — still recall in quipu, ask peers via ircc, and save verified results.
 
 You are alone. Never create other new agents.
 

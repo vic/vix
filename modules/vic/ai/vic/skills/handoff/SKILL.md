@@ -4,6 +4,7 @@ description: Session continuity protocol (ALL projects) — mid-work checkpointi
 ---
 
 # HANDOFF LAW (vic, global) CVMN — network dies; disk survives, context doesn't.
+STACK: /vic-stack — mirror HANDOFF and state writes to quipu `ledger:<proj>/handoff/<slug>`; tell peers via ircc_msg.
 
 ## CANONICAL RESUME FILE = <proj>/vic/HANDOFF.md (hooks enforce)
 OVERWRITE (history → state.md), ≤25 lines: `UPDATED · DOING · NEXT-CMD (verbatim commands) · THEN · OPEN · FILES UNCOMMITTED · BURN (<model>/<tier> ~<tok> <mins>m) · RULES PULSE`. Update triggers: task end · ctx ≥70% (stop-gate hook BLOCKS stop until fresh) · before risky long op · session end. session-boot hook points every fresh session at it — restart > compaction, ALWAYS. Delegate the write to vic-scribe w/ facts when context hot.

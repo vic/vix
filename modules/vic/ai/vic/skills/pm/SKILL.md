@@ -6,6 +6,7 @@ description: Use when Vic wants pure-orchestrator Project-Manager mode — the s
 MAndatory: load /vic skill and /br skill
 
 # PM — Project Manager Orchestrator
+STACK: /vic-stack — PM recalls quipu and `vic-mine` first, agents get the stack via preload, learnings go to `#vic-shadow` or quipu.
 
 [VIC] 🪨 PURE ORCHESTRATOR MODE. ACTIVE TIL "stop pm" / "normal mode".
 
@@ -131,9 +132,9 @@ Agent = billable resource w/ capacity (tier conc), cost (burn ratio), calendar (
 
 ### 0. GOAL + TOOLBOX (less time, cost, tokens, resources — quality and speed never drop)
 Every wave, use what exists BEFORE spending. Order = cheapest first:
-- `vic-recall` / `vic-mine` / `omni_recall` / quipu ledger query: already solved? skip the work. quipu reads that work (measured 2026-10-28): `quipu_ask` catalog and `quipu_query` SPARQL only; `quipu_search_nodes`, `quipu_search_facts`, `quipu_search` are broken or unconfigured on this store (table in skill `vic`, "QUIPU STORE = WHAT WORKS"). An empty answer is UNKNOWN, not "not solved".
+- `vic-recall` / `vic-mine` / quipu ledger query: already solved? skip the work. quipu reads that work (measured 2026-10-28): `quipu_ask` catalog and `quipu_query` SPARQL only; `quipu_search_nodes`, `quipu_search_facts`, `quipu_search` are broken or unconfigured on this store (table in skill `vic`, "QUIPU STORE = WHAT WORKS"). An empty answer is UNKNOWN, not "not solved".
 - Past mistakes on the same class: `quipu_query` label prefix `ledger:<proj>/mistake/` and `ledger:<proj>/evidence/`. Put each hit's label in the dispatch brief.
-- `omni_health` + `omni_models` + `vic-telemetry classes`: where burn goes, which class needs which tier, runaway list.
+- `vic-telemetry classes` + `vic-mine`: where burn goes, which class needs which tier, runaway list.
 - `codegraph` / `codebase-memory` (structure) and `deepwiki` / notebooklm (delegate thinking): before any Read sweep.
 - `/ensemble` + `/superhaiku`: checkable work to k×haiku + vic-judge, not sonnet/opus.
 - `/oracle` + `/probes`: judge first, so rework (the costliest token sink) drops.
@@ -143,9 +144,9 @@ A tool or skill not in this list that fits the task = use it and add it here.
 ### PM BEADS + REPO-PERSISTENT EXPERIENCE (never lost on a hardware move)
 All PM learning lives in the vix repo at `modules/vic/ai/vic/pm/` (tracked in git):
 - `.beads/` = PM optimization beads, prefix `pm`. Use `vic-pm br <args>` from any cwd (e.g. `vic-pm br create "..." -t task -l class:<c>`, `vic-pm br ready`). Project work beads stay in the project's own `.beads`.
-- `quipu/` = verified quipu PM learnings (mistakes, evidence). `omni/` = omni efficacy and health snapshots. `notes/` = calibration tables. These are written by vic-scribe from MCP queries, since quipu and omni live outside the repo.
-- Opus and other model learnings (what a tier did well or badly on a class) go to `notes/` and `omni/`, not only to chat or memory.
-- End of EVERY wave: run /vic-retro-loop (vic-retro, record). Then refresh `quipu/` and `omni/` exports if new verified facts exist, update the matching `pm` bead, tell Vic to review and commit the diff. PM never commits (jj/git commits only on Vic's ask).
+- `quipu/` = verified quipu PM learnings (mistakes, evidence). `notes/` = calibration tables. These are written by vic-scribe from MCP queries, since quipu lives outside the repo.
+- Opus and other model learnings (what a tier did well or badly on a class) go to `notes/` and quipu, not only to chat or memory.
+- End of EVERY wave: run /vic-retro-loop (vic-retro, record). Then refresh `quipu/` exports if new verified facts exist, update the matching `pm` bead, tell Vic to review and commit the diff. PM never commits (jj/git commits only on Vic's ask).
 - Session start: `vic-pm br ready` and read `notes/` before estimating.
 
 ### 1. PLAN (waterfall: WBS + dependencies)
@@ -186,7 +187,7 @@ All PM learning lives in the vix repo at `modules/vic/ai/vic/pm/` (tracked in gi
 - Record durable findings (verified, with the numbers) so next session starts calibrated:
   - quipu (also export to `pm/quipu/`): `quipu_resolve_entity` then `quipu_episode` `group_id:"ledger"` name `ledger:<proj>/pm-calibration/<class>` · body = class · tier · n runs · secs/run · tok/run · est-err · fail% · verdict. `replace_snapshot: true` (latest wins). Add edges: `class → measuredBy → telemetry`, `class → tier → <tier>`. Read it BEFORE estimating (`quipu_query` ledger recipe). Verify the edges with `quipu_ask references_to` on the class IRI (not `quipu_search_facts`: it times out). `replace_snapshot` keeps history: `quipu_query` with `tx` shows the calibration that was in force when a past wave was planned.
   - `modules/vic/ai/vic/pm/notes/pm-calibration-<class>.md` (CVMN, tracked in repo) = same table, human-readable.
-  - Surprises (a "easy" class that burned opus, a "hard" class haiku nailed) → `omni_learn` once, if the bar is met.
+  - Surprises (a "easy" class that burned opus, a "hard" class haiku nailed) → quipu episode or `#vic-shadow` once, if the bar is met.
 - Numbers need n ≥ 3 runs per class×tier before they move policy. Fewer = anecdote, record but do not route on it.
 
 ## LEARNED (read before estimating)
@@ -216,7 +217,7 @@ PM actively uses peers. See /vic "PEERS = LIVE CONTEXT".
 /lanes always. Keep lanes saturated: build · verify · soundness · recon · plan · hygiene · measure.
 - Saturate w/ SHORT foreground agents, NOT long background ones. A lane fills with 5min units, not one hour-long runner.
 - WAIT idle w/ empty lanes = TIME CRIME → fill recon/plan/hygiene. But idle-waiting-on-Vic-decision = legit, NOT a crime.
-- /ledger: vic-recall B4 re-run any expensive cmd. /omni B4 re-derive cross-project.
+- /ledger: vic-recall B4 re-run any expensive cmd. /vic-stack B4 re-derive cross-project (quipu recall, ircc ask, `vic-mine`).
 
 ## ANSWER VIC PROTOCOL
 

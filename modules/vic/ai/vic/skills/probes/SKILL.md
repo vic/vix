@@ -4,6 +4,7 @@ description: Measurement + isolation discipline (ALL projects) — probe-table-b
 ---
 
 # PROBE LAW (vic, global) CVMN
+STACK: /vic-stack — recall quipu evidence and `vic-recall` before probing; record probe tables as quipu evidence.
 
 ## ORDER (violating = the historical thrash pattern)
 1. MINREPRO: shrink failing case smaller than goal, <1s (0.01s repro ≫ 83s). Same error-class preserved per shrink.

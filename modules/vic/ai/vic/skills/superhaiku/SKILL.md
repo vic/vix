@@ -4,6 +4,7 @@ description: THE haiku-fleet composition (ALL projects) — compile→isolate→
 ---
 
 # SUPERHAIKU (vic, global) CVMN — fleet beats genius WHERE WRONGNESS IS CHECKABLE. 0 EXCEPTION on the valves.
+STACK: /vic-stack — recall quipu before COMPILE; record the landed pipeline result as quipu evidence.
 
 ## HONEST CLAIM (route by this, not hype)
 Fleet SURPASSES fable on: units/hour (10+ vs ~2), corpus coverage, cost/accepted-unit (~1/10), drift-immunity (units too small to drift). Fable keeps: derivation, design, law interpretation, root-cause verdicts. Pipeline VALVE escalates exactly those — superhaiku makes the expensive models do ONLY what only they can do. That division IS surpassing.

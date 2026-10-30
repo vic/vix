@@ -4,6 +4,7 @@ description: Haiku-amplification law (ALL projects) — make cheap models compet
 ---
 
 # ENSEMBLE LAW (vic, global) CVMN — k haiku + oracle ≫ 1 genius, WHEN verification ≪ generation.
+STACK: /vic-stack — recall quipu evidence before a k-shot fan-out; record the winning oracle pattern as quipu evidence.
 
 ## THE PHYSICS (honest — route by this, no wishful thinking)
 Haiku matches fable on EXECUTION when wrongness is CATCHABLE cheap. Haiku NEVER matches on: derivation, novel design, multi-constraint tradeoffs, knowing-the-question-is-wrong. Test: "can a dumb check reject a wrong answer?" YES → ensemble-able. NO (verify ≈ generate, proof-grade) → opus/fable, no ensemble saves you.

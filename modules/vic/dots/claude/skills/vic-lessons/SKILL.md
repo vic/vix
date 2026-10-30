@@ -4,6 +4,7 @@ description: Lessons learned from all of vic's past agent work (rules vic gave, 
 ---
 
 # vic-lessons (append-only, grows every retro)
+STACK: /vic-stack — lessons are quipu-backed: read them at task start, hand verified new ones to `#vic-shadow` or `vic-pm learn`.
 
 Live-linked into the vix repo (modules/vic/dots/claude/skills/vic-lessons), so appends land in the repo and survive restarts and hardware moves.
 
