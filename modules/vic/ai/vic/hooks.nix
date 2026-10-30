@@ -59,6 +59,8 @@
           rules = {
             process-safety = builtins.readFile ./rules/process-safety.md;
             nix-eval = builtins.readFile ./rules/nix-eval.md;
+            skills-source = builtins.readFile ./rules/skills-source.md;
+            use-skills = builtins.readFile ./rules/use-skills.md;
           };
           settings.hooks = {
             SessionStart = [
