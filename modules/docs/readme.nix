@@ -93,6 +93,7 @@ in
           (import ./_readme-capabilities.nix {
             inherit yen lib mermaid;
             engine = (import inputs.yen).lib;
+            inherit inputs;
           })
           (fold "Vocabulary: kinds, sinks, tiers, roles" (
             import ./_readme-vocab.nix { inherit yen lib vocab; }

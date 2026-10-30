@@ -5,6 +5,7 @@
   lib,
   mermaid,
   engine,
+  inputs,
 }:
 let
   g = yen.lib.graph;
@@ -49,15 +50,7 @@ let
       ]
     } |";
   mcpTools = sorted (
-    lib.filter lib.isString (
-      lib.flatten (
-        map (l: builtins.match ".*\"name\":\"(yen_[a-z_]+)\".*" l) (
-          lib.splitString "\n" (
-            builtins.replaceStrings [ "{" ] [ "\n{" ] (builtins.readFile ../../mcp/yen-mcp.sh)
-          )
-        )
-      )
-    )
+    map (t: t.name) (builtins.fromJSON (builtins.readFile (inputs.yen + "/mcp/src/tools.json")))
   );
   mcpView = {
     nodes = [
@@ -125,7 +118,7 @@ in
   |---|---|---|---|
   ${lib.concatMapStringsSep "\n" queryRow (sorted (lib.attrNames yen.queries))}
 
-  **MCP tools** (${toString (lib.length mcpTools)}, `mcp/yen-mcp.sh`): ${code mcpTools}.
+  **MCP tools** (${toString (lib.length mcpTools)}, `mcp/` of yen): ${code mcpTools}.
 
   ${mermaid mcpView}
 

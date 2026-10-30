@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# Drives yen-mcp.sh with JSON-RPC lines over the vix fleet. Run from anywhere; each call is capped at 300 s.
+# Drives the yen-mcp server (`mcp/` at the top of the yen repository, a Rust binary) with JSON-RPC lines over the vix fleet. Run from anywhere; each call is capped
+# at 300 s. YEN_MCP_SERVER: a server binary to test (then set YEN_TOOL_NIX); default: the fleet flake's package.
 set -u
 HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
-SRV=${Yen_MCP_SERVER:-$HERE/yen-mcp.sh}
+export YEN_FLEET=${YEN_FLEET:-$HERE/..}
+SRV=${YEN_MCP_SERVER:-$(timeout 900 nix build --no-link --print-out-paths "path:$(git -C "$HERE" rev-parse --show-toplevel)#yen-mcp")/bin/yen-mcp}
 fails=0
 
 rpc() { printf '%s\n' "$1" | timeout -k 5 300 "$SRV"; }
@@ -32,7 +34,7 @@ check errors-list '.complete == true and (.result | type == "array")' "$out"
 
 # vic-ssh gives secrets; placed at every vic, it reaches the untrusted home bitstream
 out=$(call yen_stage '{"change":{"yen":{"aspects":{"vic-ssh":{"at":[{"kind":"user","name":"vic"}]}}}}}' | text)
-check stage-secrets '.result.ok == false and (.result.violations | map(contains("secrets-off-trusted")) | any)' "$out"
+check stage-secrets '.result.ok == false and (.result.violations | map(.[1] == "secrets-need-trusted") | any)' "$out"
 
 out=$(call yen_queries '{}' | text)
 check queries-aspects-on '.result.aspectsOn.required == ["name"]' "$out"
@@ -55,16 +57,16 @@ check impact-unknown-sink '.result.code == "unknown-sink"' "$out"
 out=$(call yen_labels '{}' | text)
 check labels '.complete == true and (.result.labels | type == "object")' "$out"
 
-out=$(call yen_why_not '{"atom":"bad:secrets-off-trusted:fleet:vix/home:bitstream/user:vic"}' | text)
+out=$(call yen_why_not '{"atom":["bad","secrets-need-trusted","fleet:vix/home:bitstream/user:vic"]}' | text)
 check why-not-holds-false '.result.holds == false' "$out"
 
 out=$(call yen_program '{"program":[{"op":"place","aspect":"vic-ssh","kind":"user","name":"vic"}]}' | text)
-check program-violation '.result.ok == false and (.result.violations | map(contains("secrets-off-trusted")) | any)' "$out"
+check program-violation '.result.ok == false and (.result.violations | map(.[1] == "secrets-need-trusted") | any)' "$out"
 
 out=$(call yen_program '{"program":[{"op":"plac"}]}' | text)
 check program-invalid '.result.valid == false and .result.errors[0].near == ["place"]' "$out"
 
-out=$(Yen_TIMEOUT=1 call yen_export '{}' | text)
+out=$(YEN_TIMEOUT=0.001 call yen_export '{}' | text)
 check export-timeout '.complete == false and .error == "timeout"' "$out"
 
 out=$(call yen_export '{}' | text)
@@ -73,8 +75,8 @@ check export-full '.complete == true and (.result.sha256 | length == 64) and (.r
 out=$(call yen_context '{}')
 check eval-error '.result.isError == true and (.result.content[0].text | fromjson | .complete == false and (.error | length > 0))' "$out"
 
-# the flake app: `nix run .#yen-mcp` from the vix checkout (set Yen_MCP_SKIP_APP=1 to skip)
-if [ -z "${Yen_MCP_SKIP_APP:-}" ]; then
+# the flake app: `nix run .#yen-mcp` from the vix checkout (set YEN_MCP_SKIP_APP=1 to skip)
+if [ -z "${YEN_MCP_SKIP_APP:-}" ]; then
   out=$(cd "$HERE/.." && printf '%s\n' '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"yen_context","arguments":{"id":"fleet:vix/host:frodo","maxEdges":2}}}' \
     | timeout -k 5 600 nix run "path:$(git rev-parse --show-toplevel)#yen-mcp" 2>/dev/null)
   check flake-app '.result.content[0].text | fromjson | .complete == true and .result.kind == "host" and .result.given.truncated.shown == 2' "$out"

@@ -1,10 +1,39 @@
-# vix invariants: Datalog rules over the fleet's facts (`kind:K:ID`, `has:ASPECT:ID`, `edge:SINK:FROM:TO`).
-# A true `bad:` atom is a violation. An agent reads `nix eval --impure --json --file query.nix check.violations`
-# before and after a change; `stage` and `yen_program` refuse a change that adds one.
+# vix invariants: Datalog rules over the fleet's facts, by reference: a rule is a function of its variables and its literals come
+# from `yen.facts` (kind, has, parent, fields, lt) and `yen.relations`. A true `bad` atom is a violation `[ "bad" <invariant> … ]`.
+# An agent reads `nix eval --impure --json --file query.nix check.violations` before and after a change;
+# `stage` and `yen_program` refuse a change that adds one.
 { yen, lib, ... }:
 let
-  # users with their place (machine or home) as parent
-  users = scopes: lib.filter (s: s.kind == "user" && s.parent != null) scopes;
+  inherit (yen.facts)
+    kind
+    has
+    parent
+    guest
+    lt
+    ;
+  inherit (yen.relations)
+    edge
+    localForwardClash
+    portClash
+    followsUndeclared
+    ;
+  # a clash Nix computed (a field that holds an attrset gives no fact) is a fact of `rel`; one rule makes each a violation
+  computed =
+    rel: facts:
+    facts
+    ++ [
+      (
+        { C }:
+        {
+          bad = C;
+          pos = [ (rel C) ];
+        }
+      )
+    ];
+  fact = rel: pos: key: _: {
+    head = rel key;
+    inherit pos;
+  };
   forwards = lib.concatLists (
     lib.mapAttrsToList (
       n: h:
@@ -14,7 +43,8 @@ let
       }) h.localForwards
     ) yen.ssh-host
   );
-  on = active: n: lib.any lib.id (lib.attrValues active.${n});
+  # the aspects active at some scope
+  on = n: yen.lib.schema.aspects.${n}.activeAt > 0;
   # shortcut: reads the aspect's declared `ports` list, so a function element is skipped; upgrade when invariants see `reduced`
   portsOf =
     n:
@@ -37,93 +67,121 @@ let
     if lib.isAttrs f then f.inputs or { } else { };
 in
 {
+  yen.relations = {
+    edge.arity = 3; # the routed elements of the graph: sink, from, to
+    localForwardClash.arity = 1; # a local port and the ssh hosts that bind it
+    portClash.arity = 1; # a machine or home and a port two services listen on
+    followsUndeclared.arity = 1; # an input that a `follows` names and flake.nix does not declare
+  };
+
   yen.invariants = {
     # a gui feature lands only on a user whose machine or home is graphical
     gui-needs-graphical =
-      { scopes, ... }:
-      map (u: {
-        head = "bad:gui-off-graphical:${u.id}";
-        pos = [ "has:vic-gui:${u.id}" ];
-        neg = [ "has:graphical:${u.parent.id}" ];
-      }) (users scopes);
+      { U, P }:
+      {
+        bad = U;
+        pos = [
+          (kind yen.kinds.user U)
+          (parent U P)
+          (has yen.aspects.vic-gui U)
+        ];
+        neg = [ (has yen.aspects.graphical P) ];
+      };
     # secrets reach only users of trusted machines and homes
     secrets-need-trusted =
-      { scopes, ... }:
-      map (u: {
-        head = "bad:secrets-off-trusted:${u.id}";
-        pos = [ "edge:secrets:${u.id}:${u.id}" ];
-        neg = [ "has:trusted:${u.parent.id}" ];
-      }) (users scopes);
+      { U, P }:
+      {
+        bad = U;
+        pos = [
+          (kind yen.kinds.user U)
+          (parent U P)
+          (edge "secrets" U U)
+        ];
+        neg = [ (has yen.aspects.trusted P) ];
+      };
     # a CI runner (the ci-runner role: bill, tom, bert) has no users
     runners-no-users =
-      { scopes, ... }:
-      map (u: {
-        head = "bad:runner-has-user:${u.id}";
-        pos = [ "has:ci-runner:${u.parent.id}" ];
-      }) (users scopes);
+      { U, P }:
+      {
+        bad = U;
+        pos = [
+          (kind yen.kinds.user U)
+          (parent U P)
+          (has yen.aspects.ci-runner P)
+        ];
+      };
     # no two ssh hosts bind the same local port: the second forward fails while the first is open
-    unique-local-forward =
-      _:
+    unique-local-forward = computed localForwardClash (
       lib.concatLists (
         lib.mapAttrsToList (
           port: fs:
-          lib.optional (lib.length fs > 1) {
-            head = "bad:local-forward-clash:${port}:${lib.concatMapStringsSep "," (f: f.host) fs}";
-          }
+          lib.optional (lib.length fs > 1) (
+            fact localForwardClash [ ] "${port}:${lib.concatMapStringsSep "," (f: f.host) fs}"
+          )
         ) (lib.groupBy (f: f.port) forwards)
-      );
+      )
+    );
     # no two guests share an address: their host routes one /32 per tap
     unique-guest-addr =
-      _:
-      lib.concatLists (
-        lib.mapAttrsToList (
-          addr: ns:
-          lib.optional (lib.length ns > 1) {
-            head = "bad:guest-addr-clash:${addr}:${lib.concatStringsSep "," ns}";
-          }
-        ) (lib.groupBy (n: yen.guest.${n}.addr) (lib.attrNames yen.guest))
-      );
+      {
+        A,
+        B,
+        X,
+      }:
+      {
+        bad = X;
+        pos = [
+          (guest.addr A X)
+          (guest.addr B X)
+          (lt A B)
+        ];
+      };
     # no two services of one machine or home (or of its users) listen on the same port (the `ports` sink)
     unique-port =
-      { scopes, graph, ... }:
       let
-        byId = lib.listToAttrs (map (s: lib.nameValuePair s.id s) scopes);
-        # ports clash per machine or home; a scope with no place (an export) only clashes with itself
+        g = yen.lib.graph;
+        placeKinds = map (k: "${k.__kind}:") yen.helpers.places;
+        # ports clash per machine or home; a scope with no place (an export) only clashes with itself.
+        # shortcut: the place is the longest id prefix whose last segment is a machine or home (ids are `kind:name/…`); upgrade when graph scopes carry their parent
         owner =
           id:
           let
-            p = yen.helpers.place byId.${id};
+            segs = lib.splitString "/" id;
+            isPlace = s: lib.any (p: lib.hasPrefix p s) placeKinds;
+            last = lib.foldl' (acc: i: if isPlace (lib.elemAt segs i) then i + 1 else acc) 0 (
+              lib.range 0 (lib.length segs - 1)
+            );
           in
-          if p == null then id else p.id;
+          if last == 0 then id else lib.concatStringsSep "/" (lib.take last segs);
         given = lib.concatMap (
           e:
           map (p: {
             inherit e;
             key = "${owner e.to}:${toString p.port}";
           }) (portsOf (lib.removePrefix "aspect " e.origin))
-        ) (lib.filter (e: e.sink == "ports" && lib.hasPrefix "aspect " e.origin) graph.edges);
+        ) (lib.filter (e: e.sink == "ports" && lib.hasPrefix "aspect " e.origin) g.edges);
       in
-      lib.concatLists (
-        lib.mapAttrsToList (
-          k: xs:
-          lib.optional (lib.length xs > 1) {
-            head = "bad:port-clash:${k}";
-            pos = map (x: "edge:ports:${x.e.from}:${x.e.to}") xs;
-          }
-        ) (lib.groupBy (x: x.key) given)
+      computed portClash (
+        lib.concatLists (
+          lib.mapAttrsToList (
+            k: xs:
+            lib.optional (lib.length xs > 1) (fact portClash (map (x: edge "ports" x.e.from x.e.to) xs) k)
+          ) (lib.groupBy (x: x.key) given)
+        )
       );
     # every `follows` names an input that flake.nix declares: the inputs of the active aspects' flake-file elements
     follows-declared =
-      { active, ... }:
       let
         inputs = lib.filterAttrs (_: lib.isAttrs) (
-          lib.foldl' (a: n: a // inputsOf n) { } (lib.filter (on active) (lib.attrNames yen.aspects))
+          lib.foldl' (a: n: a // inputsOf n) { } (lib.filter on (lib.attrNames yen.aspects))
         );
         succ = lib.mapAttrs (_: follows) inputs;
         by = yen.lib.graphs.transpose succ;
       in
-      map (t: { head = "bad:follows-undeclared:${t}:${lib.concatStringsSep "," by.${t}}"; }) (
-        lib.subtractLists (lib.attrNames inputs) (yen.lib.graphs.nodesOf succ)
+      computed followsUndeclared (
+        map (t: fact followsUndeclared [ ] "${t}:${lib.concatStringsSep "," by.${t}}") (
+          lib.subtractLists (lib.attrNames inputs) (yen.lib.graphs.nodesOf succ)
+        )
       );
   };
 }

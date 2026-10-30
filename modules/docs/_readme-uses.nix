@@ -117,7 +117,7 @@ in
       "README.md and the CI workflow."
       [ (src "flake/ci-workflow.nix" ".github/workflows/ci.yml" "ci.yml") ]
     )
-    (row "Invariants" "Datalog rules over the fleet's facts. A true `bad:` atom is a violation."
+    (row "Invariants" "Datalog rules over the fleet's facts. A true `bad` atom is a violation."
       "Guest addresses and service ports are unique, every `follows` names a declared input, runners have no users."
       [
         (src "agent/invariants.nix" "unique-guest-addr =" "unique-guest-addr")

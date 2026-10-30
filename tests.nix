@@ -106,7 +106,7 @@ let
       lib.stringLength out.rdfPack.sha256 == 64 && lib.hasInfix "sh:NodeShape" out.rdfPack.shacl;
     # negative controls: each rule fires on a planted fault
     port-clash-fires =
-      lib.elem "bad:port-clash:${frodo}:8787"
+      lib.elem [ "bad" "unique-port" "${frodo}:8787" ]
         (with' (
           { yen, ... }:
           {
@@ -122,7 +122,7 @@ let
           }
         )).check.violations;
     follows-undeclared-fires =
-      lib.elem "bad:follows-undeclared:no-such-input:clash"
+      lib.elem [ "bad" "follows-declared" "no-such-input:clash" ]
         (with' (
           { yen, ... }:
           {

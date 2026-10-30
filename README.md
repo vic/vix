@@ -34,11 +34,11 @@ yen has four words: kinds, scopes, aspects, sinks. Each row links to the line in
 | `yen.helpers`: shared values | [`helpers`](modules/helpers.nix#L7), [`place`](modules/helpers.nix#L24), [`sopsSecrets`](modules/helpers.nix#L50) |
 | flake-file: inputs per aspect | [`vix-flake`](modules/flake/flake-file.nix#L31), [`env-rust`](modules/envs/rust.nix#L6) |
 | files: generated repo files | [`the files sink`](modules/flake/files.nix#L5), [`this README`](modules/docs/readme.nix#L78), [`ci.yml`](modules/flake/ci-workflow.nix#L124) |
-| graphs (`yen.lib.graphs`) | [`sccs: ssh jumps`](modules/topology/ssh-hosts.nix#L85), [`transpose, nodesOf: flake follows`](modules/agent/invariants.nix#L123) |
-| invariants: Datalog over the facts | [`invariants`](modules/agent/invariants.nix#L40), [`runners-no-users`](modules/agent/invariants.nix#L58), [`unique-port`](modules/agent/invariants.nix#L87), [`follows-declared`](modules/agent/invariants.nix#L116) |
-| stored queries and krn synthesis | [`stored queries`](modules/agent/queries.nix#L34), [`portsOf`](modules/agent/queries.nix#L69), [`unfreeOn`](modules/agent/queries.nix#L51), [`freePort: a krn finite domain`](modules/agent/synthesis.nix#L13), [`a `ports` element`](modules/vic/ai/headroom.nix#L34) |
+| graphs (`yen.lib.graphs`) | [`sccs: ssh jumps`](modules/topology/ssh-hosts.nix#L85), [`transpose, nodesOf: flake follows`](modules/agent/invariants.nix#L179) |
+| invariants: Datalog over the facts | [`invariants`](modules/agent/invariants.nix#L77), [`runners-no-users`](modules/agent/invariants.nix#L103), [`unique-port`](modules/agent/invariants.nix#L140), [`follows-declared`](modules/agent/invariants.nix#L173) |
+| stored queries and krn synthesis | [`stored queries`](modules/agent/queries.nix#L34), [`portsOf`](modules/agent/queries.nix#L71), [`unfreeOn`](modules/agent/queries.nix#L53), [`freePort: a krn finite domain`](modules/agent/synthesis.nix#L13), [`a `ports` element`](modules/vic/ai/headroom.nix#L34) |
 | trust labels and the knowledge pack | [`labels by path`](modules/agent/labels.nix#L4), [`rdf share (sha256)`](modules/agent/rdf.nix#L13), [`SHACL shapes`](modules/agent/rdf.nix#L20) |
-| stage and change programs | [`a change program`](modules/docs/_readme-recipes.nix#L7), [`stage a change`](mcp/test.sh#L34), [`dry-run a program`](mcp/test.sh#L61), [`the MCP app`](modules/agent/mcp.nix#L5) |
+| stage and change programs | [`a change program`](modules/docs/_readme-recipes.nix#L7), [`stage a change`](mcp/test.sh#L36), [`dry-run a program`](mcp/test.sh#L63), [`the MCP app`](modules/agent/mcp.nix#L8) |
 | tests.nix: oracles over the eval result | [`file order: reversed modules, same values`](tests.nix#L65), [`laziness: a broken mac never reaches frodo`](tests.nix#L83), [`negative controls`](tests.nix#L108), [`e2e: settings fingerprint vs vix`](tests.nix#L51) |
 
 ## How vix uses yen
@@ -59,20 +59,20 @@ Each row is one yen capability: what it is, and the vix configuration it carries
 | `entries` reduce | Each value comes with the scope that gave it. | Ports go up to the fleet `served` sink with their scope. The vini tunnel forwards what runs on bitstream. | [`served`](modules/platforms/ports.nix#L22), [`tunnel forwards`](modules/vic/sys/ssh.nix#L29) |
 | Forwards | A sink key feeds another sink, at the receiver. | A user's ports feed the fleet. A guest's NixOS goes into its host's `microvm.vms`. | [`ports to served`](modules/platforms/ports.nix#L19), [`guest to host`](modules/platforms/microvm.nix#L53) |
 | The cycle form | A component that asks the tree for data and gives 0 to n elements. | The microvm host asks for its guest scopes and gives one network setup for them. | [`vm-host`](modules/platforms/microvm.nix#L126) |
-| The `out` arg | An element reads the flake outputs lazily. | Release images, the CI workflow and the claude MCP entry read built outputs, not `inputs.self`. | [`release images`](modules/packages/release-images.nix#L9), [`yen-mcp in claude`](modules/agent/mcp.nix#L44) |
+| The `out` arg | An element reads the flake outputs lazily. | Release images, the CI workflow and the claude MCP entry read built outputs, not `inputs.self`. | [`release images`](modules/packages/release-images.nix#L9), [`yen-mcp in claude`](modules/agent/mcp.nix#L36) |
 | Errors as data | An aspect key `errors` gives error records. Evaluation continues. | frodo's wipeRoot guards, secret files that no instance owns, CI runner labels, sharedPkgs groups. | [`secret-files`](modules/topology/secrets.nix#L52), [`runner labels`](modules/flake/ci.nix#L47), [`shared pkgs`](modules/platforms/nixos.nix#L59) |
 | Autoinclude | Files found by path become modules: no line in the host file. | `hosts/<name>/_nixos` holds each machine's hardware, disko and facter report. | [`autoinclude`](modules/hosts/autoinclude.nix#L12) |
 | Exports | A scope outside any machine sends its content to a flake output. | `homeModules.vic`: vic's headless home for other flakes. | [`homeModules.vic`](modules/platforms/exports.nix#L13) |
 | Flake inputs per aspect | Each aspect declares the inputs it uses. `flake.nix` is generated. | microvm, disko, impermanence, sops-nix and the skill inputs live with their users. | [`microvm input`](modules/platforms/microvm.nix#L71) |
 | Generated files | The `files` sink writes files and checks that they are current. | README.md and the CI workflow. | [`ci.yml`](modules/flake/ci-workflow.nix#L1) |
-| Invariants | Datalog rules over the fleet's facts. A true `bad:` atom is a violation. | Guest addresses and service ports are unique, every `follows` names a declared input, runners have no users. | [`unique-guest-addr`](modules/agent/invariants.nix#L76), [`follows-declared`](modules/agent/invariants.nix#L116) |
-| Stored queries and krn | A named question on the eval result. krn synthesizes values that meet constraints. | `portsOf` a machine, and `freePort` picks a port that no service of the host uses. | [`portsOf`](modules/agent/queries.nix#L69), [`freePort`](modules/agent/synthesis.nix#L2) |
+| Invariants | Datalog rules over the fleet's facts. A true `bad` atom is a violation. | Guest addresses and service ports are unique, every `follows` names a declared input, runners have no users. | [`unique-guest-addr`](modules/agent/invariants.nix#L125), [`follows-declared`](modules/agent/invariants.nix#L173) |
+| Stored queries and krn | A named question on the eval result. krn synthesizes values that meet constraints. | `portsOf` a machine, and `freePort` picks a port that no service of the host uses. | [`portsOf`](modules/agent/queries.nix#L71), [`freePort`](modules/agent/synthesis.nix#L2) |
 | Graphs | Reachability, cycles and layers over successor maps. | The ssh proxyJump graph: a jump cycle is an error. | [`ssh jumps`](modules/topology/ssh-hosts.nix#L85) |
 | Trust labels | Content gets the trust of the files that declare it. | Files that agents write get a lower trust, so their routed elements are easy to list. | [`labels`](modules/agent/labels.nix#L4) |
 | Knowledge pack | The eval result as N-Triples with a sha256, and SHACL shapes. | `out.rdfPack` for quipu, one snapshot per revision. | [`rdfPack`](modules/agent/rdf.nix#L12) |
 | Infra checks | Facts from fleet data, compared with each built system. | Hostname, keyd, nvidia, enthium and persisted directories, per host. | [`infra`](modules/checks/infra.nix#L44) |
 | Eval cost levers | Shared pkgs per channel and system; a trimmed NixOS module list. | Ready for every host, off on all: enabling them needs the drvPath oracles on each host. | [`sharedPkgs`](modules/platforms/nixos.nix#L39), [`docs off`](modules/platforms/nixos.nix#L45) |
-| MCP server | Agents ask the fleet over stdio JSON-RPC. | vic's claude sessions have the `yen` MCP server for this fleet. | [`claude entry`](modules/agent/mcp.nix#L34) |
+| MCP server | Agents ask the fleet over stdio JSON-RPC. | vic's claude sessions have the `yen` MCP server for this fleet. | [`claude entry`](modules/agent/mcp.nix#L26) |
 | CI gate | One eval per PR: no error records, invariants ok, no undefined aspect. | The `yen-gate` job of the generated workflow. | [`yen-gate`](modules/flake/ci-workflow.nix#L102) |
 | Tests | Checks over the eval result itself. | File order changes no result; a broken varda never stops frodo. | [`file order`](tests.nix#L65) |
 
@@ -1125,15 +1125,15 @@ readable inside the fleet: `nix eval --impure --json --file query.nix check.viol
 
 | Query | Required | Optional | File |
 |---|---|---|---|
-| `aspectsOn` | `name` |  | `modules/agent/queries.nix` |
-| `featuresOf` | `vim` |  | `modules/agent/queries.nix` |
-| `freePort` | `name` |  | `modules/agent/synthesis.nix` |
-| `inputsOf` | `aspect` |  | `modules/agent/queries.nix` |
-| `portsOf` | `name` |  | `modules/agent/queries.nix` |
-| `unfreeOn` | `name` |  | `modules/agent/queries.nix` |
-| `whoInstalls` | `pkg` |  | `modules/agent/queries.nix` |
+| `aspectsOn` | `name`, `result` |  | `modules/agent/queries.nix` |
+| `featuresOf` | `result`, `vim` |  | `modules/agent/queries.nix` |
+| `freePort` | `name`, `result` |  | `modules/agent/synthesis.nix` |
+| `inputsOf` | `aspect`, `result` |  | `modules/agent/queries.nix` |
+| `portsOf` | `name`, `result` |  | `modules/agent/queries.nix` |
+| `unfreeOn` | `name`, `result` |  | `modules/agent/queries.nix` |
+| `whoInstalls` | `pkg`, `result` |  | `modules/agent/queries.nix` |
 
-**MCP tools** (14, `mcp/yen-mcp.sh`): `yen_ask`, `yen_check`, `yen_context`, `yen_declared_in`, `yen_errors`, `yen_explain`, `yen_export`, `yen_impact`, `yen_labels`, `yen_program`, `yen_queries`, `yen_schema`, `yen_stage`, `yen_why_not`.
+**MCP tools** (14, `mcp/` of yen): `yen_ask`, `yen_check`, `yen_context`, `yen_declared_in`, `yen_errors`, `yen_explain`, `yen_export`, `yen_impact`, `yen_labels`, `yen_program`, `yen_queries`, `yen_schema`, `yen_stage`, `yen_why_not`.
 
 ```mermaid
 flowchart LR
@@ -1182,9 +1182,9 @@ as sorted N-Triples (the same in every file order), and SHACL shapes from the sc
 
 **Queries on an eval result** (`r = import ./query.nix`): `active`, `ask`, `check`, `context`, `data`, `declaredIn`, `errors`, `explain`, `facts`, `flake`, `floor`, `graph`, `impact`, `labels`, `queries`, `reduced`, `root`, `schema`, `scopes`, `undefined`.
 
-**Engine library** (`yen.lib`): `agent`, `allowed`, `asOf`, `batteries`, `derive`, `diffData`, `eval`, `grant`, `history`, `is`, `jsonSafe`, `maybe`, `mkFlake`, `narrow`, `opt`, `stage`, `validAt`, `without`.
+**Engine library** (`yen.lib`): `agent`, `allowed`, `asOf`, `batteries`, `derive`, `diffData`, `eval`, `grant`, `history`, `is`, `jsonSafe`, `listOf`, `maybe`, `mkFlake`, `narrow`, `opt`, `secret`, `stage`, `validAt`, `without`.
 Reduce strategies: `entries`, `list`, `merge`, `one`, `set`. Change programs (`yen.lib.program`): `dryRun`, `opErrors`, `render`, `toModule`, `validate`.
-Graphs (`yen.lib.graphs`): `cycles`, `fromEdges`, `layers`, `nodesOf`, `paths`, `reach`, `reachers`, `sccs`, `shortest`, `topo`, `transpose`, `uniq'`.
+Graphs (`yen.lib.graphs`): `cycles`, `fromEdges`, `layers`, `nodesOf`, `paths`, `reach`, `reachers`, `sccs`, `shortest`, `topo`, `transpose`.
 
 **The cycle form** (`cycle = { tree, ... }: …`): `vm-host`.
 

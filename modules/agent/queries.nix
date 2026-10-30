@@ -33,28 +33,30 @@ in
 {
   yen.queries = {
     aspectsOn =
-      { name, r }:
+      { name, result }:
       let
-        ids = under r name;
+        ids = under result name;
       in
-      if ids == [ ] then noPlace r name else lib.genAttrs ids (activeAt r);
+      if ids == [ ] then noPlace result name else lib.genAttrs ids (activeAt result);
     # shortcut: a text match over the aspect's files, so every aspect of a matching file is listed; upgrade when yen
     # records element origins inside module values.
     whoInstalls =
-      { pkg, r }:
+      { pkg, result }:
       let
         line = l: builtins.match ".*[.]${lib.escapeRegex pkg}([^a-zA-Z0-9_-].*)?" l != null;
         names = f: lib.hasPrefix "/" f && lib.any line (lib.splitString "\n" (builtins.readFile f)); # files only, not inline modules
-        hits = lib.filter (n: lib.any names r.schema.aspects.${n}.files) (lib.attrNames r.schema.aspects);
+        hits = lib.filter (n: lib.any names result.schema.aspects.${n}.files) (
+          lib.attrNames result.schema.aspects
+        );
       in
-      lib.genAttrs hits (n: lib.filter (id: r.active.${n}.${id}) (lib.attrNames r.active.${n}));
+      lib.genAttrs hits (n: lib.filter (id: result.active.${n}.${id}) (lib.attrNames result.active.${n}));
     unfreeOn =
-      { name, r }:
+      { name, result }:
       let
-        ids = under r name;
+        ids = under result name;
       in
       if ids == [ ] then
-        noPlace r name
+        noPlace result name
       else
         map
           (e: {
@@ -64,21 +66,21 @@ in
           (
             lib.filter (
               e: e.sink == "unfree" && lib.hasPrefix "aspect " e.origin && lib.elem e.to ids
-            ) r.graph.edges
+            ) result.graph.edges
           );
     portsOf =
-      { name, r }:
+      { name, result }:
       let
-        ids = under r name;
+        ids = under result name;
       in
       if ids == [ ] then
-        noPlace r name
+        noPlace result name
       else
         lib.concatMap (
-          id: lib.concatMap (e: map (p: p // { at = id; }) e.value) (r.reduced.ports.${id} or [ ])
+          id: lib.concatMap (e: map (p: p // { at = id; }) e.value) (result.reduced.ports.${id} or [ ])
         ) ids;
     featuresOf =
-      { vim, r }:
+      { vim, result }:
       if !(yen.vim ? ${vim}) then
         unknown "vim profile" vim (lib.attrNames yen.vim)
       else
@@ -93,14 +95,14 @@ in
             map (e: lib.removePrefix "aspect " e.origin) (
               lib.filter (
                 e: e.sink == "nvf" && lib.hasSuffix "/system:x86_64-linux/vim:${vim}" e.to
-              ) r.graph.edges
+              ) result.graph.edges
             )
           );
         };
     inputsOf =
-      { aspect, r }:
+      { aspect, result }:
       if !(yen.aspects ? ${aspect}) then
-        unknown "aspect" aspect (lib.attrNames r.active)
+        unknown "aspect" aspect (lib.attrNames result.active)
       else
         let
           f = yen.aspects.${aspect}.flake-file or { };

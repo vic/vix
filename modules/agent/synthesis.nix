@@ -6,9 +6,9 @@ let
 in
 {
   yen.queries.freePort =
-    { name, r }:
+    { name, result }:
     let
-      ps = yen.queries.portsOf { inherit name r; };
+      ps = yen.queries.portsOf { inherit name result; };
       used = map (p: p.port) ps;
       a = K.run 1 (q: [ (K.infd [ q ] 8000 8999) ] ++ map (K.neqfd q) used ++ [ (K.label [ q ]) ]);
     in

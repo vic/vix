@@ -5,8 +5,8 @@ let
 in
 {
   yen.helpers = {
-    # types with a strict check: lib.types.listOf and attrsOf only test the container
-    listOf = t: is (v: lib.isList v && lib.all t.check v);
+    # types with a strict check: lib.types.attrsOf only tests the container (yen.lib.listOf checks the elements)
+    inherit (yen.lib) listOf;
     attrsOf = t: is (v: lib.isAttrs v && lib.all t.check (lib.attrValues v));
     enum = xs: is (v: lib.elem v xs);
     # Ren `is`: a guest is a host, and host, guest and mac are machines
