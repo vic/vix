@@ -2,7 +2,7 @@
 { yen, lib, ... }:
 let
   inherit (yen.lib) opt maybe derive;
-  inherit (yen.helpers) listOf enum;
+  inherit (yen.lib) listOf enum;
   # the nixos-facter report of a host with hosts/<name>/_nixos/facter.json (null otherwise)
   facter =
     m:

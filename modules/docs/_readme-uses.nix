@@ -53,11 +53,11 @@ in
       "A machine with a `ghRunner` label is a CI runner: one aspect for bill, tom and bert."
       [ (src "hosts/ci-runner.nix" "ghRunner != null" "ci-runner") ]
     )
-    (row "Own reduce" "A sink reduce is any function of `[ { from; value; } ]`."
-      "claude settings are ranked layers (rank 1 wins per key). List sinks keep first-seen order (`flat`). Permissions are sorted."
+    (row "Own reduce" "A sink reduce is any function of `[ { from; value; } ]`; `flat` is yen's."
+      "claude settings are ranked layers (rank 1 wins per key). List sinks keep first-seen order (`yen.lib.reduce.flat`). Permissions are sorted."
       [
         (src "vic/ai/claude.nix" "layers = {" "layers")
-        (src "helpers.nix" "flat = {" "flat")
+        (src "topology/secrets.nix" "reduce = yen.lib.reduce.flat;" "flat (yen.lib.reduce)")
         (src "topology/people.nix" "sorted = {" "sorted")
       ]
     )

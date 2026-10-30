@@ -24,7 +24,7 @@ in
       (src "topology/machine.nix" "system = yen.kinds.system;" "a ref field")
       (src "topology/machine.nix" "channel = opt yen.kinds.channel" "opt (a default)")
       (src "topology/machine.nix" "wifi = maybe" "maybe (null)")
-      (src "helpers.nix" "enum = xs: is" "listOf, attrsOf, enum")
+      (src "topology/machine.nix" "users = opt (listOf" "listOf, enum, attrsOf: yen.lib types")
       (src "topology/ssh-hosts.nix" "fwd = is" "is (any check)")
       (src "platforms/nixos.nix" "fields = yen.kinds.machine.fields;" "shared fields")
     ])
@@ -90,15 +90,15 @@ in
       (src "flake/outputs.nix" "reduce = one;" "one: one formatter per system")
       (src "platforms/accounts.nix" "primary-user.reduce = yen.lib.reduce.one;" "one: one admin per mac")
       (src "platforms/ports.nix" "reduce = yen.lib.reduce.entries;" "entries: each value with its giver")
-      (src "helpers.nix" "flat = {" "own reduce: flat (unique concat)")
+      (src "topology/secrets.nix" "reduce = yen.lib.reduce.flat;" "flat: join list elements")
       (src "platforms/impermanence.nix" "name = \"persist\";" "own reduce: persist (path union)")
     ])
     (row "typed sinks: `of` checks each element" [
-      (src "topology/secrets.nix" "of = yen.helpers.listOf yen.kinds.secret;" "a list of secret refs")
-      (src "vic/dots.nix" "of = yen.helpers.attrsOf (yen.lib.is (p: builtins.pathExists"
+      (src "topology/secrets.nix" "of = yen.lib.listOf yen.kinds.secret;" "a list of secret refs")
+      (src "vic/dots.nix" "of = yen.lib.attrsOf (yen.lib.is (p: builtins.pathExists"
         "a dots path that exists"
       )
-      (src "platforms/ports.nix" "of = yen.helpers.listOf (" "{ port; what; }")
+      (src "platforms/ports.nix" "of = yen.lib.listOf (" "{ port; what; }")
     ])
     (row "forwards: a sink key names another sink" [
       (src "platforms/nixos.nix" "os.nixos = " "os → nixos")

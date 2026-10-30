@@ -3,8 +3,8 @@
 let
   inherit (yen.helpers) machines;
   list = {
-    reduce = yen.helpers.flat;
-    of = yen.helpers.listOf lib.types.str;
+    reduce = yen.lib.reduce.flat;
+    of = yen.lib.listOf lib.types.str;
   };
 in
 {

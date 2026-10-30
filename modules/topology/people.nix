@@ -4,8 +4,8 @@ let
   inherit (yen.lib) opt maybe reduce;
   # an element is a list of strings; the reader gets them unique, first-seen order
   list = {
-    reduce = yen.helpers.flat;
-    of = yen.helpers.listOf lib.types.str;
+    reduce = yen.lib.reduce.flat;
+    of = yen.lib.listOf lib.types.str;
   };
   # same elements, sorted: permission rules read the same whatever order the files load in
   sorted = {

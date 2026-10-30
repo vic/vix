@@ -17,8 +17,8 @@ in
     configDots = maybe t.str; # dots source linked at ~/.config/<name>
     wrapper = maybe t.str; # flake input whose package of the same name wraps our emacs
     bootstrap = maybe t.str; # activation script text; installed as <name>-install
-    bins = opt (yen.helpers.attrsOf t.str) { }; # shell scripts put on PATH
-    fish = opt (yen.helpers.attrsOf t.str) { }; # fish function bodies
+    bins = opt (yen.lib.attrsOf t.str) { }; # shell scripts put on PATH
+    fish = opt (yen.lib.attrsOf t.str) { }; # fish function bodies
   };
 
   yen.emacs.spc = {

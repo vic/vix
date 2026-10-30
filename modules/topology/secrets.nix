@@ -26,20 +26,20 @@ in
 {
   yen.kinds.secret.fields = {
     sopsKey = t.str; # sops key path
-    format = maybe (yen.helpers.enum [ "binary" ]);
+    format = maybe (yen.lib.enum [ "binary" ]);
     sopsFile = maybe t.path;
     sopsPath = maybe t.str; # sops-nix `path`; `path` is a yen scope key
     deploy = opt t.bool true;
   };
   # an element is a list of secret refs; vic-secrets (vic/sys/secrets.nix) reads the user's
   yen.kinds.user.sinks.secrets = {
-    reduce = yen.helpers.flat;
-    of = yen.helpers.listOf yen.kinds.secret;
+    reduce = yen.lib.reduce.flat;
+    of = yen.lib.listOf yen.kinds.secret;
   };
   # the host's own secrets: the same element, forwarded to sops-nix
   yen.kinds.host.sinks.secrets = {
-    reduce = yen.helpers.flat;
-    of = yen.helpers.listOf yen.kinds.secret;
+    reduce = yen.lib.reduce.flat;
+    of = yen.lib.listOf yen.kinds.secret;
     nixos =
       { secrets, ... }:
       lib.optionalAttrs (secrets != [ ]) {

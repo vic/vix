@@ -6,9 +6,7 @@
 let
   sink = {
     reduce = yen.lib.reduce.entries;
-    of = yen.helpers.listOf (
-      yen.lib.is (p: lib.isInt (p.port or null) && lib.isString (p.what or null))
-    );
+    of = yen.lib.listOf (yen.lib.is (p: lib.isInt (p.port or null) && lib.isString (p.what or null)));
   };
 in
 {

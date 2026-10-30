@@ -13,7 +13,7 @@ let
   };
   # an element is a list of caches; it goes to the nearest machine, or the fleet
   caches = k: {
-    reduce = yen.helpers.flat;
+    reduce = yen.lib.reduce.flat;
     os = cachix.caches { from = k.sinks.caches; };
   };
 in
@@ -22,7 +22,7 @@ in
   yen.kinds.guest.sinks.caches = caches yen.kinds.guest;
   yen.kinds.mac.sinks.caches = caches yen.kinds.mac;
   yen.kinds.fleet.sinks.caches = {
-    reduce = yen.helpers.flat;
+    reduce = yen.lib.reduce.flat;
     flake-file = cachix.flake-config { from = yen.kinds.fleet.sinks.caches; };
   };
 

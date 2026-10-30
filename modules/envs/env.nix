@@ -7,7 +7,8 @@
 }:
 let
   inherit (yen.lib) opt all within;
-  inherit (yen.helpers) listOf enum place;
+  inherit (yen.lib) listOf enum;
+  inherit (yen.helpers) place;
   envs = opt (listOf yen.kinds.env) [ ];
   # an env scope carries the system it is built for: `{ env, ... }: env.system.legacyPackages`
   onSystem = system: e: e // { inherit system; };
@@ -39,7 +40,9 @@ in
     ]);
     # tools give lists of derivations; the env's devshell reads the pool, and a user's env gives it to the home.
     # `env` keeps one element per env
-    sinks.env-packages.homeManager = { env, env-packages, ... }: { home.packages = builtins.concatLists env-packages; };
+    sinks.env-packages.homeManager = { env, env-packages, ... }: {
+      home.packages = builtins.concatLists env-packages;
+    };
   };
 
   yen.aspects.devshell = {

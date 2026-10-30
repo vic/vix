@@ -2,7 +2,7 @@
 { lib, yen, ... }:
 let
   inherit (yen.lib) opt maybe is;
-  inherit (yen.helpers) listOf attrsOf;
+  inherit (yen.lib) listOf attrsOf;
   t = lib.types;
   fwd = is (
     v:

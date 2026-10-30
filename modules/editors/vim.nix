@@ -7,7 +7,7 @@
 }:
 let
   inherit (yen.lib) opt maybe;
-  inherit (yen.helpers) listOf enum;
+  inherit (yen.lib) listOf enum;
   # every feature an aspect can gate on: `at = yen.helpers.vimHas "snacks";`
   features = builtins.filter (w: builtins.isString w && w != "") (
     builtins.split "[[:space:]]+" ''

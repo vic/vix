@@ -1,14 +1,10 @@
 # vix helpers: pure values every fleet file reads as `yen.helpers`.
 { yen, lib, ... }:
 let
-  inherit (yen.lib) is all;
+  inherit (yen.lib) all;
 in
 {
   yen.helpers = {
-    # types with a strict check: lib.types.attrsOf only tests the container (yen.lib.listOf checks the elements)
-    inherit (yen.lib) listOf;
-    attrsOf = t: is (v: lib.isAttrs v && lib.all t.check (lib.attrValues v));
-    enum = xs: is (v: lib.elem v xs);
     # Ren `is`: a guest is a host, and host, guest and mac are machines
     machines = [
       yen.kinds.host
@@ -38,14 +34,6 @@ in
     allowUnfree = names: lib.genAttrs names (_: true);
     # each flake's outputs for the system of `pkgs`: `(yen.helpers.perSystem pkgs inputs.jjui).packages.jjui`
     perSystem = pkgs: builtins.mapAttrs (_: v: v.${pkgs.stdenv.hostPlatform.system} or v);
-    # sink reduce for list elements: unique concat in first-seen order, as `lib.unique (concatLists ..)`
-    flat = {
-      name = "flat";
-      __functor = _: es: {
-        value = lib.unique (lib.concatMap (e: e.value) es);
-        errors = [ ];
-      };
-    };
     # sops-nix `secrets` from secret instances; `deploy = false` ones stay out
     sopsSecrets =
       ss:

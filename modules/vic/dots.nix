@@ -24,7 +24,7 @@ in
   yen.kinds.user.sinks.dots = {
     reduce = yen.lib.reduce.merge;
     # every dots source exists in ./dots: a typo is an error record, not a dangling link
-    of = yen.helpers.attrsOf (yen.lib.is (p: builtins.pathExists (./dots + "/${p}")));
+    of = yen.lib.attrsOf (yen.lib.is (p: builtins.pathExists (./dots + "/${p}")));
   };
 
   yen.aspects.vic-dots = {
