@@ -6,6 +6,7 @@ pub(crate) enum VicError {
     Usage(String),
     Io(std::io::Error),
     Regex(regex::Error),
+    Recall(String),
 }
 
 impl fmt::Display for VicError {
@@ -14,6 +15,7 @@ impl fmt::Display for VicError {
             VicError::Usage(m) => write!(f, "usage: {m}"),
             VicError::Io(e) => write!(f, "io: {e}"),
             VicError::Regex(e) => write!(f, "regex: {e}"),
+            VicError::Recall(m) => write!(f, "recall: {m}"),
         }
     }
 }

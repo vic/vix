@@ -5,7 +5,12 @@
 # stop-gate (ctx >=70% + stale HANDOFF blocks stop once),
 # subagent-brief (worker contract), pre-compact (holds auto compaction <90%),
 # learn-loop.
-{ yen, lib, ... }:
+{
+  yen,
+  inputs,
+  lib,
+  ...
+}:
 {
   yen.aspects.ai-vic-hooks = {
     at = yen.aspects.vic-headless;
@@ -69,9 +74,25 @@
                 hooks = [ (vicHook "hook boot") ];
               }
             ];
-            SubagentStart = on [ "subagent-brief.sh" ];
-            # no `|| true` on bash-guard/pre-compact: exit 2 is the refusal
-            PreCompact = on [ "pre-compact.sh" ];
+            SubagentStart = [
+              {
+                hooks = [
+                  (hookOf "subagent-brief.sh")
+                  (vicHook "hook recall")
+                ];
+              }
+            ];
+            UserPromptSubmit = [ { hooks = [ (vicHook "hook recall") ]; } ];
+            SubagentStop = [ { hooks = [ (vicHook "hook mark") ]; } ];
+            # no `|| true` on bash-guard/pre-compact: exit 2 is the refusal, so it stays first
+            PreCompact = [
+              {
+                hooks = [
+                  (hookOf "pre-compact.sh")
+                  (vicHook "hook mark")
+                ];
+              }
+            ];
             PreToolUse = [
               {
                 matcher = "Bash";
@@ -93,10 +114,39 @@
                 hooks = [
                   (hookOf "stop-gate.sh")
                   (learnLoop "stop")
+                  (vicHook "hook mark")
                 ];
               }
             ];
           };
+        };
+      };
+
+    # quipu read is ~1.4 s, so the recall hook reads this cache instead.
+    homeLinux =
+      { pkgs, out, ... }:
+      let
+        vicTools = out.packages.${pkgs.stdenv.hostPlatform.system}.vic-tools;
+        quipu = pkgs.callPackage ../_pkgs/quipu.nix { src = inputs.quipu; };
+      in
+      {
+        systemd.user.services.vic-recall-build = {
+          Unit.Description = "Rebuild the vic recall cache from the quipu ledger";
+          Service = {
+            Type = "oneshot";
+            Environment = [ "PATH=${quipu}/bin" ];
+            ExecStart = "${lib.getExe' vicTools "vic"} recall build";
+            Nice = 19;
+            MemoryMax = "512M";
+          };
+        };
+        systemd.user.timers.vic-recall-build = {
+          Unit.Description = "Refresh the vic recall cache";
+          Timer = {
+            OnBootSec = "2min";
+            OnUnitActiveSec = "15min";
+          };
+          Install.WantedBy = [ "timers.target" ];
         };
       };
   };

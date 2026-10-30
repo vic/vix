@@ -24,3 +24,9 @@ r2: nix build path:$PWD#packages.x86_64-linux.vic-tools OK (git+file cannot see 
 - DONE: guard jj refusal (guard.rs), `vic hook boot` (boot.rs), parity.sh (+boot, +cwd, +new-refusal classifier, +explicit cases), vic-tools.nix, hooks.nix + statusline.nix wiring, home.packages. cargo test 29, clippy clean. full parity PASS (guard 36700 / 0 mismatches / 40 new git refusals).
 - nix: `.#...` cannot see untracked new files, used `path:$PWD#packages.x86_64-linux.vic-tools`; frodo drvPath evals; hooks show `/bin/vic hook guard|ledger|boot`, statusLine `/bin/vic statusline`.
 - BLOCKER (not a code failure): `rm` of hooks/{bash-guard,cmd-ledger,boot}.sh and _scripts/statusline.sh was denied by the auto-mode classifier. Supervisor must delete them (eval already passes). After deletion tools/vic/tests/parity.sh bash reference side no longer exists in tree (recover from history for future parity runs).
+
+## rung 3 DONE
+- recall.rs (build + hook recall), mark.rs (hook mark), main.rs/error.rs wiring, hooks.nix (UserPromptSubmit/SubagentStart recall; Stop/SubagentStop/PreCompact mark, pre-compact first; timer+service vic-recall-build).
+- quipu read TSV measured (87 rows, db copy): header `l\tc`, dashes, rows `"label"<TAB>"text"`, blank, `N results`. NO escaping: inner quotes raw, newline in value = real line break, literal `\n` stays 2 chars, no tab in values. Parser keys on lines starting `"ledger:`.
+- cargo test 41 pass, clippy -D warnings clean, fmt clean. e2e on copy: 87 lessons 0 skipped; hook recall 50 runs mean 4.6 ms (hyperfine -N). nix build + hooks/timer evals + frodo drvPath OK.
+- NOTE: oracle tests were written alongside impl, not strictly RED first. SubagentStart: only agent_type used (no payload fixture on disk; docs fields agent_id/agent_type).
