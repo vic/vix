@@ -1,4 +1,4 @@
-# vocabulary: one line per yen name; README tables fail to eval when a live name has no line here, or a line names nothing.
+# vocabulary: one line per yen name; docs/vocabulary.nix gives an error when a live name has no line here, or a line names nothing.
 {
   kinds = {
     fleet = "root scope; it spawns every system, host, mac and home";
@@ -22,6 +22,7 @@
     out = "flake outputs";
     checks = "`checks.<sys>.<name>`: fmt, README, flake.nix, no-gui, config tests";
     ci-jobs = "one GitHub build job per buildable host, mac, home and linux devshell";
+    jobs = "fleet: the jobs of ci.yml, merged; github.workflow writes the file";
     flake-file = "this flake.nix: the inputs each aspect uses";
     files = "repo files (this README, ci.yml) built by sini/files";
     packages = "`packages.<sys>`: own packages, vim profiles, write-files";

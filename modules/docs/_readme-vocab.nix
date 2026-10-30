@@ -5,10 +5,11 @@
   vocab,
 }:
 let
-  described = import ./_described.nix "_vocabulary.nix";
   schema = yen.lib.schema;
   # one row of cells per name, under a header row
-  table = head: cells: names: yen.lib.batteries.docs.table head (map cells names);
+  table =
+    head: cells: names:
+    yen.lib.batteries.docs.table head (map cells names);
   code = n: "`${n}`";
   codes = xs: lib.concatMapStringsSep ", " code (lib.sort (a: b: a < b) (lib.unique xs));
   instances =
@@ -44,11 +45,11 @@ let
     map (t: [
       (code t)
       vocab.tiers.${t}
-    ]) (described "tiers" (live "tiers") vocab.tiers)
+    ]) (live "tiers")
     ++ map (r: [
       "role `${r}`"
       vocab.roles.${r}
-    ]) (described "roles" (live "roles") vocab.roles);
+    ]) (live "roles");
   inactive = lib.attrNames (lib.filterAttrs (_: a: a.activeAt == 0) schema.aspects);
 in
 ''
@@ -58,14 +59,14 @@ in
     (code k)
     vocab.kinds.${k}
     (instances k)
-  ]) (described "kinds" (lib.attrNames yen.kinds) vocab.kinds)}
+  ]) (lib.attrNames yen.kinds)}
 
   ### Sinks: where an aspect key sends its element
 
   An element goes to the nearest ancestor-or-self scope that has the sink. A sink key that names another sink forwards the reduced value to it.
 
   ${table [ "sink" "on" "reduce" "forwards to" "what" ] sinkCells (
-    described "sinks" (lib.unique (map (d: d.name) decls)) vocab.sinks
+    lib.unique (map (d: d.name) decls)
   )}
 
   ### vic profiles: tiers gate features (`at = yen.aspects.vic-<tier>`); roles come from facts or host files

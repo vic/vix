@@ -1,4 +1,4 @@
-# readme dirs (a fn of yen and vocabDirs): live table of modules/ and modules/vic/ directories, checked against docs/_vocabulary-dirs.nix.
+# readme dirs (a fn of yen and vocabDirs): live table of modules/ and modules/vic/ directories, described by docs/_vocabulary-dirs.nix (docs/vocabulary.nix checks it).
 { yen, vocabDirs }:
 let
   inherit (builtins)
@@ -12,14 +12,13 @@ let
       e = readDir p;
     in
     filter (n: e.${n} == "directory") (attrNames e);
-  described = import ./_described.nix "_vocabulary-dirs.nix";
   table =
     prefix: p: lines:
     yen.lib.batteries.docs.table [ "dir" "purpose" ] (
       map (n: [
         "`${prefix}${n}/`"
         lines.${n}
-      ]) (described prefix (dirsOf p) lines)
+      ]) (dirsOf p)
     );
 in
 ''

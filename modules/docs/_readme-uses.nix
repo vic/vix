@@ -102,7 +102,7 @@ in
     )
     (row "Autoinclude" "Files found by path become modules: no line in the host file."
       "`hosts/<name>/_nixos` holds each machine's hardware, disko and facter report."
-      [ (src "hosts/autoinclude.nix" "builtins.pathExists (./. +" "autoinclude") ]
+      [ (src "hosts/autoinclude.nix" "builtins.pathExists (dir h)" "autoinclude") ]
     )
     (row "Exports" "A scope outside any machine sends its content to a flake output."
       "`homeModules.vic`: vic's headless home for other flakes."

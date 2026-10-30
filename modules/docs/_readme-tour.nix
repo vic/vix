@@ -73,9 +73,7 @@ in
       (src "hosts/ci-runner.nix" "(s: s.ghRunner != null)" "ci-runner: a ghRunner label")
       (src "roles/roles.nix" "yen.aspects.installer.at = all [" "installer: form iso")
       (src "forms/wsl.nix" "(s: s.form == \"wsl\")" "wsl: form wsl")
-      (src "hosts/autoinclude.nix" "builtins.pathExists (./. + \"/\${s.name}/_nixos\")"
-        "autoinclude: a hosts/<name>/_nixos dir"
-      )
+      (src "hosts/autoinclude.nix" "builtins.pathExists (dir h)" "autoinclude: a hosts/<name>/_nixos dir")
     ])
     (row "`all`, `not`, `within`, `has`, `same`, fact tests" [
       (src "roles/tiers.nix" "(not (within yen.aspects.installer))"
@@ -106,7 +104,9 @@ in
       (src "platforms/nixos.nix" "os.nixos = " "os → nixos")
       (src "platforms/microvm.nix" "nixos.nixos =" "guest nixos → host nixos")
       (src "platforms/nixos.nix" "os = { user, account" "account → os")
-      (src "platforms/home-manager.nix" "os = yen.lib.batteries.home-manager.into-host" "homeManager → os")
+      (src "platforms/home-manager.nix" "os = yen.lib.batteries.home-manager.into-host"
+        "homeManager → os"
+      )
       (src "platforms/impermanence.nix" "yen.kinds.host.sinks.persist = {" "persist → nixos")
       (src "topology/secrets.nix" "yen.kinds.host.sinks.secrets = {" "host secrets → nixos (sops-nix)")
       (src "envs/env.nix" "sinks.env-packages.homeManager" "env-packages → homeManager")
@@ -157,7 +157,7 @@ in
     (row "files: generated repo files" [
       (src "flake/files.nix" "yen.kinds.fleet.sinks.files.out" "the files sink")
       (src "docs/readme.nix" "files.file.\"README.md\"" "this README")
-      (src "flake/ci-workflow.nix" "files.file.\".github/workflows/ci.yml\"" "ci.yml")
+      (src "flake/ci-workflow.nix" "files = github.workflow {" "ci.yml")
     ])
     (row "graphs (`yen.lib.graphs`)" [
       (src "topology/ssh-hosts.nix" "yen.lib.graphs.sccs jumps" "sccs: ssh jumps")

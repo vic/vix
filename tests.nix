@@ -139,6 +139,9 @@ let
       yen.ssh-host.loop-a.proxyJump = "loop-b";
       yen.ssh-host.loop-b.proxyJump = "vic@loop-a";
     }) ".*proxyJump cycle loop-a -> loop-b.*";
+    vocabulary-fires = hasMsg (with' {
+      yen.kinds.ghost.fields = { };
+    }) ".*kinds `ghost`: a live name with no doc line.*";
   };
 
   e2e = rec {
