@@ -348,6 +348,6 @@
   "claudeCode.preferredLocation": "panel",
   "claudeCode.useTerminal": true,
   "git.enabled": false,
-  "workbench.preferredDarkColorTheme": "Visual Studio Dark",
-  "jjx.showTooltips": false
+  "jjx.showTooltips": false,
+  "workbench.preferredDarkColorTheme": "modus-operandi-deuteranopia"
 }

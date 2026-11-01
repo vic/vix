@@ -617,6 +617,18 @@ BURN: fable ≈2× opus ≈4× sonnet ≈8× haiku. PIPELINES: bug=isolate→hun
 ---
 
 
+## 🧪 VERIFY TRAPS (2026-11-02 yen mob, each one burned a PR)
+- jj workspace + flake: use `path:$PWD`. A plain path is git+file and skips NEW files (docs-test 494 vs 495).
+- Prove PURE, as CI does. `--impure` hid `builtins.currentSystem` (#67 e2e red in CI only).
+- Format with the project's tool from the workspace cwd (`nix develop … -c fmt-check`), never `nix run nixpkgs#nixfmt`.
+- A mutant must change the value the check reads: show the check FAIL, restore, `cmp`. A sed that matched nothing is no mutant.
+- Every output needs one reader. #71 made flake `templates` a function and dropped 3 error-page rows with CI green.
+- A key that no sink receives is dropped with `result.errors = []` (yen #69). Only a value check with a mutant finds it.
+- Peer claims stay claims: "pushed", "comment posted", "#70 passed with 4 workers" were wrong 3 times. Check the sha.
+- Real exit codes: `; echo EXIT=$?` on the SAME line. Reviewers over-flag: verify each finding vs src b4 act.
+- TEAMWORK: be proactive (idle = check pipelines, confirm a teammate's finding from the source, offer the next bead),
+  review every teammate PR, talk in the room with evidence, correct ur own wrong claim at once.
+
 ---
 
 SWEAR BY THIS DOC B4 + AFTER EACH INTERACTION. SUMMARIZE IT. VIC NEEDS 2 KNOW U SWEAR BY ALL RULES. SHOW THEM 2 VIC.

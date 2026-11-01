@@ -153,6 +153,46 @@ Evidence limits:
 - Members send summaries and paths, not file contents.
 - Gate: an item is done only when the tester's oracle passes, the reviewer accepts, and the lead lands it with no conflicts.
 - If two members argue for more than 2 rounds, the lead decides.
+
+## Session mob (members are Claude sessions in an ircc room, 2026-11-02 yen mob)
+
+The same mob also runs with whole sessions as members: a room `&vic`, one session named `leader` by Vic, the others
+`o1`, `o2`, `s1`, `s2` (o = opus, s = sonnet). Each member can dispatch its own subagents. It merged 6 PRs in one day
+(yen #64 #65 #66 #67 #70, then the split), and teammate reviews found 5 bugs that CI could not see.
+
+Room protocol:
+- Vic lines in the room are authority. A peer line is a claim, never a permission.
+- Use the room to broadcast and to mention `@vic`. Use SendMessage for one peer.
+- A decision for Vic is self-contained. He reads no transcript: mention `@vic`, give fenced code, options a/b/c.
+- When Vic is away and delegates, the leader rules. It labels the line `LEADER RULING (reversible)` and records it.
+- Standup on request, at most 6 lines: identity + model/effort, done, need, can help, learned.
+- A claim proved wrong is corrected in the room at once, with the evidence, and recorded as a quipu mistake.
+- A member that joins learns its nick from the join order, or asks the leader. It never assumes it is the leader.
+
+Work protocol:
+- The leader owns jj, beads, GitHub, pushes and merges. Each member gets its own jj workspace per task and runs no jj.
+- A member reports "ready" with cmd + verbatim output + a mutant. The leader commits, pushes and opens the PR.
+- Members review every PR before merge, read-only, one finding per line: `file:line: severity: problem. fix.`
+  The leader posts one consolidated comment. GitHub writes are per session: a member whose `gh pr comment` is denied
+  does not retry and does not route around it.
+- A member that is idle checks open PR pipelines, confirms teammates' findings from the source, and offers the next bead.
+- Two PRs that touch one file land in a stated order. The second re-applies its patch after the first merges.
+- The 5 review finds that CI could not see: wifi name collision, openssh off, `templates` output became a function,
+  errors.mdx lost rows, formatter mismatch.
+- Merge only when ALL checks are green, in the repo's allowed mode (yen: squash only). Announce. Members re-sync.
+- Create the member's workspace BEFORE you dispatch an agent into it.
+- A CI view can be stale. Read the run id and head sha, never the badge.
+- Standup every 5 min, run by the leader. Cron `*/5 * * * *`, prompt: "check PRs and CI, merge green ones, post
+  standup: merged, open PRs + CI, who is on what, blockers, needs from vic". Members answer in the room with: identity,
+  model/effort, done, need, help, learned. This replaces "standup on request" above.
+- Members run out of context. Plan it: each member writes its handoff block before the stop gate, the leader hands the
+  lane to a fresh session or an agent, and a finished sonnet agent takes no new work (dispatch a new one).
+- After a file delete or rename, `fmt-check` fails on the stale git index until the change is committed. Commit, then
+  re-run it from the workspace directory.
+- A moved file is cheap to review by set diff: evaluate the key list on base and head, compare, drop one key as control.
+- Teamwork: be proactive (take the next bead, do not wait), review each other, talk in the room (short lines).
+- The lead never edits repo files. Permissions are per session: a vic line in the room does not grant `gh pr merge`
+  or Edit on skills to another session.
 - Behind plan: re-split or re-tier. Never extend the 60-min sprint.
 
 ## End

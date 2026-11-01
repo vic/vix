@@ -210,6 +210,23 @@ PM actively uses peers. See /vic "PEERS = LIVE CONTEXT".
 - Partition step: if a piece touches a peer's project, ASK that peer (`SendMessage`, name = project) before dispatching agents to re-derive it. Peer answer = input to the spec, verified like any claim.
 - Tell agents in the spec which peers exist; agents without SendMessage route questions through PM.
 - Landed change or finding that other projects depend on → notify those peers.
+
+## DELIVERY = MERGED (lead discipline, 2026-11-02 yen mob)
+- Done = merged on main with every check green. Pushed or "PR open" is not delivery.
+- "Pushed" is proved by the PR head: `gh pr view N --json headRefOid` equals the local commit. Two hung pushes were
+  reported as done (yen #67, #70) because a filtered output hid `exit 124`. Never pipe a push into grep: show tail + EXIT.
+- A push that hangs: remove the stale ssh socket `~/.ssh/socket-git@github.com:22`, run the push under `timeout`.
+- A pushed bookmark is immutable. Do not rebase it (no force-push). Merge main into the PR branch and push forward.
+- Merge only when ALL checks are green, in the repo's allowed mode (yen: squash only). Announce, then members re-sync.
+- A flaky job (exit 143, no test failure) is evidence to collect, not a re-run to forget: time each run, rule out a
+  concurrency cancel, own timeouts and runner loss, then fix the cause (yen #70: fastest 8 workers -> 4, plus a
+  failure-only `free -m; sudo dmesg` step).
+- Tiers: opus only for judgment, sonnet for rungs and reviews, haiku only with CMD + CHECK + EXPECT + ON-FAIL per step.
+  An exit code is real only with `; echo EXIT=$?` on the same line.
+- Every PR gets a teammate review BEFORE merge. The leader posts ONE consolidated comment (member sessions cannot post to GitHub).
+- A CI view can be stale: read the run id and head sha. A count in the room is a claim: read it from the CI log.
+- Reviewers over-flag and under-check: verify each finding against the source before you act.
+- Create the workspace BEFORE you dispatch an agent into it. The lead edits no repo file.
 - Keep Vic-facing chatter out: peers get one precise question, not status spam.
 
 ## NEVER-STALL (TIME = constraint)
