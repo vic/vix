@@ -30,24 +30,22 @@ in
       ) null s.rup;
     # a machine's users by name (spawns.user of host, guest, mac)
     usersOf = m: lib.listToAttrs (map (u: lib.nameValuePair u.name u) m.users);
-    # unfree sink element: `unfree = yen.helpers.allowUnfree [ "name" ];`
-    allowUnfree = names: lib.genAttrs names (_: true);
     # each flake's outputs for the system of `pkgs`: `(yen.helpers.perSystem pkgs inputs.jjui).packages.jjui`
     perSystem = pkgs: builtins.mapAttrs (_: v: v.${pkgs.stdenv.hostPlatform.system} or v);
-    # sops-nix `secrets` from secret instances; `deploy = false` ones stay out
+    # sops-nix `secrets` of the secret refs rs, their data read from the fleet `sops` sink; `deploy = false` ones stay out
     sopsSecrets =
-      ss:
+      sops: rs:
       lib.listToAttrs (
         map (
           s:
           lib.nameValuePair s.sopsKey (
-            # named fields only: an instance also carries scope keys (key, path, ...)
+            # named fields only
             lib.filterAttrs (_: v: v != null) {
               inherit (s) format sopsFile;
               path = s.sopsPath;
             }
           )
-        ) (lib.filter (s: s.deploy) ss)
+        ) (lib.filter (s: s.deploy) (map (r: sops.${r.name}) rs))
       );
     # nixpkgs of a machine or home: its channel, its system
     pkgsOf = m: m.channel.nixpkgs.legacyPackages.${m.system.name};

@@ -32,6 +32,21 @@ let
     // h.extraOptions;
 in
 {
+  yen.aspects.ssh-block = {
+    at = yen.kinds.ssh-host;
+    ssh-blocks =
+      {
+        ssh-host,
+        served ? [ ],
+        ...
+      }:
+      {
+        ${ssh-host.name} = lib.filterAttrs (_: v: v != null && v != [ ] && v != { }) (
+          directive served ssh-host
+        );
+      };
+  };
+
   yen.aspects.vic-ssh = {
     at = yen.aspects.vic-secrets;
     secrets = [
@@ -41,16 +56,13 @@ in
     ];
 
     homeManager =
-      {
-        served ? [ ],
-        ...
-      }:
+      { ssh-blocks, sops, ... }:
       {
         programs.ssh = {
           enable = true;
           enableDefaultConfig = false;
           includes = [
-            "~/.config/sops-nix/secrets/${yen.secret.ssh-conf.sopsKey}"
+            "~/.config/sops-nix/secrets/${sops.${yen.secret.ssh-conf.name}.sopsKey}"
             "~/.ssh/config.local"
           ];
           settings = {
@@ -61,9 +73,7 @@ in
               AddKeysToAgent = "yes";
             };
           }
-          // lib.mapAttrs (
-            _: h: lib.filterAttrs (_: v: v != null && v != [ ] && v != { }) (directive served h)
-          ) yen.ssh-host;
+          // ssh-blocks;
         };
       };
 

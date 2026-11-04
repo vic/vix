@@ -19,6 +19,7 @@
     homeManager =
       {
         secrets,
+        sops,
         config,
         pkgs,
         lib,
@@ -54,7 +55,7 @@
           age.generateKey = false;
           defaultSopsFile = ../secrets.yaml;
           validateSopsFiles = true;
-          secrets = yen.helpers.sopsSecrets secrets;
+          secrets = yen.helpers.sopsSecrets sops secrets;
           templates = {
             "hello.toml".content = ''
               hello = "Wooo ${config.sops.placeholder.hello} Hoo";

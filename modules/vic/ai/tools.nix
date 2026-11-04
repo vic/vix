@@ -1,5 +1,10 @@
 # Agent CLIs from numtide/llm-agents.nix, with their Claude Code wiring.
-{ yen, inputs, lib, ... }:
+{
+  yen,
+  inputs,
+  lib,
+  ...
+}:
 {
   yen.aspects.ai-tools = {
     at = yen.aspects.vic-headless;

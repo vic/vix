@@ -44,7 +44,7 @@ let
 in
 ''
   **Add a host**: facts only; hardware and desktop aspects key on them (`modules/hosts/<name>.nix`).
-  Hardware files in `modules/hosts/<name>/_nixos/` load by autoinclude; `ghRunner = "<label>";` makes the host a bare CI runner.
+  Hardware files in `modules/hosts/<name>/_nixos/` load by autoinclude; an assembly of kit `github-runner` (`roles.runner.settings.label`) makes the host a bare CI runner.
   ```nix
   yen.host.elrond = {
     system = yen.system.x86_64-linux;

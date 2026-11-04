@@ -27,7 +27,7 @@ in
   yen.aspects.direnv-host = {
     at = yen.lib.all [
       yen.helpers.machines
-      (yen.lib.has yen.user.vic)
+      (yen.lib.below yen.user.vic)
     ];
     os = {
       nix.settings.keep-outputs = true;

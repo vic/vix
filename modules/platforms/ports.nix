@@ -5,7 +5,7 @@
 { yen, lib, ... }:
 let
   sink = {
-    reduce = yen.lib.reduce.entries;
+    reduce = yen.lib.reduce.elements;
     of = yen.lib.listOf (yen.lib.is (p: lib.isInt (p.port or null) && lib.isString (p.what or null)));
   };
 in
@@ -17,5 +17,5 @@ in
     served = { ports, ... }: lib.concatMap (e: e.value) ports;
   };
   # entries: each value comes with the user scope that serves it
-  yen.kinds.fleet.sinks.served.reduce = yen.lib.reduce.entries;
+  yen.kinds.fleet.sinks.served.reduce = yen.lib.reduce.elements;
 }

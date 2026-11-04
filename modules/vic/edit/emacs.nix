@@ -6,14 +6,76 @@
   ...
 }:
 let
-  dists = lib.attrValues yen.emacs;
+  dists.instances = yen.kinds.emacs; # a tree request: every emacs distribution, with its data
+  # the dots, the home-manager module of the distributions ds (the answer of `dists`)
+  dotsOf =
+    ds:
+    lib.listToAttrs (
+      map (e: lib.nameValuePair ".config/${e.name}" e.configDots) (
+        lib.filter (e: e.configDots != null) ds
+      )
+    );
+  homeOf =
+    ds:
+    { pkgs, ... }:
+    let
+      emacsPkg = pkgs.emacs;
+      install =
+        e:
+        pkgs.writeShellApplication {
+          name = "${e.name}-install";
+          runtimeInputs = [
+            pkgs.git
+            emacsPkg
+            pkgs.ripgrep
+            pkgs.openssh
+          ];
+          text = e.bootstrap;
+        };
+    in
+    {
+      programs.emacs.enable = true;
+      programs.emacs.package = emacsPkg;
+      services.emacs.package = emacsPkg;
+      services.emacs.extraOptions = lib.concatMap (e: [
+        "--init-directory"
+        e.initDir
+      ]) (lib.filter (e: e.daemon) ds);
+      home.packages =
+        lib.concatMap (
+          e:
+          lib.optional (e.wrapper != null) (
+            (yen.helpers.perSystem pkgs inputs.${e.wrapper}).packages.${e.wrapper}.override {
+              emacs = emacsPkg;
+            }
+          )
+        ) ds
+        ++ lib.concatMap (e: lib.mapAttrsToList pkgs.writeShellScriptBin e.bins) ds;
+      programs.fish.functions = lib.mergeAttrsList (
+        map (e: lib.mapAttrs (_: body: { inherit body; }) e.fish) ds
+      );
+      home.activation = lib.listToAttrs (
+        map (
+          e:
+          lib.nameValuePair "${e.name}-install" {
+            after = [ "link-ssh-id" ];
+            before = [ ];
+            data = "run ${lib.getExe (install e)}\n";
+          }
+        ) (lib.filter (e: e.bootstrap != null) ds)
+      );
+    };
 in
 {
   yen.aspects.vic-emacs = {
     at = yen.aspects.vic-gui;
-    dots = lib.mapAttrs' (n: e: lib.nameValuePair ".config/${n}" e.configDots) (
-      lib.filterAttrs (_: e: e.configDots != null) yen.emacs
-    );
+    cycle =
+      { tree, ... }:
+      {
+        tree = [ dists ];
+        dots = [ (dotsOf (tree.select dists)) ];
+        homeManager = [ (homeOf (tree.select dists)) ];
+      };
     flake-file.inputs = {
       SPC = {
         url = "github:vic/SPC";
@@ -40,52 +102,5 @@ in
       };
       systems.url = "github:nix-systems/default";
     };
-    homeManager =
-      { pkgs, ... }:
-      let
-        emacsPkg = pkgs.emacs;
-        install =
-          n: e:
-          pkgs.writeShellApplication {
-            name = "${n}-install";
-            runtimeInputs = [
-              pkgs.git
-              emacsPkg
-              pkgs.ripgrep
-              pkgs.openssh
-            ];
-            text = e.bootstrap;
-          };
-      in
-      {
-        programs.emacs.enable = true;
-        programs.emacs.package = emacsPkg;
-        services.emacs.package = emacsPkg;
-        services.emacs.extraOptions = lib.concatMap (e: [
-          "--init-directory"
-          e.initDir
-        ]) (lib.filter (e: e.daemon) dists);
-        home.packages =
-          lib.concatMap (
-            e:
-            lib.optional (e.wrapper != null) (
-              (yen.helpers.perSystem pkgs inputs.${e.wrapper}).packages.${e.wrapper}.override {
-                emacs = emacsPkg;
-              }
-            )
-          ) dists
-          ++ lib.concatMap (e: lib.mapAttrsToList pkgs.writeShellScriptBin e.bins) dists;
-        programs.fish.functions = lib.mergeAttrsList (
-          map (e: lib.mapAttrs (_: body: { inherit body; }) e.fish) dists
-        );
-        home.activation = lib.mapAttrs' (
-          n: e:
-          lib.nameValuePair "${n}-install" {
-            after = [ "link-ssh-id" ];
-            before = [ ];
-            data = "run ${lib.getExe (install n e)}\n";
-          }
-        ) (lib.filterAttrs (_: e: e.bootstrap != null) yen.emacs);
-      };
   };
 }

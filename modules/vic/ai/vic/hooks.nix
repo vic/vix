@@ -34,7 +34,6 @@
           type = "command";
           command = "${vic} ${args}";
         };
-        on = scripts: [ { hooks = map hookOf scripts; } ];
         learnLoop = mode: {
           type = "command";
           command = "bash \"${config.home.homeDirectory}/.claude/hooks/learn-loop.sh\" ${mode}";
@@ -43,17 +42,20 @@
       {
         home.packages = [ vicTools ];
         # shortcut: sessions started before the Rust port still call these paths; drop once none run.
-        home.file = lib.mapAttrs' (
-          script: sub:
-          lib.nameValuePair ".claude/hooks/${script}" {
-            executable = true;
-            text = "#!/bin/sh\nexec ${vic} hook ${sub}\n";
-          }
-        ) {
-          "bash-guard.sh" = "guard";
-          "cmd-ledger.sh" = "ledger";
-          "boot.sh" = "boot";
-        };
+        home.file =
+          lib.mapAttrs'
+            (
+              script: sub:
+              lib.nameValuePair ".claude/hooks/${script}" {
+                executable = true;
+                text = "#!/bin/sh\nexec ${vic} hook ${sub}\n";
+              }
+            )
+            {
+              "bash-guard.sh" = "guard";
+              "cmd-ledger.sh" = "ledger";
+              "boot.sh" = "boot";
+            };
         programs.claude-code = {
           hooksDir = ./hooks;
           rules = {

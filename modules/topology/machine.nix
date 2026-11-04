@@ -3,11 +3,11 @@
 let
   inherit (yen.lib) opt maybe derive;
   inherit (yen.lib) listOf enum;
-  # the nixos-facter report of a host with hosts/<name>/_nixos/facter.json (null otherwise)
+  # the nixos-facter report of a host with hosts/_facter/<name>.json (null otherwise): the dir of assembly hardware (kits/hardware.nix)
   facter =
     m:
     let
-      f = ../hosts + "/${m.name}/_nixos/facter.json";
+      f = ../hosts/_facter + "/${m.name}.json";
     in
     if m.kind == "host" && builtins.pathExists f then
       (builtins.fromJSON (builtins.readFile f)).hardware

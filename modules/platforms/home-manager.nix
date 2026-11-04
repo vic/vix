@@ -5,7 +5,7 @@ let
   inherit (yen.lib)
     all
     within
-    has
+    below
     opt
     ;
   inherit (yen.helpers) place linux;
@@ -38,7 +38,6 @@ in
     sinks = lib.genAttrs [
       "nixos"
       "os"
-      "login-shells"
       "nix-features"
       "persist"
       "ports"
@@ -86,14 +85,14 @@ in
   yen.aspects.hm-nixos = {
     at = all [
       linux
-      (has user)
+      (below user)
     ];
     nixos = { scope, ... }: { imports = [ scope.channel.home-manager.nixosModules.home-manager ]; };
   };
   yen.aspects.hm-darwin = {
     at = all [
       yen.kinds.mac
-      (has user)
+      (below user)
     ];
     darwin = { mac, ... }: { imports = [ mac.channel.home-manager.darwinModules.home-manager ]; };
   };

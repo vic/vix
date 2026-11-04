@@ -1,4 +1,4 @@
-# autoinclude: a host with a hosts/<name>/_nixos directory gets its hardware files, disko and facter report without a line in its host file.
+# autoinclude: a host with a hosts/<name>/_nixos directory gets its hardware files and disko without a line in its host file.
 {
   yen,
   lib,
@@ -31,13 +31,5 @@ in
             "${inputs.disko}/module.nix"
           ];
       };
-  };
-  # the nixos-facter report of the host
-  yen.aspects.autoinclude-facter = {
-    at = all [
-      hasDir
-      (h: has h "facter.json")
-    ];
-    nixos = yen.lib.batteries.nixos.facter { report = h: dir h + "/facter.json"; };
   };
 }

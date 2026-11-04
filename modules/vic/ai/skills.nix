@@ -1,6 +1,11 @@
 # Plain (non-plugin) Claude Code skills: the local ones under ./skills, plus
 # gstack and task-observer from upstream.
-{ yen, inputs, lib, ... }:
+{
+  yen,
+  inputs,
+  lib,
+  ...
+}:
 let
   # every subdirectory holding a SKILL.md, by name
   skillDirs =
@@ -53,7 +58,7 @@ in
           // {
             gstack = "${inputs.gstack}";
             task-observer = "${inputs.one-skill-to-rule-them-all}";
-            yen-mcp = "${inputs.yen}/.claude/skills/yen-mcp"; # teaches the yen_* tools; from the yen repository, at the locked rev
+            yen-mcp = "${inputs.yen}/skills/yen-mcp"; # teaches the yen_* tools; from the yen repository, at the locked rev
             quipu = "${inputs.quipu}/skills/quipu";
             quipu-embedded-artifacts = "${inputs.quipu}/skills/quipu-embedded-artifacts";
             # upstream has no SKILL.md: frontmatter + local deltas + upstream index become one

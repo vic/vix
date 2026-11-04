@@ -139,21 +139,23 @@ in
   yen.aspects.frodo-wipe-user = {
     at = all [
       yen.kinds.user
-      (within yen.host.frodo)
-      (_: yen.host.frodo.impermanence.wipeRoot)
+      (within (all [
+        yen.host.frodo
+        (s: s.impermanence.wipeRoot)
+      ]))
     ];
     account =
-      { config, ... }:
+      { sops, config, ... }:
       lib.optionalAttrs (yen.secret ? vic-password) {
-        hashedPasswordFile = config.sops.secrets.${yen.secret.vic-password.sopsKey}.path;
+        hashedPasswordFile = config.sops.secrets.${sops.vic-password.sopsKey}.path;
       };
     os =
-      { user, ... }:
+      { user, sops, ... }:
       {
         sops.age.keyFile = "/home/${user.name}/.config/sops/age/keys.txt";
       }
       // lib.optionalAttrs (yen.secret ? vic-password) {
-        sops.secrets.${yen.secret.vic-password.sopsKey}.neededForUsers = true;
+        sops.secrets.${sops.vic-password.sopsKey}.neededForUsers = true;
       };
   };
 }

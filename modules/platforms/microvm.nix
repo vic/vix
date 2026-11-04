@@ -6,9 +6,9 @@
   ...
 }:
 let
-  inherit (yen.lib) all has same;
+  inherit (yen.lib) all below;
   tap = g: "vm-${g.name}";
-  guestsOf = h: lib.filterAttrs (_: g: same g.on h) yen.guest; # h: a host scope
+  guests.children = yen.kinds.guest; # a tree request: the guest scopes of this host
   # the host side of its guests (gs: guest scopes): microvm host module, one routed tap each, NAT
   hostNet = gs: {
     imports = [ inputs.microvm.nixosModules.host ];
@@ -36,7 +36,7 @@ let
   };
 in
 {
-  yen.kinds.host.spawns.guest = guestsOf;
+  yen.kinds.host.spawns.guest = yen.lib.pointing "on" yen.guest;
 
   yen.kinds.guest = {
     fields = yen.kinds.machine.fields // {
@@ -56,13 +56,7 @@ in
             config.imports = nixos;
           };
         };
-      inherit (yen.kinds.host.sinks)
-        os
-        persist
-        nix-features
-        login-shells
-        unfree
-        ;
+      # os (platforms/nixos.nix), persist, nix-features and unfree are declared next to the host's
     };
   };
 
@@ -114,19 +108,14 @@ in
   yen.aspects.vm-host = {
     at = all [
       yen.kinds.host
-      (has yen.kinds.guest)
+      (below yen.kinds.guest)
     ];
     # cycle form: ask the tree for this host's guest scopes (no second filter over yen.guest)
     cycle =
       { tree, ... }:
       {
-        tree = [
-          {
-            category = "guests";
-            children = yen.kinds.guest;
-          }
-        ];
-        nixos = [ (hostNet (lib.concatLists (tree.select "guests"))) ]; # one answer per request: a children answer is a list
+        tree = [ guests ];
+        nixos = [ (hostNet (tree.select guests)) ]; # a children answer is the list of guest scopes
       };
   };
 }

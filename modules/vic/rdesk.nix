@@ -3,7 +3,7 @@
 {
   yen.aspects.vic-rdesk = {
     at = [ ];
-    unfree = yen.helpers.allowUnfree [ "anydesk" ];
+    unfree = [ "anydesk" ];
 
     homeManager =
       { out, pkgs, ... }:

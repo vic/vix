@@ -55,7 +55,7 @@
         ".vscode/extensions/extensions.json" = "vscode/extensions/extensions-Linux.json";
         ".cursor/extensions/extensions.json" = "cursor/extensions/extensions-Linux.json";
       };
-    unfree = yen.helpers.allowUnfree [
+    unfree = [
       "cursor"
       "vscode"
     ];

@@ -2,7 +2,12 @@
 # - vic-* run/recall/mine/telemetry/law/gc/ws scripts (./bin, were ~/bin)
 # - deepwiki MCP + REPL (./dw, vendored from github:vic/dw incl. unpushed repl.js)
 # - notebooklm MCP (npx, unpinned as on frodo) + notebooklm-pack
-{ yen, inputs, lib, ... }:
+{
+  yen,
+  inputs,
+  lib,
+  ...
+}:
 let
   node = pkgs: lib.getExe pkgs.nodejs_24; # deepwiki runs on node
 in

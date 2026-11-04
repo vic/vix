@@ -1,5 +1,10 @@
 # ircc: local IRC-like chat between Claude Code sessions; package + ircc MCP server. Linux only (/proc, SO_PEERCRED).
-{ yen, inputs, lib, ... }:
+{
+  yen,
+  inputs,
+  lib,
+  ...
+}:
 {
   yen.aspects.ai-ircc = {
     at = yen.aspects.vic-headless;

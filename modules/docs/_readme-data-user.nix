@@ -27,7 +27,8 @@ let
   fileOf = s: if s.sopsFile == null then "secrets.yaml" else "secrets/${baseNameOf s.sopsFile}";
   declared = lib.attrValues yen.secret;
   asks = lib.genAttrs (sorted (map aspectOf (given "secrets"))) (
-    a: map (s: s.name) (lib.filter lib.isAttrs (lib.toList (value [ ] yen.aspects.${a}.secrets)))
+    a:
+    map (s: s.name) (lib.filter lib.isAttrs (lib.toList (value [ ] (yen.aspects.${a}.secrets or [ ]))))
   );
   asked = lib.concatLists (lib.attrValues asks);
   # a user's secrets land on its place; a host's on the host
@@ -144,7 +145,7 @@ let
         "`${t}`"
         "`${s}`"
         "`${a}`"
-      ]) (value { } yen.aspects.${a}.dots)
+      ]) (value { } (yen.aspects.${a}.dots or { }))
     ) (sorted (map aspectOf (given "dots")))
   );
 in

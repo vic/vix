@@ -9,10 +9,12 @@ let
     all [
       yen.kinds.user
       (within role)
-      (not (within (all [
-        yen.kinds.guest
-        (not role)
-      ])))
+      (not (
+        within (all [
+          yen.kinds.guest
+          (not role)
+        ])
+      ))
     ];
 in
 {

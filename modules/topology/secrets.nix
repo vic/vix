@@ -18,12 +18,27 @@ let
     sopsFile = file;
     deploy = false;
   };
-  # the sops files the instances own, by name
-  covered = map (s: baseNameOf s.sopsFile) (
-    lib.filter (s: s.sopsFile != null) (lib.attrValues yen.secret)
-  );
+  # the sops files the secrets ss own, by name
+  covered = ss: map (s: baseNameOf s.sopsFile) (lib.filter (s: s.sopsFile != null) ss);
 in
 {
+  # one scope per secret: it gives its data to the fleet `sops` sink, so a reader resolves a secret ref with `sops.${ref.name}`
+  yen.kinds.fleet.spawns.secret = _: yen.secret;
+  yen.kinds.fleet.sinks.sops.reduce = yen.lib.reduce.merge; # { <secret name> = { sopsKey; format; sopsFile; sopsPath; deploy; }; }
+  yen.aspects.secret-data = {
+    at = yen.kinds.secret;
+    sops = { secret, ... }: {
+      ${secret.name} = {
+        inherit (secret)
+          sopsKey
+          format
+          sopsFile
+          sopsPath
+          deploy
+          ;
+      };
+    };
+  };
   yen.kinds.secret.fields = {
     sopsKey = t.str; # sops key path
     format = maybe (yen.lib.enum [ "binary" ]);
@@ -41,19 +56,21 @@ in
     reduce = yen.lib.reduce.flat;
     of = yen.lib.listOf yen.kinds.secret;
     nixos =
-      { secrets, ... }:
+      { secrets, sops, ... }:
       lib.optionalAttrs (secrets != [ ]) {
         imports = [ inputs.sops-nix.nixosModules.sops ];
-        sops.secrets = yen.helpers.sopsSecrets secrets;
+        sops.secrets = yen.helpers.sopsSecrets sops secrets;
       };
   };
 
   # a file in vic/secrets that no instance owns is an error
   yen.aspects.secret-files = {
     at = yen.fleet.vix;
-    errors = map (f: "secret: modules/vic/secrets/${f} is no yen.secret") (
-      lib.subtractLists covered (lib.attrNames (builtins.readDir ../vic/secrets))
-    );
+    errors =
+      { sops, ... }:
+      map (f: "secret: modules/vic/secrets/${f} is no yen.secret") (
+        lib.subtractLists (covered (lib.attrValues sops)) (lib.attrNames (builtins.readDir ../vic/secrets))
+      );
   };
 
   yen.secret.hello = {

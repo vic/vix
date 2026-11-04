@@ -2,7 +2,12 @@
 # skills from seflless/deepwiki and vercel-labs/skills, and npm CLIs run via npx
 # at the versions that were installed in ~/node_modules (same pattern as calldiff
 # in ../tools.nix). lightjj: ../lightjj.nix; notebooklm-mcp: ../browser-tools.nix.
-{ yen, inputs, lib, ... }:
+{
+  yen,
+  inputs,
+  lib,
+  ...
+}:
 let
   # bin name -> npm package spec providing it
   npx = {

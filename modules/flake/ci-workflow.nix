@@ -3,7 +3,8 @@
 { yen, ... }:
 let
   inherit (yen.lib.batteries) cachix files github;
-  runnerOf = system: yen.system.${system}.runner;
+  # the runner label of a system, from the fleet `runners` sink (flake/ci.nix)
+  runnerOf = runners: system: runners.${system}.label;
   # generated files (README, ci.yml) are checked on every PR event, so they are never stale
   isFiles = j: builtins.match "check-files/.*" j.name != null;
   setup = [
@@ -52,7 +53,7 @@ let
   };
   # every check of the flake, as a matrix entry
   checksOf =
-    out:
+    runners: out:
     builtins.concatLists (
       builtins.attrValues (
         builtins.mapAttrs (
@@ -61,10 +62,10 @@ let
             name = "check-${n}-${system}";
             attr = "checks.${system}.\"${n}\"";
             inherit system;
-            runner = runnerOf system;
+            runner = runnerOf runners system;
             allowFailure = false;
           }) (builtins.attrNames cs)
-        ) out.checks
+        ) (builtins.intersectAttrs runners out.checks) # the checks of systems that have a runner
       )
     );
 in
@@ -102,7 +103,7 @@ in
   yen.aspects.ci-builds = {
     at = yen.kinds.fleet;
     jobs =
-      { out, ... }:
+      { out, runners, ... }:
       builtins.listToAttrs (
         builtins.attrValues (
           builtins.mapAttrs
@@ -110,7 +111,11 @@ in
               name = "build-${builtins.replaceStrings [ "." ] [ "_" ] r}";
               value = job gate r include;
             })
-            (builtins.groupBy (j: j.runner) (out.ci.matrix ++ builtins.filter (j: !isFiles j) (checksOf out)))
+            (
+              builtins.groupBy (j: j.runner) (
+                out.ci.matrix ++ builtins.filter (j: !isFiles j) (checksOf runners out)
+              )
+            )
         )
       );
   };
@@ -118,26 +123,30 @@ in
   yen.aspects.ci-files = {
     at = yen.kinds.fleet;
     jobs =
-      { out, ... }:
+      { out, runners, ... }:
       {
-        build-files = job "true" (runnerOf "x86_64-linux") (builtins.filter isFiles (checksOf out));
+        build-files = job "true" (runnerOf runners "x86_64-linux") (
+          builtins.filter isFiles (checksOf runners out)
+        );
       };
   };
   # yen gate: one eval, so every PR event runs it: no error records, invariants ok, no undefined aspect
   yen.aspects.ci-yen-gate = {
     at = yen.kinds.fleet;
-    jobs.yen-gate = {
-      name = "yen gate";
-      runs-on = runnerOf "x86_64-linux";
-      steps = setup ++ [
-        {
-          run = builtins.concatStringsSep "\n" [
-            "test \"$(nix eval --impure --json --file query.nix errors)\" = '[]'"
-            "test \"$(nix eval --impure --json --file query.nix check.ok)\" = 'true'"
-            "test \"$(nix eval --impure --json --file query.nix undefined)\" = '[]'"
-          ];
-        }
-      ];
+    jobs = { runners, ... }: {
+      yen-gate = {
+        name = "yen gate";
+        runs-on = runnerOf runners "x86_64-linux";
+        steps = setup ++ [
+          {
+            run = builtins.concatStringsSep "\n" [
+              "test \"$(nix eval --impure --json --file query.nix errors)\" = '[]'"
+              "test \"$(nix eval --impure --json --file query.nix check.ok)\" = 'true'"
+              "test \"$(nix eval --impure --json --file query.nix undefined)\" = '[]'"
+            ];
+          }
+        ];
+      };
     };
   };
 }

@@ -37,16 +37,20 @@ in
         ...
       }:
       let
-        # a profile's aspects may allow unfree plugin deps (`unfree = yen.helpers.allowUnfree [ .. ];`)
+        # a profile's aspects may allow unfree plugin deps (`unfree = [ .. ];`)
         pkgs =
-          if unfree == { } then
+          if unfree == [ ] then
             system.legacyPackages
           else
             import inputs.nixpkgs {
               system = system.name;
-              config.allowUnfreePredicate = p: unfree ? ${inputs.nixpkgs.lib.getName p};
+              config.allowUnfreePredicate = p: builtins.elem (inputs.nixpkgs.lib.getName p) unfree;
             };
-        nvim = (inputs.nvf.lib.neovimConfiguration { inherit pkgs; modules = nvf; }).neovim;
+        nvim =
+          (inputs.nvf.lib.neovimConfiguration {
+            inherit pkgs;
+            modules = nvf;
+          }).neovim;
         names = [ vim.name ] ++ vim.aliases;
         bin = n: pkgs.writeShellScriptBin n ''exec ${nvim}/bin/nvim "$@"'';
         gui =

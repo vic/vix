@@ -21,7 +21,7 @@
 
   yen.aspects.vim-copilot = {
     at = yen.helpers.vimHas "copilot";
-    unfree = yen.helpers.allowUnfree [ "copilot-language-server" ];
+    unfree = [ "copilot-language-server" ];
     nvf =
       { pkgs, ... }:
       {
@@ -44,7 +44,7 @@
 
   yen.aspects.vim-copilot-chat = {
     at = yen.helpers.vimHas "copilot-chat";
-    unfree = yen.helpers.allowUnfree [ "copilot-language-server" ]; # via copilot-lua
+    unfree = [ "copilot-language-server" ]; # via copilot-lua
     nvf =
       { pkgs, ... }:
       {

@@ -1,6 +1,11 @@
 # Claude Code plugin marketplaces, store-pinned: CC resolves plugins from these
 # nix-store paths instead of cloning from GitHub at runtime.
-{ yen, inputs, lib, ... }:
+{
+  yen,
+  inputs,
+  lib,
+  ...
+}:
 let
   # marketplace name -> url of its flake input (vix listed this table twice, identical)
   marketplaces = {

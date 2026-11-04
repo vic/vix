@@ -4,7 +4,12 @@
   yen.aspects.vic-edge = {
     at = yen.kinds.system;
     packages =
-      { system, out, ... }:
+      {
+        system,
+        out,
+        sops,
+        ...
+      }:
       let
         pkgs = system.legacyPackages;
       in
@@ -15,7 +20,9 @@
             sudo env \
               ADDRESS="''${ADDRESS:-"192.168.192.192/24"}" \
               EDGEVPNLOGLEVEL="''${EDGEVPNLOGLEVEL:-debug}" \
-              EDGEVPNTOKEN="''${EDGEVPNTOKEN:-$(< "''${HOME}"/.config/sops-nix/secrets/${yen.secret.edge-token.sopsKey})}" \
+              EDGEVPNTOKEN="''${EDGEVPNTOKEN:-$(< "''${HOME}"/.config/sops-nix/secrets/${
+                sops.${yen.secret.edge-token.name}.sopsKey
+              })}" \
               ${out.packages.${system.name}.edgevpn}/bin/edgevpn "$@"
           '';
         };

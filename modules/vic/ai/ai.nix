@@ -3,7 +3,7 @@
 {
   yen.aspects.ai-ai = {
     at = yen.aspects.vic-headless;
-    unfree = yen.helpers.allowUnfree [
+    unfree = [
       "copilot-language-server"
       "claude"
       "github-copilot-cli"

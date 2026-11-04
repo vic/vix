@@ -8,11 +8,19 @@ let
   };
   inherit (inputs.nixpkgs) lib;
   yen = (import inputs.yen).lib;
-  modules = (inputs.import-tree.withLib lib).leafs ./modules;
+  modules = (inputs.import-tree.withLib lib).leaves ./modules;
   fleet = ms: {
     imports = ms;
-    _module.args = { inherit inputs lib; };
+    inherit inputs lib;
+    yen.sinks = {
+      inputs = { };
+      lib = { };
+    };
   };
+  frodoRef = {
+    kind = "host";
+    name = "frodo";
+  }; # a ref from JSON: what an agent passes to `ask`
   r = yen.eval (fleet modules);
   with' = m: yen.eval (fleet (modules ++ [ m ]));
   msgs = q: map (e: e.error) q.errors;
@@ -74,34 +82,34 @@ let
               "flake-file"
               "dots"
               "ci-jobs"
-              "secrets"
+              "sops"
             ]
           );
       in
       j rev == j r && map (s: s.id) rev.scopes == map (s: s.id) r.scopes;
-    # a broken mac never reaches frodo: frodo's nixos reduces while varda's darwin throws
-    vix-sibling-laziness =
+    # a broken mac is an error record at varda, never a throw: the fleet gives no outputs and names varda
+    vix-broken-mac-blocks =
       let
         p = with' (
           { yen, ... }:
           {
             yen.aspects.poison = {
               at = yen.mac.varda;
-              darwin = throw "poisoned varda";
+              errors = [ "poisoned varda" ];
             };
           }
         );
       in
-      p.reduced.nixos.${frodo} != [ ]
-      && !(builtins.tryEval (builtins.deepSeq p.reduced.darwin.${varda} true)).success;
+      lib.any (e: e.error == "poisoned varda" && e.from == varda) p.errors
+      && p.flake ? invalid-flake-errors;
 
     # ── agent surface ──
     labels = (r.labels.ai-headroom.trust or null) == 2 && (r.labels.rdf-pack.trust or null) == 1;
-    unfree-on-frodo = r.ask "unfreeOn" { name = "frodo"; } != [ ];
+    unfree-on-frodo = r.ask "unfreeOn" { place = frodoRef; } != [ ];
     ports-of-frodo = lib.any (p: p.port == 8787 && p.what == "headroom") (
-      r.ask "portsOf" { name = "frodo"; }
+      r.ask "portsOf" { place = frodoRef; }
     );
-    free-port-frodo = ((r.ask "freePort" { name = "frodo"; }).port or null) == 8000;
+    free-port-frodo = ((r.ask "freePort" { place = frodoRef; }).port or null) == 8000;
     rdf-pack =
       lib.stringLength out.rdfPack.sha256 == 64 && lib.hasInfix "sh:NodeShape" out.rdfPack.shacl;
     # negative controls: each rule fires on a planted fault
@@ -139,6 +147,63 @@ let
       yen.ssh-host.loop-a.proxyJump = "loop-b";
       yen.ssh-host.loop-b.proxyJump = "vic@loop-a";
     }) ".*proxyJump cycle loop-a -> loop-b.*";
+    # a guest's os reaches its own nixos (a sink copied from another kind would give no forward)
+    guest-os-forwards = lib.any (
+      e: e.sink == "nixos" && e.origin == "sink os" && e.to == "${frodo}/guest:gen"
+    ) r.graph.edges;
+    # every host is a member of assembly hardware (kit facter); bill, tom and bert of their github-runner assembly
+    members =
+      map (s: s.id) (
+        lib.filter (s: s.kind == "member" && !lib.hasSuffix "member:hardware.default" s.id) r.scopes
+      ) == [
+        "fleet:vix/host:bill/member:ci-bill.runner"
+        "fleet:vix/host:tom/member:ci-tom.runner"
+        "fleet:vix/mac:bert/member:ci-bert.runner"
+      ]
+      &&
+        lib.length (lib.filter (s: lib.hasSuffix "member:hardware.default" s.id) r.scopes)
+        == lib.length (lib.attrNames r.data.host);
+    # each runner machine has the ci-runner role, and no other machine has it
+    ci-runner-role =
+      lib.sort lib.lessThan (lib.filter (id: r.active.ci-runner.${id}) (lib.attrNames r.active.ci-runner))
+      == [
+        "fleet:vix/host:bill"
+        "fleet:vix/host:tom"
+        "fleet:vix/mac:bert"
+      ];
+    # a second runner on one system is a claim error
+    runner-claim-fires = hasMsg (with' (
+      { yen, ... }:
+      {
+        yen.host.tom2.system = yen.system.x86_64-linux;
+        yen.assembly.ci-tom2 = {
+          kit = yen.kit.github-runner;
+          roles.runner = {
+            at = yen.host.tom2;
+            settings.label = "ubuntu-latest";
+          };
+        };
+      }
+    )) "claim: x86_64-linux has 2 owners.*";
+    # two hosts on shared pkgs: the second by name follows the first, and the fleet stays clean
+    shared-pkgs-follows =
+      let
+        p = with' (
+          { yen, ... }:
+          {
+            yen.host.frodo.sharedPkgs = true;
+            yen.host.nargun.sharedPkgs = true;
+          }
+        );
+      in
+      p.errors == [ ]
+      && p.flake.sharedPkgs.nargun.follower
+      && p.flake.sharedPkgs.nargun.leader == "frodo"
+      && !p.flake.sharedPkgs.frodo.follower;
+    # a mac's primary user: its one admin (varda), or the runner of kit github-runner (bert)
+    mac-primary-users =
+      out.darwinConfigurations.varda.config.system.primaryUser == "vic"
+      && out.darwinConfigurations.bert.config.system.primaryUser == "runner";
     vocabulary-fires = hasMsg (with' {
       yen.kinds.ghost.fields = { };
     }) ".*kinds `ghost`: a live name with no doc line.*";

@@ -6,7 +6,7 @@
       yen.helpers.linux
       (s: s.wifi == "broadcom")
     ];
-    unfree = yen.helpers.allowUnfree [ "broadcom-sta" ];
+    unfree = [ "broadcom-sta" ];
     nixos =
       { lib, config, ... }:
       {

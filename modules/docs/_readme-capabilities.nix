@@ -40,10 +40,10 @@ let
   queryRow =
     n:
     let
-      fa = builtins.functionArgs yen.queries.${n};
-      ps = lib.filter (a: a != "r") (lib.attrNames fa);
+      ps = yen.queries.${n}.params or { };
+      opt = lib.filterAttrs (_: t: t ? default) ps; # a parameter with a default is optional
     in
-    "| `${n}` | ${code (lib.filter (a: !fa.${a}) ps)} | ${code (lib.filter (a: fa.${a}) ps)} | ${
+    "| `${n}` | ${code (lib.attrNames (removeAttrs ps (lib.attrNames opt)))} | ${code (lib.attrNames opt)} | ${
       files [
         "queries"
         n
@@ -56,7 +56,7 @@ let
     nodes = [
       {
         id = "srv";
-        label = "yen-mcp (nix run github:vic/yen?dir=mcp)";
+        label = "yen-mcp (nix run github:vic/yen#yen-mcp)";
         kind = "output";
       }
     ]
@@ -156,7 +156,7 @@ in
         !lib.elem n [
           "graphs"
           "datalog"
-          "krn"
+          "uKanren"
           "rdf"
           "reduce"
           "program"

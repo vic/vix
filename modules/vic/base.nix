@@ -21,7 +21,7 @@
   yen.aspects.vic-hm-backup = {
     at = yen.lib.all [
       yen.helpers.linux
-      (yen.lib.has yen.user.vic)
+      (yen.lib.below yen.user.vic)
     ];
     nixos = { pkgs, ... }: { home-manager.backupCommand = "${pkgs.trash-cli}/bin/trash-put"; };
   };

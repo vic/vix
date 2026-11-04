@@ -349,5 +349,5 @@
   "claudeCode.useTerminal": true,
   "git.enabled": false,
   "jjx.showTooltips": false,
-  "workbench.preferredDarkColorTheme": "modus-operandi-deuteranopia"
+  "workbench.preferredDarkColorTheme": "Solarized Dark"
 }

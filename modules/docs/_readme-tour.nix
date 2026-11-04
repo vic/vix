@@ -30,7 +30,7 @@ in
     ])
     (row "`derive`: a default computed from the instance" [
       (src "vic/dots.nix" "fields.checkout = yen.lib.derive" "checkout: from kind and users")
-      (src "flake/ci.nix" "fields.runner = derive" "a system's runner: from the machines on it")
+      (src "topology/machine.nix" "gpu = derive" "gpu: from the facter report")
     ])
     (row "`yen.<k>.<name>`: an instance" [
       (src "hosts/frodo/default.nix" "yen.host.frodo = {" "yen.host.frodo")
@@ -41,11 +41,13 @@ in
     ])
     (row "data kinds: instances no `spawns` reaches" [
       (src "topology/channel.nix" "yen.channel.unstable" "channel")
-      (src "topology/secrets.nix" "yen.kinds.secret.fields" "secret")
-      (src "topology/secrets.nix" "deploy = false;" "a secret only tools read")
-      (src "topology/ssh-hosts.nix" "yen.kinds.ssh-host.fields" "ssh-host")
-      (src "editors/emacs.nix" "yen.kinds.emacs.fields" "emacs")
       (src "topology/workspaces.nix" "yen.kinds.workspace.fields" "workspace")
+      (src "editors/emacs.nix" "yen.kinds.emacs.fields" "emacs")
+    ])
+    (row "data as scopes: each instance gives its data to a fleet sink" [
+      (src "topology/secrets.nix" "yen.kinds.fleet.spawns.secret" "secret -> sops")
+      (src "topology/secrets.nix" "deploy = false;" "a secret only tools read")
+      (src "topology/ssh-hosts.nix" "yen.kinds.fleet.spawns.ssh-host" "ssh-host -> ssh-blocks")
     ])
     (row "`spawns`: the scope tree" [
       (src "topology/fleet.nix" "spawns = {" "fleet → system, host, mac, home")
@@ -70,18 +72,18 @@ in
       (src "vic/rdesk.nix" "at = [ ];" "nowhere")
     ])
     (row "roles from data: a fact test, no host file names them" [
-      (src "hosts/ci-runner.nix" "(s: s.ghRunner != null)" "ci-runner: a ghRunner label")
+      (src "kits/github-runner.nix" "(below member)" "ci-runner: a member of kit github-runner below")
       (src "roles/roles.nix" "yen.aspects.installer.at = all [" "installer: form iso")
       (src "forms/wsl.nix" "(s: s.form == \"wsl\")" "wsl: form wsl")
       (src "hosts/autoinclude.nix" "builtins.pathExists (dir h)" "autoinclude: a hosts/<name>/_nixos dir")
     ])
-    (row "`all`, `not`, `within`, `has`, `same`, fact tests" [
+    (row "`all`, `not`, `within`, `below`, `pointing`, fact tests" [
       (src "roles/tiers.nix" "(not (within yen.aspects.installer))"
         "all [ vic-headless (not (within installer)) ]"
       )
-      (src "platforms/microvm.nix" "(has yen.kinds.guest)" "has guest")
+      (src "platforms/microvm.nix" "(below yen.kinds.guest)" "below guest")
       (src "hardware/kvm.nix" "(s: s.cpu == \"amd\")" "s: s.cpu == \"amd\"")
-      (src "platforms/microvm.nix" "same g.on h" "same g.on h")
+      (src "platforms/microvm.nix" "yen.lib.pointing \"on\" yen.guest" "pointing \"on\" guest")
     ])
     (row "sinks and their reduce" [
       (src "topology/fleet.nix" "sinks.out.reduce = yen.lib.reduce.merge;" "merge")
@@ -89,7 +91,9 @@ in
       (src "platforms/nixos.nix" "nixos.out =" "list (the default)")
       (src "flake/outputs.nix" "reduce = one;" "one: one formatter per system")
       (src "platforms/accounts.nix" "primary-user.reduce = yen.lib.reduce.one;" "one: one admin per mac")
-      (src "platforms/ports.nix" "reduce = yen.lib.reduce.entries;" "entries: each value with its giver")
+      (src "platforms/ports.nix" "reduce = yen.lib.reduce.elements;"
+        "elements: each value with its giver"
+      )
       (src "topology/secrets.nix" "reduce = yen.lib.reduce.flat;" "flat: join list elements")
       (src "platforms/impermanence.nix" "nixos.persist {" "nixos.persist: path union, hideMounts")
     ])
@@ -111,17 +115,17 @@ in
       (src "topology/secrets.nix" "yen.kinds.host.sinks.secrets = {" "host secrets → nixos (sops-nix)")
       (src "envs/env.nix" "sinks.env-packages.homeManager" "env-packages → homeManager")
       (src "editors/vim.nix" "sinks.nvf.packages" "nvf → packages")
-      (src "nix/unfree.nix" "unfree = { user, unfree, ... }: unfree;" "user unfree → machine unfree")
+      (src "nix/unfree.nix" "unfree = { unfree, ... }: unfree;" "user unfree → machine unfree")
     ])
     (row "`out`: flake outputs" [
-      (src "platforms/nixos.nix" "nixosConfigurations.\${host.name}" "nixosConfigurations.<host>")
-      (src "flake/outputs.nix" "ci.matrix" "ci.matrix")
+      (src "platforms/nixos.nix" "output = \"nixosConfigurations\";" "nixosConfigurations.<host>")
+      (src "flake/ci.nix" "ci.matrix" "ci.matrix")
       (src "agent/rdf.nix" "rdfPack =" "rdfPack")
       (src "topology/fleet.nix" "yen.flake = { out, ... }: out;" "yen.flake")
     ])
     (row "the `out` arg: an element reads the flake outputs, not `inputs.self`" [
-      (src "packages/vic-edge.nix" "{ system, out, ... }:" "vic-edge wraps out.packages")
-      (src "flake/ci-workflow.nix" "{ out, ... }:" "ci.yml from out.checks and out.ci.matrix")
+      (src "packages/vic-edge.nix" "edgevpn}/bin/edgevpn" "vic-edge wraps out.packages")
+      (src "flake/ci-workflow.nix" "{ out, runners, ... }:" "ci.yml from out.checks and out.ci.matrix")
     ])
     (row "a sink `at`: who may receive" [
       (src "platforms/home-manager.nix" "at = yen.aspects.on-linux;" "homeLinux on linux")
@@ -160,7 +164,7 @@ in
       (src "flake/ci-workflow.nix" "files = github.workflow {" "ci.yml")
     ])
     (row "graphs (`yen.lib.graphs`)" [
-      (src "topology/ssh-hosts.nix" "yen.lib.graphs.sccs jumps" "sccs: ssh jumps")
+      (src "topology/ssh-hosts.nix" "yen.lib.graphs.sccs (jumpsOf" "sccs: ssh jumps")
       (src "agent/invariants.nix" "yen.lib.graphs.transpose succ" "transpose, nodesOf: flake follows")
     ])
     (row "invariants: Datalog over the facts" [
@@ -169,11 +173,11 @@ in
       (src "agent/invariants.nix" "unique-port =" "unique-port")
       (src "agent/invariants.nix" "follows-declared =" "follows-declared")
     ])
-    (row "stored queries and krn synthesis" [
+    (row "stored queries and uKanren synthesis" [
       (src "agent/queries.nix" "yen.queries = {" "stored queries")
       (src "agent/queries.nix" "portsOf =" "portsOf")
       (src "agent/queries.nix" "unfreeOn =" "unfreeOn")
-      (src "agent/synthesis.nix" "K.infd" "freePort: a krn finite domain")
+      (src "agent/synthesis.nix" "K.infd" "freePort: a uKanren finite domain")
       (src "vic/ai/headroom.nix" "ports = [" "a `ports` element")
     ])
     (row "trust labels and the knowledge pack" [
@@ -186,7 +190,7 @@ in
     ])
     (row "tests.nix: oracles over the eval result" [
       (top "tests.nix" "vix-permutation-stable =" "file order: reversed modules, same values")
-      (top "tests.nix" "vix-sibling-laziness =" "laziness: a broken mac never reaches frodo")
+      (top "tests.nix" "vix-broken-mac-blocks =" "a broken mac is an error record: no outputs")
       (top "tests.nix" "port-clash-fires =" "negative controls")
       (top "tests.nix" "fingerprints =" "e2e: settings fingerprint vs vix")
     ])

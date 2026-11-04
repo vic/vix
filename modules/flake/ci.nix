@@ -1,66 +1,59 @@
 # CI: every buildable config (host, mac, standalone home, devShell) emits one job record; flake output `ci.matrix` feeds the GitHub matrix.
+# A member of kit github-runner (kits/github-runner.nix) claims its system's runner: one owner per system, a second is an error record.
 { yen, lib, ... }:
 let
   inherit (yen.lib)
     all
     within
     maybe
-    derive
+    str
     ;
   ciFields = {
-    ghRunner = maybe lib.types.str; # the GitHub runner label this machine is: the CI runner of its system
-    ciBroken = maybe lib.types.str; # why its ci job may fail (continue-on-error); null = must pass
+    ciBroken = maybe str; # why its ci job may fail (continue-on-error); null = must pass
   };
-  runnersOf =
-    system:
-    lib.filter (m: m.ghRunner != null && m.system.name == system.name) (
-      lib.concatMap lib.attrValues [
-        yen.host
-        yen.guest
-        yen.mac
-        yen.home
-      ]
-    );
-  job =
-    {
-      system,
-      ciBroken ? null,
-      ...
-    }:
-    name: attr: {
-      ${name} = {
-        inherit name attr;
-        system = system.name;
-        inherit (system) runner;
-        allowFailure = ciBroken != null; # continue-on-error
-      };
+  job = place: name: attr: {
+    ${name} = {
+      inherit name attr;
+      system = place.system.name;
+      allowFailure = place.ciBroken or null != null; # continue-on-error
     };
+  };
 in
 {
   yen.kinds.machine.fields = ciFields;
   yen.kinds.home.fields = ciFields;
-  # one runner machine per system gives its label (GitHub matrix `runs-on`)
-  yen.kinds.system.fields.runner = derive (maybe lib.types.str) (
-    s: if lib.length (runnersOf s) == 1 then (lib.head (runnersOf s)).ghRunner else null
-  );
 
+  yen.kinds.fleet.sinks = {
+    # { <system> = { system; machine; label; }; }: the runner machine of each system
+    runners.reduce = yen.lib.batteries.claim { key = r: r.system; };
+    # an element is { <job name> = job; }; the matrix gets each job's runner from its system
+    ci-jobs = {
+      reduce = yen.lib.reduce.merge;
+      out =
+        { ci-jobs, runners, ... }:
+        {
+          # a job of a system with no runner is left out: that system already has an error record
+          ci.matrix = map (j: j // { runner = runners.${j.system}.label; }) (
+            lib.filter (j: runners ? ${j.system}) (builtins.attrValues ci-jobs)
+          );
+        };
+    };
+  };
+
+  # every system builds on one runner
   yen.aspects.ci-runner-labels = {
     at = yen.kinds.system;
     errors =
-      { system, ... }:
-      let
-        n = lib.length (runnersOf system);
-      in
+      { system, runners, ... }:
       lib.optional (
-        n != 1
-      ) "ci: system ${system.name} has ${toString n} machines with ghRunner, want exactly 1";
+        !runners ? ${system.name}
+      ) "ci: system ${system.name} has no member of kit github-runner";
   };
 
   yen.aspects.ci-host = {
     at = yen.kinds.host; # guests build inside their host
     ci-jobs =
-      { host, ... }:
-      job host host.name "nixosConfigurations.${host.name}.config.system.build.toplevel";
+      { host, ... }: job host host.name "nixosConfigurations.${host.name}.config.system.build.toplevel";
   };
 
   yen.aspects.ci-mac = {

@@ -6,7 +6,7 @@
       yen.helpers.linux
       (s: s.gpu == "nvidia")
     ];
-    unfree = yen.helpers.allowUnfree [
+    unfree = [
       "nvidia-x11"
       "nvidia-settings"
       "nvidia-kernel-modules"

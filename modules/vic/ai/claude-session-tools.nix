@@ -7,11 +7,13 @@
     homeManager =
       { pkgs, ... }:
       let
-        py = name: script: pkgs.writeShellApplication {
-          inherit name;
-          runtimeInputs = [ pkgs.python3 ];
-          text = ''exec python3 ${script} "$@"'';
-        };
+        py =
+          name: script:
+          pkgs.writeShellApplication {
+            inherit name;
+            runtimeInputs = [ pkgs.python3 ];
+            text = ''exec python3 ${script} "$@"'';
+          };
       in
       {
         home.packages = [

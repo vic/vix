@@ -15,13 +15,16 @@
     vim = "a neovim profile: a feature list built per system into one nvf package (+ a gui wrapper)";
     emacs = "data: an emacs distribution";
     workspace = "data: a project an isolated guest works on (repo path)";
-    ssh-host = "data: one ssh client matchBlock";
-    secret = "data: a sops secret a feature asks for";
+    ssh-host = "data spawned by the fleet: one ssh client matchBlock, given to `ssh-blocks`";
+    secret = "data spawned by the fleet: a sops secret a feature asks for, its data given to `sops`";
+    kit = "data: roles, a typed interface per role, constraints and exports (yen.lib.kits.* are kits)";
+    assembly = "data: one use of a kit, each role's machines an `at` predicate";
+    member = "one (assembly, role) a machine takes: spawned under the machine, its elements go up to it";
   };
   sinks = {
     out = "flake outputs";
     checks = "`checks.<sys>.<name>`: fmt, README, flake.nix, no-gui, config tests";
-    ci-jobs = "one GitHub build job per buildable host, mac, home and linux devshell";
+    ci-jobs = "one GitHub build job per buildable host, mac, home and linux devshell; its runner comes from `runners`";
     jobs = "fleet: the jobs of ci.yml, merged; github.workflow writes the file";
     flake-file = "this flake.nix: the inputs each aspect uses";
     files = "repo files (this README, ci.yml) built by sini/files";
@@ -40,10 +43,15 @@
     unfree = "unfree package names the machine, home or vim profile allows";
     nix-features = "each machine's `nix.settings.experimental-features`";
     caches = "cachix caches: a machine's `nix.settings` substituters and keys, the fleet's flake.nix `nixConfig`";
-    login-shells = "login shells of the users; the machine enables `programs.<shell>`";
+    login-shells = "mac: login shells of its users; the mac enables `programs.<shell>` and lists them in environment.shells";
     persist = "paths impermanence keeps on the host";
     ports = "`{ port; what; }` a machine's or a user's service listens on: for unique-port, portsOf and freePort; a user's go up to `served`";
-    served = "fleet: every user's ports with the scope that serves them (`entries`); ssh tunnels forward from it";
+    served = "fleet: every user's ports with the scope that serves them (`elements`); ssh tunnels forward from it";
+    runners = "fleet: `{ <system> = { system; machine; label; }; }`, the GitHub runner of each system, claimed by the member of kit github-runner on it";
+    ssh-blocks = "fleet: one ssh matchBlock per `ssh-host` scope; vic's `programs.ssh.settings` reads it";
+    exports = "fleet: what kit members export to each other, one element per member (kits.exports)";
+    shared-pkgs = "fleet: the hosts with `sharedPkgs`, each with its scope; a host finds its group leader in it";
+    sops = "fleet: every secret's sops data by secret name; a reader resolves a secret ref `r` with `sops.<r.name>`";
     infra = "fleet: facts per host from its data; `checks.x86_64-linux.infra-<host>` compares them with the built system";
     claude = "Claude Code settings.json layers `{ rank; set; }`: a higher rank wins per key, equal ranks must agree";
     primary-user = "the one admin user name a mac (system.primaryUser) or a wsl host (wsl.defaultUser) reads; two admins are an error record";
@@ -67,6 +75,6 @@
     on-trusted = "a user within `trusted`, no untrusted guest between";
     on-linux = "a user on a linux machine or home (`homeLinux`)";
     on-darwin = "a user on a mac or darwin home (`homeDarwin`)";
-    ci-runner = "machines with a `ghRunner` label (from data): bare GitHub runners, no users";
+    ci-runner = "machines that hold a member of kit github-runner: bare GitHub runners, no users";
   };
 }

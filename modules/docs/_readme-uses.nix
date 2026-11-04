@@ -19,18 +19,26 @@ in
     )
     (row "Derived fields (`derive`)"
       "A field default that the instance computes from itself. An explicit value wins."
-      "`checkout` for every machine with users. `cpu` and `gpu` from the facter report. The CI runner label of each system."
+      "`checkout` for every machine with users. `cpu` and `gpu` from the facter report."
       [
         (src "vic/dots.nix" "yen.kinds.machine.fields.checkout = yen.lib.derive" "checkout")
         (src "topology/machine.nix" "cpu = derive" "cpu from facter")
-        (src "flake/ci.nix" "yen.kinds.system.fields.runner = derive" "runner")
+        (src "topology/machine.nix" "gpu = derive" "gpu from facter")
       ]
     )
     (row "Data kinds" "A kind that no kind spawns. Its instances have no scope; refs to them work."
-      "Secrets, ssh hosts, workspaces and channels are data that aspects read."
+      "Workspaces, emacs distributions and channels are data that aspects read through refs and tree requests."
       [
-        (src "topology/secrets.nix" "yen.kinds.secret.fields" "secret")
         (src "topology/workspaces.nix" "yen.kinds.workspace.fields" "workspace")
+        (src "vic/edit/emacs.nix" "dists.instances = yen.kinds.emacs" "emacs: a tree request")
+      ]
+    )
+    (row "Data as scopes"
+      "A data kind the fleet spawns: each instance is a scope that gives its data to a fleet sink."
+      "Each secret gives its sops data to `sops`, each ssh host its matchBlock to `ssh-blocks`. A reader takes the sink as an arg, so every read is an edge."
+      [
+        (src "topology/secrets.nix" "yen.kinds.fleet.spawns.secret" "secret -> sops")
+        (src "topology/ssh-hosts.nix" "yen.kinds.fleet.spawns.ssh-host" "ssh-host -> ssh-blocks")
       ]
     )
     (row "Structure from data (`spawns`)" "A scope's children come from a function of the data."
@@ -45,13 +53,22 @@ in
       [ (src "platforms/home-manager.nix" "sinks = lib.genAttrs [" "home walls") ]
     )
     (row "Aspects and predicates (`at`)"
-      "An aspect is active where its `at` holds: kinds, instances, aspect refs, `all`, `not`, `within`, `has`."
+      "An aspect is active where its `at` holds: kinds, instances, aspect refs, `all`, `not`, `within`, `below`."
       "The tiers (`vic-headless`, `vic-gui`, `vic-full`, `vic-secrets`) gate every feature of vic."
       [ (src "roles/tiers.nix" "vic-gui" "tiers") ]
     )
     (row "Roles from data" "An aspect whose `at` is a fact about the instance."
-      "A machine with a `ghRunner` label is a CI runner: one aspect for bill, tom and bert."
-      [ (src "hosts/ci-runner.nix" "ghRunner != null" "ci-runner") ]
+      "A machine in form iso is an installer, a machine in form wsl runs NixOS-WSL: one aspect each, no host file names them."
+      [ (src "roles/roles.nix" "yen.aspects.installer.at = all [" "installer") ]
+    )
+    (row "Kits and assemblies"
+      "A kit is data with roles and typed settings; an assembly puts machines in its roles with refs."
+      "Library kit facter gives every host its hardware report; vix kit github-runner makes bill, tom and bert bare CI runners: each host file writes one assembly."
+      [
+        (src "kits/hardware.nix" "kit = yen.kit.facter;" "hardware")
+        (src "kits/github-runner.nix" "yen.kit.github-runner.roles.runner" "github-runner")
+        (src "hosts/tom.nix" "yen.assembly.ci-tom" "ci-tom")
+      ]
     )
     (row "Own reduce" "A sink reduce is any function of `[ { from; value; } ]`; `flat` is yen's."
       "claude settings are ranked layers (rank 1 wins per key). List sinks keep first-seen order (`yen.lib.reduce.flat`). Permissions are sorted."
@@ -123,8 +140,8 @@ in
         (src "agent/invariants.nix" "follows-declared" "follows-declared")
       ]
     )
-    (row "Stored queries and krn"
-      "A named question on the eval result. krn synthesizes values that meet constraints."
+    (row "Stored queries and uKanren"
+      "A named question with typed ref parameters on the eval result. uKanren synthesizes values that meet constraints."
       "`portsOf` a machine, and `freePort` picks a port that no service of the host uses."
       [
         (src "agent/queries.nix" "portsOf =" "portsOf")

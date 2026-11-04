@@ -10,7 +10,9 @@
       {
         programs.claude-code.settings.statusLine = {
           type = "command";
-          command = "${lib.getExe' out.packages.${pkgs.stdenv.hostPlatform.system}.vic-tools "vic"} statusline";
+          command = "${
+            lib.getExe' out.packages.${pkgs.stdenv.hostPlatform.system}.vic-tools "vic"
+          } statusline";
           padding = 0;
         };
       };

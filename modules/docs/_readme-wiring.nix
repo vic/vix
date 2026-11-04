@@ -1,9 +1,10 @@
-# readme wiring (a fn of yen, lib, mermaid and the ci-jobs value): ports per scope, CI runners per system, flake input follows.
+# readme wiring (a fn of yen, lib, mermaid, the ci-jobs and the runners values): ports per scope, CI runners per system, flake input follows.
 {
   yen,
   lib,
   mermaid,
   ciJobs,
+  runners,
 }:
 let
   g = yen.lib.graph;
@@ -67,29 +68,29 @@ let
     lib.attrNames yen.aspects
   );
 
-  # CI: each system's runner label is derived from the one machine on it with `ghRunner`; `ciBroken` lets a job fail
+  # CI: each system's runner label comes from the one member of kit github-runner on it (`runners`); `ciBroken` lets a job fail
   machines = lib.concatMap (k: lib.attrValues (yen.${k} or { })) [
     "host"
     "guest"
     "mac"
     "home"
   ];
-  marked = lib.filter (m: m.ghRunner != null || m.ciBroken != null) machines;
+  # the runner record of machine m, null when m is no runner
+  runnerOf = m: lib.findFirst (r: r.machine == m.name) null (lib.attrValues runners);
+  marked = lib.filter (m: runnerOf m != null || m.ciBroken != null) machines;
   jobsOn = s: lib.filter (j: j.system == s) (lib.attrValues ciJobs);
   ci = {
     nodes =
       map (s: {
         id = "sys:${s}";
-        label = "${s} · runs-on ${
-          if yen.system.${s}.runner == null then "none" else yen.system.${s}.runner
-        } · ${toString (lib.length (jobsOn s))} jobs";
+        label = "${s} · runs-on ${runners.${s}.label or "none"} · ${toString (lib.length (jobsOn s))} jobs";
         kind = "system";
       }) (lib.attrNames yen.system)
       ++ map (m: {
         id = "m:${m.kind}:${m.name}";
         label =
-          if m.ghRunner != null then
-            "${m.name} · ghRunner ${m.ghRunner}"
+          if runnerOf m != null then
+            "${m.name} · runner ${(runnerOf m).label}"
           else
             "${m.name} · ciBroken ${m.ciBroken}";
         inherit (m) kind;
@@ -97,8 +98,8 @@ let
     edges = map (m: {
       from = "m:${m.kind}:${m.name}";
       to = "sys:${m.system.name}";
-      label = if m.ghRunner != null then "runner" else "may fail";
-      live = m.ghRunner != null;
+      label = if runnerOf m != null then "runner" else "may fail";
+      live = runnerOf m != null;
     }) marked;
   };
 
@@ -147,7 +148,7 @@ in
 
   ${mermaid ports}
 
-  **CI runners per system**: the runner label of a system comes from the one machine on it with `ghRunner`
+  **CI runners per system**: the runner label of a system comes from the one member of kit github-runner on it
   (0 or 2+ is an error record); a dashed edge is a machine whose job may fail (`ciBroken`).
 
   ${mermaid ci}

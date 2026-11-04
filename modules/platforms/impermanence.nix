@@ -7,6 +7,9 @@ let
     root = "/nix/persist";
     hideMounts = true;
   };
+  # a machine bind-mounts its persist paths only when its impermanence is enabled
+  persistWhenEnabled =
+    { scope, sinks, ... }@args: lib.optionalAttrs scope.impermanence.enable (persist args);
 in
 {
   # both gates default off: `enable` = binds only (nothing deleted), `wipeRoot` = initrd root rollback.
@@ -16,6 +19,6 @@ in
   };
 
   # user and feature entries reach the host (a guest keeps its own: platforms/microvm.nix)
-  yen.kinds.host.sinks.persist.nixos =
-    { scope, sinks, ... }@args: lib.optionalAttrs scope.impermanence.enable (persist args);
+  yen.kinds.host.sinks.persist.nixos = persistWhenEnabled;
+  yen.kinds.guest.sinks.persist.nixos = persistWhenEnabled;
 }

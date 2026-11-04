@@ -10,6 +10,7 @@ in
 {
   # an element is a list of feature names; it goes to the nearest machine
   yen.kinds.host.sinks.nix-features = list;
+  yen.kinds.guest.sinks.nix-features = list;
   yen.kinds.mac.sinks.nix-features = list;
 
   # every machine: flakes and the nix command

@@ -21,17 +21,25 @@ let
     host.address = "127.0.0.1";
     host.port = port;
   };
-  # proxyJump graph by Host match name: each ssh-host jumps to the host part of every hop of its proxyJump
-  jumps = lib.mapAttrs' (
-    n: h:
-    lib.nameValuePair (if h.host != null then h.host else n) (
-      lib.optionals (h.proxyJump != null) (
-        map (j: lib.last (lib.splitString "@" j)) (lib.splitString "," h.proxyJump)
-      )
-    )
-  ) yen.ssh-host;
+  hostsTree.instances = yen.kinds.ssh-host; # a tree request: every ssh host, with its data
+  # the proxyJump graph of the ssh hosts hs, by Host match name: each jumps to the host part of every hop of its proxyJump
+  jumpsOf =
+    hs:
+    lib.listToAttrs (
+      map (
+        h:
+        lib.nameValuePair (if h.host != null then h.host else h.name) (
+          lib.optionals (h.proxyJump != null) (
+            map (j: lib.last (lib.splitString "@" j)) (lib.splitString "," h.proxyJump)
+          )
+        )
+      ) hs
+    );
 in
 {
+  # one scope per ssh host: its aspect reads its data as the `ssh-host` arg and gives its matchBlock to the fleet
+  yen.kinds.fleet.spawns.ssh-host = _: yen.ssh-host;
+  yen.kinds.fleet.sinks.ssh-blocks.reduce = yen.lib.reduce.merge; # { <Host> = directives; }
   yen.kinds.ssh-host.fields = {
     host = maybe t.str;
     hostname = maybe t.str;
@@ -81,8 +89,13 @@ in
   # a proxyJump cycle never connects: an error record at eval, before any build
   yen.aspects.ssh-jumps = {
     at = yen.fleet.vix;
-    errors = map (c: "ssh: proxyJump cycle ${lib.concatStringsSep " -> " c}") (
-      yen.lib.graphs.sccs jumps
-    );
+    cycle =
+      { tree, ... }:
+      {
+        tree = [ hostsTree ];
+        errors = map (c: "ssh: proxyJump cycle ${lib.concatStringsSep " -> " c}") (
+          yen.lib.graphs.sccs (jumpsOf (tree.select hostsTree))
+        );
+      };
   };
 }

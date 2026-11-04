@@ -23,7 +23,7 @@
 
   yen.aspects.vim-scope = {
     at = yen.helpers.vimHas "scope";
-    unfree = yen.helpers.allowUnfree [ "scope.nvim" ]; # no license upstream
+    unfree = [ "scope.nvim" ]; # no license upstream
     nvf =
       { pkgs, ... }:
       {
