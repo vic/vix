@@ -1,6 +1,5 @@
 # nargun hardware (was the nargun-hardware aspect); hosts/autoinclude.nix imports it.
-{ ... }:
-{
+_: {
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"

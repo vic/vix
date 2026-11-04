@@ -32,34 +32,37 @@ let
   # settings fingerprint (design §0): sorted package names, enabled services, users, home.file targets, hm programs.
   # Order is not compared.
   sorted = xs: lib.sort lib.lessThan (lib.unique xs);
+  # a renamed option (visible = false, e.g. services.frp.enable) aborts when read, so its service is not read
   enabled =
-    s:
+    opts: s:
     sorted (
       lib.attrNames (
         lib.filterAttrs (
-          _: v:
+          n: v:
           let
             t = builtins.tryEval (lib.isAttrs v && (v.enable or false) == true);
           in
-          t.success && t.value
+          (lib.attrByPath [ n "enable" "visible" ] true opts) != false && t.success && t.value
         ) s
       )
     );
   hm = h: {
     packages = sorted (map lib.getName h.home.packages);
     files = sorted (lib.mapAttrsToList (_: f: f.target) (lib.filterAttrs (_: f: f.enable) h.home.file));
-    programs = enabled h.programs;
+    programs = enabled { } h.programs;
   };
-  os = c: {
+  os = c: opts: {
     packages = sorted (map lib.getName c.environment.systemPackages);
-    services = enabled c.services;
+    services = enabled opts.services c.services;
     users = lib.attrNames c.users.users;
     homes = lib.mapAttrs (_: hm) (c.home-manager.users or { });
   };
   fingerprints =
     o:
-    lib.mapAttrs' (n: c: lib.nameValuePair "nixos-${n}" (os c.config)) (o.nixosConfigurations or { })
-    // lib.mapAttrs' (n: c: lib.nameValuePair "darwin-${n}" (os c.config)) (
+    lib.mapAttrs' (n: c: lib.nameValuePair "nixos-${n}" (os c.config c.options)) (
+      o.nixosConfigurations or { }
+    )
+    // lib.mapAttrs' (n: c: lib.nameValuePair "darwin-${n}" (os c.config c.options)) (
       o.darwinConfigurations or { }
     )
     // lib.mapAttrs' (n: c: lib.nameValuePair "home-${n}" (hm c.config)) (o.homeConfigurations or { });

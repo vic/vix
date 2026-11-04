@@ -58,7 +58,7 @@ in
       { env, env-packages, ... }:
       {
         ${env.name} = (import inputs.devshell { nixpkgs = env.system.legacyPackages; }).mkShell {
-          name = env.name;
+          inherit (env) name;
           packages = builtins.concatLists env-packages;
         };
       };

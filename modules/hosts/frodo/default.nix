@@ -22,7 +22,6 @@
   yen.aspects.frodo-base = {
     at = yen.host.frodo;
     nixos = {
-      nixpkgs.config.allowUnfree = true;
       system.stateVersion = "26.11";
     };
   };

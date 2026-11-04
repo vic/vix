@@ -46,6 +46,21 @@
           openspec init --tools claude --force --profile custom </dev/null
           cp -r .claude/skills/* $out/
         '';
+        # shortcut: openspec 1.15.0 renders these 12 skills, a readDir would build the output on any eval host (IFD), upgrade with openspec
+        openspecSkillNames = [
+          "openspec-apply-change"
+          "openspec-archive-change"
+          "openspec-bulk-archive-change"
+          "openspec-continue-change"
+          "openspec-explore"
+          "openspec-ff-change"
+          "openspec-new-change"
+          "openspec-onboard"
+          "openspec-propose"
+          "openspec-sync-specs"
+          "openspec-update-change"
+          "openspec-verify-change"
+        ];
       in
       {
         home.packages = [
@@ -66,7 +81,7 @@
           skills = {
             hunk-review = "${llm.hunk.src}/packages/hunk/skills/hunk-review";
           }
-          // lib.mapAttrs (name: _: "${openspecSkills}/${name}") (builtins.readDir openspecSkills);
+          // lib.genAttrs openspecSkillNames (name: "${openspecSkills}/${name}");
 
           mcpServers.codegraph = {
             type = "stdio";

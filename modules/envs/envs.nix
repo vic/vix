@@ -1,6 +1,5 @@
 # envs: vic's dev environments.
-{ ... }:
-{
+_: {
   yen.env.nixenv.langs = [ "nix" ];
   yen.env.rustenv.langs = [
     "rust"

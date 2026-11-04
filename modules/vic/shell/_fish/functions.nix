@@ -1,7 +1,4 @@
-{
-  ...
-}:
-{
+_: {
   jj-git-init.description = "init jj to follow git branch";
   jj-git-init.argumentNames = [ "branch" ];
   jj-git-init.body = ''

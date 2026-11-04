@@ -1,6 +1,5 @@
 # mordor hardware (was the mordor-hardware aspect); hosts/autoinclude.nix imports it.
-{ ... }:
-{
+_: {
   hardware.nvidia.prime.nvidiaBusId = "PCI:9:0:0";
   boot.initrd.availableKernelModules = [
     "nvme"

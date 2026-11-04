@@ -27,7 +27,7 @@ in
 {
   yen.kinds.home = {
     fields = {
-      user = user;
+      inherit user;
       system = yen.kinds.system;
       channel = opt yen.kinds.channel yen.channel.unstable;
       # the host this home lives on (Den #739): it reads the host's data, and builds its own homeConfigurations

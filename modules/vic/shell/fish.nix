@@ -4,7 +4,7 @@
   # the fish-functions sink (any feature emits fish functions; fish writes them once) is declared in topology/people.nix.
   yen.aspects.fish = {
     at = yen.aspects.vic-headless;
-    fish-functions = { ... }: import ./_fish/functions.nix { };
+    fish-functions = import ./_fish/functions.nix { };
     homeManager =
       { pkgs, fish-functions, ... }:
       {

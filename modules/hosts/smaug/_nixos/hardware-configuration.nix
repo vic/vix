@@ -1,6 +1,5 @@
 # smaug hardware (was the smaug-hardware aspect); hosts/autoinclude.nix imports it.
-{ ... }:
-{
+_: {
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "ehci_pci"

@@ -6,10 +6,16 @@
       yen.helpers.linux
       (s: s.firmware == "all")
     ];
+    unfree = [
+      "b43-firmware"
+      "broadcom-bt-firmware"
+      "facetimehd-calibration"
+      "facetimehd-firmware"
+      "xone-dongle-firmware"
+    ];
     nixos = {
       hardware.enableAllFirmware = true;
       hardware.enableRedistributableFirmware = true;
-      nixpkgs.config.allowUnfree = true;
     };
   };
 }

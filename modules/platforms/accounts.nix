@@ -26,7 +26,7 @@ in
     account =
       { user, scope, ... }:
       {
-        name = user.name;
+        inherit (user) name;
         home = homeOf user scope;
       };
     homeManager =

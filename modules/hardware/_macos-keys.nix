@@ -1,6 +1,6 @@
 # see https://raw.githubusercontent.com/rvaiya/keyd/refs/heads/master/docs/keyd.scdoc
 # see https://github.com/rvaiya/keyd/blob/master/examples/macos.conf
-{ ... }:
+_:
 let
 
   # MacOS Command (⌘)

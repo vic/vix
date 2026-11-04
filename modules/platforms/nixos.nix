@@ -147,7 +147,7 @@ in
     shared-pkgs = { host, ... }: host.name;
   };
 
-  # a group shares one nixpkgs.config: a follower whose unfree names differ from its leader's is an error record
+  # a group shares its leader's nixpkgs.config: a follower naming an unfree package its leader does not allow is an error record
   # shortcut: compares the `unfree` sink only, not other nixpkgs.config keys a host module sets by hand
   yen.aspects.shared-pkgs-group = {
     at = yen.kinds.fleet;
@@ -157,8 +157,8 @@ in
         lib.mapAttrsToList (
           h: s:
           lib.optional (
-            s.follower && s.unfree != out.sharedPkgs.${s.leader}.unfree
-          ) "sharedPkgs: ${h} allows other unfree packages than its leader ${s.leader}"
+            s.follower && !lib.all (n: lib.elem n out.sharedPkgs.${s.leader}.unfree) s.unfree
+          ) "sharedPkgs: ${h} names unfree packages its leader ${s.leader} does not allow"
         ) (out.sharedPkgs or { })
       );
   };

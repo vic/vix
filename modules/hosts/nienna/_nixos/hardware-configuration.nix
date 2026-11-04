@@ -1,6 +1,5 @@
 # nienna hardware (was the nienna-hardware aspect); hosts/autoinclude.nix imports it.
-{ ... }:
-{
+_: {
   boot.initrd.availableKernelModules = [
     "uhci_hcd"
     "ehci_pci"

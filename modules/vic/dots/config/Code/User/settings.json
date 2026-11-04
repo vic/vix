@@ -101,7 +101,6 @@
   "find-it-faster.general.openFileInPreviewEditor": true,
   "find-it-faster.general.useTerminalInEditor": true,
   "geminicodeassist.inlineSuggestions.enableAuto": false,
-  "git.blame.statusBarItem.enabled": false,
   "git.confirmSync": false,
   "github.copilot.chat.agent.thinkingTool": true,
   "github.copilot.chat.codesearch.enabled": true,
@@ -347,7 +346,14 @@
   "chat.viewSessions.orientation": "stacked",
   "claudeCode.preferredLocation": "panel",
   "claudeCode.useTerminal": true,
-  "git.enabled": false,
   "jjx.showTooltips": false,
-  "workbench.preferredDarkColorTheme": "Solarized Dark"
+  "workbench.preferredDarkColorTheme": "modus-vivendi-tinted-quiet",
+  "editor.fontSize": 16,
+  "editor.tabSize": 2,
+  "window.zoomLevel": -2,
+  "files.associations": {
+    "*.srs": "scala"
+  },
+  "claudeCode.claudeProcessWrapper": "/home/vic/.nix-profile/bin/claude",
+  "github-actions.workflows.pinned.refresh.enabled": true
 }
