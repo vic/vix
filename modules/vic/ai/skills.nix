@@ -7,6 +7,7 @@
   ...
 }:
 let
+  skillRepo = src: skillDirs "${src}/skills";
   # every subdirectory holding a SKILL.md, by name
   skillDirs =
     dir:
@@ -20,6 +21,10 @@ in
   yen.aspects.ai-skills = {
     at = yen.aspects.vic-headless;
     flake-file.inputs = {
+      egm = {
+        url = "github:google/elephant-goldfish-model";
+        flake = false;
+      };
       genie-agent = {
         url = "github:sini/genie-agent";
         flake = false;
@@ -55,12 +60,12 @@ in
         programs.claude-code.skills =
           skillDirs ./skills
           // skillDirs inputs.gstack
+          // skillRepo inputs.egm
+          // skillRepo inputs.quipu
+          // skillRepo inputs.yen
           // {
             gstack = "${inputs.gstack}";
             task-observer = "${inputs.one-skill-to-rule-them-all}";
-            yen-mcp = "${inputs.yen}/skills/yen-mcp"; # teaches the yen_* tools; from the yen repository, at the locked rev
-            quipu = "${inputs.quipu}/skills/quipu";
-            quipu-embedded-artifacts = "${inputs.quipu}/skills/quipu-embedded-artifacts";
             # upstream has no SKILL.md: frontmatter + local deltas + upstream index become one
             operating-memory = pkgs.runCommand "operating-memory-skill" { } ''
               cp -r ${inputs.genie-agent}/operating-memory $out

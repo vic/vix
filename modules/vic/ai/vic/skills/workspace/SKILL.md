@@ -9,7 +9,7 @@ STACK: /vic-stack — record each landed workspace as quipu `ledger:<proj>/lande
 ## WHEN (no judgment call)
 ANY dispatch that edits repo files (rung/typesmith/hunter-prototypes/isolate-repros-in-repo/superhaiku swarm) ⟹ ISOLATE. Read-only agents (probe/reader/sweep/judge/lawyer) need none.
 
-## LOCAL REPO LAW (every repo under ~/hk, vic 2026-10-29)
+## LOCAL REPO LAW (every local repo, vic 2026-10-29)
 - jj ALWAYS. git-only repo ⟹ `jj git init --colocate`, no ask. Mutating git (commit/add/stash/checkout/switch/reset/rebase/merge/restore) = FORBIDDEN; jj equivalents only.
 - `vic/` (notes, status, HANDOFF, state) = own jj workspace `vic` of the SAME repo, started from `root()` (commit 000000000000), bookmark `vic`. Never on main. Create: `jj workspace add --name vic -r 'root()' vic`. Commit inside it: `jj -R vic commit -m ...` + `jj -R vic bookmark set vic -r @-`.
 - beads db lives in `vic/.beads` (tracked w/ vic/). Repo root `.beads` = symlink to `vic/.beads`, listed in `.git/info/exclude` (local, never committed).

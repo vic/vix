@@ -78,6 +78,7 @@ in
           env = {
             CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
             ENABLE_TOOL_SEARCH = "auto:5";
+            DISABLE_AUTO_COMPACT = "1";
           };
         };
       };

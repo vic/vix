@@ -21,7 +21,7 @@ Every checker/encoder/prover test ships ≥1 REJECTED mutant (2+2≢3, arity-mut
 - UNREADABLE RESULT: when direct check hard, state the soundness argument explicitly (each step licensed + confluence/uniqueness ⟹ result correct). No hand-wave.
 - AGENTS CHEAT TESTS: "N tests pass" MEANS NOTHING. Demand RED→GREEN→mutant-REJECTS pastes; spot-check diff didn't weaken oracle.
 - UNGUARDED SUBPROCESS in tests = harness hang. Kill-timer always.
-- Timing/float assertions = flake; forbidden in oracles.
+- Timing/float assertions = flaky; forbidden in oracles.
 
 ## LAW
 No impl dispatched w/o oracle written + RED confirmed. No "validated" accepted w/o oracle named + outputs pasted. Fix w/o red test = reverted.

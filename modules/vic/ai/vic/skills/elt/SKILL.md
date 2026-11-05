@@ -1,6 +1,6 @@
 ---
 name: elt
-description: Use when performing any coding, debugging, refactoring, or multi-step agentic/tool-use task — and specifically the moment before you (1) claim work is done, fixed, passing, working, or complete; (2) state an API, function signature, file path, line number, version, or fact you have not verified in THIS session; (3) edit, reformat, or reproduce an operator-provided artifact (code, config, commit message, prose, markup); (4) assert a root cause or commit to a design; or (5) agree with the operator while privately doubting it is true. Applies to the main agent and every spawned subagent. Binds the ELT epistemic guardrails (Intelligent Yielding, Earned Confidence Gating, Workflow Fidelity Protocol, Adversarial Convergence, Alignment Governor) that live in ~/hk/ai-frameworks. Read the source file when a gate fires; do not reconstruct the protocol from memory.
+description: Use when performing any coding, debugging, refactoring, or multi-step agentic/tool-use task — and specifically the moment before you (1) claim work is done, fixed, passing, working, or complete; (2) state an API, function signature, file path, line number, version, or fact you have not verified in THIS session; (3) edit, reformat, or reproduce an operator-provided artifact (code, config, commit message, prose, markup); (4) assert a root cause or commit to a design; or (5) agree with the operator while privately doubting it is true. Applies to the main agent and every spawned subagent. Binds the ELT epistemic guardrails (Intelligent Yielding, Earned Confidence Gating, Workflow Fidelity Protocol, Adversarial Convergence, Alignment Governor) that live in the ELT doctrine repo (its path is set by the vic config). Read the source file when a gate fires; do not reconstruct the protocol from memory.
 ---
 
 # ELT — Epistemic Lattice Tethering guardrails for coding agents
@@ -8,7 +8,7 @@ description: Use when performing any coding, debugging, refactoring, or multi-st
 **Core principle: earned over fluent. Verify or yield — never reconstruct across a gap.**
 
 ELT is a set of inference-time epistemic guardrails by Vir Multiplicis. The
-full doctrine lives in `~/hk/ai-frameworks/` and is the single source of
+full doctrine lives in the ELT doctrine repo (its path is set by the vic config) and is the single source of
 truth. This skill does **not** copy that doctrine — it **binds** the relevant
 guardrails to coding/agentic work and **forces you to read the source** when a
 gate fires. Recalling "what ELT says" from memory is itself the failure mode
@@ -57,7 +57,7 @@ the forcing function — open it, do not paraphrase it from memory.
 | **agree** with the operator while doubting it is true | **AG** | `Alignment Governor (AG).md` | global-truth over rapport; flag the concern once, clearly, then move on |
 | long session: recall slipping, repetition rising, early decisions fading | **CM / TB** | `Context Management (CM).md`, `Temporal Balance (TB).md` | hold / compress / yield with an honest diagnostic; re-anchor to early load-bearing context |
 
-All files are under `/home/vic/hk/ai-frameworks/Epistemic Lattice Tethering (ELT)/`
+All files are under the `Epistemic Lattice Tethering (ELT)/` folder of the ELT doctrine repo (its path is set by the vic config)
 (see Source map). The operator's cognitive signature (**OA** — the decision
 oracle for what matters here) = the `vic` skill + project memory + CLAUDE.md;
 honor it the way ELT honors operator exemplars.
@@ -92,7 +92,7 @@ memory is the exact fluent-reconstruction failure IY names.
 
 ---
 
-## Source map (`/home/vic/hk/ai-frameworks/`)
+## Source map (the ELT doctrine repo; its path is set by the vic config)
 
 ```
 README.md                                   repo + ELT overview
@@ -117,6 +117,6 @@ When in doubt which file, read the ELT `README.md` (component index) first.
 ---
 
 *Binds Epistemic Lattice Tethering (ELT) by Vir Multiplicis
-(github.com/Vir-Multiplicis/ai-frameworks, CC BY 4.0) to coding-agent work.
+(the ELT doctrine repo, CC BY 4.0) to coding-agent work.
 This skill references and adapts ELT; it does not reproduce it. Doctrine is
-read live from `~/hk/ai-frameworks`.*
+read live from the ELT doctrine repo.*

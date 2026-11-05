@@ -5,7 +5,7 @@ description: Use for task management, issue/epics tracking for working on all pr
 
 ## Beads Workflow Integration
 
-This project uses [beads_rust](https://github.com/Dicklesworthstone/beads_rust) (`br`/`bd`) for issue tracking. Issues are stored in `.beads/` and tracked in git.
+Where `.beads/` exists, the repo uses beads_rust (`br`/`bd`) for issue tracking. Issues are stored in `.beads/` and tracked in git.
 
 ### Essential Commands
 

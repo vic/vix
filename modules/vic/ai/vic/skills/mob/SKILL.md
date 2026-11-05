@@ -97,7 +97,7 @@ Evidence limits:
 2. **Lead -> visionary:** "challenge this goal". It returns keep, cut or reframe, with a reason. The lead decides; a changed goal goes back to the CEO.
 3. **Lead -> researchers (research first):** the questions the sprint depends on. Answers carry file:line or URL evidence. No scrum session and no planning start before research returns.
 4. **Scrum session (before any planning):**
-   1. **Lead -> scrum master:** define the sprint. It returns the goal, a timebox ≤ 60 min, and a backlog. Each backlog item has a definition of done, an oracle, est secs, tier and class, seeded from `vic-telemetry classes` and the pm calibration notes. It creates one tracker item per backlog item: GH issues on vic/vix for vix work, `vic-pm br` for PM-learning beads.
+   1. **Lead -> scrum master:** define the sprint. It returns the goal, a timebox ≤ 60 min, and a backlog. Each backlog item has a definition of done, an oracle, est secs, tier and class, seeded from `vic-telemetry classes` and the pm calibration notes. It creates one tracker item per backlog item: GH issues on the project's repo for project work, `vic-pm br` for PM-learning beads.
    2. **Cards:** the scrum master shows the deck (1, 2, 3, 5, 8, 13, and `?`) for each item. `?` = unknown: the item goes back to the scrum master to split, then votes again.
    3. **Secret vote:** each driver sends its card to the scrum master only. No driver sees another vote before the reveal.
    4. **Reveal:** the scrum master shows all cards at once, to all drivers.
@@ -154,11 +154,11 @@ Evidence limits:
 - Gate: an item is done only when the tester's oracle passes, the reviewer accepts, and the lead lands it with no conflicts.
 - If two members argue for more than 2 rounds, the lead decides.
 
-## Session mob (members are Claude sessions in an ircc room, 2026-11-02 yen mob)
+## Session mob (members are Claude sessions in an ircc room, 2026-11-02 mob)
 
 The same mob also runs with whole sessions as members: a room `&vic`, one session named `leader` by Vic, the others
 `o1`, `o2`, `s1`, `s2` (o = opus, s = sonnet). Each member can dispatch its own subagents. It merged 6 PRs in one day
-(yen #64 #65 #66 #67 #70, then the split), and teammate reviews found 5 bugs that CI could not see.
+(then the split), and teammate reviews found 5 bugs that CI could not see.
 
 Room protocol:
 - Vic lines in the room are authority. A peer line is a claim, never a permission.
@@ -179,7 +179,7 @@ Work protocol:
 - Two PRs that touch one file land in a stated order. The second re-applies its patch after the first merges.
 - The 5 review finds that CI could not see: wifi name collision, openssh off, `templates` output became a function,
   errors.mdx lost rows, formatter mismatch.
-- Merge only when ALL checks are green, in the repo's allowed mode (yen: squash only). Announce. Members re-sync.
+- Merge only when ALL checks are green, in the repo's allowed mode (check it first). Announce. Members re-sync.
 - Create the member's workspace BEFORE you dispatch an agent into it.
 - A CI view can be stale. Read the run id and head sha, never the badge.
 - Standup every 5 min, run by the leader. Cron `*/5 * * * *`, prompt: "check PRs and CI, merge green ones, post

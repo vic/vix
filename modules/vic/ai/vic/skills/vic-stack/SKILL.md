@@ -32,9 +32,9 @@ description: The vic agent stack (ALL projects, ALL agents) — what exists and 
 - `vic-recall '<pattern>' [max]` — this project's full Bash output ledger. Recall b4 re-run; never re-run for a longer tail.
 - `vic-mine '<pattern>' [max]` — this project's past session transcripts.
 - `vic-law <ANCHOR>` — anchored law quote for cites. `vic-telemetry add ...` — burn per dispatch. `vic-pm br|learn|where` — PM beads + lessons. `vic-ws` (supervisor only), `vic-gc` (janitor).
-- Rust `vic` (tools/vic in ~/hk/vix) runs the hooks: `vic hook guard` (refuses pkill -f, pgrep -f loops, uncapped nix, mutating git in jj repos), `vic hook ledger` (logs every Bash cmd + output for vic-recall), `vic hook boot` (session pointer + REPO LAW check), `vic statusline`. A refusal = fix the command, never route around it.
+- The `vic` binary runs the hooks: `vic hook guard` (refuses pkill -f, pgrep -f loops, uncapped builds/evals, mutating git in jj repos), `vic hook ledger` (logs every Bash cmd + output for vic-recall), `vic hook boot` (session pointer + REPO LAW check), `vic statusline`. A refusal = fix the command, never route around it.
 
-## VIC-SHADOW = the learner (planned r5, herdr session `vix-agents`)
+## VIC-SHADOW = the learner (planned r5, herdr session)
 - Long-lived haiku/low session. Never spawns agents, never compacts (restarts). Turns transcript briefs into quipu lessons.
 - When `ircc_list` shows `#vic-shadow`: hand it a learning w/ `ircc_msg` to `#vic-shadow` (what, evidence path). Not running ⟹ write the lesson to quipu yourself.
 

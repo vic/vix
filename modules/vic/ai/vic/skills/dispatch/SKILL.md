@@ -30,7 +30,7 @@ PIE ORDER (/pie): P (goal + why, consumer side) → I (inputs, output shape, ora
 SCOPE exact + NOT-SCOPE · ORACLE (runnable failing test) + NEG CONTROL (mutant must REJECT) · LAW cite + quote (vic-law) · PRE-DEBUNKED dead leads w/ kill receipts · EVIDENCE demanded (pastes per checkpoint; report file appended per step) · HONESTY (numbers verbatim if slower/negative; honest negative = success) · BUDGET (n attempts; 3 fails ⟹ stop + /escalate note).
 
 ## LIFECYCLE
-Parallel = disjoint dep lanes only (agent on crate X locks X's deps; run-only agents lock nothing). NO commit while agents in flight. Agent death ≠ work lost: check disk b4 re-dispatch. Background = max drift → gated checkpoints. VERIFY-DON'T-TRUST: every deliverable → vic-reviewer (code) / vic-lawyer (law-touching) / own x-check. NEVER STALL: saturate lanes per /lanes; subagents can't nest — supervisor = only spawner; fan-out = Workflow.
+Parallel = disjoint dep lanes only (agent on package X locks X's deps; run-only agents lock nothing). NO commit while agents in flight. Agent death ≠ work lost: check disk b4 re-dispatch. Background = max drift → gated checkpoints. VERIFY-DON'T-TRUST: every deliverable → vic-reviewer (code) / vic-lawyer (law-touching) / own x-check. NEVER STALL: saturate lanes per /lanes; subagents can't nest — supervisor = only spawner; fan-out = Workflow.
 
 ## TOKEN DISCIPLINE
 Thinkers never run cmds (vic-probe), never bulk-read (vic-reader), never explore inline (codegraph first). RECALL-B4-RUN: `vic-recall '<pat>'` b4 expensive cmds; `vic-mine` b4 re-solving (/ledger). TELEMETRY DUTY: after EVERY dispatch `vic-telemetry add <agent> <model> <tier> <secs> <tokens> <outcome>`; `report` = routing feedback; this table = LIVING policy (scribe edits w/ receipts).

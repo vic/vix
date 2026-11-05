@@ -1,12 +1,12 @@
 ---
 name: vic-lessons
-description: Lessons learned from all of vic's past agent work (rules vic gave, PM/tier calibration, per-skill lessons, tool traps). Preloaded into every vic-* agent; read before dispatching, estimating, or using jj/nix/br/shell. Grows automatically, append-only, via `vic-pm learn`.
+description: Lessons learned from all of vic's past agent work (rules vic gave, PM/tier calibration, per-skill lessons, tool traps). Preloaded into every vic-* agent; read before dispatching, estimating, or using jj/br/shell. Grows automatically, append-only, via `vic-pm learn`.
 ---
 
 # vic-lessons (append-only, grows every retro)
 STACK: /vic-stack — lessons are quipu-backed: read them at task start, hand verified new ones to `#vic-shadow` or `vic-pm learn`.
 
-Live-linked into the vix repo (modules/vic/dots/claude/skills/vic-lessons), so appends land in the repo and survive restarts and hardware moves.
+Live-linked into the vic config repo, so appends land in the repo and survive restarts and hardware moves.
 
 ## WORKER CONTRACT (every subagent, every task)
 - Max 3 fix attempts. An attempt = one change + one run of the check. After the 3rd failed attempt: STOP. No 4th try, no new theory. Report `blocked` with what you tried. PM classifies the problem and decides the next step.
@@ -27,7 +27,7 @@ metrics: secs=<n> tool_calls=<n> files_touched=<n>
 - [vic.md](vic.md): vic's rules for agents. TOP = rules vic had to repeat most.
 - [pm.md](pm.md): tier, time-gate, partition, spec, verify, burn baselines.
 - [skills.md](skills.md): lessons per skill/agent (oracle, probes, ensemble, workspace, handoff, vic-rung, ...).
-- [traps.md](traps.md): tool traps with fixes (jj, git, shell, nix, cargo, br, codegraph, harness/MCP).
+- [traps.md](traps.md): tool traps with fixes (jj, git, shell, br, codegraph, harness/MCP).
 
 ## Always apply (top lessons)
 - Agent output = claim. `ls` every "written" file; paste cmd + output before "done".
@@ -37,7 +37,7 @@ metrics: secs=<n> tool_calls=<n> files_touched=<n>
 - 3 fails ⟹ stop, write the escalation note, move on.
 
 ## Add a lesson (never edit or delete lines; append only)
-`vic-pm learn <vic|pm|skills|traps> "<lesson> · src:<project>/<file>"`
+`vic-pm learn <vic|pm|skills|traps> "<lesson>"`
 Only verified lessons (evidence on disk or in the ledger). Dedup is automatic.
 
 ## Appended

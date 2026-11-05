@@ -21,4 +21,4 @@ NEVER build on a number whose probe setup you can't see/rerun (prior number was 
 
 ## SPLITS THAT MATTER
 one-time vs marginal cost · construction vs execution count · startup vs compute wall · kernel-only vs e2e (kernel-only multiples = BANNED reporting class — e2e or nothing).
-Project-specific probe catalogs (env vars, repro paths) live in the PROJECT skill (e.g. /dnx2).
+Project-specific probe catalogs (env vars, repro paths) live in the PROJECT skill (e.g. the repo's own skill).

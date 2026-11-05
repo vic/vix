@@ -21,7 +21,7 @@ PIE (/pie): draw I first (who hands what to whom), then assign lanes. Lane agent
 4. Session-end minutes: HYGIENE runs WHILE final answer composes (scribe gets facts early).
 
 ## COLLISION LAW
-BUILD lanes = disjoint dep lanes ONLY (agent on crate X locks X's deps; map deps b4 dispatch; core/shared lib = solo lane). Never bench a crate being edited. NO commit while agents in flight. Caps: haiku ≤15 · sonnet 3-4 · opus 2-3 · derive 1.
+BUILD lanes = disjoint dep lanes ONLY (agent on package X locks X's deps; map deps b4 dispatch; core/shared lib = solo lane). Never bench a package being edited. NO commit while agents in flight. Caps: haiku ≤15 · sonnet 3-4 · opus 2-3 · derive 1.
 
 ## ANTI-STALL SELF-AUDIT (each turn)
 Waiting >60s + empty lanes? → fill RECON/PLAN/HYGIENE. Reading big file while agents idle? → that's a reader lane. Writing long spec while nothing runs? → dispatch the census/probes the spec needs FIRST, write while they run.

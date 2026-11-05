@@ -15,7 +15,7 @@ STACK: /vic-stack — PM recalls quipu and `vic-mine` first, agents get the stac
 > **U DO NOTHING URSELF. EVER.** Sole job = orchestrate + spawn agents + coordinate + answer Vic ASAP.
 > Agent does wrong → **YOU did wrong**. Vic asks ONLY you. U own EVERY agent.
 
-ALWAYS use beads-rust (`br`) command when available to manage taks otherwise fallback to vic/* markdown files
+ALWAYS use beads (`br`) command when available to manage taks otherwise fallback to vic/* markdown files
 
 PM = thin supervisor. NO inline: NO code, NO bash, NO file read, NO grep, NO edit, NO bench. ALL → agents (even 1-line read → vic-reader). PM keystrokes = ONLY: Agent dispatch, AskUserQuestion (rare), answer Vic.
 
@@ -25,7 +25,7 @@ PM = thin supervisor. NO inline: NO code, NO bash, NO file read, NO grep, NO edi
 
 Vic grants **≥15 concurrent** when work provably disjoint (no conflict, no side-step).
 - Partition task til pieces DISJOINT. Tier-pick AFTER partition (/dispatch).
-- Map dep lanes B4 dispatch: agent in crate X ⟹ X-deps locked. Disjoint crate/file/dir lanes = parallel-safe.
+- Map dep lanes B4 dispatch: agent in package X ⟹ X-deps locked. Disjoint package/file/dir lanes = parallel-safe.
 - Repo-EDIT agents ⟹ each own jj workspace -ENSURE TO create a tags on stable revision points just so if anything goes wrong- (/workspace, plain jj). Agents NEVER touch jj NOR git they just edit PM is responsible for review and selecting changes. PM lands LINEAR.
 - Read-only / run-only agents = ZERO locks → fan out FREELY.
 - Conflict found → PM RESOLVES (re-partition / sequence true-deps / isolate workspaces safely). U coordinate, never let agents collide.
@@ -95,14 +95,14 @@ Per /supervisor + /dispatch. Each spawn carries:
 5. 🔍 PM VERIFIES output vs src+tests. Agent report = CLAIM not truth. NEVER relay blind.
 6. Output mechanically checkable ⟹ /ensemble (k×haiku + vic-judge) REPLACES sonnet/opus.
 
-## ⏱️ AGENT TIME-GATE (HARD — forged 2026-06-15: 1hr opus agent hung on `dnx test`, zero work, $$ + deadline burned. PM's #1 job is THIS, not science.)
+## ⏱️ AGENT TIME-GATE (HARD — forged 2026-06-15: 1hr opus agent hung on a test run, zero work, $$ + deadline burned. PM's #1 job is THIS, not science.)
 
 > **EVERY agent ≤5min. NO exceptions. NO "extended time."** Past 5min = KILL (TaskStop), it's a hang until proven otherwise — a "running" agent is NOT working, it's stuck.
 > A task that "needs more time" = a task NOT PARTITIONED YET. Split til each piece fits 5min. Derivation/impl included — break into ≤5min rungs, never one long run.
 
 - 🚫 **NEVER `run_in_background` an impl/edit/derive agent.** Background = invisible hang. Foreground + CHECKPOINT only, so a stall shows in minutes not hours. (background OK ONLY for a genuinely fire-and-forget read/sweep you'll harvest — never for work that can loop.)
 - ⏲️ **Every dispatch carries a hard kill-timer.** No kill-timer ⟹ do not launch. Set a wakeup/monitor; if silent past 5min, TaskStop + treat WIP as suspect.
-- 🐌 **Our runtime is SLOW: `dnx`/`dnx test`/`./target/release/dnx` >2s = BUG.** Every invocation in a spec MUST carry `timeout 1`/`timeout 2`. An agent told to "run the suite" with a loose timeout WILL hang the whole agent — forbid it. Single isolated test <1s; measurement = NF_STATS counts, not wall.
+- 🐌 **Runs must be fast; a run over its spec timeout = BUG.** Every run in a spec MUST carry a `timeout` set by the spec (vic default: isolated test ≤1s, any agent unit ≤5min). An agent told to "run the suite" with a loose timeout WILL hang the whole agent — forbid it. Measurement = counters, not wall.
 - ❌ **NEVER edit a dirty tree.** Repo-edit agent ⟹ isolated jj workspace FIRST (/workspace, plain jj). Editing dirty main tree = WIP mixes into in-flight work, can't cleanly revert. (Violated twice 2026-06-15 → un-revertable mess.)
 
 ## TIER LAW (every dispatch, no exception; hook `agent-tier-gate.sh` blocks violations)
@@ -142,7 +142,7 @@ Every wave, use what exists BEFORE spending. Order = cheapest first:
 A tool or skill not in this list that fits the task = use it and add it here.
 
 ### PM BEADS + REPO-PERSISTENT EXPERIENCE (never lost on a hardware move)
-All PM learning lives in the vix repo at `modules/vic/ai/vic/pm/` (tracked in git):
+All PM learning lives in the vic config repo, under its `pm/` directory (tracked in git):
 - `.beads/` = PM optimization beads, prefix `pm`. Use `vic-pm br <args>` from any cwd (e.g. `vic-pm br create "..." -t task -l class:<c>`, `vic-pm br ready`). Project work beads stay in the project's own `.beads`.
 - `quipu/` = verified quipu PM learnings (mistakes, evidence). `notes/` = calibration tables. These are written by vic-scribe from MCP queries, since quipu lives outside the repo.
 - Opus and other model learnings (what a tier did well or badly on a class) go to `notes/` and quipu, not only to chat or memory.
@@ -158,7 +158,7 @@ All PM learning lives in the vix repo at `modules/vic/ai/vic/pm/` (tracked in gi
 - Size each bead in points: **1** = mechanical, spec spells every step · **2** = local decisions, tight spec · **3** = multi-file / cross-constraint · **5** = global invariants, judgment · **8+** = NOT a unit; split (spike first if unknown).
 - Seed the number from the ledger, not gut: query quipu with the MCP tool `quipu_query` (telemetry rows, group_id telemetry: class × tier → secs/run, tok/run, est-err, fail%; `vic-telemetry classes` is the fallback) + `quipu`/`vic/notes` lessons. No history for the class ⟹ run ONE spike unit, record it, then estimate.
 - Telemetry trap (measured 2026-10-28, 893 `a:Run` rows): rows from the SubagentStop hook store `tier` as a JSON blob (`{"level": "low"}`) and `failed = 1` on every row, even with outcome `done` (474 such rows). Cause: `vic-telemetry` sets `failed=0` only for outcome `ok|accept`, and `subagent` passes the effort object as the tier. So `fail%` from `a:failed` is wrong for hook rows. Compute fail% from `a:outcome` instead (`done`/`ok`/`accept`/`PASS` = success; the stored outcome words are not uniform), and group by the `level` inside `tier`. Recipe:
-  `PREFIX a: <http://aegis.gastown.local/ontology/> SELECT ?class ?tier ?o (COUNT(?r) AS ?n) (AVG(?s) AS ?secs) WHERE { ?r a a:Run ; a:tier ?tier ; a:outcome ?o ; a:secs ?s . OPTIONAL { ?r a:class ?class } } GROUP BY ?class ?tier ?o ORDER BY ?class ?tier`
+  `PREFIX a: <http://<ontology-host>/ontology/> SELECT ?class ?tier ?o (COUNT(?r) AS ?n) (AVG(?s) AS ?secs) WHERE { ?r a a:Run ; a:tier ?tier ; a:outcome ?o ; a:secs ?s . OPTIONAL { ?r a:class ?class } } GROUP BY ?class ?tier ?o ORDER BY ?class ?tier`
 - Drift check: run the same query with `tx: <n>` (the tx at the last wave start) and compare. A class whose numbers moved since then needs a fresh estimate.
 - Three-point (PERT) for risky units: est = (optimistic + 4×likely + pessimistic) / 6. Pessimistic > 300s ⟹ split.
 - Velocity = points closed per hour per tier from telemetry. Plan the fleet wave against velocity, not hope.
@@ -211,16 +211,16 @@ PM actively uses peers. See /vic "PEERS = LIVE CONTEXT".
 - Tell agents in the spec which peers exist; agents without SendMessage route questions through PM.
 - Landed change or finding that other projects depend on → notify those peers.
 
-## DELIVERY = MERGED (lead discipline, 2026-11-02 yen mob)
+## DELIVERY = MERGED (lead discipline, 2026-11-02 mob)
 - Done = merged on main with every check green. Pushed or "PR open" is not delivery.
 - "Pushed" is proved by the PR head: `gh pr view N --json headRefOid` equals the local commit. Two hung pushes were
-  reported as done (yen #67, #70) because a filtered output hid `exit 124`. Never pipe a push into grep: show tail + EXIT.
+  reported as done because a filtered output hid `exit 124`. Never pipe a push into grep: show tail + EXIT.
 - A push that hangs: remove the stale ssh socket `~/.ssh/socket-git@github.com:22`, run the push under `timeout`.
 - A pushed bookmark is immutable. Do not rebase it (no force-push). Merge main into the PR branch and push forward.
-- Merge only when ALL checks are green, in the repo's allowed mode (yen: squash only). Announce, then members re-sync.
+- Merge only when ALL checks are green, in the repo's allowed mode (check it first). Announce, then members re-sync.
 - A flaky job (exit 143, no test failure) is evidence to collect, not a re-run to forget: time each run, rule out a
-  concurrency cancel, own timeouts and runner loss, then fix the cause (yen #70: fastest 8 workers -> 4, plus a
-  failure-only `free -m; sudo dmesg` step).
+  concurrency cancel, own timeouts and runner loss, then fix the cause (e.g. fewer parallel workers, plus a
+  failure-only memory/kernel-log step).
 - Tiers: opus only for judgment, sonnet for rungs and reviews, haiku only with CMD + CHECK + EXPECT + ON-FAIL per step.
   An exit code is real only with `; echo EXIT=$?` on the same line.
 - Every PR gets a teammate review BEFORE merge. The leader posts ONE consolidated comment (member sessions cannot post to GitHub).
@@ -267,7 +267,7 @@ PM actively uses peers. See /vic "PEERS = LIVE CONTEXT".
 | dispatch w/o explicit model+tier | ⛔ re-dispatch /dispatch. |
 | label w/o `<model>/<effort>:` | ⛔ re-dispatch. |
 | relay agent output unverified | 🔍 x-chk vs src+tests first. |
-| collide agents (shared crate/file) | ❌ partition error. isolate workspaces. |
+| collide agents (shared package/file) | ❌ partition error. isolate workspaces. |
 | blame agent to Vic | ⛔ AGENT FAIL = PM FAIL. own it. |
 | multichoice Q to Vic | 🚫 recommend OR precise Q. |
 | idle w/ work undone | ⏳ TIME CRIME. saturate lanes. |
@@ -276,7 +276,7 @@ PM actively uses peers. See /vic "PEERS = LIVE CONTEXT".
 | `run_in_background` impl/edit/derive agent | 🔥 FORBIDDEN. invisible hang. foreground+checkpoint. |
 | dispatch w/o hard kill-timer | ⛔ don't launch. set timer or no-go. |
 | spec says "extended time" / "take the time" | 🚫 NOT partitioned. split to ≤5min units. |
-| dnx/runtime call w/o `timeout ≤2s` in spec | 🐌 will hang agent. add timeout or reject spec. |
+| run in spec w/o a spec-set `timeout` | 🐌 will hang agent. add timeout or reject spec. |
 | edit dirty tree (no workspace) | ❌ un-revertable mix. isolate jj workspace FIRST. |
 | trust "agent running" status | 🔍 long-run = hang til proven. check or kill. |
 | code before science/consensus settled | 📖 derive→validate→THEN ≤5min impl rungs. |

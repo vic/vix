@@ -1,6 +1,6 @@
 ---
 name: vic-retro-loop
-description: Retrospective + learning loop for agent work (ALL projects). Use at the end of every PM wave, at session end, after an agent was rejected/killed twice, or when Vic asks "what did we learn" / "optimize the workflow". Measures burn vs quality, dispatches vic-retro to diagnose and propose prompt/skill/tier changes, and records learnings in the vix repo so they survive hardware moves.
+description: Retrospective + learning loop for agent work (ALL projects). Use at the end of every PM wave, at session end, after an agent was rejected/killed twice, or when Vic asks "what did we learn" / "optimize the workflow". Measures burn vs quality, dispatches vic-retro to diagnose and propose prompt/skill/tier changes, and records learnings in the vic config repo so they survive hardware moves.
 ---
 
 # retro — measure, learn, optimize (quality never drops)

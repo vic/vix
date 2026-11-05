@@ -102,5 +102,21 @@
       width = "80%";
       height = "80%";
     }
+    {
+      key = "prefix+!";
+      type = "popup";
+      command = ''exec fish -c "bv .beads || bv --db vic/.beads"'';
+      description = "beads";
+      width = "80%";
+      height = "80%";
+    }
+    {
+      key = "prefix+@";
+      type = "popup";
+      command = ''exec fish -c jjui'';
+      description = "jjui";
+      width = "80%";
+      height = "80%";
+    }
   ];
 }
