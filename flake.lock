@@ -269,6 +269,22 @@
         "type": "github"
       }
     },
+    "egm": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794005470,
+        "narHash": "sha256-TJpsXdXtVs3qDdE/HezV11szJ4gGJw4x1KsFSbtF9Xw=",
+        "owner": "google",
+        "repo": "elephant-goldfish-model",
+        "rev": "7bd119c1031c58e6a6f4e2031b397a2635872124",
+        "type": "github"
+      },
+      "original": {
+        "owner": "google",
+        "repo": "elephant-goldfish-model",
+        "type": "github"
+      }
+    },
     "enthium": {
       "flake": false,
       "locked": {
@@ -913,6 +929,7 @@
         "disko": "disko",
         "doom-emacs": "doom-emacs",
         "edgevpn": "edgevpn",
+        "egm": "egm",
         "enthium": "enthium",
         "files": "files",
         "flake-file": "flake-file",

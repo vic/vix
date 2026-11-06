@@ -59,10 +59,10 @@ in
 
         programs.claude-code.skills =
           skillDirs ./skills
-          // skillDirs inputs.gstack
-          // skillRepo inputs.egm
-          // skillRepo inputs.quipu
-          // skillRepo inputs.yen
+          // (skillDirs inputs.gstack)
+          // (skillRepo inputs.egm)
+          // (skillRepo inputs.quipu)
+          // (skillRepo inputs.yen)
           // {
             gstack = "${inputs.gstack}";
             task-observer = "${inputs.one-skill-to-rule-them-all}";

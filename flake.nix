@@ -86,6 +86,10 @@
       url = "github:mudler/edgevpn";
       flake = false;
     };
+    egm = {
+      url = "github:google/elephant-goldfish-model";
+      flake = false;
+    };
     enthium = {
       url = "github:sunaku/enthium";
       flake = false;
