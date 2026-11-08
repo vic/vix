@@ -238,6 +238,10 @@
       url = "github:aanderse/trix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    tuios = {
+      url = "github:Gaurav-Gosain/tuios";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     ui-ux-pro-max-skill = {
       url = "github:nextlevelbuilder/ui-ux-pro-max-skill";
       flake = false;
