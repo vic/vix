@@ -38,6 +38,12 @@
             "~/.ssh/config.local"
           ];
           settings = {
+            # git over a shared master hangs once that master's connection dies (sleep, network change): github
+            # gets a fresh connection each time. A named block comes before `Host *` in the file, so it wins.
+            "github.com" = {
+              ControlMaster = "no";
+              ControlPath = "none";
+            };
             "*" = {
               ControlMaster = "auto";
               ControlPath = "~/.ssh/socket-%r@%h:%p";
@@ -45,7 +51,9 @@
               AddKeysToAgent = "yes";
             };
           }
-          // lib.mapAttrs (_: h: lib.filterAttrs (_: v: v != null && v != [ ] && v != { }) (directive (ren.lib.data h))) ren.ssh-host;
+          // lib.mapAttrs (
+            _: h: lib.filterAttrs (_: v: v != null && v != [ ] && v != { }) (directive (ren.lib.data h))
+          ) ren.ssh-host;
         };
       };
 
