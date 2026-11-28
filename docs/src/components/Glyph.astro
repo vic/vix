@@ -1,0 +1,71 @@
+---
+// Line icons: 24px grid, 1.6 stroke, round joins.
+// tone "neon" strokes with the cyan-to-purple gradient; "current" follows the text colour.
+const paths = {
+	proof: ['M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z', 'M8.5 12l2.5 2.5 4.5-5'],
+	shake: ['M4 5h16l-6 7.5V18l-4 2v-7.5z'],
+	law: ['M12 4v16', 'M8 20h8', 'M5 7h14', 'M5 7l-2.5 6h5z', 'M19 7l-2.5 6h5z'],
+	sheet: ['M12 3l9 5-9 5-9-5z', 'M3 12.5l9 5 9-5', 'M3 16.5l9 5 9-5'],
+	start: ['M12 21a9 9 0 100-18 9 9 0 000 18z', 'M10 8.5l5 3.5-5 3.5z'],
+	language: ['M8 7l-5 5 5 5', 'M16 7l5 5-5 5', 'M13.5 5l-3 14'],
+	door: ['M6 21V4.5A1.5 1.5 0 017.5 3h9A1.5 1.5 0 0118 4.5V21', 'M3 21h18', 'M14.5 12.5h.01'],
+	agents: ['M4.5 4h15A1.5 1.5 0 0121 5.5v13a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 013 18.5v-13A1.5 1.5 0 014.5 4z', 'M7 10l3 2-3 2', 'M12.5 15h4.5'],
+	humans: ['M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z', 'M12 15a3 3 0 100-6 3 3 0 000 6z'],
+	runtime: ['M4 18a8 8 0 1116 0', 'M12 18l4-5', 'M12 19a1 1 0 100-2 1 1 0 000 2z'],
+	platforms: ['M8 7h8a1 1 0 011 1v8a1 1 0 01-1 1H8a1 1 0 01-1-1V8a1 1 0 011-1z', 'M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4'],
+	trust: ['M12 15a6 6 0 100-12 6 6 0 000 12z', 'M9 14.2L8 21l4-2 4 2-1-6.8', 'M10 9l1.5 1.5L14 8'],
+	related: ['M6 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5z', 'M18 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5z', 'M12 21a2.5 2.5 0 100-5 2.5 2.5 0 000 5z', 'M8.5 5.5h7M7.2 7.8l3.6 8.4M16.8 7.8l-3.6 8.4'],
+	heart: ['M12 20s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.5-7 10-7 10z'],
+	arrow: ['M5 12h14', 'M13 6l6 6-6 6'],
+	chevron: ['M9 6l6 6-6 6'],
+	branch: ['M6 3v12', 'M6 21a3 3 0 100-6 3 3 0 000 6z', 'M18 9a3 3 0 100-6 3 3 0 000 6z', 'M18 9a9 9 0 01-9 9'],
+	chat: ['M4 5h16v11H9l-5 4z', 'M8 9.5h8M8 12.5h5'],
+	star: ['M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z'],
+} as const;
+
+export type GlyphName = keyof typeof paths;
+
+interface Props {
+	name: GlyphName;
+	size?: string;
+	tone?: 'current' | 'neon';
+	class?: string;
+	[attr: string]: unknown;
+}
+
+const { name, size = '1.25rem', tone = 'current', class: className, ...rest } = Astro.props;
+const gradient = `glyph-${name}-${Math.random().toString(36).slice(2, 8)}`;
+const stroke = tone === 'neon' ? `url(#${gradient})` : 'currentColor';
+---
+
+<svg
+	class:list={['glyph', className]}
+	viewBox="0 0 24 24"
+	width={size}
+	height={size}
+	fill="none"
+	stroke={stroke}
+	stroke-width="1.6"
+	stroke-linecap="round"
+	stroke-linejoin="round"
+	aria-hidden="true"
+	{...rest}
+>
+	{
+		tone === 'neon' && (
+			<defs>
+				<linearGradient id={gradient} x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+					<stop offset="0" style="stop-color: var(--yen-cyan)" />
+					<stop offset="1" style="stop-color: var(--sl-color-accent)" />
+				</linearGradient>
+			</defs>
+		)
+	}
+	{paths[name].map((d) => <path d={d} />)}
+</svg>
+
+<style>
+	.glyph {
+		flex-shrink: 0;
+	}
+</style>

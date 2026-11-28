@@ -90,10 +90,11 @@ in
               apps.gh-deps-update
               out.formatter.${system.name}
             ]
-            # the README and flake.nix writers are built on x86_64-linux only (flake/files.nix, flake/flake-file.nix)
+            # the README, docs, and flake.nix writers are built on x86_64-linux only
             ++ builtins.attrValues (
               builtins.intersectAttrs {
                 write-files = null;
+                write-docs = null;
                 write-flake = null;
                 write-lock = null;
               } apps

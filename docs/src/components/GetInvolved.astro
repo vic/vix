@@ -1,0 +1,92 @@
+---
+// Quick-start terminal card for exploring Vix and Yen.
+import Glyph from './Glyph.astro';
+---
+
+<div class="involved not-content">
+	<figure class="term" aria-label="Verify and inspect Vix">
+		<pre><code><span class="p">$</span> nix eval github:vic/vix#yen.ok
+<span class="p">$</span> nix eval --json github:vic/vix#yen.ask.fleetSummary --apply 'f: f &#123;&#125;'
+<span class="p">$</span> nix run github:vic/vix#nvim</code></pre>
+	</figure>
+	<div class="buttons">
+		<a class="primary" href="https://github.com/vic/vix"><Glyph name="branch" size="1.1rem" />Vix on GitHub</a>
+		<a class="ghost" href="https://yen.oeiuwq.com/"><Glyph name="chat" size="1.1rem" />Read the Yen docs</a>
+	</div>
+</div>
+
+<style>
+	.involved {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		margin-top: 1.5rem;
+	}
+
+	.term {
+		margin: 0;
+		border: 1px solid var(--sl-color-hairline-light);
+		border-radius: 0.75rem;
+		background: var(--sl-color-bg-nav);
+		overflow: hidden;
+	}
+
+	pre {
+		margin: 0;
+		padding: 1rem 1.25rem;
+		overflow-x: auto;
+		border: 0;
+		background: transparent;
+		font-family: 'Pragmasevka', monospace;
+		font-size: 0.92rem;
+		line-height: 1.7;
+		color: var(--sl-color-white);
+	}
+
+	.p {
+		color: var(--yen-cyan);
+		user-select: none;
+	}
+
+	.buttons {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.55rem;
+		padding: 0.7rem 1.3rem;
+		border-radius: 999px;
+		font-family: var(--font-victor-mono);
+		font-size: 0.9rem;
+		font-weight: 600;
+		text-decoration: none;
+		transition:
+			box-shadow 0.2s ease,
+			color 0.2s ease,
+			border-color 0.2s ease;
+	}
+
+	.primary {
+		color: var(--sl-color-black);
+		background: linear-gradient(110deg, var(--yen-cyan), var(--sl-color-accent));
+	}
+
+	.primary:hover {
+		color: var(--sl-color-black);
+		box-shadow: 0 10px 26px -10px color-mix(in srgb, var(--sl-color-accent) 85%, transparent);
+	}
+
+	.ghost {
+		color: var(--sl-color-white);
+		border: 1px solid var(--sl-color-hairline-light);
+	}
+
+	.ghost:hover {
+		color: var(--sl-color-accent-high);
+		border-color: var(--sl-color-accent);
+	}
+</style>

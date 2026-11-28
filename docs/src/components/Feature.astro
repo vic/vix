@@ -1,0 +1,158 @@
+---
+// One feature: a neon glyph in a tile, an HTML-capable title, description, and full-card link.
+import Glyph, { type GlyphName } from './Glyph.astro';
+
+interface Props {
+	icon: GlyphName;
+	title: string;
+	href: string;
+}
+
+const { icon, title, href } = Astro.props;
+---
+
+<article class="feature">
+	<span class="tile"><Glyph name={icon} tone="neon" size="1.5rem" /></span>
+	<h3 set:html={title} />
+	<div class="body"><slot /></div>
+	<a class="more" href={href}>
+		Learn more
+		<Glyph name="arrow" class="arrow" size="0.95rem" />
+	</a>
+</article>
+
+<style>
+	.feature {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		padding: 1.5rem;
+		border: 1px solid transparent;
+		border-radius: 0.875rem;
+		background:
+			linear-gradient(var(--sl-color-bg), var(--sl-color-bg)) padding-box,
+			linear-gradient(
+					135deg,
+					color-mix(in srgb, var(--yen-cyan) 35%, var(--sl-color-hairline)),
+					var(--sl-color-hairline) 45%,
+					color-mix(in srgb, var(--sl-color-accent) 35%, var(--sl-color-hairline))
+				)
+				border-box;
+		transition:
+			transform 0.25s ease,
+			box-shadow 0.25s ease,
+			background 0.25s ease;
+	}
+
+	.feature:hover {
+		transform: translateY(-2px);
+		background:
+			linear-gradient(
+					160deg,
+					color-mix(in srgb, var(--sl-color-accent) 7%, var(--sl-color-bg)),
+					var(--sl-color-bg) 60%
+				)
+				padding-box,
+			linear-gradient(135deg, var(--yen-cyan), var(--sl-color-accent)) border-box;
+		box-shadow: 0 12px 32px -16px color-mix(in srgb, var(--sl-color-accent) 55%, transparent);
+	}
+
+	.feature:has(.more:focus-visible) {
+		outline: 2px solid var(--sl-color-accent);
+		outline-offset: 2px;
+	}
+
+	.tile {
+		display: grid;
+		place-items: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		border-radius: 0.75rem;
+		border: 1px solid color-mix(in srgb, var(--sl-color-accent) 30%, transparent);
+		background: color-mix(in srgb, var(--sl-color-accent) 10%, transparent);
+	}
+
+	h3 {
+		margin: 0;
+		font-family: var(--font-victor-mono);
+		font-size: 1.15rem;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+		color: var(--sl-color-white);
+	}
+
+	/* Keep external links inside card titles (Tupu, Cycle.js) clickable above the stretched card link */
+	h3 :global(a) {
+		position: relative;
+		z-index: 2;
+	}
+
+	.body,
+	.body :global(p) {
+		margin: 0;
+		font-size: 0.875rem;
+		line-height: 1.7;
+		color: var(--sl-color-gray-2);
+	}
+
+	.body :global(a) {
+		position: relative;
+		z-index: 2;
+		color: var(--yen-cyan);
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.18em;
+		text-decoration-color: color-mix(in srgb, var(--yen-cyan) 40%, transparent);
+	}
+
+	.body :global(a:hover) {
+		color: var(--sl-color-accent-high);
+	}
+
+	.more {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		margin-top: auto;
+		padding-top: 0.35rem;
+		font-family: var(--font-victor-mono);
+		font-size: 0.8rem;
+		font-weight: 600;
+		color: var(--yen-cyan);
+		text-decoration: none;
+	}
+
+	.more::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+	}
+
+	.more :global(.arrow) {
+		transition: transform 0.2s ease;
+	}
+
+	.feature:hover .more {
+		color: var(--sl-color-accent-high);
+	}
+
+	.feature:hover .more :global(.arrow) {
+		transform: translateX(3px);
+	}
+
+	.more:focus-visible {
+		outline: none;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.feature,
+		.feature:hover,
+		.more :global(.arrow),
+		.feature:hover .more :global(.arrow) {
+			transition: none;
+			transform: none;
+		}
+	}
+</style>

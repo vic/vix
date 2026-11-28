@@ -1,0 +1,57 @@
+---
+// the page headings as a nested list of links; the reader's current heading is marked by aria-current
+interface TocItem {
+	slug: string;
+	text: string;
+	children: TocItem[];
+}
+
+interface Props {
+	items: TocItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<ul>
+	{
+		items.map((item) => (
+			<li>
+				<a href={`#${item.slug}`} data-slug={item.slug}>
+					{item.text}
+				</a>
+				{item.children.length > 0 && <Astro.self items={item.children} />}
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	ul ul {
+		padding-left: 0.75rem;
+	}
+	a {
+		display: block;
+		padding: 0.15rem 0;
+		font-size: 0.8125rem;
+		font-weight: 400;
+		line-height: 1.4;
+		color: var(--sl-color-gray-3);
+		text-decoration: none;
+		overflow-wrap: anywhere;
+	}
+	a:hover {
+		color: var(--sl-color-white);
+	}
+	/* the heading being read: bold and a little larger */
+	a[aria-current] {
+		font-size: 0.9375rem;
+		font-weight: 700;
+		color: var(--sl-color-accent-high);
+	}
+</style>

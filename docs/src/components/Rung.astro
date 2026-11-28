@@ -1,0 +1,120 @@
+---
+// One step of a Ladder: number, title, one line, arrow.
+import Glyph from './Glyph.astro';
+
+interface Props {
+	href: string;
+	title: string;
+}
+
+const { href, title } = Astro.props;
+---
+
+<li class="rung">
+	<a href={href}>
+		<span class="step" aria-hidden="true"></span>
+		<span class="text">
+			<span class="title">{title}</span>
+			<span class="line"><slot /></span>
+		</span>
+		<Glyph name="arrow" class="arrow" size="1.125rem" />
+	</a>
+</li>
+
+<style>
+	.rung {
+		counter-increment: rung;
+	}
+
+	a {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+		padding: 0.875rem 1.25rem 0.875rem 0;
+		border-radius: 0.875rem;
+		text-decoration: none;
+		color: inherit;
+		transition: background 0.2s ease;
+	}
+
+	a:hover,
+	a:focus-visible {
+		background: color-mix(in srgb, var(--sl-color-accent) 7%, transparent);
+	}
+
+	a:focus-visible {
+		outline: 2px solid var(--sl-color-accent);
+		outline-offset: 2px;
+	}
+
+	.step {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		place-items: center;
+		flex: 0 0 2.75rem;
+		height: 2.75rem;
+		border-radius: 50%;
+		border: 1px solid color-mix(in srgb, var(--sl-color-accent) 45%, transparent);
+		background: var(--sl-color-bg);
+		font-family: var(--font-victor-mono);
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: var(--sl-color-accent-high);
+		transition:
+			background 0.2s ease,
+			color 0.2s ease;
+	}
+
+	.step::before {
+		content: counter(rung, decimal-leading-zero);
+	}
+
+	a:hover .step {
+		background: linear-gradient(135deg, var(--yen-cyan), var(--sl-color-accent));
+		border-color: transparent;
+		color: var(--sl-color-black);
+	}
+
+	.text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		flex: 1;
+		min-width: 0;
+	}
+
+	.title {
+		font-family: var(--font-victor-mono);
+		font-size: 1.05rem;
+		font-weight: 600;
+		color: var(--sl-color-white);
+	}
+
+	.line {
+		font-family: var(--font-jetbrains-mono);
+		font-size: 0.85rem;
+		color: var(--sl-color-gray-2);
+	}
+
+	a :global(.arrow) {
+		color: var(--sl-color-gray-4);
+		transition:
+			transform 0.2s ease,
+			color 0.2s ease;
+	}
+
+	a:hover :global(.arrow) {
+		color: var(--yen-cyan);
+		transform: translateX(4px);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		a,
+		.step,
+		a :global(.arrow) {
+			transition: none;
+		}
+	}
+</style>

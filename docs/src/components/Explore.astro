@@ -1,0 +1,155 @@
+---
+// Stacked reading list for Vix's live generated sections.
+import Glyph from './Glyph.astro';
+
+const entries = [
+	{
+		tag: 'Architecture',
+		href: '/architecture/overview/',
+		title: 'One scope tree, zero string tags',
+		line: 'See how place -> machine -> linux -> host/guest extends cleanly across NixOS, macOS, and walled homes.',
+	},
+	{
+		tag: 'Roles & Tiers',
+		href: '/architecture/roles-and-tiers/',
+		title: 'Capability roles and vic-* tiers',
+		line: 'Decouple 150+ personal modules from hostnames with at.nearest, at.under, and at.not.',
+	},
+	{
+		tag: 'Kits & Walls',
+		href: '/architecture/kits-and-boundaries/',
+		title: 'GitHub runners, facter, MicroVMs, and walls',
+		line: 'Compose reusable kits, isolate standalone Home Manager with wall = true, and share evaluated pkgs.',
+	},
+	{
+		tag: 'Machines',
+		href: '/fleet/machines/',
+		title: 'Live catalog of 9 hosts, 2 Macs, and 2 homes',
+		line: 'Every machine table and activation command generated straight from tree.select.',
+	},
+	{
+		tag: 'Envs & Vim',
+		href: '/fleet/envs-and-editors/',
+		title: '6 devShells and 5 NVF Neovim profiles',
+		line: 'Ref-typed yen.lang.* and yen.vimFeature.* profiles usable via nix develop and nix run.',
+	},
+	{
+		tag: 'Verify',
+		href: '/verify/invariants-and-queries/',
+		title: 'Datalog invariants, reactive guards, and queries',
+		line: 'Run nix eval .#yen.ok, freePort, portsOf, unfreeOn, and featuresOf directly from your shell.',
+	},
+];
+---
+
+<ul class="explore not-content">
+	{
+		entries.map((e) => (
+			<li>
+				<a href={e.href}>
+					<span class="tag">{e.tag}</span>
+					<span class="text">
+						<span class="title">{e.title}</span>
+						<span class="line">{e.line}</span>
+					</span>
+					<Glyph name="arrow" class="arrow" size="1rem" />
+				</a>
+			</li>
+		))
+	}
+</ul>
+<a class="all not-content" href="/architecture/overview/">Start the architecture tour <Glyph name="arrow" size="0.95rem" /></a>
+
+<style>
+	.explore {
+		list-style: none;
+		margin: 1.5rem 0 0;
+		padding: 0;
+		border-top: 1px solid var(--sl-color-hairline);
+	}
+
+	li {
+		border-bottom: 1px solid var(--sl-color-hairline);
+	}
+
+	li a {
+		display: grid;
+		grid-template-columns: 8.5rem 1fr auto;
+		align-items: baseline;
+		gap: 1rem;
+		padding: 1rem 0.5rem;
+		text-decoration: none;
+		color: inherit;
+		transition: background 0.2s ease;
+	}
+
+	li a:hover {
+		background: color-mix(in srgb, var(--sl-color-accent) 6%, transparent);
+	}
+
+	.tag {
+		font-family: var(--font-victor-mono);
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--sl-color-accent-high);
+	}
+
+	.text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	.title {
+		font-family: var(--font-victor-mono);
+		font-size: 1.05rem;
+		font-weight: 600;
+		color: var(--sl-color-white);
+	}
+
+	.line {
+		font-family: var(--font-jetbrains-mono);
+		font-size: 0.85rem;
+		line-height: 1.6;
+		color: var(--sl-color-gray-2);
+	}
+
+	li a :global(.arrow) {
+		align-self: center;
+		color: var(--sl-color-gray-4);
+		transition:
+			transform 0.2s ease,
+			color 0.2s ease;
+	}
+
+	li a:hover :global(.arrow) {
+		color: var(--yen-cyan);
+		transform: translateX(4px);
+	}
+
+	.all {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		margin-top: 1rem;
+		font-family: var(--font-victor-mono);
+		font-size: 0.9rem;
+		color: var(--yen-cyan);
+		text-decoration: none;
+	}
+
+	.all:hover {
+		color: var(--sl-color-accent-high);
+	}
+
+	@media (max-width: 40rem) {
+		li a {
+			grid-template-columns: 1fr auto;
+		}
+
+		.tag {
+			grid-column: 1 / -1;
+		}
+	}
+</style>

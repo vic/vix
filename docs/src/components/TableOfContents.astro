@@ -1,0 +1,93 @@
+---
+// "On this page": the page title, its description as a quote, the template command, then the page headings.
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import TocItems from './TocItems.astro';
+
+const { toc } = Astro.locals.starlightRoute;
+const { title, description } = Astro.locals.starlightRoute.entry.data;
+// every example with a flake.nix is a template named after its directory (docs/templates.nix)
+const name = Astro.locals.starlightRoute.entry.id.split('/').pop();
+const isTemplate = existsSync(join(process.cwd(), 'examples', name, 'flake.nix')); // astro runs from docs/
+const source = `https://github.com/vic/yen/blob/main/docs/examples/${name}/`;
+---
+
+{
+	toc && (
+		<nav aria-label="On this page">
+			<h2 class="page-title">{title}</h2>
+			{description && <blockquote class="page-description">{description}</blockquote>}
+			{
+				isTemplate && (
+					<a class="template-link" href={source}>
+						<code>{`github:vic/yen#${name}`}</code>
+					</a>
+				)
+			}
+			<TocItems items={toc.items.filter((item) => item.slug !== '_top')} />
+		</nav>
+	)
+}
+
+<script>
+	import { onScroll } from '../scripts/scroll';
+
+	// the current heading is the last one whose top has passed the top of the page
+	onScroll(() => {
+		const links = [...document.querySelectorAll<HTMLAnchorElement>('nav[aria-label="On this page"] a[data-slug]')];
+		const headings = links
+			.map((a) => ({ a, h: document.getElementById(a.dataset.slug!) }))
+			.filter((x): x is { a: HTMLAnchorElement; h: HTMLElement } => x.h !== null);
+		const current = headings.filter((x) => x.h.getBoundingClientRect().top <= 120).pop();
+		for (const x of headings) {
+			if (x === current) x.a.setAttribute('aria-current', 'location');
+			else x.a.removeAttribute('aria-current');
+		}
+	});
+</script>
+
+<style>
+	nav {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.page-title {
+		color: var(--sl-color-white);
+		font-size: var(--sl-text-h5);
+		font-weight: 600;
+		line-height: var(--sl-line-height-headings);
+		margin: 0;
+	}
+	/* a tiny terminal: dark block, prompt, no wrapping, scrolls sideways */
+	.template-link {
+		display: block;
+		text-decoration: none;
+	}
+	.template-link code {
+		display: block;
+		padding: 0.25rem 0.5rem;
+		overflow-x: auto;
+		white-space: pre;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 3px;
+		background: var(--sl-color-black);
+		color: var(--sl-color-white);
+		font-family: var(--__sl-font-mono, monospace);
+		font-size: 0.7rem;
+		line-height: 1.4;
+	}
+	.template-link code::before {
+		content: '$ ';
+		color: var(--sl-color-accent-high);
+		user-select: none;
+	}
+	.page-description {
+		margin: 0;
+		padding-left: 0.75rem;
+		border-left: 2px solid var(--sl-color-accent);
+		color: var(--sl-color-gray-2);
+		font-size: var(--sl-text-xs);
+		line-height: 1.5;
+	}
+</style>

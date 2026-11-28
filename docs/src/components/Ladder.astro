@@ -1,0 +1,30 @@
+---
+// A reading path drawn as a ladder: a gradient rail with numbered rungs.
+---
+
+<ol class="ladder not-content"><slot /></ol>
+
+<style>
+	.ladder {
+		position: relative;
+		list-style: none;
+		margin: 2rem 0 1rem;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		counter-reset: rung;
+	}
+
+	.ladder::before {
+		content: '';
+		position: absolute;
+		top: 1.75rem;
+		bottom: 1.75rem;
+		left: 1.375rem;
+		width: 2px;
+		border-radius: 1px;
+		background: linear-gradient(var(--yen-cyan), var(--sl-color-accent));
+		opacity: 0.6;
+	}
+</style>

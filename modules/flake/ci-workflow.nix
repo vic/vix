@@ -133,9 +133,10 @@ in
           steps = setup ++ [
             {
               run = builtins.concatStringsSep "\n" [
-                "test \"$(nix eval --impure --json --file query.nix errors)\" = '[]'"
-                "test \"$(nix eval --impure --json --file query.nix check.ok)\" = 'true'"
-                "test \"$(nix eval --impure --json --file query.nix undefined)\" = '[]'"
+                "test \"$(nix eval .#yen.ok)\" = 'true'"
+                "test \"$(nix eval --json .#yen.errors)\" = '[]'"
+                "test \"$(nix eval --json .#yen.check.violations)\" = '[]'"
+                "test \"$(nix eval --json .#yen.undefined)\" = '[]'"
               ];
             }
           ];

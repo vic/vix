@@ -1,0 +1,29 @@
+<div class="reading-progress" aria-hidden="true"></div>
+
+<script>
+	import { onScroll } from '../scripts/scroll';
+
+	// the bar grows with the page: 0 at the top, 1 at the bottom
+	onScroll(() => {
+		const bar = document.querySelector<HTMLElement>('.reading-progress');
+		if (!bar) return;
+		const max = document.documentElement.scrollHeight - innerHeight;
+		bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+	});
+</script>
+
+<style>
+	/* sits in the fixed site header, which is the containing block: the top edge of the viewport */
+	.reading-progress {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 3px;
+		z-index: 1;
+		background: var(--sl-color-accent);
+		transform-origin: 0 50%;
+		transform: scaleX(0);
+		pointer-events: none;
+	}
+</style>

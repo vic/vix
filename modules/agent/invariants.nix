@@ -11,6 +11,7 @@ let
     parent
     edge
     guest
+    machine
     ;
   followsOf =
     i:
@@ -30,6 +31,26 @@ let
       (lib.splitString "/" scopeId);
 in
 {
+  # Pure-Nix Datalog relations reused across invariants and queries (zero strings!)
+  yen.relations = {
+    has-user =
+      { P, U }:
+      {
+        head = yen.relations.has-user P;
+        pos = [
+          (kind yen.kinds.user U)
+          (parent U P)
+        ];
+      };
+
+    serves-tunnel =
+      { S, H }:
+      {
+        head = yen.relations.serves-tunnel S H;
+        pos = [ (yen.facts.ssh-host.forwardsServedBy S H) ];
+      };
+  };
+
   yen.invariants = {
     # A gui feature lands only on a user whose machine or home is graphical
     gui-needs-graphical =
@@ -67,6 +88,18 @@ in
           (parent U P)
           (has yen.aspects.ci-runner P)
         ];
+      };
+
+    # Every workstation must spawn at least one user (uses `yen.relations.has-user`)
+    workstation-has-user =
+      { M }:
+      {
+        bad = M;
+        pos = [
+          (kind yen.kinds.machine M)
+          (machine.workstation M true)
+        ];
+        neg = [ (yen.relations.has-user M) ];
       };
 
     # No two guests share an address (their host routes one /32 per tap)

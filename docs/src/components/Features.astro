@@ -1,0 +1,19 @@
+---
+// A two-column grid of Feature cards.
+---
+
+<div class="features not-content"><slot /></div>
+
+<style>
+	.features {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+		margin-block: 2rem 1rem;
+	}
+	@media (min-width: 40rem) {
+		.features {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+</style>

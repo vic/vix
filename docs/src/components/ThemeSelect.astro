@@ -1,0 +1,210 @@
+---
+import DefaultThemeSelect from '@astrojs/starlight/components/ThemeSelect.astro';
+---
+
+<div class="theme-zen">
+  <DefaultThemeSelect />
+  <button type="button" class="zen-extra" data-panel="nav" aria-pressed="false" aria-label="Toggle navigation" title="Toggle navigation">
+    <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+      <rect x="1.5" y="2.5" width="13" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.2"></rect>
+      <rect x="1.5" y="2.5" width="4.5" height="11" rx="1" fill="currentColor"></rect>
+    </svg>
+  </button>
+  <button type="button" class="zen-extra" data-panel="toc" aria-pressed="false" aria-label="Toggle outline" title="Toggle outline">
+    <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+      <rect x="1.5" y="2.5" width="13" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.2"></rect>
+      <rect x="10" y="2.5" width="4.5" height="11" rx="1" fill="currentColor"></rect>
+    </svg>
+  </button>
+  <button type="button" class="zen-toggle" aria-pressed="false" title="Zen reading mode">Zen</button>
+</div>
+
+<script>
+  const KEY = 'yen-zen';
+  const EDGE = 96;
+  const IDLE_MS = 450;
+  const HIDE_MS = 600;
+  const root = document.documentElement;
+  const zenButtons = document.querySelectorAll<HTMLButtonElement>('.zen-toggle');
+  const panelButtons = document.querySelectorAll<HTMLButtonElement>('.zen-extra');
+  const panels = {
+    nav: () => document.querySelector<HTMLElement>('#starlight__sidebar'),
+    toc: () => document.querySelector<HTMLElement>('.right-sidebar-panel'),
+  };
+  const attrs = { nav: 'data-zen-nav', toc: 'data-zen-toc' } as const;
+  type Panel = keyof typeof attrs;
+  const pinned: Record<Panel, boolean> = { nav: false, toc: false };
+  const timers: Partial<Record<Panel, number>> = {};
+
+  const setPressed = (buttons: NodeListOf<HTMLButtonElement>, on: boolean) =>
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(on)));
+
+  // The sponsor card sits beside the outline in normal layout. In zen the outline is an
+  // overlay, so the card is moved into it (last child) while the outline is open.
+  const ad = document.querySelector<HTMLElement>('.sponsor-card');
+  const adHome = ad?.parentElement ?? null;
+  const adNext = ad?.nextSibling ?? null;
+  const placeAd = () => {
+    if (!ad || !adHome) return;
+    const outline = document.querySelector<HTMLElement>('.right-sidebar-panel');
+    if (root.hasAttribute('data-zen') && root.hasAttribute(attrs.toc) && outline) outline.appendChild(ad);
+    else adHome.insertBefore(ad, adNext);
+  };
+
+  const showPanel = (p: Panel, on: boolean) => {
+    root.toggleAttribute(attrs[p], on);
+    panelButtons.forEach((b) => {
+      if (b.dataset.panel === p) b.setAttribute('aria-pressed', String(on));
+    });
+    placeAd();
+  };
+
+  const cancel = (p: Panel) => {
+    window.clearTimeout(timers[p]);
+    timers[p] = undefined;
+  };
+
+  const schedule = (p: Panel) => {
+    cancel(p);
+    if (pinned[p]) return;
+    timers[p] = window.setTimeout(() => showPanel(p, false), HIDE_MS);
+  };
+
+  const applyZen = (on: boolean) => {
+    root.toggleAttribute('data-zen', on);
+    setPressed(zenButtons, on);
+    if (!on) {
+      (Object.keys(attrs) as Panel[]).forEach((p) => {
+        cancel(p);
+        pinned[p] = false;
+        showPanel(p, false);
+      });
+    }
+  };
+
+  try {
+    applyZen(localStorage.getItem(KEY) === '1');
+  } catch {
+    applyZen(false);
+  }
+
+  zenButtons.forEach((b) =>
+    b.addEventListener('click', () => {
+      const on = !root.hasAttribute('data-zen');
+      applyZen(on);
+      try {
+        localStorage.setItem(KEY, on ? '1' : '0');
+      } catch {
+        /* storage blocked: zen still works for this page */
+      }
+    }),
+  );
+
+  panelButtons.forEach((b) =>
+    b.addEventListener('click', () => {
+      const p = b.dataset.panel as Panel;
+      const on = !root.hasAttribute(attrs[p]);
+      pinned[p] = on;
+      cancel(p);
+      showPanel(p, on);
+    }),
+  );
+
+  // Edge reveal: a pointer that rests in an edge zone opens that pane. Moving or pressing
+  // cancels it, and resting on a control or content (copy button, link, code) does not
+  // open a pane, so edge buttons stay usable.
+  let idle: number | undefined;
+  const CONTENT = 'button, a, input, select, textarea, pre, .expressive-code, [role="tab"]';
+
+  const reveal = (p: Panel, e: PointerEvent) => {
+    if ((e.target as Element | null)?.closest(CONTENT)) return;
+    cancel(p);
+    showPanel(p, true);
+  };
+
+  document.addEventListener('pointermove', (e) => {
+    window.clearTimeout(idle);
+    if (!root.hasAttribute('data-zen')) return;
+    const edge: Panel | undefined =
+      e.clientX < EDGE ? 'nav' : e.clientX > window.innerWidth - EDGE ? 'toc' : undefined;
+    if (!edge || root.hasAttribute(attrs[edge])) return;
+    idle = window.setTimeout(() => reveal(edge, e), IDLE_MS);
+  });
+
+  document.addEventListener('pointerdown', () => window.clearTimeout(idle));
+
+  (Object.keys(panels) as Panel[]).forEach((p) => {
+    const el = panels[p]();
+    if (!el) return;
+    el.addEventListener('pointerenter', () => cancel(p));
+    el.addEventListener('pointerleave', () => schedule(p));
+  });
+
+  // Pointer is outside the edge zone and outside an edge-revealed pane: hide after the timeout.
+  document.addEventListener('pointermove', (e) => {
+    if (!root.hasAttribute('data-zen')) return;
+    (Object.keys(panels) as Panel[]).forEach((p) => {
+      const el = panels[p]();
+      const inEdge = p === 'nav' ? e.clientX < EDGE : e.clientX > window.innerWidth - EDGE;
+      if (!root.hasAttribute(attrs[p]) || pinned[p] || inEdge || el?.matches(':hover')) return;
+      if (!timers[p]) schedule(p);
+    });
+  });
+</script>
+
+<style>
+  .theme-zen {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .zen-toggle,
+  .zen-extra {
+    font-family: var(--font-jetbrains-mono);
+    font-size: 0.8rem;
+    line-height: 1;
+    border: 1px solid var(--sl-color-hairline);
+    background: transparent;
+    color: var(--sl-color-gray-2);
+    cursor: pointer;
+  }
+
+  .zen-toggle {
+    padding: 0.45rem 0.75rem;
+    border-radius: 999px;
+  }
+
+  .zen-extra {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border-radius: 6px;
+  }
+
+  :global(:root[data-zen]) .zen-extra {
+    display: inline-flex;
+  }
+
+  .zen-toggle:hover,
+  .zen-extra:hover {
+    color: var(--sl-color-white);
+    border-color: var(--sl-color-accent);
+  }
+
+  .zen-toggle[aria-pressed='true'],
+  .zen-extra[aria-pressed='true'] {
+    background: var(--sl-color-accent);
+    border-color: var(--sl-color-accent);
+    color: var(--sl-color-bg);
+  }
+
+  .zen-toggle:focus-visible,
+  .zen-extra:focus-visible {
+    outline: 2px solid var(--sl-color-accent);
+    outline-offset: 2px;
+  }
+</style>

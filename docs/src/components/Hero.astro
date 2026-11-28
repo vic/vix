@@ -1,0 +1,512 @@
+---
+// Vix split hero: wide Stigi/Yen layout with single-row actions and 5-tab live Vix showcase.
+import Glyph, { type GlyphName } from './Glyph.astro';
+
+const { data } = Astro.locals.starlightRoute.entry;
+const { title = data.title, tagline, actions = [] } = data.hero || {};
+
+const glyphs: Record<string, GlyphName> = {
+	'right-arrow': 'arrow',
+	rocket: 'arrow',
+	heart: 'heart',
+};
+---
+
+<div class="hero">
+	<div class="stack">
+		<h1 id="_top" data-page-title set:html={title} />
+		{tagline && <div class="tagline" set:html={tagline} />}
+		<p class="availability">9 NixOS hosts · 2 Macs · 2 standalone homes · 6 devShells · 5 Neovim profiles.</p>
+		{
+			actions.length > 0 && (
+				<div class="actions">
+					{actions.map(({ icon, link, text, variant }) => (
+						<a class:list={['action', variant === 'minimal' ? 'ghost' : 'primary']} href={link}>
+							{text}
+							{icon?.name && glyphs[icon.name] && <Glyph name={glyphs[icon.name]} size="1.1rem" />}
+						</a>
+					))}
+				</div>
+			)
+		}
+	</div>
+
+	<figure class="window" aria-label="Vix fleet examples: host facts, roles and tiers, kits, invariants, and live queries">
+		<input type="radio" name="hero-tab" id="hero-tab-frodo" class="tab-input" checked />
+		<input type="radio" name="hero-tab" id="hero-tab-tiers" class="tab-input" />
+		<input type="radio" name="hero-tab" id="hero-tab-kits" class="tab-input" />
+		<input type="radio" name="hero-tab" id="hero-tab-invariants" class="tab-input" />
+		<input type="radio" name="hero-tab" id="hero-tab-queries" class="tab-input" />
+		<div class="bar">
+			<span class="dots"><i></i><i></i><i></i></span>
+			<label for="hero-tab-frodo" class="tab tab-frodo">frodo.nix</label>
+			<label for="hero-tab-tiers" class="tab tab-tiers">tiers.nix</label>
+			<label for="hero-tab-kits" class="tab tab-kits">kits.nix</label>
+			<label for="hero-tab-invariants" class="tab tab-invariants">invariants.nix</label>
+			<label for="hero-tab-queries" class="tab tab-queries">queries.nix</label>
+		</div>
+
+		<div class="panels">
+			<div class="panel panel-frodo">
+				<pre class="code"><code><span class="cm"># modules/hosts/frodo/default.nix — pure facts, zero imports</span>
+<span class="kw">yen.host.frodo</span> = &#123;
+  system = <span class="fn">yen.system.x86_64-linux</span>;
+  users = [ <span class="fn">yen.user.vic</span> ];
+  form = <span class="fn">yen.form.laptop</span>;   workstation = <span class="fact">true</span>;  trusted = <span class="fact">true</span>;
+  keyboard = <span class="fn">yen.keyboard.macos</span>;
+  desktops = [ <span class="fn">yen.desktop.niri</span> <span class="fn">yen.desktop.xfce</span> ];
+&#125;;</code></pre>
+				<div class="reply">
+					<pre><code><span class="prompt">$</span> sudo nixos-rebuild switch --flake .#frodo
+<span class="ok">ok</span>  cpu derived from facter · niri + xfce + laptop power + vic-gui + vic-secrets</code></pre>
+					<div class="reply-foot">
+						<span class="hint">zero string tags · hardware derived automatically</span>
+						<a class="learn-more" href="/fleet/machines/">
+							Learn more <Glyph name="arrow" class="arrow" size="0.9rem" />
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-tiers">
+				<pre class="code"><code><span class="cm"># modules/roles/tiers.nix — features never name a host</span>
+<span class="kw">yen.aspects.vic-headless</span>.at = <span class="fn">yen.user.vic</span>;
+<span class="kw">yen.aspects.vic-gui</span>.at = <span class="fn">at.all</span> [ <span class="fn">yen.aspects.vic-headless</span> <span class="fn">yen.aspects.on-graphical</span> ];
+<span class="kw">yen.aspects.vic-full</span>.at = <span class="fn">at.all</span> [
+  <span class="fn">yen.aspects.vic-headless</span> (<span class="fn">at.not</span> (<span class="fn">at.under</span> <span class="fn">yen.aspects.installer</span>))
+];
+<span class="kw">yen.aspects.vic-secrets</span>.at = <span class="fn">at.all</span> [ <span class="fn">yen.aspects.vic-headless</span> <span class="fn">yen.aspects.on-trusted</span> ];</code></pre>
+				<div class="reply">
+					<pre><code><span class="prompt">$</span> nix eval --json .#yen.explain --apply 'f: f "vic-gui" "host:frodo/user:vic"'
+<span class="ok">ok</span>  active: <span class="fact">true</span> · nearest place host:frodo satisfies graphical</code></pre>
+					<div class="reply-foot">
+						<span class="hint">150+ personal modules decoupled from machine names</span>
+						<a class="learn-more" href="/architecture/roles-and-tiers/">
+							Learn more <Glyph name="arrow" class="arrow" size="0.9rem" />
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-kits">
+				<pre class="code"><code><span class="cm"># modules/hosts/tom.nix — native yen.kits.github-runner assembly</span>
+<span class="kw">yen.host.tom</span>.system = <span class="fn">yen.system.x86_64-linux</span>;
+<span class="kw">yen.assemblies.ci-tom</span> = <span class="fn">yen.kits.github-runner</span> &#123;
+  runner = &#123;
+    at = <span class="fn">yen.host.tom</span>;
+    settings.label = <span class="fact">"ubuntu-latest"</span>;
+  &#125;;
+&#125;;</code></pre>
+				<div class="reply">
+					<pre><code><span class="prompt">$</span> nix eval --json .#yen.scopes --apply 'xs: builtins.filter (s: s.kind == ["_member"]) xs'
+<span class="ok">ok</span>  ci-bill.runner (aarch64-linux) · ci-tom.runner (x86_64-linux) · ci-bert.runner (darwin)</code></pre>
+					<div class="reply-foot">
+						<span class="hint">one runner per system via reduce.keyed · walled homes</span>
+						<a class="learn-more" href="/architecture/kits-and-boundaries/">
+							Learn more <Glyph name="arrow" class="arrow" size="0.9rem" />
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-invariants">
+				<pre class="code"><code><span class="cm"># modules/agent/invariants.nix — whole-fleet Datalog verification</span>
+<span class="kw">yen.invariants.secrets-need-trusted</span> = &#123; U, P &#125;: &#123;
+  bad = U;
+  pos = [ (<span class="fn">kind</span> <span class="ty">yen.kinds.user</span> U) (<span class="fn">parent</span> U P) (<span class="fn">edge</span> <span class="ty">yen.kinds.user.sinks.secrets</span> U U) ];
+  neg = [ (<span class="fn">has</span> <span class="fn">yen.aspects.trusted</span> P) ];
+&#125;;
+<span class="kw">yen.invariants.workstation-has-user</span> = &#123; M &#125;: &#123;
+  bad = M; pos = [ (<span class="fn">kind</span> <span class="ty">yen.kinds.machine</span> M) (<span class="fn">machine.workstation</span> M <span class="fact">true</span>) ];
+  neg = [ (<span class="fn">yen.relations.has-user</span> M) ];
+&#125;;</code></pre>
+				<div class="reply">
+					<pre><code><span class="prompt">$</span> nix eval .#yen.ok &amp;&amp; nix eval --json .#yen.check.violations
+<span class="ok">ok</span>  true · [] (6 Datalog invariants + port, follows &amp; SSH cycle guards)</code></pre>
+					<div class="reply-foot">
+						<span class="hint">broken fleets fail closed before nixos-rebuild</span>
+						<a class="learn-more" href="/verify/invariants-and-queries/">
+							Learn more <Glyph name="arrow" class="arrow" size="0.9rem" />
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-queries">
+				<pre class="code"><code><span class="cm"># Run stored queries straight from any shell via .#yen.ask</span>
+<span class="prompt">$</span> nix eval --json .#yen.ask.fleetSummary --apply 'f: f &#123;&#125;'
+<span class="prompt">$</span> nix eval --json .#yen.ask.freePort --apply 'f: f &#123; place = "frodo"; &#125;'
+<span class="prompt">$</span> nix eval --json .#yen.ask.featuresOf --apply 'f: f &#123; vim = "nvim"; &#125;'</code></pre>
+				<div class="reply">
+					<pre><code><span class="ok">freePort</span>  &#123; "port": <span class="fact">8000</span>, "used": [<span class="fact">8787</span>] &#125;
+<span class="ok">nvim</span>      theme: <span class="fact">"base24-rebecca"</span> · 15 ref-typed features · aliases: [<span class="fact">"vi"</span>, <span class="fact">"vim"</span>]</code></pre>
+					<div class="reply-foot">
+						<span class="hint">pure flake eval · zero --impure · zero query.nix</span>
+						<a class="learn-more" href="/verify/invariants-and-queries/">
+							Learn more <Glyph name="arrow" class="arrow" size="0.9rem" />
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</figure>
+</div>
+
+<style>
+	.hero {
+		display: grid;
+		align-items: center;
+		gap: 2.5rem;
+		padding-block: 2rem 2.5rem;
+	}
+
+	.stack {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 1.25rem;
+	}
+
+	h1 {
+		margin: 0;
+		font-size: clamp(2.1rem, calc(1rem + 3.2vw), 3.15rem);
+		line-height: 1.1;
+		padding-bottom: 0.08em;
+		font-weight: 400;
+		letter-spacing: -0.04em;
+	}
+
+	.tagline {
+		max-width: 44ch;
+		font-size: clamp(1rem, calc(0.6rem + 0.95vw), 1.15rem);
+		line-height: 1.65;
+		color: var(--sl-color-gray-2);
+	}
+
+	.availability {
+		margin: 0;
+		font-size: 0.85rem;
+		color: var(--sl-color-gray-3);
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.7rem;
+		margin-top: 0.5rem;
+	}
+
+	.action {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.55rem;
+		padding: 0.72rem 1.2rem;
+		border-radius: 999px;
+		font-family: var(--font-victor-mono);
+		font-size: 0.9rem;
+		font-weight: 600;
+		line-height: 1;
+		white-space: nowrap;
+		text-decoration: none;
+		transition:
+			transform 0.2s ease,
+			box-shadow 0.2s ease,
+			border-color 0.2s ease,
+			color 0.2s ease;
+	}
+
+	.primary {
+		color: var(--sl-color-black);
+		background: linear-gradient(110deg, var(--yen-cyan), var(--sl-color-accent));
+		box-shadow: 0 8px 24px -10px color-mix(in srgb, var(--sl-color-accent) 70%, transparent);
+	}
+
+	.primary:hover {
+		color: var(--sl-color-black);
+		transform: translateY(-1px);
+		box-shadow: 0 12px 30px -10px color-mix(in srgb, var(--sl-color-accent) 85%, transparent);
+	}
+
+	.ghost {
+		color: var(--sl-color-white);
+		border: 1px solid var(--sl-color-hairline-light);
+	}
+
+	.ghost:hover {
+		color: var(--sl-color-accent-high);
+		border-color: var(--sl-color-accent);
+	}
+
+	.action:focus-visible {
+		outline: 2px solid var(--sl-color-accent);
+		outline-offset: 3px;
+	}
+
+	.window {
+		position: relative;
+		margin: 0;
+		min-width: 0;
+		border: 1px solid transparent;
+		border-radius: 0.875rem;
+		overflow: hidden;
+		background:
+			linear-gradient(var(--sl-color-bg-nav), var(--sl-color-bg-nav)) padding-box,
+			linear-gradient(
+					135deg,
+					color-mix(in srgb, var(--yen-cyan) 60%, transparent),
+					var(--sl-color-hairline) 50%,
+					color-mix(in srgb, var(--sl-color-accent) 60%, transparent)
+				)
+				border-box;
+		box-shadow: 0 30px 80px -30px color-mix(in srgb, var(--sl-color-accent) 55%, transparent);
+	}
+
+	.bar {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		gap: 0.3rem;
+		padding: 0.55rem 0.85rem;
+		overflow-x: auto;
+		scrollbar-width: none;
+		border-bottom: 1px solid var(--sl-color-hairline);
+	}
+
+	.bar::-webkit-scrollbar {
+		display: none;
+	}
+
+	.dots {
+		display: flex;
+		flex-shrink: 0;
+		gap: 0.35rem;
+		margin-right: 0.35rem;
+	}
+
+	.dots i {
+		width: 0.62rem;
+		height: 0.62rem;
+		border-radius: 50%;
+		background: var(--sl-color-gray-5);
+	}
+
+	.dots i:first-child {
+		background: var(--sl-color-red);
+	}
+
+	.dots i:nth-child(2) {
+		background: var(--sl-color-orange);
+	}
+
+	.dots i:last-child {
+		background: var(--sl-color-green);
+	}
+
+	.tab-input {
+		position: absolute;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.tab {
+		flex-shrink: 0;
+		white-space: nowrap;
+		padding: 0.2rem 0.55rem;
+		border-radius: 0.4rem;
+		font-family: var(--font-victor-mono);
+		font-size: 0.72rem;
+		color: var(--sl-color-gray-3);
+		cursor: pointer;
+		transition:
+			background 0.2s ease,
+			color 0.2s ease;
+	}
+
+	.tab:hover {
+		color: var(--sl-color-white);
+	}
+
+	#hero-tab-frodo:checked ~ .bar .tab-frodo,
+	#hero-tab-tiers:checked ~ .bar .tab-tiers,
+	#hero-tab-kits:checked ~ .bar .tab-kits,
+	#hero-tab-invariants:checked ~ .bar .tab-invariants,
+	#hero-tab-queries:checked ~ .bar .tab-queries {
+		color: var(--sl-color-white);
+		background: color-mix(in srgb, var(--sl-color-accent) 22%, transparent);
+	}
+
+	#hero-tab-frodo:focus-visible ~ .bar .tab-frodo,
+	#hero-tab-tiers:focus-visible ~ .bar .tab-tiers,
+	#hero-tab-kits:focus-visible ~ .bar .tab-kits,
+	#hero-tab-invariants:focus-visible ~ .bar .tab-invariants,
+	#hero-tab-queries:focus-visible ~ .bar .tab-queries {
+		outline: 2px solid var(--sl-color-accent);
+		outline-offset: 1px;
+	}
+
+	.panels {
+		display: grid;
+	}
+
+	.panel {
+		grid-area: 1 / 1;
+		display: flex;
+		flex-direction: column;
+		visibility: hidden;
+		pointer-events: none;
+	}
+
+	#hero-tab-frodo:checked ~ .panels .panel-frodo,
+	#hero-tab-tiers:checked ~ .panels .panel-tiers,
+	#hero-tab-kits:checked ~ .panels .panel-kits,
+	#hero-tab-invariants:checked ~ .panels .panel-invariants,
+	#hero-tab-queries:checked ~ .panels .panel-queries {
+		visibility: visible;
+		pointer-events: auto;
+	}
+
+	pre {
+		margin: 0;
+		padding: 0.95rem 1.05rem;
+		overflow-x: auto;
+		font-family: 'Pragmasevka', monospace;
+		font-size: 0.81rem;
+		line-height: 1.56;
+		color: var(--sl-color-white);
+		background: transparent;
+		border: 0;
+	}
+
+	.code {
+		flex: 1 0 auto;
+		background: var(--sl-color-bg);
+	}
+
+	.reply {
+		border-top: 1px dashed var(--sl-color-hairline-light);
+	}
+
+	.reply pre {
+		padding-bottom: 0.65rem;
+		font-size: 0.77rem;
+		color: var(--sl-color-gray-2);
+	}
+
+	.reply-foot {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.6rem;
+		padding: 0.55rem 1.05rem 0.8rem;
+		border-top: 1px solid color-mix(in srgb, var(--sl-color-hairline) 65%, transparent);
+	}
+
+	.hint {
+		font-family: 'Pragmasevka', monospace;
+		font-size: 0.73rem;
+		font-style: italic;
+		color: var(--sl-color-gray-3);
+	}
+
+	.learn-more {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		padding: 0.3rem 0.75rem;
+		border-radius: 999px;
+		border: 1px solid color-mix(in srgb, var(--yen-cyan) 45%, transparent);
+		background: color-mix(in srgb, var(--yen-cyan) 10%, transparent);
+		font-family: var(--font-victor-mono);
+		font-size: 0.74rem;
+		font-weight: 600;
+		line-height: 1.2;
+		color: var(--yen-cyan);
+		text-decoration: none;
+		transition:
+			border-color 0.2s ease,
+			background 0.2s ease,
+			color 0.2s ease;
+	}
+
+	.learn-more :global(.arrow) {
+		transition: transform 0.2s ease;
+	}
+
+	.learn-more:hover {
+		color: var(--sl-color-white);
+		border-color: var(--sl-color-accent);
+		background: color-mix(in srgb, var(--sl-color-accent) 20%, transparent);
+	}
+
+	.learn-more:hover :global(.arrow) {
+		transform: translateX(2px);
+	}
+
+	.learn-more:focus-visible {
+		outline: 2px solid var(--sl-color-accent);
+		outline-offset: 2px;
+	}
+
+	.cm {
+		color: var(--sl-color-gray-3);
+		font-style: italic;
+	}
+
+	.kw {
+		color: var(--sl-color-accent);
+	}
+
+	.fn {
+		color: var(--yen-cyan);
+	}
+
+	.ty {
+		color: var(--sl-color-orange-high);
+	}
+
+	.fact {
+		color: var(--sl-color-accent-high);
+	}
+
+	.bad {
+		color: var(--sl-color-red-high);
+		font-weight: 700;
+	}
+
+	.ok {
+		color: var(--sl-color-green-high);
+		font-weight: 700;
+	}
+
+	.code-name {
+		color: var(--sl-color-orange-high);
+	}
+
+	.prompt {
+		color: var(--yen-cyan);
+		user-select: none;
+	}
+
+	@media (min-width: 60rem) {
+		.hero {
+			grid-template-columns: 0.85fr 1.15fr;
+			gap: 2rem;
+			padding-block: clamp(1.75rem, calc(1rem + 4vmin), 3.75rem) 2.75rem;
+		}
+
+		.actions {
+			flex-wrap: nowrap;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.action,
+		.learn-more,
+		.learn-more :global(.arrow),
+		.learn-more:hover :global(.arrow) {
+			transition: none;
+			transform: none;
+		}
+	}
+</style>

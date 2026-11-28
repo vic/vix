@@ -1,0 +1,124 @@
+---
+// Frequently asked questions about Vix.
+import Glyph from './Glyph.astro';
+
+const items = [
+	{
+		q: 'How does Vix load 150+ modules without import-tree or flake-parts?',
+		a: 'flake.nix passes ./modules directly to inputs.yen.mkFlake. Yen walks every *.nix file recursively in sorted order and skips _-prefixed files automatically.',
+		href: '/architecture/overview/',
+	},
+	{
+		q: 'How do host files stay under 20 lines with zero module imports?',
+		a: 'Hosts declare pure typed facts like yen.cpu.amd and yen.desktop.niri. Hardware, desktop, and vic-* tier aspects select matching hosts automatically via Datalog selectors.',
+		href: '/architecture/roles-and-tiers/',
+	},
+	{
+		q: 'How do standalone homes share modules with NixOS hosts without leaking OS settings?',
+		a: 'yen.kinds.home sets wall = true with an explicit passUp list. Home Manager modules run identically, while OS sinks never cross upward onto the host.',
+		href: '/architecture/kits-and-boundaries/',
+	},
+	{
+		q: 'How does this website stay in sync with Vix?',
+		a: 'modules/docs/ lives inside the Vix fleet itself and queries live host, mac, home, env, vim, and secret instances via Cycle.js tree.select. nix run .#write-docs writes every page.',
+		href: '/verify/recipes-and-ci/',
+	},
+];
+---
+
+<div class="faq not-content">
+	{
+		items.map(({ q, a, href }) => (
+			<details name="faq">
+				<summary>
+					<span>{q}</span>
+					<Glyph name="chevron" class="caret" size="1.1rem" />
+				</summary>
+				<p>
+					{a} <a href={href}>Read more</a>
+				</p>
+			</details>
+		))
+	}
+</div>
+
+<style>
+	.faq {
+		margin-top: 1.5rem;
+		border-top: 1px solid var(--sl-color-hairline);
+		interpolate-size: allow-keywords;
+	}
+
+	details {
+		border-bottom: 1px solid var(--sl-color-hairline);
+	}
+
+	summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1.1rem 0.5rem;
+		cursor: pointer;
+		list-style: none;
+		font-family: var(--font-victor-mono);
+		font-size: 1.05rem;
+		font-weight: 600;
+		color: var(--sl-color-white);
+	}
+
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	summary:hover {
+		color: var(--sl-color-accent-high);
+	}
+
+	summary:focus-visible {
+		outline: 2px solid var(--sl-color-accent);
+		outline-offset: -2px;
+	}
+
+	summary :global(.caret) {
+		color: var(--sl-color-gray-3);
+		transition: transform 0.2s ease;
+	}
+
+	details[open] summary :global(.caret) {
+		transform: rotate(90deg);
+		color: var(--sl-color-accent);
+	}
+
+	details::details-content {
+		block-size: 0;
+		overflow-y: clip;
+		transition:
+			block-size 0.3s ease,
+			content-visibility 0.3s allow-discrete;
+	}
+
+	details[open]::details-content {
+		block-size: auto;
+	}
+
+	p {
+		margin: 0;
+		padding: 0 0.5rem 1.25rem;
+		max-width: 62ch;
+		font-size: 0.9rem;
+		line-height: 1.75;
+		color: var(--sl-color-gray-2);
+	}
+
+	p a {
+		color: var(--yen-cyan);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		summary :global(.caret),
+		details::details-content {
+			transition: none;
+		}
+	}
+</style>

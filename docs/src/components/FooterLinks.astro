@@ -1,0 +1,40 @@
+---
+import { Icon } from '@astrojs/starlight/components';
+---
+
+<section class="sl-flex">
+  <a href="https://github.com/vic/vix" class="sl-flex">
+		<Icon name="github" size="1.2em" />
+		vix source
+	</a>
+
+  <a href="https://yen.oeiuwq.com/" class="sl-flex">
+		<Icon name="rocket" size="1.2em" />
+		Yen docs
+	</a>
+
+	<a href="https://github.com/sponsors/vic" class="sl-flex">
+		<Icon name="heart" size="1.2em" />
+		Sponsor
+	</a>
+</section>
+
+<style>
+	section {
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.5rem;
+		font-size: var(--sl-text-sm);
+	}
+
+	a {
+		align-items: center;
+		text-decoration: none;
+		gap: 0.5rem;
+		color: var(--sl-color-gray-3);
+	}
+
+	a:hover {
+		color: var(--sl-color-white);
+	}
+</style>

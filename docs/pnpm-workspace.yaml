@@ -1,0 +1,5 @@
+allowBuilds:
+  esbuild: true
+  sharp: true
+# every package in docs/node_modules: the build bundle imports astro deps by bare name
+shamefullyHoist: true

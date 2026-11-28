@@ -1,4 +1,4 @@
-# Stored queries: named questions with typed parameters (`result.ask.<name> args`).
+# Stored queries: named questions runnable from CLI via `nix eval --json .#yen.ask.<name> --apply 'f: f { ... }'`.
 {
   yen,
   lib,
@@ -6,11 +6,41 @@
 }:
 let
   b = builtins;
+  placeKinds = [
+    "host"
+    "guest"
+    "mac"
+    "home"
+  ];
+  placeMatches =
+    p: s:
+    if b.isString p then
+      s.ref.name == p && b.elem (lib.last s.ref.kind) placeKinds
+    else if b.isAttrs p && p ? __inst then
+      s.ref.kind == p.__inst.kind && s.ref.name == p.__inst.name
+    else
+      s.ref.name == (p.name or "");
+  placeNameOf =
+    p:
+    if b.isString p then
+      p
+    else if b.isAttrs p && p ? __inst then
+      p.__inst.name
+    else
+      p.name or (toString p);
+  vimNameOf =
+    v:
+    if b.isString v then
+      v
+    else if b.isAttrs v && v ? __inst then
+      v.__inst.name
+    else
+      v.name or (toString v);
   under =
     r: p:
     lib.concatMap (
       s: map (x: x.id) (lib.filter (x: x.id == s.id || lib.hasPrefix "${s.id}/" x.id) r.scopes)
-    ) (lib.filter (s: s.ref.kind == p.__inst.kind && s.ref.name == p.__inst.name) r.scopes);
+    ) (lib.filter (placeMatches p) r.scopes);
   portsOf =
     result: p:
     lib.concatMap (
@@ -20,6 +50,19 @@ in
 {
   yen.helpers.portsOf = portsOf;
   yen.queries = {
+    fleetSummary = {
+      answer =
+        { result }:
+        {
+          hosts = lib.sort lib.lessThan (b.attrNames (result.data.host or { }));
+          macs = lib.sort lib.lessThan (b.attrNames (result.data.mac or { }));
+          homes = lib.sort lib.lessThan (b.attrNames (result.data.home or { }));
+          envs = lib.sort lib.lessThan (b.attrNames (result.data.env or { }));
+          vims = lib.sort lib.lessThan (b.attrNames (result.data.vim or { }));
+          kits = lib.sort lib.lessThan (b.attrNames (result.schema.kits or { }));
+          assemblies = lib.sort lib.lessThan (b.attrNames (result.schema.assemblies or { }));
+        };
+    };
     aspectsOn = {
       params.place = yen.kinds.place;
       answer =
@@ -50,21 +93,22 @@ in
       params.vim = yen.kinds.vim;
       answer =
         { result, vim }:
-        {
-          inherit (result.data.vim.${vim.name})
-            features
-            theme
-            gui
-            aliases
-            ;
-          aspects = lib.unique (
-            map (e: e.aspect) (
-              lib.filter (
-                e: e.sink == "nvf" && lib.hasSuffix "/system:x86_64-linux/vim:${vim.name}" e.to
-              ) result.graph.edges
-            )
-          );
-        };
+        (
+          vName:
+          (vData: {
+            features = map (f: f.name or (toString f)) (vData.features or [ ]);
+            inherit (vData) theme gui aliases;
+            aspects = lib.unique (
+              map (e: e.aspect) (
+                lib.filter (
+                  e: e.sink == "nvf" && lib.hasSuffix "/system:x86_64-linux/vim:${vName}" e.to
+                ) result.graph.edges
+              )
+            );
+          })
+            result.data.vim.${vName}
+        )
+          (vimNameOf vim);
     };
     freePort = {
       params.place = yen.kinds.place;
@@ -76,7 +120,7 @@ in
             free:
             if free == [ ] then
               {
-                error = "no free port on ${place.name} in 8000..8999";
+                error = "no free port on ${placeNameOf place} in 8000..8999";
                 inherit used;
               }
             else

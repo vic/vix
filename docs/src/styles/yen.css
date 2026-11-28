@@ -1,0 +1,71 @@
+/*
+ * Yen's own visual layer on top of layout.css and custom.css (adapted from Stigi).
+ * Mauve (purple) is the accent from Catppuccin; sky (cyan) is the second colour.
+ */
+
+:root {
+  --yen-cyan: #89dceb; /* Catppuccin Mocha sky */
+}
+
+:root[data-theme='light'] {
+  --yen-cyan: #04a5e5; /* Catppuccin Latte sky */
+}
+
+/* Links in cyan, purple on hover. */
+.sl-markdown-content a:not(:where(.not-content *)) {
+  color: var(--yen-cyan);
+  text-decoration-color: color-mix(in srgb, var(--yen-cyan) 40%, transparent);
+}
+
+.sl-markdown-content a:not(:where(.not-content *)):hover {
+  color: var(--sl-color-accent-high);
+}
+
+/* Wordmark: cyan into purple. */
+.site-title {
+  background: linear-gradient(90deg, var(--yen-cyan), var(--sl-color-accent) 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Thin neon edge under the top bar. */
+header.header {
+  border-bottom: 1px solid color-mix(in srgb, var(--sl-color-accent) 35%, var(--sl-color-hairline));
+}
+
+/* Reading bar goes cyan to purple too. */
+.reading-progress {
+  background: linear-gradient(90deg, var(--yen-cyan), var(--sl-color-accent)) !important;
+}
+
+/* Hero headline: crisp solid white. */
+.hero h1 {
+  color: var(--sl-color-white);
+}
+
+/* Links inside hero tagline and feature card headings. */
+.hero .tagline a,
+.feature h3 a {
+  color: var(--yen-cyan);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, var(--yen-cyan) 45%, transparent);
+}
+
+.hero .tagline a:hover,
+.feature h3 a:hover {
+  color: var(--sl-color-accent-high);
+}
+
+/* Splash landing page: widen container and remove excessive side gutters. */
+html[data-has-hero] {
+  --sl-content-width: min(88rem, 100%);
+  --sl-content-pad-x: clamp(1rem, 2vw, 1.75rem);
+}
+
+html[data-has-hero] .sl-container {
+  max-width: min(88rem, 100%);
+  margin-inline: auto;
+}

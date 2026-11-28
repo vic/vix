@@ -95,6 +95,16 @@ let
     }
   );
 
+  workstationNoUser = with' (
+    { yen, ... }:
+    {
+      yen.host.ghost-ws = {
+        system = yen.system.x86_64-linux;
+        workstation = true;
+      };
+    }
+  );
+
   sharedPkgs = with' (
     { yen, ... }:
     {
@@ -125,13 +135,26 @@ let
     ports-of-frodo = lib.any (p: p.port == 8787 && p.what == "headroom") (
       r.ask.portsOf { place = frodoRef; }
     );
-    free-port-frodo = ((r.ask.freePort { place = frodoRef; }).port or null) == 8000;
+    free-port-frodo =
+      ((r.ask.freePort { place = frodoRef; }).port or null) == 8000
+      && ((r.ask.freePort { place = "frodo"; }).port or null) == 8000;
+    fleet-summary-query =
+      lib.length (r.ask.fleetSummary { }).hosts == 9 && lib.length (r.ask.fleetSummary { }).vims == 5;
+    cli-features-of-nvim = (r.ask.featuresOf { vim = "nvim"; }).theme == "base24-rebecca";
+    flake-exposes-yen-handle = out ? yen && out.yen.ok;
     port-clash-fires = hasMsg portClash ".*unique-port: clash at host:frodo:8787.*";
     follows-undeclared-fires = hasMsg followsClash ".*follows-declared:.*no-such-input.*";
     ssh-jump-cycle-fires = hasMsg sshCycle ".*proxyJump cycle.*loop-a.*loop-b.*";
     runners-no-users-fires =
       !runnerWithUser.ok
       && lib.any (v: v.invariant == "runners-no-users") runnerWithUser.check.violations;
+    workstation-has-user-fires =
+      !workstationNoUser.ok
+      && lib.any (v: v.invariant == "workstation-has-user") workstationNoUser.check.violations;
+    docs-site-assertions-pass =
+      (out.docsSite.assertions."site.links-resolve" or false)
+      && (out.docsSite.assertions."site.tupu-cycle-linked" or false)
+      && (out.docsSite.assertions."site.all-hosts-documented" or false);
     members =
       runnerMemberIds == [
         "host:bill/_member:ci-bill.runner"
@@ -165,7 +188,7 @@ let
   total = lib.length (lib.attrNames checks);
 in
 {
-  inherit checks failed;
+  inherit checks failed out;
   summary = {
     ok = failed == [ ];
     inherit total failed;

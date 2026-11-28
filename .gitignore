@@ -4,3 +4,8 @@ old
 .devenv
 .direnv
 .DS_Store
+docs/dist
+docs/node_modules
+docs/.astro
+docs/src/content/docs
+docs/src/sidebar.json
