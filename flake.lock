@@ -1523,13 +1523,12 @@
       }
     },
     "yen": {
-      "flake": false,
       "locked": {
-        "lastModified": 1794191444,
-        "narHash": "sha256-UEfwBosL9rVlryuqKd7IlJKUJA546sMTTaxV3vhX594=",
+        "lastModified": 1795849264,
+        "narHash": "sha256-sOi7RzeE6ey8hu+zHz1hZv84Eqpr1zKwHrJR1epjCrY=",
         "owner": "vic",
         "repo": "yen",
-        "rev": "b2a64e9246b7861c07afd18bfe9adb43530a770a",
+        "rev": "b1180f4ef3686d8781fb48b05ff78c0e83fa03c6",
         "type": "github"
       },
       "original": {

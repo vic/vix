@@ -16,7 +16,6 @@
         url = "github:vikingnope/helium-browser-nix-flake";
         inputs = {
           nixpkgs.follows = "nixpkgs";
-          nixpkgs-darwin.follows = "nixpkgs-darwin";
           utils.follows = "flake-utils";
         };
       };

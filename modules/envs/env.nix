@@ -10,7 +10,7 @@
 }:
 let
   inherit (yen.helpers) place;
-  onSystem = system: e: e // { inherit system; };
+  onSystem = system: _: { system = yen.system.${system.name}; };
 in
 {
   yen.kinds.place.fields.envs = types.opt (types.listOf yen.kinds.env) [ ];

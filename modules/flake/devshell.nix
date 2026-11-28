@@ -31,6 +31,18 @@ let
       if [ $# -gt 0 ] && [ "''${1#-}" = "$1" ]; then host="$1"; shift; fi
       nh os "$action" "$PRJ_ROOT#nixosConfigurations.$host" "''${ask[@]}" "$@"
     '')
+    (cmd "docs-build" "generate and build the Vix Starlight website" ''
+      set -euo pipefail
+      write-docs
+      pnpm --dir "$PRJ_ROOT/docs" install --frozen-lockfile --prefer-offline
+      pnpm --dir "$PRJ_ROOT/docs" build
+    '')
+    (cmd "docs-preview" "generate docs and start the local Astro dev server" ''
+      set -euo pipefail
+      write-docs
+      pnpm --dir "$PRJ_ROOT/docs" install --frozen-lockfile --prefer-offline
+      pnpm --dir "$PRJ_ROOT/docs" dev "$@"
+    '')
     (cmd "vini-hm" "build vini's home here, activate it on vini" ''
       set -euo pipefail
       test "''${1:-}" = activate || { echo "usage: vini-hm activate" >&2; exit 1; }
@@ -85,6 +97,8 @@ in
               pkgs.age
               pkgs.ssh-to-age # vic-sops-get --setup derives the age key from the ssh key
               pkgs.just
+              pkgs.nodejs
+              pkgs.pnpm
               apps.vic-sops-get
               apps.vic-sops-rotate
               apps.gh-deps-update
