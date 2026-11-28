@@ -129,7 +129,6 @@
       url = "github:vikingnope/helium-browser-nix-flake";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        nixpkgs-darwin.follows = "nixpkgs-darwin";
         utils.follows = "flake-utils";
       };
     };
@@ -176,10 +175,6 @@
     mattpocock = {
       url = "github:mattpocock/skills";
       flake = false;
-    };
-    microvm = {
-      url = "github:microvm-nix/microvm.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     mnw.url = "github:Gerg-L/mnw";
     nix-index-database = {
