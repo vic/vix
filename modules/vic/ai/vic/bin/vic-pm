@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# vic-pm br <args> | learn <vic|pm|skills|traps> "<lesson>" | where
+# PM's persistent experience, kept in the vix repo (survives hardware moves):
+#   $VIC_PM_DIR/.beads/      PM beads (br, prefix pm): learnings + optimization tasks
+#   $VIC_PM_DIR/quipu/ notes/   exports written by PM agents (quipu is MCP-only)
+# br      = br pinned to the PM beads, from any cwd
+# learn   = append-only lesson into the vic-lessons skill (live-linked into the repo; dedup)
+set -eu
+dir="${VIC_PM_DIR:-$HOME/hk/vix/modules/vic/ai/vic/pm}"
+case "${1:-}" in
+  br) shift; mkdir -p "$dir/.beads"; cd "$dir"; exec br "$@" ;;
+  learn) f="${VIC_LESSONS_DIR:-$HOME/.claude/skills/vic-lessons}/${2:?file}.md"; [ -f "$f" ] || { echo "no $f"; exit 1; }
+         l="${3:?lesson}"; grep -qF -- "$l" "$f" && { echo dup; exit 0; }
+         printf -- "- %s · %s\n" "$l" "$(date +%F)" >> "$f"; echo appended ;;
+  where) echo "$dir" ;;
+  *) sed -n '2,8p' "$0" ;;
+esac

@@ -1,0 +1,2 @@
+# repeated_keys: the yen idiom writes `yen.aspects.<name> = …` once per aspect in one file; merging them is noise.
+disabled = [ "repeated_keys" ]

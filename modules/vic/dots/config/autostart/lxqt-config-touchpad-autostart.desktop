@@ -1,0 +1,23 @@
+[Desktop Entry]
+Exec=lxqt-config-input --load-touchpad
+Name=Mouse and Touchpad Settings
+Name[ar]=إعدادات الماوس ولوحة اللمس
+Name[bg]=Настройки на мишката и тъчпада
+Name[cs]=Nastavení myši a touchpadu
+Name[de]=Maus- und Touchpad-Einstellungen
+Name[et]=Hiire ja puuteplaadi seadistused
+Name[fi]=Hiiren ja kosketuslevyn asetukset
+Name[he]=הגדרות עכבר ומשטח מגע
+Name[hr]=Postavke miša i dodirne ploče
+Name[it]=Impostazioni del mouse e del touchpad
+Name[kk]=Тышқан мен тачпад баптаулары
+Name[ko]=마우스 및 터치패드 설정
+Name[lg]=Enteekateeka za Busongesebwa
+Name[lt]=Pelės ir jutiklinio kilimėlio nustatymai
+Name[nl]=Muis- en touchpadinstellingen
+Name[oc]=Paramètres de la mirga e del pavat tactil
+Name[ru]=Настройки мыши и сенсорной панели
+NoDisplay=true
+OnlyShowIn=LXQt;
+Type=Application
+Version=1.0

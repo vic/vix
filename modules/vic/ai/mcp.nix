@@ -1,0 +1,118 @@
+# Local stdio MCP servers for code discovery, spawned per session by Claude Code.
+# (codegraph lives in tools.nix beside its CLI; headroom in headroom.nix.)
+{
+  yen,
+  inputs,
+  lib,
+  ...
+}:
+let
+  kb = import ./_quipu.nix;
+
+  hookOf = command: [
+    {
+      hooks = [
+        {
+          type = "command";
+          inherit command;
+        }
+      ];
+    }
+  ];
+
+  # Shown to the main session and injected into every subagent, so the index is
+  # used before grep and its known blind spots are not read as absence.
+  discovery = ''
+    Code discovery: prefer codebase-memory-mcp (search_graph, trace_path,
+    get_code_snippet, query_graph, search_code) over grep for languages the index
+    covers. Confirm coverage with a known-positive symbol query, never from
+    get_architecture's languages field (it omits Nix). CALLS edges miss
+    attrset-mediated Nix calls, so ZERO CALLERS IS NOT EVIDENCE OF DEAD CODE:
+    cross-check with Grep before concluding or deleting. Never pass `mode` to
+    index_repository: fast/moderate silently skip dirs named docs, scripts,
+    tools, bin, build. Use Grep/Glob/Read for text and configs.
+  '';
+in
+{
+  yen.aspects.ai-mcp = {
+    at = yen.aspects.vic-headless;
+    claude-allow = kb.tools;
+    git-ignores = [
+      ".serena"
+      ".cbmignore"
+      ".quipu"
+    ];
+    homeManager =
+      { config, pkgs, ... }:
+      let
+        cbm = pkgs.codebase-memory-mcp;
+        quipu = inputs.quipu.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        # One global graph, like the global codegraph. The signing key defaults to
+        # .quipu/ in the cwd, which would drop a private key into every repo.
+        quipuDir = "${config.xdg.dataHome}/quipu";
+      in
+      {
+        home.packages = [
+          cbm
+          quipu
+        ];
+
+        # auto_index defaults to false, leaving the graph empty until an agent
+        # volunteers to index. `|| true`: a live session pinning another build refuses.
+        home.activation.cbmAutoIndex = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+          run ${lib.getExe cbm} config set auto_index true || true
+        '';
+
+        programs.claude-code = {
+          mcpServers = {
+            codebase-memory = {
+              type = "stdio";
+              command = lib.getExe cbm;
+            };
+            quipu = {
+              type = "stdio";
+              command = lib.getExe quipu;
+              args = [
+                "mcp"
+                "--db"
+                "${quipuDir}/quipu.db"
+              ];
+              env.QUIPU_SIGNING_KEY = "${quipuDir}/verifier.pk8";
+            };
+          };
+
+          settings.hooks = {
+            PreToolUse = [
+              {
+                matcher = "Grep|Glob";
+                hooks = [
+                  {
+                    type = "command";
+                    command = "${lib.getExe cbm} hook-augment 2>/dev/null; exit 0";
+                  }
+                ];
+              }
+            ];
+            SessionStart = hookOf "${pkgs.writeShellScript "cbm-session-reminder" ''
+              cat <<'EOF'
+              ${discovery + kb.instructions}
+              EOF
+            ''}";
+            # SubagentStart delivers only `additionalContext`, never plain stdout.
+            SubagentStart = hookOf "${pkgs.writeShellScript "cbm-subagent-reminder" ''
+              printf '%s\n' ${
+                lib.escapeShellArg (
+                  builtins.toJSON {
+                    hookSpecificOutput = {
+                      hookEventName = "SubagentStart";
+                      additionalContext = discovery + kb.instructions;
+                    };
+                  }
+                )
+              }
+            ''}";
+          };
+        };
+      };
+  };
+}

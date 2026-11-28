@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# vic-recall <rg-pattern> [max] — search THIS project's command ledger (full untruncated outputs).
+# LAW: recall BEFORE re-running expensive cmds; never re-run for a longer tail. GLOBAL.
+p=${1:?usage: vic-recall <pattern> [max-entries]}
+m=${2:-3}
+k=$(printf '%s' "${CLAUDE_PROJECT_DIR:-$PWD}" | sed 's|/|-|g')
+d="$HOME/.cache/claude-ledger/$k"
+ls "$d"/bash-*.jsonl >/dev/null 2>&1 || { echo "LEDGER EMPTY for $k"; exit 0; }
+rg -I --no-line-number -i "$p" "$d"/bash-*.jsonl 2>/dev/null | tail -n "$m" | \
+  jq -r '"━━━ [\(.ts)] sid:\(.sid[0:8])\nCMD: \(.cmd)\nERR: \(.err)\nOUT:\n\(.out)"' 2>/dev/null \
+  || rg -i "$p" "$d"/bash-*.jsonl | tail -n "$m" | cut -c1-4000

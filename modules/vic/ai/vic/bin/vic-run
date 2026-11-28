@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# vic-run <timeout-s> <cmd...> — vic-law run wrapper: ulimit 8G + timeout + nice + verbatim shape.
+# Hang = datapoint, never wait. GLOBAL (any project).
+t=${1:?usage: vic-run <timeout-s> <cmd...>}
+shift
+ulimit -v 8388608
+echo "CMD: $*"
+s=$(date +%s%N)
+timeout "$t" nice -n 10 "$@"
+ec=$?
+e=$(date +%s%N)
+echo "EXIT: $ec  WALL: $(( (e - s) / 1000000 ))ms"
+[ "$ec" -eq 124 ] && echo "TIMEOUT >${t}s (datapoint)"
+exit 0

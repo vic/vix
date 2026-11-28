@@ -1,0 +1,7 @@
+keys:
+  - &vic age1wmg6gkfar8nl9tr2y409vac6zqwnfjvjh6rxh2fl6x3tx4rzwdxqwj2r9e
+creation_rules:
+  - path_regex: ^.*$
+    key_groups:
+      - age:
+          - *vic

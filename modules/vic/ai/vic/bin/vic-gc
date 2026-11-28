@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# vic-gc [days] — janitor: prune old ledgers, orphaned jj workspaces dirs, stale /tmp probes.
+# Disk exhaustion = documented supervisor failure mode. Run weekly (vic or scribe duty). Default 30d.
+d=${1:-30}
+echo "── ledgers older ${d}d:"
+find "$HOME/.cache/claude-ledger" "$HOME/.cache/dnx2-ledger" -name 'bash-*.jsonl' -mtime +"$d" -print -delete 2>/dev/null
+echo "── workspace dirs w/o live jj workspace (CHECK list b4 trusting):"
+ls -d "$HOME"/hk/workspace/*/ 2>/dev/null
+echo "   (cross-check w/ 'vic-ws list' per repo; remove orphans MANUALLY — never auto-rm work)"
+echo "── /tmp probe files older ${d}d:"
+find /tmp -maxdepth 1 \( -name '*.nix' -o -name 'probe*' -o -name 'ablate*' \) -user "$USER" -mtime +"$d" -print -delete 2>/dev/null
+df -h "$HOME" | tail -1

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# vic-ws new <name> [rev] | list | land <name> | drop <name>
+# jj workspace isolation under ~/hk/workspace/<repo>-<name>.
+# SUPERVISOR-ONLY: worker agents NEVER run this or ANY jj cmd (history = supervisor's).
+# land = squash ws diff into current @ (LINEAR mainline), forget ws, rm dir.
+echo "BANNED: USE DIRECTLY jj INSTEAD"
+exit 1;
+root=$(jj root 2>/dev/null) || { echo "not in jj repo"; exit 1; }
+repo=$(basename "$root"); W="$HOME/hk/workspace"
+case "${1:-}" in
+  new) n=${2:?name}; p="$W/$repo-$n"; mkdir -p "$W"
+    jj workspace add --name "$n" "$p" ${3:+-r "$3"} >/dev/null || exit 1
+    echo "$p" ;;
+  list) jj workspace list ;;
+  land) n=${2:?name}
+    jj squash --from "$n@" --into @ || { echo "SQUASH FAILED — resolve manually, ws kept"; exit 1; }
+    jj workspace forget "$n" || true
+    rm -rf "$W/$repo-$n"
+    echo "landed $n into @ (linear); ws removed" ;;
+  drop) n=${2:?name}
+    jj workspace forget "$n" 2>/dev/null || true
+    rm -rf "$W/$repo-$n"; echo "dropped $n (mainline untouched)" ;;
+  *) sed -n '2,6p' "$0" ;;
+esac
